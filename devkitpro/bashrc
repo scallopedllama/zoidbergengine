@@ -1,0 +1,4 @@
+#These need to be added to your bashrc in order for devkitARM
+#to work correctly. Replace paths with correct ones
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=$DEVKITPRO/devkitARM
