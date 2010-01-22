@@ -9,10 +9,10 @@
 		<Option compiler="devkitarm" />
 		<Option virtualFolders="source/;headers/;" />
 		<MakeCommands>
-			<Build command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-			<CompileFile command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-			<Clean command="$make -f $makefile clean$target" />
-			<DistClean command="$make -f $makefile distclean$target" />
+			<Build command="" />
+			<CompileFile command="" />
+			<Clean command="" />
+			<DistClean command="" />
 		</MakeCommands>
 		<Build>
 			<Target title="Debug">
@@ -25,10 +25,10 @@
 					<Add option="-g" />
 				</Compiler>
 				<MakeCommands>
-					<Build command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-					<CompileFile command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-					<Clean command="$make -f $makefile clean$target" />
-					<DistClean command="$make -f $makefile distclean$target" />
+					<Build command="make -C .." />
+					<CompileFile command="" />
+					<Clean command="make -C .. clean" />
+					<DistClean command="make -C .. clean" />
 				</MakeCommands>
 			</Target>
 			<Target title="Release">
@@ -44,16 +44,12 @@
 					<Add option="-s" />
 				</Linker>
 				<MakeCommands>
-					<Build command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-					<CompileFile command="$make -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;" />
-					<Clean command="$make -f $makefile clean$target" />
-					<DistClean command="$make -f $makefile distclean$target" />
+					<Build command="make -C .." />
+					<CompileFile command="" />
+					<Clean command="make -C .. clean" />
+					<DistClean command="make -C .. clean" />
 				</MakeCommands>
 			</Target>
-			<Environment>
-				<Variable name="DEVKITARM" value="$DEVKITPRO/devkitARM" />
-				<Variable name="DEVKITPRO" value="/Users/guest/Code/zoidbergengine/devkitpro" />
-			</Environment>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />

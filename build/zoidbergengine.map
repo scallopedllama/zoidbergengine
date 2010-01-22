@@ -1,0 +1,1338 @@
+Archive member included because of file (symbol)
+
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+                              main.o (consoleDemoInit)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (vramSetBankC)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (initSystem)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o) (fifoSetValue32Handler)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o) (irqSet)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (__libnds_exit)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (__libnds_mpu_setup)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o) (swiIntrWait)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (nocashMessage)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o) (IntrMain)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (default_font_bin)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (bgState)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o) (powerValueHandler)
+/Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o) (sinLerp)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o) (bsearch)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (_impure_ptr)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (__libc_init_array)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+                              main.o (iprintf)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (memcpy)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o) (memset)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (setvbuf)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (siscanf)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o) (strlen)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o) (__ssvfiscanf_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (__submore)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o) (_vfiprintf_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (_wcrtomb_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (_wcsrtombs_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o) (_wctomb_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (__swsetup_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (__ctype_ptr__)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o) (_fflush_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o) (_cleanup_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o) (_free_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (__sfvwrite_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o) (_fwalk_reent)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (iswspace)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o) (__jp2uc)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (__mb_cur_max)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o) (__smakebuf_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o) (malloc)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o) (_malloc_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (_mbrtowc_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (_mbtowc_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (memchr)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o) (memmove)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o) (__malloc_lock)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o) (_realloc_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (__sccl)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o) (__sclose)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o) (strcmp)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o) (strcpy)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (_strtol_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o) (_strtoul_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o) (fclose)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o) (devoptab_list)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o) (_close_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o) (_fstat_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o) (_isatty_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o) (_lseek_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o) (_read_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o) (_sbrk_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+                              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o) (punixTime)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o) (_write_r)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (fake_heap_end)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o (build_argv)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o) (__get_handle)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o) (__aeabi_uidiv)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_dvmd_tls.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o) (__div0)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o) (__errno)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o) (strchr)
+/Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+                              /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o) (strncmp)
+
+Allocating common symbols
+Common symbol       size              file
+
+currentCopy         0x5c              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+fifo_datamsg_data   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+bgState             0x140             /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+fifo_buffer         0x800             /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+bgIsTextLut         0x8               /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+fifo_value32_func   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+fifo_address_func   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+fifo_value32_data   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+theTime             0x4               /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+fifo_value32_queue  0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+fifo_data_queue     0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+punixTime           0x4               /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+fifo_address_data   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+fifo_datamsg_func   0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+fifo_address_queue  0x40              /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x0000000008000000 0x0000000002000000
+ewram            0x0000000002000000 0x00000000003ff000
+dtcm             0x000000000b000000 0x0000000000004000
+vectors          0x0000000001000000 0x0000000000000100
+itcm             0x0000000001000100 0x0000000000007f00
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000001000000                __vectors_start = 0x1000000
+                0x0000000001000100                __itcm_start = 0x1000100
+                0x00000000023ff000                __ewram_end = 0x23ff000
+                0x00000000023ff000                __eheap_end = 0x23ff000
+                0x000000000b000000                __dtcm_start = 0xb000000
+                0x000000000b004000                __dtcm_top = 0xb004000
+                0x000000000b003ff8                __irq_flags = (__dtcm_top - 0x8)
+                0x000000000b003ffc                __irq_vector = (__dtcm_top - 0x4)
+                0x000000000b003f00                __sp_svc = (__dtcm_top - 0x100)
+                0x000000000b003e00                __sp_irq = (__sp_svc - 0x100)
+                0x000000000b003d00                __sp_usr = (__sp_irq - 0x100)
+
+.init           0x0000000002000000      0x21c
+                0x0000000002000000                __text_start = .
+ *(.init)
+ .init          0x0000000002000000      0x210 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+                0x0000000002000000                _start
+ .init          0x0000000002000210        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+                0x0000000002000210                _init
+ .init          0x0000000002000214        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+                0x000000000200021c                . = ALIGN (0x4)
+
+.plt
+ *(.plt)
+
+.text           0x0000000002000220     0x7338
+ *(EXCLUDE_FILE(*.itcm*) .text)
+ .text          0x0000000002000220        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+ .text          0x0000000002000220        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+ .text          0x0000000002000220       0x6c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+ .text          0x000000000200028c       0x18 main.o
+                0x000000000200028c                main
+ .text          0x00000000020002a4      0xa1c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+                0x00000000020002a4                consoleGetDefault
+                0x00000000020002ac                consoleSelect
+                0x0000000002000348                consolePrintChar
+                0x00000000020004e8                consoleLoadFont
+                0x0000000002000768                consoleSetFont
+                0x0000000002000788                consoleSetWindow
+                0x00000000020007ac                consoleClear
+                0x00000000020007bc                consoleDebugInit
+                0x0000000002000808                consoleInit
+                0x0000000002000980                consoleDemoInit
+                0x00000000020009bc                con_write
+                0x0000000002000c90                nocash_write
+ .text          0x0000000002000cc0      0x144 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+                0x0000000002000cc0                vramSetMainBanks
+                0x0000000002000d04                vramRestoreMainBanks
+                0x0000000002000d10                vramSetBankA
+                0x0000000002000d24                vramSetBankB
+                0x0000000002000d38                vramSetBankC
+                0x0000000002000d4c                vramSetBankD
+                0x0000000002000d60                vramSetBankE
+                0x0000000002000d74                vramSetBankF
+                0x0000000002000d88                vramSetBankG
+                0x0000000002000d9c                vramSetBankH
+                0x0000000002000db0                vramSetBankI
+                0x0000000002000dc4                setBrightness
+ .text          0x0000000002000e04       0xf4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+                0x0000000002000e04                initSystem
+ .text          0x0000000002000ef8      0xcd0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                0x000000000200108c                fifoSendAddress
+                0x00000000020010c4                fifoSendValue32
+                0x000000000200110c                fifoGetAddress
+                0x000000000200117c                fifoSetAddressHandler
+                0x00000000020011f0                fifoGetValue32
+                0x0000000002001260                fifoSetValue32Handler
+                0x00000000020012d4                fifoCheckAddress
+                0x00000000020012f8                fifoCheckDatamsg
+                0x000000000200131c                fifoCheckValue32
+                0x00000000020013e4                fifoInit
+                0x00000000020015a4                fifoGetDatamsg
+                0x0000000002001ab0                fifoSetDatamsgHandler
+                0x0000000002001b58                fifoSendDatamsg
+ .text          0x0000000002001bc8      0x1d8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+                0x0000000002001bc8                irqDummy
+                0x0000000002001bcc                irqSet
+                0x0000000002001c38                irqInit
+                0x0000000002001c84                irqInitHandler
+                0x0000000002001cb4                irqEnable
+                0x0000000002001d14                irqDisable
+                0x0000000002001d74                irqClear
+ .text          0x0000000002001da0        0x4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+                0x0000000002001da0                __libnds_exit
+ .text          0x0000000002001da4      0x1d4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+                0x0000000002001da4                __libnds_mpu_setup
+                0x0000000002001f04                memCached
+                0x0000000002001f1c                memUncached
+ *fill*         0x0000000002001f78        0x8 ff
+ .text          0x0000000002001f80       0x70 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+                0x0000000002001f80                swiSoftReset
+                0x0000000002001f84                swiDelay
+                0x0000000002001f88                swiIntrWait
+                0x0000000002001f8c                swiWaitForVBlank
+                0x0000000002001f90                swiSleep
+                0x0000000002001f94                swiChangeSoundBias
+                0x0000000002001f98                swiDivide
+                0x0000000002001f9c                swiRemainder
+                0x0000000002001fa2                swiDivMod
+                0x0000000002001fae                swiCopy
+                0x0000000002001fb2                swiFastCopy
+                0x0000000002001fb6                swiSqrt
+                0x0000000002001fba                swiCRC16
+                0x0000000002001fbe                swiIsDebugger
+                0x0000000002001fc2                swiUnpackBits
+                0x0000000002001fc6                swiDecompressLZSSWram
+                0x0000000002001fca                swiDecompressLZSSVram
+                0x0000000002001fce                swiDecompressHuffman
+                0x0000000002001fd2                swiDecompressRLEWram
+                0x0000000002001fd6                swiDecompressRLEVram
+                0x0000000002001fda                swiWaitForIRQ
+                0x0000000002001fde                swiDecodeDelta8
+                0x0000000002001fe2                swiDecodeDelta16
+                0x0000000002001fe6                swiSetHaltCR
+ .text          0x0000000002001ff0       0x98 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+                0x0000000002001ff0                nocashMessage
+ .text          0x0000000002002088        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .text          0x0000000002002088        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+ .text          0x0000000002002088      0x350 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x0000000002002088                bgIsText
+                0x0000000002002094                checkIfText
+                0x00000000020020e4                bgUpdate
+                0x00000000020021f8                bgInitSub_call
+                0x0000000002002308                bgInit_call
+ .text          0x00000000020023d8       0xdc /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+                0x00000000020023d8                ledBlink
+                0x00000000020023ec                powerOff
+                0x0000000002002418                powerOn
+                0x0000000002002448                systemSleep
+                0x0000000002002460                powerValueHandler
+                0x0000000002002470                systemMsgHandler
+ .text          0x00000000020024b4      0x234 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+                0x00000000020024b4                sinLutLookup
+                0x00000000020024f0                sinLerp
+                0x000000000200257c                cosLerp
+                0x0000000002002594                tanLutLookup
+                0x00000000020025e0                tanLerp
+                0x000000000200261c                arcSinComp
+                0x000000000200264c                asinLerp
+                0x00000000020026d0                acosLerp
+ .text          0x00000000020026e8       0x60 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+                0x00000000020026e8                bsearch
+ .text          0x0000000002002748        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+ .text          0x0000000002002748       0x84 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+                0x0000000002002748                __libc_fini_array
+                0x0000000002002778                __libc_init_array
+ .text          0x00000000020027cc       0x40 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+                0x00000000020027cc                _iprintf_r
+                0x00000000020027e8                iprintf
+ .text          0x000000000200280c       0x80 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+                0x000000000200280c                memcpy
+ .text          0x000000000200288c       0x94 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+                0x000000000200288c                memset
+ .text          0x0000000002002920      0x10c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+                0x0000000002002920                setvbuf
+ .text          0x0000000002002a2c       0xa4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+                0x0000000002002a30                _siscanf_r
+                0x0000000002002a80                siscanf
+ .text          0x0000000002002ad0       0x6c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+                0x0000000002002ad0                strlen
+ .text          0x0000000002002b3c      0xa6c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+                0x0000000002002c10                __ssvfiscanf_r
+ .text          0x00000000020035a8      0x1a0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+                0x00000000020035a8                __submore
+                0x0000000002003624                _ungetc_r
+                0x000000000200372c                ungetc
+ .text          0x0000000002003748      0xd48 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+                0x0000000002003768                _vfiprintf_r
+                0x0000000002004470                vfiprintf
+ .text          0x0000000002004490       0x64 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+                0x0000000002004490                _wcrtomb_r
+                0x00000000020044d4                wcrtomb
+ .text          0x00000000020044f4      0x104 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+                0x00000000020044f4                _wcsrtombs_r
+                0x00000000020045d0                wcsrtombs
+ .text          0x00000000020045f8      0x2c8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+                0x00000000020045f8                _wctomb_r
+ .text          0x00000000020048c0       0xd0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+                0x00000000020048c0                __swsetup_r
+ .text          0x0000000002004990        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+ .text          0x0000000002004990      0x148 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+                0x0000000002004990                _fflush_r
+                0x0000000002004aa4                fflush
+ .text          0x0000000002004ad8      0x1e0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+                0x0000000002004ad8                __sfp_lock_acquire
+                0x0000000002004adc                __sfp_lock_release
+                0x0000000002004ae0                __sinit_lock_acquire
+                0x0000000002004ae4                __sinit_lock_release
+                0x0000000002004af0                __fp_unlock_all
+                0x0000000002004b0c                __fp_lock_all
+                0x0000000002004b28                _cleanup_r
+                0x0000000002004b3c                _cleanup
+                0x0000000002004b9c                __sinit
+                0x0000000002004bf8                __sfmoreglue
+                0x0000000002004c28                __sfp
+ .text          0x0000000002004cb8      0x250 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+                0x0000000002004cb8                _malloc_trim_r
+                0x0000000002004d5c                _free_r
+ .text          0x0000000002004f08      0x318 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+                0x0000000002004f08                __sfvwrite_r
+ .text          0x0000000002005220       0xc4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+                0x0000000002005220                _fwalk_reent
+                0x0000000002005284                _fwalk
+ .text          0x00000000020052e4       0xe8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+                0x00000000020052e4                iswspace
+ .text          0x00000000020053cc      0x190 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+                0x00000000020053cc                __jp2uc
+ .text          0x000000000200555c      0x28c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+                0x000000000200555c                __locale_charset
+                0x0000000002005568                _localeconv_r
+                0x0000000002005570                localeconv
+                0x0000000002005578                _setlocale_r
+                0x00000000020057cc                setlocale
+ .text          0x00000000020057e8       0xe8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+                0x00000000020057e8                __smakebuf_r
+ .text          0x00000000020058d0       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+                0x00000000020058d0                free
+                0x00000000020058e8                malloc
+ .text          0x0000000002005900      0x504 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+                0x0000000002005900                _malloc_r
+ .text          0x0000000002005e04       0x70 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+                0x0000000002005e04                _mbrtowc_r
+                0x0000000002005e4c                mbrtowc
+ .text          0x0000000002005e74      0x660 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+                0x0000000002005e74                _mbtowc_r
+ .text          0x00000000020064d4       0x80 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+                0x00000000020064d4                memchr
+ .text          0x0000000002006554       0xa0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+                0x0000000002006554                memmove
+ .text          0x00000000020065f4        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+                0x00000000020065f4                __malloc_lock
+                0x00000000020065f8                __malloc_unlock
+ .text          0x00000000020065fc      0x354 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+                0x00000000020065fc                _realloc_r
+ .text          0x0000000002006950       0x78 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+                0x0000000002006950                __sccl
+ .text          0x00000000020069c8       0xa8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+                0x00000000020069c8                __sclose
+                0x00000000020069d8                __sseek
+                0x0000000002006a08                __swrite
+                0x0000000002006a44                __sread
+ .text          0x0000000002006a70       0x5c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+                0x0000000002006a70                strcmp
+ .text          0x0000000002006acc       0x4c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+                0x0000000002006acc                strcpy
+ .text          0x0000000002006b18      0x190 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+                0x0000000002006b18                _strtol_r
+                0x0000000002006c88                strtol
+ .text          0x0000000002006ca8      0x17c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+                0x0000000002006ca8                _strtoul_r
+                0x0000000002006e04                strtoul
+ .text          0x0000000002006e24       0xc0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+                0x0000000002006e24                _fclose_r
+                0x0000000002006ec8                fclose
+ .text          0x0000000002006ee4      0x144 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+                0x0000000002006ee4                setDefaultDevice
+                0x0000000002006ef8                AddDevice
+                0x0000000002006f74                FindDevice
+                0x0000000002006fe4                GetDeviceOpTab
+                0x0000000002007004                RemoveDevice
+ .text          0x0000000002007028       0x50 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+                0x0000000002007028                _close_r
+ .text          0x0000000002007078       0x58 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+                0x0000000002007078                _fstat_r
+ .text          0x00000000020070d0        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+                0x00000000020070d0                _isatty_r
+ .text          0x00000000020070d4       0x50 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+                0x00000000020070d4                _lseek_r
+ .text          0x0000000002007124       0x50 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+                0x0000000002007124                _read_r
+ .text          0x0000000002007174       0x54 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+                0x0000000002007174                _sbrk_r
+ .text          0x00000000020071c8       0x48 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+                0x00000000020071c8                _times_r
+                0x00000000020071d0                _gettimeofday_r
+                0x00000000020071fc                _times
+ .text          0x0000000002007210       0x50 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+                0x0000000002007210                _write_r
+ .text          0x0000000002007260        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+ .text          0x0000000002007260       0x54 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+                0x0000000002007260                build_argv
+ .text          0x00000000020072b4       0x88 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+                0x00000000020072b4                __get_handle
+                0x00000000020072d4                __alloc_handle
+                0x0000000002007310                __release_handle
+ .text          0x000000000200733c       0x8c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o)
+                0x000000000200733c                __udivsi3
+                0x000000000200733c                __aeabi_uidiv
+                0x00000000020073b8                __aeabi_uidivmod
+ .text          0x00000000020073c8        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_dvmd_tls.o)
+                0x00000000020073c8                __aeabi_ldiv0
+                0x00000000020073c8                __div0
+                0x00000000020073c8                __aeabi_idiv0
+ .text          0x00000000020073cc        0xc /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+                0x00000000020073cc                __errno
+ .text          0x00000000020073d8       0xd4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+                0x00000000020073d8                strchr
+ .text          0x00000000020074ac       0xac /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+                0x00000000020074ac                strncmp
+ .text          0x0000000002007558        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+ .text          0x0000000002007558        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+ *(.text.*)
+ *(.stub)
+ *(.gnu.warning)
+ *(.gnu.linkonce.t*)
+ *(.glue_7)
+ .glue_7        0x0000000000000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0000000000000000        0x0 linker stubs
+                0x0000000002007558                . = ALIGN (0x4)
+
+.vfp11_veneer   0x0000000000000000        0x0 load address 0x0000000002007558
+ .vfp11_veneer  0x0000000000000000        0x0 linker stubs
+
+.v4_bx          0x0000000000000000        0x0 load address 0x0000000002007558
+ .v4_bx         0x0000000000000000        0x0 linker stubs
+
+.fini           0x0000000002007558        0xc
+ *(.fini)
+ .fini          0x0000000002007558        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+                0x0000000002007558                _fini
+ .fini          0x000000000200755c        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+                0x0000000002007564                __text_end = .
+
+.rodata         0x0000000002007564     0x5ef4
+ *(.rodata)
+ .rodata        0x0000000002007564      0x18c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .rodata        0x00000000020076f0     0x2004 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+                0x00000000020076f0                default_font_bin
+                0x00000000020096f0                default_font_bin_end
+                0x00000000020096f0                default_font_bin_size
+ .rodata        0x00000000020096f4        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+                0x00000000020096f4                _global_impure_ptr
+ .rodata        0x00000000020096f8      0x340 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+ .rodata        0x0000000002009a38      0x184 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+ .rodata        0x0000000002009bbc      0x104 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+                0x0000000002009bbc                _ctype_
+ .rodata        0x0000000002009cc0     0x34f0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+ .rodata        0x000000000200d1b0       0xb8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+ .rodata        0x000000000200d268       0xa8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ .rodata        0x000000000200d310       0x5c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+                0x000000000200d310                dotab_stdnull
+ *all.rodata*(*)
+ *(.roda)
+ *(.rodata.*)
+ .rodata.str1.4
+                0x000000000200d36c        0xd main.o
+                                         0x10 (size before relaxing)
+ *fill*         0x000000000200d379        0x3 ff
+ .rodata.str1.4
+                0x000000000200d37c       0x44 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .rodata.str1.4
+                0x000000000200d3c0        0x2 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+                                          0x4 (size before relaxing)
+ *fill*         0x000000000200d3c2        0x2 ff
+ .rodata.str1.4
+                0x000000000200d3c4       0x2f /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+                                         0x30 (size before relaxing)
+ *fill*         0x000000000200d3f3        0x1 ff
+ .rodata.str1.4
+                0x000000000200d3f4       0x1e /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+                                         0x20 (size before relaxing)
+ .rodata.str1.4
+                0x0000000000000000       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+ *fill*         0x000000000200d412        0x2 ff
+ .rodata.str1.4
+                0x000000000200d414       0x3a /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+                                         0x64 (size before relaxing)
+ .rodata.str1.4
+                0x0000000000000000        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+ .rodata.str1.4
+                0x0000000000000000       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ *fill*         0x000000000200d44e        0x2 ff
+ .rodata.str1.4
+                0x000000000200d450        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+ *(.gnu.linkonce.r*)
+                0x000000000200d458                . = ALIGN (0x4)
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x000000000200d458                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x000000000200d458                __exidx_end = .
+                0x000000000200d458                . = ALIGN (0x4)
+                0x000000000200d458                PROVIDE (__preinit_array_start, .)
+
+.preinit_array
+ *(.preinit_array)
+                0x000000000200d458                PROVIDE (__preinit_array_end, .)
+                0x000000000200d458                PROVIDE (__init_array_start, .)
+
+.init_array     0x000000000200d458        0x4
+ *(.init_array)
+ .init_array    0x000000000200d458        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+                0x000000000200d45c                PROVIDE (__init_array_end, .)
+                0x000000000200d45c                PROVIDE (__fini_array_start, .)
+
+.fini_array     0x000000000200d45c        0x4
+ *(.fini_array)
+ .fini_array    0x000000000200d45c        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+                0x000000000200d460                PROVIDE (__fini_array_end, .)
+
+.ctors          0x000000000200d460        0x0
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+                0x000000000200d460                . = ALIGN (0x4)
+
+.dtors          0x000000000200d460        0x0
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+                0x000000000200d460                . = ALIGN (0x4)
+
+.eh_frame       0x000000000200d460        0x4
+ *(.eh_frame)
+ .eh_frame      0x000000000200d460        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+ .eh_frame      0x000000000200d460        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+                0x000000000200d464                . = ALIGN (0x4)
+
+.gcc_except_table
+                0x000000000200d464        0x0
+ *(.gcc_except_table)
+                0x000000000200d464                . = ALIGN (0x4)
+
+.jcr            0x000000000200d464        0x4
+ *(.jcr)
+ .jcr           0x000000000200d464        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+ .jcr           0x000000000200d464        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+
+.got
+ *(.got.plt)
+ *(.got)
+ *(.rel.got)
+
+.ewram          0x000000000200d468        0x0
+                0x000000000200d468                __ewram_start = ABSOLUTE (.)
+ *(.ewram)
+ *ewram.*(.text)
+                0x000000000200d468                . = ALIGN (0x4)
+
+.data           0x000000000200d468      0xca4
+                0x000000000200d468                __data_start = ABSOLUTE (.)
+ *(.data)
+ .data          0x000000000200d468        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+ .data          0x000000000200d468        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+ .data          0x000000000200d468        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+                0x000000000200d468                __dso_handle
+ .data          0x000000000200d46c        0x0 main.o
+ .data          0x000000000200d46c       0x64 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+                0x000000000200d46c                defaultConsole
+                0x000000000200d4c8                currentConsole
+ .data          0x000000000200d4d0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .data          0x000000000200d4d0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .data          0x000000000200d4d0       0x10 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                0x000000000200d4d0                fifo_freewords
+                0x000000000200d4d4                fifo_send_queue
+                0x000000000200d4d8                fifo_buffer_free
+                0x000000000200d4dc                fifo_receive_queue
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .data          0x000000000200d4e0        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+ .data          0x000000000200d4e0       0x60 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x000000000200d4e0                bgScrollTable
+                0x000000000200d500                bgTransform
+                0x000000000200d520                bgControl
+ .data          0x000000000200d540        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .data          0x000000000200d540      0x308 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+                0x000000000200d540                SIN_LUT
+                0x000000000200d644                TAN_LUT
+ .data          0x000000000200d848        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+ .data          0x000000000200d848      0x430 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+                0x000000000200d848                _impure_ptr
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+ .data          0x000000000200dc78        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+ .data          0x000000000200dc78        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+                0x000000000200dc78                __ctype_ptr
+                0x000000000200dc7c                __ctype_ptr__
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+ .data          0x000000000200dc80        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+ .data          0x000000000200dc80       0x38 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+                0x000000000200dc90                __lc_ctype
+                0x000000000200dcb4                __mb_cur_max
+ .data          0x000000000200dcb8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+ .data          0x000000000200dcb8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+ .data          0x000000000200dcb8      0x410 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+                0x000000000200dcb8                __malloc_av_
+                0x000000000200e0c0                __malloc_sbrk_base
+                0x000000000200e0c4                __malloc_trim_threshold
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+ .data          0x000000000200e0c8        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+ .data          0x000000000200e0c8       0x44 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+                0x000000000200e0cc                devoptab_list
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_dvmd_tls.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+ .data          0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+ *(.data.*)
+ *(.gnu.linkonce.d*)
+                0x000000000200e10c                . = ALIGN (0x4)
+                0x000000000200e10c                __data_end = ABSOLUTE (.)
+                0x000000000200e10c                __dtcm_lma = .
+                0x000000000200e10c                __bss_vma = .
+
+.dtcm           0x000000000b000000        0x0 load address 0x000000000200e10c
+ *(.dtcm)
+ *(.dtcm.*)
+                0x000000000b000000                . = ALIGN (0x4)
+                0x000000000b000000                __dtcm_end = ABSOLUTE (.)
+                0x000000000200e10c                __itcm_lma = (__dtcm_lma + SIZEOF (.dtcm))
+
+.itcm           0x0000000001000100      0x190 load address 0x000000000200e10c
+ *(.itcm)
+ .itcm          0x0000000001000100       0xc8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+                0x0000000001000100                irqTable
+ .itcm          0x00000000010001c8       0xc8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+                0x00000000010001c8                IntrMain
+ *itcm.*(.text)
+                0x0000000001000290                . = ALIGN (0x4)
+                0x0000000001000290                __itcm_end = ABSOLUTE (.)
+                0x000000000200e29c                __vectors_lma = (__itcm_lma + SIZEOF (.itcm))
+
+.vectors        0x0000000001000000        0x0 load address 0x000000000200e29c
+ *(.vectors)
+ *vectors.*(.text)
+                0x0000000001000000                . = ALIGN (0x4)
+                0x0000000001000000                __vectors_end = ABSOLUTE (.)
+
+.sbss           0x000000000b000000        0x0
+                0x000000000b000000                __sbss_start = ABSOLUTE (.)
+                0x000000000b000000                __sbss_start__ = ABSOLUTE (.)
+ *(.sbss)
+                0x000000000b000000                . = ALIGN (0x4)
+                0x000000000b000000                __sbss_end = ABSOLUTE (.)
+
+.bss            0x000000000200e10c     0x1c5c
+                0x000000000200e10c                __bss_start = ABSOLUTE (.)
+                0x000000000200e10c                __bss_start__ = ABSOLUTE (.)
+ *(.dynbss)
+ *(.gnu.linkonce.b*)
+ *(.bss*)
+ .bss           0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+ .bss           0x000000000200e10c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+ .bss           0x000000000200e10c       0x1c /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+ .bss           0x000000000200e128        0x0 main.o
+ .bss           0x000000000200e128        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .bss           0x000000000200e128        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .bss           0x000000000200e128        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .bss           0x000000000200e128        0x8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                0x000000000200e12c                processing
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .bss           0x000000000200e130        0x0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+ .bss           0x000000000200e130        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+ .bss           0x000000000200e130        0xc /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+                0x000000000200e130                __nlocale_changed
+                0x000000000200e134                __mlocale_changed
+                0x000000000200e138                _PathLocale
+ .bss           0x000000000200e13c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+ .bss           0x000000000200e13c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+ .bss           0x000000000200e13c       0x34 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+                0x000000000200e13c                __malloc_top_pad
+                0x000000000200e140                __malloc_current_mallinfo
+                0x000000000200e168                __malloc_max_sbrked_mem
+                0x000000000200e16c                __malloc_max_total_mem
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+ .bss           0x000000000200e170        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+ .bss           0x000000000200e170        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+ .bss           0x000000000200e174        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+ .bss           0x000000000200e174        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+ .bss           0x000000000200e174        0x8 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+                0x000000000200e174                fake_heap_end
+                0x000000000200e178                fake_heap_start
+ .bss           0x000000000200e17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+ .bss           0x000000000200e17c     0x1000 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_dvmd_tls.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+ .bss           0x000000000200f17c        0x0 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+ *(COMMON)
+ COMMON         0x000000000200f17c       0x5c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+                0x000000000200f17c                currentCopy
+ COMMON         0x000000000200f1d8        0x4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+                0x000000000200f1d8                theTime
+ COMMON         0x000000000200f1dc      0xa40 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                0x000000000200f1dc                fifo_datamsg_data
+                0x000000000200f21c                fifo_buffer
+                0x000000000200fa1c                fifo_value32_func
+                0x000000000200fa5c                fifo_address_func
+                0x000000000200fa9c                fifo_value32_data
+                0x000000000200fadc                fifo_value32_queue
+                0x000000000200fb1c                fifo_data_queue
+                0x000000000200fb5c                fifo_address_data
+                0x000000000200fb9c                fifo_datamsg_func
+                0x000000000200fbdc                fifo_address_queue
+ COMMON         0x000000000200fc1c      0x148 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+                0x000000000200fc1c                bgState
+                0x000000000200fd5c                bgIsTextLut
+ COMMON         0x000000000200fd64        0x4 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+                0x000000000200fd64                punixTime
+                0x000000000200fd68                . = ALIGN (0x4)
+                0x000000000200fd68                __bss_end = ABSOLUTE (.)
+                0x000000000200fd68                __bss_end__ = __bss_end
+                0x000000000200fd68                _end = __bss_end__
+                0x000000000200fd68                __end__ = __bss_end__
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.ARM.attributes
+                0x0000000000000000       0x2d load address 0x000000000200e10c
+ .ARM.attributes
+                0x0000000000000000       0x21 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+ .ARM.attributes
+                0x0000000000000021       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+ .ARM.attributes
+                0x0000000000000041       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+ .ARM.attributes
+                0x0000000000000071       0x27 main.o
+ .ARM.attributes
+                0x0000000000000098       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .ARM.attributes
+                0x00000000000000bf       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .ARM.attributes
+                0x00000000000000e6       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .ARM.attributes
+                0x000000000000010d       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .ARM.attributes
+                0x0000000000000134       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .ARM.attributes
+                0x000000000000015b       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .ARM.attributes
+                0x0000000000000182       0x21 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .ARM.attributes
+                0x00000000000001a3       0x1b /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .ARM.attributes
+                0x00000000000001be       0x1b /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .ARM.attributes
+                0x00000000000001d9       0x1b /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .ARM.attributes
+                0x00000000000001f4       0x14 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(default_font.bin.o)
+ .ARM.attributes
+                0x0000000000000208       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .ARM.attributes
+                0x000000000000022f       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .ARM.attributes
+                0x0000000000000256       0x27 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+ .ARM.attributes
+                0x000000000000027d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+ .ARM.attributes
+                0x00000000000002ad       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+ .ARM.attributes
+                0x00000000000002dd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+ .ARM.attributes
+                0x000000000000030d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+ .ARM.attributes
+                0x000000000000033d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+ .ARM.attributes
+                0x000000000000036d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+ .ARM.attributes
+                0x000000000000039d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+ .ARM.attributes
+                0x00000000000003cd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+ .ARM.attributes
+                0x00000000000003fd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x000000000000042d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+ .ARM.attributes
+                0x000000000000045d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+ .ARM.attributes
+                0x000000000000048d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+ .ARM.attributes
+                0x00000000000004bd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+ .ARM.attributes
+                0x00000000000004ed       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+ .ARM.attributes
+                0x000000000000051d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+ .ARM.attributes
+                0x000000000000054d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+ .ARM.attributes
+                0x000000000000057d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+ .ARM.attributes
+                0x00000000000005ad       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+ .ARM.attributes
+                0x00000000000005dd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+ .ARM.attributes
+                0x000000000000060d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+ .ARM.attributes
+                0x000000000000063d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+ .ARM.attributes
+                0x000000000000066d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+ .ARM.attributes
+                0x000000000000069d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+ .ARM.attributes
+                0x00000000000006cd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+ .ARM.attributes
+                0x00000000000006fd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+ .ARM.attributes
+                0x000000000000072d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+ .ARM.attributes
+                0x000000000000075d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+ .ARM.attributes
+                0x000000000000078d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+ .ARM.attributes
+                0x00000000000007bd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+ .ARM.attributes
+                0x00000000000007ed       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ .ARM.attributes
+                0x000000000000081d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+ .ARM.attributes
+                0x000000000000084d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+ .ARM.attributes
+                0x000000000000087d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+ .ARM.attributes
+                0x00000000000008ad       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+ .ARM.attributes
+                0x00000000000008dd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+ .ARM.attributes
+                0x000000000000090d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+ .ARM.attributes
+                0x000000000000093d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+ .ARM.attributes
+                0x000000000000096d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+ .ARM.attributes
+                0x000000000000099d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+ .ARM.attributes
+                0x00000000000009cd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+ .ARM.attributes
+                0x00000000000009fd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+ .ARM.attributes
+                0x0000000000000a2d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+ .ARM.attributes
+                0x0000000000000a5d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+ .ARM.attributes
+                0x0000000000000a8d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+ .ARM.attributes
+                0x0000000000000abd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+ .ARM.attributes
+                0x0000000000000aed       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+ .ARM.attributes
+                0x0000000000000b1d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+ .ARM.attributes
+                0x0000000000000b4d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+ .ARM.attributes
+                0x0000000000000b7d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+ .ARM.attributes
+                0x0000000000000bad       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+ .ARM.attributes
+                0x0000000000000bdd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+ .ARM.attributes
+                0x0000000000000c0d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+ .ARM.attributes
+                0x0000000000000c3d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+ .ARM.attributes
+                0x0000000000000c6d       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x0000000000000c8d       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x0000000000000cad       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+ .ARM.attributes
+                0x0000000000000cdd       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+ .ARM.attributes
+                0x0000000000000d0d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+ .ARM.attributes
+                0x0000000000000d3d       0x30 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+ .ARM.attributes
+                0x0000000000000d6d       0x20 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+
+.comment        0x0000000000000000       0x22 load address 0x000000000200e10c
+ *(.comment)
+ .comment       0x0000000000000000       0x22 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+                                         0x23 (size before relaxing)
+ .comment       0x0000000000000000       0x23 main.o
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .comment       0x0000000000000000       0x23 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-bsearch.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-impure.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-init.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iprintf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memcpy.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memset.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-setvbuf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-siscanf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strlen.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-svfiscanf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ungetc.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-vfiprintf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcrtomb.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wcsrtombs.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wctomb_r.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-wsetup.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-ctype_.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fflush.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-findfp.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-freer.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fvwrite.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fwalk.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-iswspace.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-jp2uc.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-locale.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-makebuf.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-malloc.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mallocr.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbrtowc.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mbtowc_r.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memchr.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-memmove.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-mlock.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-reallocr.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-sccl.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-stdio.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strcpy.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtol.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strtoul.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-fclose.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(iosupport.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(close.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(fstat.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(isatty.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(lseek.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(read.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(sbrk.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(times.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(write.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(malloc_vars.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(build_argv.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a(handle_manager.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-errno.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strchr.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a(lib_a-strncmp.o)
+ .comment       0x0000000000000000       0x23 /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x1c0 load address 0x000000000200e10c
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x20 main.o
+ .debug_aranges
+                0x0000000000000020       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_aranges
+                0x0000000000000040       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_aranges
+                0x0000000000000060       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_aranges
+                0x0000000000000080       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_aranges
+                0x00000000000000a0       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_aranges
+                0x00000000000000c0       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_aranges
+                0x00000000000000e0       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_aranges
+                0x0000000000000100       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_aranges
+                0x0000000000000120       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .debug_aranges
+                0x0000000000000140       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_aranges
+                0x0000000000000160       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_aranges
+                0x0000000000000180       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_aranges
+                0x00000000000001a0       0x20 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_pubnames
+                0x0000000000000000      0x711 load address 0x000000000200e10c
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x0000000000000000       0x1b main.o
+ .debug_pubnames
+                0x000000000000001b      0x12a /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_pubnames
+                0x0000000000000145       0xeb /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_pubnames
+                0x0000000000000230       0x2d /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_pubnames
+                0x000000000000025d      0x259 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_pubnames
+                0x00000000000004b6       0x80 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_pubnames
+                0x0000000000000536       0x24 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_pubnames
+                0x000000000000055a       0xab /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_pubnames
+                0x0000000000000605       0x73 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_pubnames
+                0x0000000000000678       0x99 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_info     0x0000000000000000     0x5310 load address 0x000000000200e10c
+ *(.debug_info)
+ .debug_info    0x0000000000000000      0x343 main.o
+ .debug_info    0x0000000000000343     0x1dd3 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_info    0x0000000000002116      0x5ad /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_info    0x00000000000026c3      0x416 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_info    0x0000000000002ad9      0xf89 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_info    0x0000000000003a62      0x340 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_info    0x0000000000003da2       0x4f /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_info    0x0000000000003df1       0xc8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_info    0x0000000000003eb9       0xc3 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_info    0x0000000000003f7c       0xc4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .debug_info    0x0000000000004040       0xcd /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_info    0x000000000000410d      0x883 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_info    0x0000000000004990      0x5c7 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_info    0x0000000000004f57      0x3b9 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_abbrev   0x0000000000000000     0x11f6 load address 0x000000000200e10c
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000      0x131 main.o
+ .debug_abbrev  0x0000000000000131      0x3fe /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_abbrev  0x000000000000052f       0xfc /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_abbrev  0x000000000000062b      0x15f /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_abbrev  0x000000000000078a      0x322 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_abbrev  0x0000000000000aac      0x170 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_abbrev  0x0000000000000c1c       0x43 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_abbrev  0x0000000000000c5f       0x14 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_abbrev  0x0000000000000c73       0x14 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_abbrev  0x0000000000000c87       0x14 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .debug_abbrev  0x0000000000000c9b       0x14 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_abbrev  0x0000000000000caf      0x25e /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_abbrev  0x0000000000000f0d      0x17c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_abbrev  0x0000000000001089      0x16d /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_line     0x0000000000000000     0x1ec9 load address 0x000000000200e10c
+ *(.debug_line)
+ .debug_line    0x0000000000000000      0x1b8 main.o
+ .debug_line    0x00000000000001b8      0x6c7 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_line    0x000000000000087f      0x1ce /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_line    0x0000000000000a4d      0x2d8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_line    0x0000000000000d25      0x5db /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_line    0x0000000000001300      0x1b5 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_line    0x00000000000014b5       0x88 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_line    0x000000000000153d       0xeb /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_line    0x0000000000001628       0xc3 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_line    0x00000000000016eb       0x96 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(debugprint.o)
+ .debug_line    0x0000000000001781       0xc1 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_line    0x0000000000001842      0x28b /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_line    0x0000000000001acd      0x25c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_line    0x0000000000001d29      0x1a0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_frame    0x0000000000000000      0x944 load address 0x000000000200e10c
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000       0x2c main.o
+ .debug_frame   0x000000000000002c      0x1e4 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_frame   0x0000000000000210       0xec /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_frame   0x00000000000002fc       0x30 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_frame   0x000000000000032c      0x2bc /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_frame   0x00000000000005e8       0xc0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_frame   0x00000000000006a8       0x28 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_frame   0x00000000000006d0       0xcc /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_frame   0x000000000000079c       0xb8 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_frame   0x0000000000000854       0xf0 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_str      0x0000000000000000     0x295f load address 0x000000000200e10c
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x217 main.o
+                                        0x26b (size before relaxing)
+ .debug_str     0x0000000000000217      0xddd /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+                                        0xfbd (size before relaxing)
+ .debug_str     0x0000000000000ff4      0x908 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+                                        0xae5 (size before relaxing)
+ .debug_str     0x00000000000018fc      0x37d /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+                                        0x48a (size before relaxing)
+ .debug_str     0x0000000000001c79      0x53d /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+                                        0x728 (size before relaxing)
+ .debug_str     0x00000000000021b6      0x13d /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+                                        0x325 (size before relaxing)
+ .debug_str     0x00000000000022f3       0x69 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+                                         0x75 (size before relaxing)
+ .debug_str     0x000000000000235c      0x306 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+                                        0x667 (size before relaxing)
+ .debug_str     0x0000000000002662      0x23c /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+                                        0x444 (size before relaxing)
+ .debug_str     0x000000000000289e       0xc1 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+                                        0x197 (size before relaxing)
+
+.debug_loc      0x0000000000000000     0x241a load address 0x000000000200e10c
+ *(.debug_loc)
+ .debug_loc     0x0000000000000000       0x1f main.o
+ .debug_loc     0x000000000000001f      0xd40 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_loc     0x0000000000000d5f       0xb3 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(video.o)
+ .debug_loc     0x0000000000000e12       0x32 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_loc     0x0000000000000e44      0xc17 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_loc     0x0000000000001a5b      0x145 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_loc     0x0000000000001ba0       0x1f /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(libnds_exit.o)
+ .debug_loc     0x0000000000001bbf      0x29b /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_loc     0x0000000000001e5a      0x177 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(system.o)
+ .debug_loc     0x0000000000001fd1      0x449 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.stack          0x0000000000080000        0x0 load address 0x000000000200e10c
+                0x0000000000080000                _stack = .
+ *(.stack)
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/ds_arm9_crt0.o
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crti.o
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtbegin.o
+LOAD main.o
+LOAD /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a
+START GROUP
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/libgcc.a
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libg.a
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libc.a
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/../../../../arm-eabi/lib/thumb/libsysbase.a
+END GROUP
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtend.o
+LOAD /Users/PSUbackup/30783/Code/zoidbergengine/devkitpro/devkitARM/bin/../lib/gcc/arm-eabi/4.4.2/thumb/crtn.o
+OUTPUT(/Users/PSUbackup/30783/Code/zoidbergengine/bin/zoidbergengine.elf elf32-littlearm)
+
+.debug_ranges   0x0000000000000000      0x6f8 load address 0x000000000200e10c
+ .debug_ranges  0x0000000000000000      0x238 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(console.o)
+ .debug_ranges  0x0000000000000238      0x418 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_ranges  0x0000000000000650       0x78 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(background.o)
+ .debug_ranges  0x00000000000006c8       0x30 /Users/guest/Code/zoidbergengine/devkitpro/libnds/lib/libnds9.a(trig.o)
