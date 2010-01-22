@@ -1,1 +1,22 @@
-This repository will contain the source for the zoidberg engine. I'm just making sure all my git stuff works right now.
+This is the root directory for the git repository of the zoidberg
+engine. 
+
+In this directory:
+  README            This file
+  LICENSE           A copy of the license for the zoidberg engine 
+                       (GPL v3)
+  devkitpro/        A folder containing a full install of the 
+                       devkitPRO toolchain for linux x64. The code::
+                       blocks project file references this folder
+                       directly.
+  src/              The straight IDE-independent source code for the
+                       zoidberg engine. You will eventually find the
+                       full code used by the engine along with a
+                       working makefile to build it all
+  vs_project        A working visual studio 2008 project and its
+                       files. This references C:\devkitpro
+  cb_project_linux  A working code::block project and its files for
+                       development in Linux, references ./devkitpro
+  cb_project_win    A working code::blocks project and its files for
+                       development in Windows, references 
+                       C:\devkitpro
