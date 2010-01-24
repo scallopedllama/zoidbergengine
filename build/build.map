@@ -1,0 +1,204 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ddmem            0xbf800000         0x00008000
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD c:/devkitPro/libnds/lib\libnds7.a
+
+.init           0xbf800000        0x0
+                0xbf800000                __text_start = .
+ *(.init)
+                0xbf800000                . = ALIGN (0x4)
+
+.text           0xbf800000        0x0
+ *(.text.*)
+ *(.stub)
+ *(.gnu.warning)
+ *(.gnu.linkonce.t*)
+                0xbf800000                __glue_start = ABSOLUTE (.)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+                0xbf800000                __glue_end = ABSOLUTE (.)
+                0xbf800000                . = ALIGN (0x4)
+
+.vfp11_veneer   0x00000000        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00000000        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.fini           0xbf800000        0x0
+ *(.fini)
+                0xbf800000                . = ALIGN (0x4)
+                0xbf800000                __text_end = .
+
+.rodata         0xbf800000        0x0
+ *(.rodata)
+ *all.rodata*(*)
+ *(.roda)
+ *(.rodata.*)
+ *(.gnu.linkonce.r*)
+                0xbf800000                . = ALIGN (0x4)
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0xbf800000                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0xbf800000                __exidx_end = .
+                0xbf800000                . = ALIGN (0x4)
+                0xbf800000                PROVIDE (__preinit_array_start, .)
+
+.preinit_array
+ *(.preinit_array)
+                0xbf800000                PROVIDE (__preinit_array_end, .)
+                0xbf800000                PROVIDE (__init_array_start, .)
+
+.init_array
+ *(.init_array)
+                0xbf800000                PROVIDE (__init_array_end, .)
+                0xbf800000                PROVIDE (__fini_array_start, .)
+
+.fini_array
+ *(.fini_array)
+                0xbf800000                PROVIDE (__fini_array_end, .)
+
+.ctors          0xbf800000        0x0
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+                0xbf800000                . = ALIGN (0x4)
+
+.dtors          0xbf800000        0x0
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+                0xbf800000                . = ALIGN (0x4)
+
+.eh_frame       0xbf800000        0x0
+ *(.eh_frame)
+                0xbf800000                . = ALIGN (0x4)
+
+.gcc_except_table
+                0xbf800000        0x0
+ *(.gcc_except_table)
+                0xbf800000                . = ALIGN (0x4)
+
+.jcr
+ *(.jcr)
+                0xbf800000                __got_start = .
+
+.got
+ *(.got.plt)
+ *(.got)
+ *(.rel.got)
+                0xbf800000                __got_end = .
+
+.data           0xbf800000        0x0
+                0xbf800000                __data_start = ABSOLUTE (.)
+ *(.data)
+ *(.data.*)
+ *(.gnu.linkonce.d*)
+                0xbf800000                . = ALIGN (0x4)
+                0xbf800000                __data_end = ABSOLUTE (.)
+                0xbf800000                __data_end = .
+
+.bss            0xbf800000        0x0
+                0xbf800000                __bss_start = ABSOLUTE (.)
+                0xbf800000                __bss_start__ = ABSOLUTE (.)
+ *(.dynbss)
+ *(.gnu.linkonce.b*)
+ *(.bss*)
+ *(COMMON)
+                0xbf800000                . = ALIGN (0x4)
+                0xbf800000                __bss_end = .
+                0xbf800000                __bss_end__ = .
+                0xbf800000                _end = .
+                0xbf800000                __end__ = .
+                0xbf800000                PROVIDE (end, _end)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.stack          0x00080000        0x0
+                0x00080000                _stack = .
+ *(.stack)
+OUTPUT(c:/code/zoidbergengine/zoidbergengine.elf elf32-littlearm)
