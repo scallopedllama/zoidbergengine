@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="zoidbergengine"
+	ProjectGUID="{B0B55943-27B1-4B89-AB53-899B19ABC047}"
+	Keyword="MakeFileProj"
+	TargetFrameworkVersion="196613"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="make -C ../.. -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;"
+				ReBuildCommandLine=""
+				CleanCommandLine="make -C ../.. clean"
+				Output="../../bin/zoidbergengine.nds"
+				PreprocessorDefinitions="WIN32;_DEBUG"
+				IncludeSearchPath="“c:\devkitPro\libnds\include”;”$(ProjectDir)\..\source\arm7\include”;”$(ProjectDir)\..\source\arm9\include”;"
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="make -C .. -r 2&gt;&amp;1 | sed -e &apos;s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/&apos;"
+				ReBuildCommandLine=""
+				CleanCommandLine="make -C .. clean"
+				Output="../bin/zoidbergengine.nds"
+				PreprocessorDefinitions="WIN32;NDEBUG"
+				IncludeSearchPath="“c:\devkitPro\libnds\include”;”$(ProjectDir)\..\source\arm7\include”;”$(ProjectDir)\..\source\arm9\include”;"
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+		</Filter>
+		<Filter
+			Name="arm7"
+			>
+			<File
+				RelativePath="..\..\source\arm7\Makefile"
+				>
+			</File>
+			<Filter
+				Name="Source Files"
+				Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+				>
+				<File
+					RelativePath="..\..\source\arm7\source\main.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Header Files"
+				Filter="h;hpp;hxx;hm;inl;inc;xsd"
+				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+				>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="arm9"
+			>
+			<File
+				RelativePath="..\..\source\arm9\Makefile"
+				>
+			</File>
+			<Filter
+				Name="Header Files"
+				>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\source\arm9\source\main.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<File
+			RelativePath="..\..\Makefile"
+			>
+		</File>
+		<File
+			RelativePath="..\..\README"
+			>
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>
