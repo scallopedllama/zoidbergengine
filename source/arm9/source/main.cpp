@@ -25,10 +25,6 @@ int main(void) {
 
 	while(1) {
 
-		touchRead(&touch);
-		iprintf("\x1b[10;0HTouch x = %04i, %04i\n", touch.rawx, touch.px);
-		iprintf("Touch y = %04i, %04i\n", touch.rawy, touch.py);
-
 		swiWaitForVBlank();
 	}
 
