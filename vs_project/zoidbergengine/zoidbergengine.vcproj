@@ -28,7 +28,7 @@
 				CleanCommandLine="make -C ../.. clean"
 				Output="../../bin/zoidbergengine.nds"
 				PreprocessorDefinitions="WIN32;_DEBUG"
-				IncludeSearchPath="“c:\devkitPro\libnds\include”;”$(ProjectDir)\..\source\arm7\include”;”$(ProjectDir)\..\source\arm9\include”;"
+				IncludeSearchPath="“c:\devkitPro\libnds\include”;”$(ProjectDir)\..\..\source\arm7\include”;”$(ProjectDir)\..\..\source\arm9\include”;"
 				ForcedIncludes=""
 				AssemblySearchPath=""
 				ForcedUsingAssemblies=""
