@@ -10,8 +10,8 @@
 		<MakeCommands>
 			<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
 			<CompileFile command="" />
-			<Clean command="make -C .. clean" />
-			<DistClean command="make -C .. clean" />
+			<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+			<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 		</MakeCommands>
 		<Build>
 			<Target title="Debug">
@@ -19,7 +19,7 @@
 				<Option working_dir="../bin" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
-				<Option compiler="devkitpro" />
+				<Option compiler="gcc" />
 				<Option parameters="../bin/zoidbergengine.nds" />
 				<Option host_application="desmume" />
 				<Compiler>
@@ -28,8 +28,8 @@
 				<MakeCommands>
 					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
 					<CompileFile command="" />
-					<Clean command="make -C .. clean" />
-					<DistClean command="make -C .. clean" />
+					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 				</MakeCommands>
 			</Target>
 			<Target title="Release">
@@ -49,8 +49,8 @@
 				<MakeCommands>
 					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
 					<CompileFile command="" />
-					<Clean command="make -C .. clean" />
-					<DistClean command="make -C .. clean" />
+					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 				</MakeCommands>
 			</Target>
 		</Build>
