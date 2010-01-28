@@ -6,8 +6,7 @@
 		<Option makefile="../Makefile" />
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
-		<Option compiler="devkitarm" />
-		<Option virtualFolders="source/;headers/;" />
+		<Option compiler="devkitpro" />
 		<MakeCommands>
 			<Build command="" />
 			<CompileFile command="" />
@@ -20,7 +19,7 @@
 				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
 				<Option type="5" />
-				<Option compiler="devkitarm" />
+				<Option compiler="devkitpro" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -36,7 +35,7 @@
 				<Option working_dir="" />
 				<Option object_output="obj/Release/" />
 				<Option type="5" />
-				<Option compiler="devkitarm" />
+				<Option compiler="devkitpro" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
@@ -54,13 +53,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../source/main.c">
-			<Option compilerVar="CC" />
-			<Option virtualFolder="source/" />
-		</Unit>
+		<Unit filename="../source/arm7/Makefile" />
+		<Unit filename="../source/arm7/source/main.cpp" />
+		<Unit filename="../source/arm9/Makefile" />
+		<Unit filename="../source/arm9/source/main.cpp" />
 		<Extensions>
 			<code_completion>
-				<search_path add="../../../../../guest/Code/zoidbergengine/devkitpro/libnds/include" />
+				<search_path add="../devkitpro/libnds/include" />
 			</code_completion>
 			<debugger />
 		</Extensions>

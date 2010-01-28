@@ -1,142 +1,142 @@
-main.o: c:/code/zoidbergengine/source/arm9/source/main.cpp \
- c:/devkitPro/libnds/include/nds.h \
- c:/devkitPro/libnds/include/nds/libversion.h \
- c:/devkitPro/libnds/include/nds/ndstypes.h \
- c:/devkitPro/libnds/include/nds/bios.h \
- c:/devkitPro/libnds/include/nds/ndstypes.h \
- c:/devkitPro/libnds/include/nds/card.h \
- c:/devkitPro/libnds/include/nds/ndstypes.h \
- c:/devkitPro/libnds/include/nds/debug.h \
- c:/devkitPro/libnds/include/nds/dma.h \
- c:/devkitPro/libnds/include/nds/interrupts.h \
- c:/devkitPro/libnds/include/nds/ipc.h \
- c:/devkitPro/libnds/include/nds/memory.h \
- c:/devkitPro/libnds/include/nds/system.h \
- c:/devkitPro/libnds/include/nds/timers.h \
- c:/devkitPro/libnds/include/nds/linkedlist.h \
- c:/devkitPro/libnds/include/nds/fifocommon.h \
- c:/devkitPro/libnds/include/nds/touch.h \
- c:/devkitPro/libnds/include/nds/arm9/background.h \
- c:/devkitPro/libnds/include/nds/arm9/video.h \
- c:/devkitPro/libnds/include/nds/arm9/sassert.h \
- c:/devkitPro/libnds/include/nds/memory.h \
- c:/devkitPro/libnds/include/nds/dma.h \
- c:/devkitPro/libnds/include/nds/arm9/boxtest.h \
- c:/devkitPro/libnds/include/nds/arm9/videoGL.h \
- c:/devkitPro/libnds/include/nds/arm9/cache.h \
- c:/devkitPro/libnds/include/nds/arm9/trig_lut.h \
- c:/devkitPro/libnds/include/nds/arm9/math.h \
- c:/devkitPro/libnds/include/nds/dynamicArray.h \
- c:/devkitPro/libnds/include/nds/arm9/cache.h \
- c:/devkitPro/libnds/include/nds/arm9/console.h \
- c:/devkitPro/libnds/include/nds/arm9/background.h \
- c:/devkitPro/libnds/include/nds/arm9/keyboard.h \
- c:/devkitPro/libnds/include/nds/arm9/exceptions.h \
- c:/devkitPro/libnds/include/nds/arm9/image.h \
- c:/devkitPro/libnds/include/nds/arm9/pcx.h \
- c:/devkitPro/libnds/include/nds/arm9/input.h \
- c:/devkitPro/libnds/include/nds/touch.h \
- c:/devkitPro/libnds/include/nds/arm9/math.h \
- c:/devkitPro/libnds/include/nds/arm9/pcx.h \
- c:/devkitPro/libnds/include/nds/arm9/rumble.h \
- c:/devkitPro/libnds/include/nds/arm9/sound.h \
- c:/devkitPro/libnds/include/nds/arm9/trig_lut.h \
- c:/devkitPro/libnds/include/nds/arm9/video.h \
- c:/devkitPro/libnds/include/nds/arm9/videoGL.h \
- c:/devkitPro/libnds/include/nds/arm9/sprite.h \
- c:/devkitPro/libnds/include/nds/system.h \
- c:/devkitPro/libnds/include/nds/arm9/decompress.h
+main.o: /home/sl/Code/zoidbergengine/source/arm9/source/main.cpp \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/libversion.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/bios.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/card.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/debug.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dma.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/interrupts.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ipc.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/memory.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/system.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/timers.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/linkedlist.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/fifocommon.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/touch.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/background.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/video.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sassert.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/memory.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dma.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/boxtest.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/videoGL.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/cache.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/trig_lut.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/math.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dynamicArray.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/cache.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/console.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/background.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/keyboard.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/exceptions.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/image.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/pcx.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/input.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/touch.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/math.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/pcx.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/rumble.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sound.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/trig_lut.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/video.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/videoGL.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sprite.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/system.h \
+ /home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/decompress.h
 
-c:/devkitPro/libnds/include/nds.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds.h:
 
-c:/devkitPro/libnds/include/nds/libversion.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/libversion.h:
 
-c:/devkitPro/libnds/include/nds/ndstypes.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h:
 
-c:/devkitPro/libnds/include/nds/bios.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/bios.h:
 
-c:/devkitPro/libnds/include/nds/ndstypes.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h:
 
-c:/devkitPro/libnds/include/nds/card.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/card.h:
 
-c:/devkitPro/libnds/include/nds/ndstypes.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ndstypes.h:
 
-c:/devkitPro/libnds/include/nds/debug.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/debug.h:
 
-c:/devkitPro/libnds/include/nds/dma.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dma.h:
 
-c:/devkitPro/libnds/include/nds/interrupts.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/interrupts.h:
 
-c:/devkitPro/libnds/include/nds/ipc.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/ipc.h:
 
-c:/devkitPro/libnds/include/nds/memory.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/memory.h:
 
-c:/devkitPro/libnds/include/nds/system.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/system.h:
 
-c:/devkitPro/libnds/include/nds/timers.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/timers.h:
 
-c:/devkitPro/libnds/include/nds/linkedlist.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/linkedlist.h:
 
-c:/devkitPro/libnds/include/nds/fifocommon.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/fifocommon.h:
 
-c:/devkitPro/libnds/include/nds/touch.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/touch.h:
 
-c:/devkitPro/libnds/include/nds/arm9/background.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/background.h:
 
-c:/devkitPro/libnds/include/nds/arm9/video.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/video.h:
 
-c:/devkitPro/libnds/include/nds/arm9/sassert.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sassert.h:
 
-c:/devkitPro/libnds/include/nds/memory.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/memory.h:
 
-c:/devkitPro/libnds/include/nds/dma.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dma.h:
 
-c:/devkitPro/libnds/include/nds/arm9/boxtest.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/boxtest.h:
 
-c:/devkitPro/libnds/include/nds/arm9/videoGL.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/videoGL.h:
 
-c:/devkitPro/libnds/include/nds/arm9/cache.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/cache.h:
 
-c:/devkitPro/libnds/include/nds/arm9/trig_lut.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/trig_lut.h:
 
-c:/devkitPro/libnds/include/nds/arm9/math.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/math.h:
 
-c:/devkitPro/libnds/include/nds/dynamicArray.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/dynamicArray.h:
 
-c:/devkitPro/libnds/include/nds/arm9/cache.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/cache.h:
 
-c:/devkitPro/libnds/include/nds/arm9/console.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/console.h:
 
-c:/devkitPro/libnds/include/nds/arm9/background.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/background.h:
 
-c:/devkitPro/libnds/include/nds/arm9/keyboard.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/keyboard.h:
 
-c:/devkitPro/libnds/include/nds/arm9/exceptions.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/exceptions.h:
 
-c:/devkitPro/libnds/include/nds/arm9/image.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/image.h:
 
-c:/devkitPro/libnds/include/nds/arm9/pcx.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/pcx.h:
 
-c:/devkitPro/libnds/include/nds/arm9/input.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/input.h:
 
-c:/devkitPro/libnds/include/nds/touch.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/touch.h:
 
-c:/devkitPro/libnds/include/nds/arm9/math.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/math.h:
 
-c:/devkitPro/libnds/include/nds/arm9/pcx.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/pcx.h:
 
-c:/devkitPro/libnds/include/nds/arm9/rumble.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/rumble.h:
 
-c:/devkitPro/libnds/include/nds/arm9/sound.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sound.h:
 
-c:/devkitPro/libnds/include/nds/arm9/trig_lut.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/trig_lut.h:
 
-c:/devkitPro/libnds/include/nds/arm9/video.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/video.h:
 
-c:/devkitPro/libnds/include/nds/arm9/videoGL.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/videoGL.h:
 
-c:/devkitPro/libnds/include/nds/arm9/sprite.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/sprite.h:
 
-c:/devkitPro/libnds/include/nds/system.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/system.h:
 
-c:/devkitPro/libnds/include/nds/arm9/decompress.h:
+/home/sl/Code/zoidbergengine/devkitpro/libnds/include/nds/arm9/decompress.h:
