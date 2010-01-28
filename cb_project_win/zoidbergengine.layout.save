@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="../README" open="0" top="0" tabpos="0">
+		<Cursor position="930" topLine="0" />
+	</File>
+	<File name="../source/arm7/source/main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1734" topLine="0" />
+	</File>
+	<File name="../source/arm9/source/main.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="822" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
