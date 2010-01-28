@@ -21,7 +21,8 @@ int main(void) {
 	iprintf(" |\\ |>       /\n");
 	iprintf(" |/ |\\      /\n");
 	iprintf("           /\n");
-	iprintf("          /_______ engine\n");
+	iprintf("          /_______ engine\n\n");
+	iprintf("ROCK!\n");
 
 	while(1) {
 
