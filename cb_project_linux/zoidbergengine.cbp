@@ -6,7 +6,7 @@
 		<Option makefile="../Makefile" />
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
-		<Option compiler="devkitarm" />
+		<Option compiler="gcc" />
 		<MakeCommands>
 			<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
 			<CompileFile command="" />
@@ -19,7 +19,7 @@
 				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
-				<Option compiler="devkitarm" />
+				<Option compiler="gcc" />
 				<Option parameters="./bin/zoidbergengine.nds" />
 				<Option host_application="desmume" />
 				<Compiler>
@@ -37,9 +37,9 @@
 				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
-				<Option compiler="devkitarm" />
+				<Option compiler="gcc" />
 				<Option parameters="./bin/zoidbergengine.nds" />
-				<Option host_application="no\$gba" />
+				<Option host_application="no/$gba" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
