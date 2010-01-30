@@ -5,7 +5,7 @@
 
 #emulator config files
 desmume.ini
-NO\$GBA.INP
+NO$GBA.INP
 
 #compiled stuff
 *.map
