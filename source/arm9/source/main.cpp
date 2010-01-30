@@ -25,7 +25,6 @@ int main(void) {
 	iprintf("ROCK!\n");
 
 	while(1) {
-
 		swiWaitForVBlank();
 	}
 
