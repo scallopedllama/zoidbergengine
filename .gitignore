@@ -15,4 +15,4 @@ NO$GBA.INP
 *.arm9
 *.arm7
 *.nds
-soundbank.h
+*/soundbank_bin.h
