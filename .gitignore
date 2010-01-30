@@ -1,0 +1,12 @@
+*.save
+*.layout
+*~
+desmume.ini
+NO\$GBA.INP
+*.map
+*.d
+*.o
+*.elf
+*.arm9
+*.arm7
+*.nds
