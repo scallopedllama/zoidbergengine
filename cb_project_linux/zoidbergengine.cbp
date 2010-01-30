@@ -14,7 +14,7 @@
 			<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 		</MakeCommands>
 		<Build>
-			<Target title="DeSmuMe">
+			<Target title="Debug">
 				<Option output="../source/arm9/bin/zoidbergengine.arm9.elf" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
@@ -32,14 +32,56 @@
 					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 				</MakeCommands>
 			</Target>
-			<Target title="NoCash">
+			<Target title="Release">
+				<Option output="../bin/zoidbergengine.nds" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="devkitarm" />
+				<Option parameters="./bin/zoidbergengine.nds" />
+				<Option host_application="desmume" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+				<MakeCommands>
+					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
+					<CompileFile command="" />
+					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+				</MakeCommands>
+			</Target>
+			<Target title="Release-wine">
+				<Option output="../bin/zoidbergengine.nds" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="devkitarm" />
+				<Option parameters="/Users/PSUbackup/30783/Code/zoidbergengine/emu/desmume/DeSmuME.exe" />
+				<Option host_application="wine" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+				<MakeCommands>
+					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
+					<CompileFile command="" />
+					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+				</MakeCommands>
+			</Target>
+			<Target title="Debug-wine">
 				<Option output="../source/arm9/bin/zoidbergengine.arm9.elf" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="devkitarm" />
-				<Option parameters="./bin/zoidbergengine.nds" />
-				<Option host_application="no\$gba" />
+				<Option parameters="./emu/no\$gba/NO\$GBA.EXE ./bin/zoidbergengine.nds" />
+				<Option host_application="wine" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
