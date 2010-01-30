@@ -60,7 +60,11 @@
 		<Unit filename="../source/arm7/Makefile" />
 		<Unit filename="../source/arm7/source/main.cpp" />
 		<Unit filename="../source/arm9/Makefile" />
+		<Unit filename="../source/arm9/include/ship.h" />
+		<Unit filename="../source/arm9/include/sprites.h" />
 		<Unit filename="../source/arm9/source/main.cpp" />
+		<Unit filename="../source/arm9/source/ship.cpp" />
+		<Unit filename="../source/arm9/source/sprites.cpp" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />
