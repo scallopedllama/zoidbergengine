@@ -81,7 +81,6 @@ protected:
     int width;
     int height;
     int angle;
-
 };
 
 #endif // OBJECT_H_INCLUDED
