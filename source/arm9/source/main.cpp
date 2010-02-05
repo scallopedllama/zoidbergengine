@@ -161,6 +161,7 @@ int main() {
 	*  Place the main screen on the bottom physical screen. Then arrange the
 	*  VRAM banks. Next, confiure the background control registers.
 	*/
+
 	lcdMainOnBottom();
 	initVideo();
 	initBackgrounds();
@@ -176,8 +177,8 @@ int main() {
 	//make a level
 	level *lvl = new level();
 	//void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
-	lvl->addSprite(orangeShuttleTiles, orangeShuttleTilesLen, orangeShuttlePal, orangeShuttlePalLen, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
-	lvl->addSprite(moonTiles, moonTilesLen, moonPal, moonPalLen, 150, 100, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
+	lvl->addSprite(true, orangeShuttleTiles, orangeShuttleTilesLen, orangeShuttlePal, orangeShuttlePalLen, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
+	lvl->addSprite(false, moonTiles, moonTilesLen, moonPal, moonPalLen, 150, 100, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
 	lvl->run();
 
 	return 0;

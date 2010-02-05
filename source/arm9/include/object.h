@@ -29,10 +29,7 @@ public:
 	object(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic = false);
 
 	//updates this sprite's position
-	virtual void update();
-
-	//Toggle whether or not this sprite is currently hidden.
-	void isHidden(bool visibility);
+	virtual void update(touchPosition *touch);
 
 	//make this sprite a RotateScale sprite
 	void makeRotateScale(int matrixId, int angle, SpriteRotation *mat);
@@ -48,6 +45,8 @@ public:
 	//only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
 	void rotate(int angle);
 
+	//Toggle whether or not this sprite is currently hidden.
+	void isHidden(bool visibility);
 	//Returns whether or not this sprite is visible
 	inline bool isHidden()
 	{
@@ -94,7 +93,7 @@ protected:
 
 	//obvious variables
 	//note: gravity is added to the y acceleration.
-	vector2D<int> position, velocity, acceleration;
+	vector2D<float> position, velocity, acceleration;
 
 	//these are only valid when isRotateScale == true
     int width;

@@ -19,6 +19,20 @@ level::level()
 level::~level()
 {
 	delete oam;
+
+	//iterate through all the objects in the object list
+	LinkedList *current = objects;
+	while(current != NULL)
+	{
+		//get the current object and delete it
+		object *curObj = (object *) current->data;
+		delete curObj;
+
+		//delete this LinkedList object
+		LinkedList *deleted = current;
+		linkedlistRemove(current);
+		delete deleted;
+	}
 }
 
 //tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -52,7 +66,7 @@ int level::getSpriteEntry()
 	return -1;
 }
 
-void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
+void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 {
     /*  Define some sprite configuration specific constants.
      *
@@ -78,13 +92,17 @@ void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 
 
     // Create the sprite and make it a rotozoomer
     int spriteIndex = getSpriteEntry();
-	object *newSprite = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
+    object *newObj;
+    if (mkeHero)
+		newObj = (object *) new hero(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
+    else
+		newObj = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
 	if(angle > 0)
 	{
 		int matrixIndex = getMatrix();
-		newSprite->makeRotateScale(matrixIndex, angle, getMatrix(matrixIndex));
+		newObj->makeRotateScale(matrixIndex, angle, getMatrix(matrixIndex));
 	}
-	newSprite->setPriority(OBJPRIORITY_0);
+	newObj->setPriority(OBJPRIORITY_0);
 
     // Copy palette
     dmaCopyHalfWords(SPRITE_DMA_CHANNEL, palette, &SPRITE_PALETTE[palIndex * COLORS_PER_PALETTE], paletteLen);
@@ -94,6 +112,15 @@ void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 
 	//increment starting index for the next sprite
 	gfxIndex += tilesLen / BYTES_PER_16_COLOR_TILE;
 	palIndex++;
+
+	//add that object to the list
+	if (!objects)
+	{
+		objects = new LinkedList();
+		objects->data = (void *) newObj;
+	}
+	else
+		linkedlistAdd(&objects->next, (void *) newObj);
 }
 
 void level::run()
@@ -101,8 +128,26 @@ void level::run()
 	//start running the main loop
 	while(true)
 	{
+		update();
 		swiWaitForVBlank();
 		updateOAM(oam);
+	}
+}
+
+void level::update()
+{
+	//update the button pressage and touch screen data
+	scanKeys();
+	touchPosition *touch = NULL;
+	touchRead(touch);
+
+	//iterate through all the objects in that list
+	LinkedList *current = objects;
+	for(; current != NULL; current = current->next)
+	{
+		//run their respective update functions
+		object *curObj = (object *) current->data;
+		curObj->update(touch);
 	}
 }
 

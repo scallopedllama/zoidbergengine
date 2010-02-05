@@ -6,18 +6,26 @@ hero::hero(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int 
 
 }
 
-void hero::update()
+void hero::update(touchPosition *touch)
 {
 	if (keysHeld() & KEY_LEFT)
 	{
-		position.x -= 3;
+		angle -= 132;
+		rotate(angle);
 	}
 	else if (keysHeld() & KEY_RIGHT)
 	{
-		position.x += 3;
+		angle += 132;
+		rotate(angle);
+	}
+	if (keysHeld() & KEY_UP)
+	{
+		float addAccel = 0.05;
+		velocity.x += -cos(degreesToAngle(angle) * 180.0 / M_PI) * addAccel;
+		velocity.y += sin(degreesToAngle(angle) * 180.0 / M_PI) * addAccel;
 	}
 
 	// Done doing hero specific update functions,
 	// pass back to the object update function
-	object::update();
+	object::update(touch);
 }

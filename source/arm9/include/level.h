@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "object.h" //addSprite function needs this
+#include "hero.h"  //addSprite can add a hero to the mix
 
 static const int SPRITE_DMA_CHANNEL = 3;
 
@@ -20,8 +21,11 @@ public:
 	//this function will act as the main game loop for this level.
 	void run();
 
+	//this function updates all the objects and such in this level
+	void update();
+
 	//this is a temporary function to tell the level to load a sprite with specified graphics and settings
-	void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
+	void addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
 
 	// these functions will likely only ever be needed by the level class, but if anything else
 	// needs them, they remain generalized to allow that.
@@ -34,6 +38,9 @@ public:
 private:
 	//this level's local copy of the OAM
 	OAMTable *oam;
+
+	//a libnds linked list containing all of the objects in this level
+	LinkedList *objects;
 
 	//an array of boolean variables indicating whether or not the index matrix is being used by a sprite
 	//used by the getMatrix and freeMatrix functions

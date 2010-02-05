@@ -18,8 +18,11 @@ object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, 
 	sprite->priority = OBJPRIORITY_0;
     sprite->shape = shape;
     sprite->size = size;
-    sprite->x = X;
-    sprite->y = Y;
+    sprite->x = position.x = X;
+    sprite->y = position.y = Y;
+
+	acceleration.x = acceleration.y = 0.0;
+	velocity.x = velocity.y = 0.0;
 
 	width = Width;
 	height = Height;
@@ -27,8 +30,16 @@ object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, 
 	matrixId = -1;
 }
 
-void object::update()
+void object::update(touchPosition *touch)
 {
+	//relevant physics equations:
+	//   s = v_0 * (delta t) + .5 * a * (delta t)^2
+	//   v^2_f - v^2_o = 2 * a * (x_f - x_o)
+
+	position.x += velocity.x;
+	sprite->x = position.x;
+	position.y += velocity.y;
+	sprite->y = position.y;
 }
 
 //make this sprite a RotateScale sprite
