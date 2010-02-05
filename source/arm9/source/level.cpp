@@ -52,7 +52,7 @@ int level::getSpriteEntry()
 	return -1;
 }
 
-void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle)
+void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 {
     /*  Define some sprite configuration specific constants.
      *
@@ -78,9 +78,12 @@ void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 
 
     // Create the sprite and make it a rotozoomer
     int spriteIndex = getSpriteEntry();
-	object *newSprite = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64, gfxIndex, palIndex);
-	int matrixIndex = getMatrix();
-	newSprite->makeRotateScale(matrixIndex, angle, getMatrix(matrixIndex));
+	object *newSprite = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
+	if(angle > 0)
+	{
+		int matrixIndex = getMatrix();
+		newSprite->makeRotateScale(matrixIndex, angle, getMatrix(matrixIndex));
+	}
 	newSprite->setPriority(OBJPRIORITY_0);
 
     // Copy palette
@@ -90,6 +93,7 @@ void level::addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 
 
 	//increment starting index for the next sprite
 	gfxIndex += tilesLen / BYTES_PER_16_COLOR_TILE;
+	palIndex++;
 }
 
 void level::run()
@@ -97,7 +101,8 @@ void level::run()
 	//start running the main loop
 	while(true)
 	{
-
+		swiWaitForVBlank();
+		updateOAM(oam);
 	}
 }
 

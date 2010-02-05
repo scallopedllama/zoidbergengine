@@ -21,7 +21,7 @@ public:
 	void run();
 
 	//this is a temporary function to tell the level to load a sprite with specified graphics and settings
-	void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle);
+	void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
 
 	// these functions will likely only ever be needed by the level class, but if anything else
 	// needs them, they remain generalized to allow that.
