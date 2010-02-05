@@ -10,7 +10,7 @@
 #include <maxmod9.h>
 #include <assert.h>
 
-#include "util.h" //initOAM updateOAM
+#include "level.h" //initOAM updateOAM
 
 /* Backgrounds */
 #include "starField.h"
@@ -152,39 +152,30 @@ void displaySplash() {
 
 
 int main() {
-    /*  Turn on the 2D graphics core. */
-    powerOn(POWER_ALL_2D);
+	/*  Turn on the 2D graphics core. */
+	powerOn(POWER_ALL_2D);
 
-    /*
-     *  Configure the VRAM and background control registers.
-     *
-     *  Place the main screen on the bottom physical screen. Then arrange the
-     *  VRAM banks. Next, confiure the background control registers.
-     */
-    lcdMainOnBottom();
-    initVideo();
-    initBackgrounds();
+	/*
+	*  Configure the VRAM and background control registers.
+	*
+	*  Place the main screen on the bottom physical screen. Then arrange the
+	*  VRAM banks. Next, confiure the background control registers.
+	*/
+	lcdMainOnBottom();
+	initVideo();
+	initBackgrounds();
 
-    /* Initialize maxmod using the memory based soundbank set up. */
-    mmInitDefaultMem((mm_addr)soundbank_bin);
+	/* Initialize maxmod using the memory based soundbank set up. */
+	mmInitDefaultMem((mm_addr)soundbank_bin);
 
-    /* Set up a few sprites. */
-    //SpriteInfo spriteInfo[SPRITE_COUNT];
-    OAMTable *oam = new OAMTable();
-    initOAM(oam);
-    //initSprites(oam, spriteInfo);
+	/* Display the backgrounds. */
+	displayStarField();
+	displayPlanet();
+	displaySplash();
 
-    /* Display the backgrounds. */
-    displayStarField();
-    displayPlanet();
-    displaySplash();
+	//make a level
+	level *lvl = new level();
+	lvl->run();
 
-	while(true)
-	{
-
-        swiWaitForVBlank();
-        updateOAM(oam);
-    }
-
-    return 0;
+	return 0;
 }

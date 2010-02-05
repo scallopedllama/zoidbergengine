@@ -1,17 +1,79 @@
 #include "object.h"
 
-object::object(SpriteEntry *spriteEntry)
+object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic)
 {
 	//initialize the spriteEntry
 	sprite = spriteEntry;
+	spriteId = SpriteId;
 
+    sprite->blendMode = blendMode;
+    sprite->colorMode = colorMode;
+	sprite->gfxIndex = gfxIndex;
+	sprite->hFlip = sprite->vFlip = false;
+	sprite->isHidden = false;
+    sprite->isMosaic = mosaic;
 	isRotateScale = isSizeDouble = false;
-	width = height = 32;
-	angle = oamId = 0;
+	sprite->isRotateScale = sprite->isSizeDouble = false;
+	sprite->palette = palette;
+	sprite->priority = OBJPRIORITY_0;
+    sprite->shape = shape;
+    sprite->size = size;
+    sprite->x = X;
+    sprite->y = Y;
+
+	width = Width;
+	height = Height;
+	angle = 0;
+	matrixId = -1;
 }
 
 void object::update()
 {
+}
+
+//make this sprite a RotateScale sprite
+void object::makeRotateScale(int MatrixId, int Angle, SpriteRotation *mat)
+{
+	//set variables
+	matrixId = MatrixId;
+	angle = Angle;
+
+	//make rotateScale
+	isRotateScale = true;
+	sprite->isRotateScale = true;
+	matrix = mat;
+
+	//do rotation
+	rotate(angle);
+}
+
+//turn off rotate scale, returns the matrixId it used to use
+int object::removeRotateScale()
+{
+	//make sure it's actually a rotatescale sprite
+	if(!isRotateScale) return -1;
+
+	//it'll return this later
+	int toReturn = matrixId;
+	matrixId = -1;
+	isRotateScale = false;
+	isSizeDouble = false;
+
+	//done
+	return toReturn;
+}
+
+//only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
+void object::rotate(int Angle)
+{
+	angle = Angle;
+	s16 s = sinLerp(angle) >> 4;
+	s16 c = cosLerp(angle) >> 4;
+
+	matrix->hdx = c;
+	matrix->hdy = s;
+	matrix->vdx = -s;
+	matrix->vdy = c;
 }
 
 //This function is borrowed from Jaeden Amero (http://patater.com/files/projects/manual/manual.htm)
