@@ -26,10 +26,24 @@
 class object
 {
 public:
-	object(SpriteEntry *spriteEntry);
+	object(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic = false);
 
 	//updates this sprite's position
-	virtual void update();
+	virtual void update(touchPosition *touch);
+
+	//make this sprite a RotateScale sprite
+	void makeRotateScale(int matrixId, int angle, SpriteRotation *mat);
+	//turn off rotate scale, returns the matrixId it used to use
+	int removeRotateScale();
+
+	//sets the priority for this object
+	inline void setPriority(ObjPriority priority)
+	{
+		sprite->priority = priority;
+	}
+
+	//only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
+	void rotate(int angle);
 
 	//Toggle whether or not this sprite is currently hidden.
 	void isHidden(bool visibility);
@@ -64,18 +78,22 @@ protected:
 	 */
 	SpriteEntry *sprite;
 
+	//this is the copy of the matrixbuffer for this sprite if we're a RotateScale
+	SpriteRotation *matrix;
+
 	//whether or not this sprite is using affine transformations
 	bool isRotateScale;
 
 	//whether or not this sprite's bounds are doubled
 	bool isSizeDouble;
 
-	//the current id for the oam (Used to keep track of what matrix this RotateScale sprite has in the OAM)
-    int oamId;
+	//the current id for the for the affine matrix and the sprite in the oam table
+    int matrixId;
+    int spriteId;
 
 	//obvious variables
 	//note: gravity is added to the y acceleration.
-	vector2D<int> position, velocity, acceleration;
+	vector2D<float> position, velocity, acceleration;
 
 	//these are only valid when isRotateScale == true
     int width;
