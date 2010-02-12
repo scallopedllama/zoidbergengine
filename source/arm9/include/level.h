@@ -2,8 +2,11 @@
 #define LEVEL_H_INCLUDED
 
 #include <nds.h>
+#include <vector>
 #include "object.h" //addSprite function needs this
 #include "hero.h"  //addSprite can add a hero to the mix
+
+using namespace std;
 
 static const int SPRITE_DMA_CHANNEL = 3;
 
@@ -40,7 +43,7 @@ private:
 	OAMTable oam;
 
 	//a libnds linked list containing all of the objects in this level
-	LinkedList *objects;
+	vector<object*> objects;
 
 	//an array of boolean variables indicating whether or not the index matrix is being used by a sprite
 	//used by the getMatrix and freeMatrix functions

@@ -17,18 +17,9 @@ level::level()
 
 level::~level()
 {
-	//iterate through all the objects in the object list
-	LinkedList *current = objects;
-	while(current != NULL)
+	for(int i=0; i < objects.size(); i++)
 	{
-		//get the current object and delete it
-		object *curObj = (object *) current->data;
-		delete curObj;
-
-		//delete this LinkedList object
-		LinkedList *deleted = current;
-		linkedlistRemove(current);
-		delete deleted;
+		delete objects[i];
 	}
 }
 
@@ -111,13 +102,7 @@ void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void 
 	palIndex++;
 
 	//add that object to the list
-	if (!objects)
-	{
-		objects = new LinkedList();
-		objects->data = (void *) newObj;
-	}
-	else
-		linkedlistAdd(&objects->next, (void *) newObj);
+	objects.push_back(newObj);
 }
 
 void level::run()
@@ -139,12 +124,10 @@ void level::update()
 	touchRead(touch);
 
 	//iterate through all the objects in that list
-	LinkedList *current = objects;
-	for(; current != NULL; current = current->next)
+	for(int i=0; i<objects.size(); i++)
 	{
 		//run their respective update functions
-		object *curObj = (object *) current->data;
-		curObj->update(touch);
+		objects[i]->update(touch);
 	}
 }
 
