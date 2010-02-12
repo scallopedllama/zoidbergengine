@@ -3,7 +3,6 @@
 level::level()
 {
 	//initialize the oam table
-	oam = new OAMTable();
 	initOAM(oam);
 
 	//indicate that all matrices and sprites are available
@@ -18,8 +17,6 @@ level::level()
 
 level::~level()
 {
-	delete oam;
-
 	//iterate through all the objects in the object list
 	LinkedList *current = objects;
 	while(current != NULL)
@@ -151,18 +148,18 @@ void level::update()
 	}
 }
 
-void level::initOAM(OAMTable * oam) {
+void level::initOAM(OAMTable &oam) {
 	//reset all the attributes
     for (int i = 0; i < SPRITE_COUNT; i++)
-		clearSprite(&oam->oamBuffer[i]);
+		clearSprite(&oam.oamBuffer[i]);
 
     //and the matrices (that's the identity matrix btw)
     for (int i = 0; i < MATRIX_COUNT; i++)
     {
-        oam->matrixBuffer[i].hdx = 1 << 8;
-        oam->matrixBuffer[i].hdy = 0;
-        oam->matrixBuffer[i].vdx = 0;
-        oam->matrixBuffer[i].vdy = 1 << 8;
+        oam.matrixBuffer[i].hdx = 1 << 8;
+        oam.matrixBuffer[i].hdy = 0;
+        oam.matrixBuffer[i].vdx = 0;
+        oam.matrixBuffer[i].vdy = 1 << 8;
     }
 }
 
@@ -173,8 +170,8 @@ void level::clearSprite(SpriteEntry *Sprite)
 	Sprite->attribute[2] = 0;
 }
 
-void level::updateOAM(OAMTable * oam) {
+void level::updateOAM(OAMTable &oam) {
 	//avoid any caching issues
     DC_FlushAll();
-    dmaCopyHalfWords( SPRITE_DMA_CHANNEL, oam->oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry) );
+    dmaCopyHalfWords( SPRITE_DMA_CHANNEL, oam.oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry) );
 }

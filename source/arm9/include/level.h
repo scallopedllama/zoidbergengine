@@ -30,14 +30,14 @@ public:
 	// these functions will likely only ever be needed by the level class, but if anything else
 	// needs them, they remain generalized to allow that.
 	//takes a pointer to a freshly allocated OAMTable and initializes it
-	void initOAM(OAMTable * oam);
+	void initOAM(OAMTable &oam);
 
 	//takes a pointer to an OAMTable and copies it into vram replacing the current OAMTable
-	void updateOAM(OAMTable * oam);
+	void updateOAM(OAMTable &oam);
 
 private:
 	//this level's local copy of the OAM
-	OAMTable *oam;
+	OAMTable oam;
 
 	//a libnds linked list containing all of the objects in this level
 	LinkedList *objects;
@@ -55,7 +55,7 @@ private:
 	//returns the SpriteRotation for the specified index
 	inline SpriteRotation *getMatrix(int index)
 	{
-		return &oam->matrixBuffer[index];
+		return &oam.matrixBuffer[index];
 	}
 
 	//indicates that the specified matrix is no longer being used and can be given to a different sprite
@@ -67,7 +67,7 @@ private:
 	//returns the spriteEntry with the passed index
 	inline SpriteEntry *getSpriteEntry(int i)
 	{
-		return &oam->oamBuffer[i];
+		return &oam.oamBuffer[i];
 	}
 
 	//tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or -1 if it can't.
