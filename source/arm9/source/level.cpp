@@ -6,7 +6,7 @@ level::level()
 	initOAM(oam);
 
 	//indicate that all matrices and sprites are available
-	for (int i=0; i<MATRIX_COUNT; i++)
+	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
 		spriteAvail[i] = true;
@@ -17,7 +17,7 @@ level::level()
 
 level::~level()
 {
-	for(unsigned int i=0; i < objects.size(); i++)
+	for(unsigned int i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
@@ -27,7 +27,7 @@ level::~level()
 //returns the matrix id or -1 if they're all taken
 int level::getMatrix()
 {
-	for (unsigned int i=0; i<MATRIX_COUNT; i++)
+	for (unsigned int i = 0; i < MATRIX_COUNT; i++)
 	{
 		if (matrixAvail[i])
 		{
@@ -42,7 +42,7 @@ int level::getMatrix()
 //tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or -1 if it can't.
 int level::getSpriteEntry()
 {
-	for (int i=0; i<SPRITE_COUNT; i++)
+	for (int i = 0; i < SPRITE_COUNT; i++)
 	{
 		if (spriteAvail[i])
 		{
@@ -131,7 +131,8 @@ void level::update()
 	}
 }
 
-void level::initOAM(OAMTable &oam) {
+void level::initOAM(OAMTable &oam)
+{
 	//reset all the attributes
     for (int i = 0; i < SPRITE_COUNT; i++)
 		clearSprite(&oam.oamBuffer[i]);
@@ -153,8 +154,9 @@ void level::clearSprite(SpriteEntry *Sprite)
 	Sprite->attribute[2] = 0;
 }
 
-void level::updateOAM(OAMTable &oam) {
+void level::updateOAM(OAMTable &oam)
+{
 	//avoid any caching issues
     DC_FlushAll();
-    dmaCopyHalfWords( SPRITE_DMA_CHANNEL, oam.oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry) );
+    dmaCopyHalfWords(SPRITE_DMA_CHANNEL, oam.oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry));
 }

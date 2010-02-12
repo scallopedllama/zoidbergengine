@@ -43,7 +43,7 @@ void object::update(touchPosition *touch)
 }
 
 //make this sprite a RotateScale sprite
-void object::makeRotateScale(int MatrixId, int Angle, SpriteRotation *mat)
+void object::makeRotateScale(int MatrixId, SpriteRotation *mat, int Angle)
 {
 	//set variables
 	matrixId = MatrixId;

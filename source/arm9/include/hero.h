@@ -1,3 +1,33 @@
+/**
+ * @file hero.h
+ *
+ * @brief The hero class represents a object that is controlled by the user.
+ *
+ * This file contains the hero class, a user-controllable object
+ *
+ * @see object.h
+ * @author Joe Balough
+ */
+
+/**
+ *  Copyright (c) 2010 zoidberg engine
+ *
+ *  This file is part of the zoidberg engine.
+ *
+ *  The zoidberg engine is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The zoidberg engine is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef HERO_H_INCLUDED
 #define HERO_H_INCLUDED
 
@@ -5,15 +35,38 @@
 #include <math.h>
 #include "object.h"
 
-//the hero is a simple extension to the object that is under the control of the user.
-// TODO (sl#6#): generalize the input stuff.
-
+/**
+ * hero class
+ *
+ * The hero class is is used to represent the character that the player controls. It is expanded to include usable items,
+ * weapons, and powerups. The design of the Hero class is such that more than one hero can be dropped into a level and can
+ * interact with other Heroes.
+ *
+ * @author Joe Balough
+ */
 class hero : public object
 {
 public:
+	/**
+	 * Constuctor
+	 *
+	 * Takes a lot of specific values and passes them through to the object constructor. Please see that function for
+	 * details.
+	 *
+	 * @see object::object()
+	 * @author Joe Balough
+	 */
 	hero(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic = false);
 
-	//updates the hero based on input from the user
+	/**
+	 * Implementation of update function
+	 *
+	 * Polls the buttons for input and moves the sprite accordingly. After doing that, it calls the object's update function to
+	 * apply physics features.
+	 *
+	 * @see object::update()
+	 * @author Joe Balough
+	 */
 	virtual void update(touchPosition *touch);
 
 private:
