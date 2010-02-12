@@ -17,7 +17,7 @@ level::level()
 
 level::~level()
 {
-	for(int i=0; i < objects.size(); i++)
+	for(unsigned int i=0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
@@ -27,7 +27,7 @@ level::~level()
 //returns the matrix id or -1 if they're all taken
 int level::getMatrix()
 {
-	for (int i=0; i<MATRIX_COUNT; i++)
+	for (unsigned int i=0; i<MATRIX_COUNT; i++)
 	{
 		if (matrixAvail[i])
 		{
@@ -36,7 +36,7 @@ int level::getMatrix()
 		}
 	}
 	//must be all taken
-	return -1;
+	return ZOIDBERG_NO_MATRICES;
 }
 
 //tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or -1 if it can't.
@@ -51,7 +51,7 @@ int level::getSpriteEntry()
 		}
 	}
 	//must be all taken
-	return -1;
+	return ZOIDBERG_NO_SPRITES;
 }
 
 void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
@@ -124,7 +124,7 @@ void level::update()
 	touchRead(touch);
 
 	//iterate through all the objects in that list
-	for(int i=0; i<objects.size(); i++)
+	for(unsigned int i=0; i<objects.size(); i++)
 	{
 		//run their respective update functions
 		objects[i]->update(touch);

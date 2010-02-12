@@ -1,6 +1,9 @@
 #ifndef LEVEL_H_INCLUDED
 #define LEVEL_H_INCLUDED
 
+#define ZOIDBERG_NO_MATRICES -1
+#define ZOIDBERG_NO_SPRITES -1
+
 #include <nds.h>
 #include <vector>
 #include "object.h" //addSprite function needs this
