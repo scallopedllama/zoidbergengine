@@ -1,8 +1,9 @@
 #include "object.h"
 
+// object constructor
 object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic)
 {
-	//initialize the spriteEntry
+	// initialize the spriteEntry
 	sprite = spriteEntry;
 	spriteId = SpriteId;
 
@@ -30,9 +31,10 @@ object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, 
 	matrixId = -1;
 }
 
+// object update function, applies physics to the object
 void object::update(touchPosition *touch)
 {
-	//relevant physics equations:
+	// relevant physics equations:
 	//   s = v_0 * (delta t) + .5 * a * (delta t)^2
 	//   v^2_f - v^2_o = 2 * a * (x_f - x_o)
 
@@ -42,39 +44,39 @@ void object::update(touchPosition *touch)
 	sprite->y = position.y;
 }
 
-//make this sprite a RotateScale sprite
+// makes this sprite a RotateScale sprite
 void object::makeRotateScale(int MatrixId, SpriteRotation *mat, int Angle)
 {
-	//set variables
+	// set variables
 	matrixId = MatrixId;
 	angle = Angle;
 
-	//make rotateScale
+	// make rotateScale
 	isRotateScale = true;
 	sprite->isRotateScale = true;
 	matrix = mat;
 
-	//do rotation
+	// do rotation
 	rotate(angle);
 }
 
-//turn off rotate scale, returns the matrixId it used to use
+// turns off rotate scale, returns the matrixId it used to use
 int object::removeRotateScale()
 {
-	//make sure it's actually a rotatescale sprite
+	// make sure it's actually a rotatescale sprite
 	if(!isRotateScale) return -1;
 
-	//it'll return this later
+	// it'll return this later
 	int toReturn = matrixId;
 	matrixId = -1;
 	isRotateScale = false;
 	isSizeDouble = false;
 
-	//done
+	// done
 	return toReturn;
 }
 
-//only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
+// only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
 void object::rotate(int Angle)
 {
 	angle = Angle;
@@ -87,8 +89,9 @@ void object::rotate(int Angle)
 	matrix->vdy = c;
 }
 
-//This function is borrowed from Jaeden Amero (http://patater.com/files/projects/manual/manual.htm)
-void object::isHidden(bool visibility) {
+// This function is borrowed from Jaeden Amero (http://patater.com/files/projects/manual/manual.htm)
+void object::isHidden(bool visibility)
+{
     if (visibility) {
         /*
          * Make the sprite invisible.
@@ -99,10 +102,10 @@ void object::isHidden(bool visibility) {
          * redundant, but it is faster than a branch to just set it regardless
          * of whether or not it is already set.
          */
-        sprite->isRotateScale = false; // Bit 9 off
-        sprite->isHidden = true; // Bit 8 on
+        sprite->isRotateScale = false;
+        sprite->isHidden = true;
     } else {
-        /* Make the sprite visible.*/
+        // Make the sprite visible.
         if (isRotateScale) {
             /* Again, keep in mind that affine sprites cannot be hidden, so
              * enabling affine is enough to show the sprite again. We also need

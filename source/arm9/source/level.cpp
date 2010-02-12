@@ -1,20 +1,22 @@
 #include "level.h"
 
+// level constructor
 level::level()
 {
-	//initialize the oam table
+	// initialize the oam table
 	initOAM(oam);
 
-	//indicate that all matrices and sprites are available
+	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
 		spriteAvail[i] = true;
 	}
 
-	//load up all the necessary assets n stuff
+	// load up all the necessary assets n stuff
 }
 
+// level destructor
 level::~level()
 {
 	for(unsigned int i = 0; i < objects.size(); i++)
@@ -23,8 +25,8 @@ level::~level()
 	}
 }
 
-//tries to get an affine transformation matrix for use with the rotoZoom style sprite.
-//returns the matrix id or -1 if they're all taken
+// tries to get an affine transformation matrix for use with the rotoZoom style sprite.
+// returns the matrix id or ZOIDBERG_NO_MATRICES if they're all taken
 int level::getMatrix()
 {
 	for (unsigned int i = 0; i < MATRIX_COUNT; i++)
@@ -35,11 +37,11 @@ int level::getMatrix()
 			return i;
 		}
 	}
-	//must be all taken
+	// must be all taken
 	return ZOIDBERG_NO_MATRICES;
 }
 
-//tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or -1 if it can't.
+// tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or ZOIDBERG_NO_SPRITES if it can't.
 int level::getSpriteEntry()
 {
 	for (int i = 0; i < SPRITE_COUNT; i++)
@@ -50,10 +52,11 @@ int level::getSpriteEntry()
 			return i;
 		}
 	}
-	//must be all taken
+	// must be all taken
 	return ZOIDBERG_NO_SPRITES;
 }
 
+// TEMP FCTN: adds a sprite to the level
 void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 {
     /*  Define some sprite configuration specific constants.
@@ -70,8 +73,8 @@ void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void 
      */
     static const int BYTES_PER_16_COLOR_TILE = 32;
     static const int COLORS_PER_PALETTE = 16;
-    static const int BOUNDARY_VALUE = 32; /* This is the default boundary value
-                                           * (can be set in REG_DISPCNT) */
+    //This is the default boundary value (can be set in REG_DISPCNT)
+    static const int BOUNDARY_VALUE = 32;
     static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 
     // Keep track of the gfx index and palette index
@@ -97,17 +100,18 @@ void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void 
     // Copy sprite
     dmaCopyHalfWords(SPRITE_DMA_CHANNEL, tiles, &SPRITE_GFX[gfxIndex * OFFSET_MULTIPLIER], tilesLen);
 
-	//increment starting index for the next sprite
+	// increment starting index for the next sprite
 	gfxIndex += tilesLen / BYTES_PER_16_COLOR_TILE;
 	palIndex++;
 
-	//add that object to the list
+	// add that object to the list
 	objects.push_back(newObj);
 }
 
+// The 'main game loop' for this level
 void level::run()
 {
-	//start running the main loop
+	// start running the main loop
 	while(true)
 	{
 		update();
@@ -116,9 +120,10 @@ void level::run()
 	}
 }
 
+// updates all objects on this level
 void level::update()
 {
-	//update the button pressage and touch screen data
+	// update the button pressage and touch screen data
 	scanKeys();
 	touchPosition *touch = NULL;
 	touchRead(touch);
@@ -126,18 +131,19 @@ void level::update()
 	//iterate through all the objects in that list
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
-		//run their respective update functions
+		// run their respective update functions
 		objects[i]->update(touch);
 	}
 }
 
+// initializes a local OAMTable
 void level::initOAM(OAMTable &oam)
 {
-	//reset all the attributes
+	// reset all the attributes
     for (int i = 0; i < SPRITE_COUNT; i++)
 		clearSprite(&oam.oamBuffer[i]);
 
-    //and the matrices (that's the identity matrix btw)
+    // and the matrices (that's the identity matrix btw)
     for (int i = 0; i < MATRIX_COUNT; i++)
     {
         oam.matrixBuffer[i].hdx = 1 << 8;
@@ -147,6 +153,7 @@ void level::initOAM(OAMTable &oam)
     }
 }
 
+// clears out the attributes for a SpriteEntry
 void level::clearSprite(SpriteEntry *Sprite)
 {
 	Sprite->attribute[0] = ATTR0_DISABLED;
@@ -154,9 +161,10 @@ void level::clearSprite(SpriteEntry *Sprite)
 	Sprite->attribute[2] = 0;
 }
 
+// copies a local OAMTable into memory, replacing the old one.
 void level::updateOAM(OAMTable &oam)
 {
-	//avoid any caching issues
+	// avoid any caching issues
     DC_FlushAll();
     dmaCopyHalfWords(SPRITE_DMA_CHANNEL, oam.oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry));
 }
