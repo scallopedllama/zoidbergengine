@@ -84,6 +84,8 @@ bool intersection(const object sprite1, const object sprite2)
 	else if ( s1bottom <= s2top ) return true;
 	else if ( s1left >= s2right ) return true;
 	else if ( s1bottom >= s2top ) return true;
+	
+	return false;
 }
 
 bool smallProjectileCollide(const object sprite, const object bullet)
@@ -102,8 +104,8 @@ bool smallProjectileCollide(const object sprite, const object bullet)
 	left	=	sprite.getYcoord() + width;
 	right   =	sprite.getYcoord() - width;
 	
-	bulletX = bullet.getXcoord();
-	bulletY = bullet.getYcoord();
+	int bulletX = bullet.getXcoord();
+	int bulletY = bullet.getYcoord();
 	
 	if( bulletX >= left || bulletX <= right ) return true;
 	else if( bulletY <= top || bulletY >= bottom) return true;
@@ -125,15 +127,14 @@ void jump(object sprite, level lvl)
 	*/
 	int xPos  = sprite.getXcoord();
 	int yPos  = sprite.getYcoord();
-	int angle = sprite.getAngle();
 	int yVelo = sprite.getVelocity().y;
 	
-	int y = yPos + yVelo
+	int y = yPos + yVelo;
 	int x = xPos + sprite.getVelocity().x;
 	
-	sprite.setVelocity( new vector2D(x, (yVelo - GRAVITY) ) );
-	sprite.setPosition( new vector2D(x,y) );	
+	sprite.setVelocity( vector2D<float>(x, (yVelo - gravity) ) );
+	sprite.setPosition( vector2D<float>(x,y) );	
 }
 
 
-};
+}
