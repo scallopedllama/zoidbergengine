@@ -7,26 +7,28 @@ object::object(SpriteEntry *spriteEntry, int SpriteId, int X, int Y, int Width, 
 	sprite = spriteEntry;
 	spriteId = SpriteId;
 
-    sprite->blendMode = blendMode;
-    sprite->colorMode = colorMode;
+    	sprite->blendMode = blendMode;
+    	sprite->colorMode = colorMode;
 	sprite->gfxIndex = gfxIndex;
 	sprite->hFlip = sprite->vFlip = false;
 	sprite->isHidden = false;
-    sprite->isMosaic = mosaic;
+    	sprite->isMosaic = mosaic;
 	isRotateScale = isSizeDouble = false;
 	sprite->isRotateScale = sprite->isSizeDouble = false;
 	sprite->palette = palette;
 	sprite->priority = OBJPRIORITY_0;
-    sprite->shape = shape;
-    sprite->size = size;
-    sprite->x = position.x = X;
-    sprite->y = position.y = Y;
+    	sprite->shape = shape;
+    	sprite->size = size;
+    	sprite->x = position.x = X;
+    	sprite->y = position.y = Y;
 
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 
 	width = Width;
 	height = Height;
+	colHeight = height*0.8f / 2;
+	colWidth  = width*0.8f / 2;
 	angle = 0;
 	matrixId = -1;
 }
