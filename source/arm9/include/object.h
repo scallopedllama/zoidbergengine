@@ -183,6 +183,49 @@ public:
 		return sprite->isHidden;
 	}
 
+	/**
+	* getXcoord()
+	* getYcoord()
+	* 
+	* Constant accessor function that returns the respective X and Y coordinates of the object.
+	*
+	* @return int
+	* returns the X or Y coordinate on the DS screen, for use by the physics engine
+	*
+	* @see physics.h
+	* @author Dan Tracy
+	*/
+	const int getXcoord() const { return position.x; }
+	const int getYcoord() const { return position.y; }
+
+	/**
+	* getColWidth
+	* getColHeight
+	* 
+	* Constant accessor function that returns the respective width and height of the object.
+	*
+	* @return int
+	* returns the width or height of the object for use by the physics engine
+	*
+	* @see physics.h
+	* @author Dan Tracy
+	*/
+	const int getColHeight() const { return colHeight; }
+	const int getColWidth()  const { return colWidth;  }
+
+	/**
+	* getWidth
+	* getHeight
+	* 
+	* Constant accessor function that returns the angle of the object.
+	*
+	* @return int
+	* returns the angle of the object for use by the physics engine
+	*
+	* @see physics.h
+	* @author Dan Tracy
+	*/
+	const int getAngle() const { return angle; }
 protected:
 	/**
 	 * the SpriteEntry union is provided by libnds and does the bit flipping necessary to change things about a sprite
@@ -200,11 +243,11 @@ protected:
 	 * priority  - The priority (z-index) of the sprite. Can be OBJPRIORITY_[0123]. 0 is highest.
 	 * rotationIndex - (when isRotoScale set) affine parameter number to use.
 	 * shape     - Shape of the sprite. Can be OBJSHAPE_SQUARE (w == h), OBJSHAPE_WIDE (w > h), OBJSHAPE_TALL (w < h),
-     *             or OBJSHAPE_FORBIDDEN (undefined)
-     * size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
-     * vFlip     - whether to flip this sprite vertically or not
-     * x         - Sprite's x position
-     * y         - Sprite's y position
+    	 *             or OBJSHAPE_FORBIDDEN (undefined)
+    	 * size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
+    	 * vFlip     - whether to flip this sprite vertically or not
+    	 * x         - Sprite's x position
+    	 * y         - Sprite's y position
 	 */
 	SpriteEntry *sprite;
 
@@ -218,17 +261,19 @@ protected:
 	bool isSizeDouble;
 
 	//the current id for the for the affine matrix and the sprite in the oam table
-    int matrixId;
-    int spriteId;
+    	int matrixId;
+    	int spriteId;
 
 	//obvious variables
 	//note: gravity is added to the y acceleration.
 	vector2D<float> position, velocity, acceleration;
 
 	//these are only valid when isRotateScale == true
-    int width;
-    int height;
-    int angle;
+    	int width;
+    	int height;
+    	int angle;
+	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
+	int colHeight; // will be 20% of the real height for use by Physics Engine - DT
 };
 
 #endif // OBJECT_H_INCLUDED

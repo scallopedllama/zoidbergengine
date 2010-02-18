@@ -91,7 +91,7 @@ void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void 
 	if(angle > 0)
 	{
 		int matrixIndex = getMatrix();
-		newObj->makeRotateScale(matrixIndex, angle, getMatrix(matrixIndex));
+		newObj->makeRotateScale(matrixIndex, getMatrix(matrixIndex),angle);
 	}
 	newObj->setPriority(OBJPRIORITY_0);
 
