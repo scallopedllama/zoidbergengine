@@ -197,7 +197,8 @@ public:
 	*/
 	const int getXcoord() const { return position.x; }
 	const int getYcoord() const { return position.y; }
-
+	void setPosition( vector2D<float> pos ){ position = pos; }
+	
 	/**
 	* getColWidth
 	* getColHeight
@@ -214,8 +215,7 @@ public:
 	const int getColWidth()  const { return colWidth;  }
 
 	/**
-	* getWidth
-	* getHeight
+	* getAngle
 	* 
 	* Constant accessor function that returns the angle of the object.
 	*
@@ -226,6 +226,15 @@ public:
 	* @author Dan Tracy
 	*/
 	const int getAngle() const { return angle; }
+	void setAngle(int angleInRadians) { angle = angleInRadians; }
+	
+	const vector2D<float> getVelocity() const { return velocity; }
+	void setVelocity(vector2D<float> v)	{ velocity = v; }
+	
+	const vector2D<float> getAcceleration() const { return acceleration; }
+	void setAcceleration(vector2D<float> accel) { acceleration = accel; }
+	
+
 protected:
 	/**
 	 * the SpriteEntry union is provided by libnds and does the bit flipping necessary to change things about a sprite
@@ -243,11 +252,11 @@ protected:
 	 * priority  - The priority (z-index) of the sprite. Can be OBJPRIORITY_[0123]. 0 is highest.
 	 * rotationIndex - (when isRotoScale set) affine parameter number to use.
 	 * shape     - Shape of the sprite. Can be OBJSHAPE_SQUARE (w == h), OBJSHAPE_WIDE (w > h), OBJSHAPE_TALL (w < h),
-    	 *             or OBJSHAPE_FORBIDDEN (undefined)
-    	 * size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
-    	 * vFlip     - whether to flip this sprite vertically or not
-    	 * x         - Sprite's x position
-    	 * y         - Sprite's y position
+     *             or OBJSHAPE_FORBIDDEN (undefined)
+     * size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
+     * vFlip     - whether to flip this sprite vertically or not
+     * x         - Sprite's x position
+     * y         - Sprite's y position
 	 */
 	SpriteEntry *sprite;
 
@@ -269,9 +278,9 @@ protected:
 	vector2D<float> position, velocity, acceleration;
 
 	//these are only valid when isRotateScale == true
-    	int width;
-    	int height;
-    	int angle;
+    int width;
+    int height;
+    int angle;
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT
 };
