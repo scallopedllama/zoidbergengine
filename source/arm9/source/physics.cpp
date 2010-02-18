@@ -3,8 +3,8 @@
 
 static const int gravity = 10;
 
-bool intersection(const object* const sprite1, const object* const sprite2);
-void projectileVelocity(object* sprite); //Returns Velocity
+bool intersection(const object sprite1, const object sprite2);
+void projectileVelocity(object sprite); //Returns Velocity
 
 
 
@@ -21,7 +21,7 @@ void projectileVelocity(object* sprite); //Returns Velocity
 *
 */
 
-const bool intersection(const object sprite1, const object sprite2)
+bool intersection(const object sprite1, const object sprite2)
 {
 	// Create the bounding boxes for the sprites
 	int s1top, s1bottom, s1left, s1right;
@@ -51,4 +51,6 @@ const bool intersection(const object sprite1, const object sprite2)
 	else if ( s1bottom <= s2top ) return true;
 	else if ( s1left >= s2right ) return true;
 	else if ( s1bottom >= s2top ) return true;
+
+	return false;
 }
