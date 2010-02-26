@@ -15,3 +15,6 @@ NO$GBA.INP
 *.arm9
 *.arm7
 *.nds
+
+#build stuff
+source/arm9/build/*
