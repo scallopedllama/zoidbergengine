@@ -1,44 +1,6 @@
-/**
- * @file physics.cpp
- *
- * @brief The Decapodian Physics Engine implementation.
- *
- * This file contains the physics methods that the zoidberg engine will utilize.
- *
- * @see object.h
- * @see level.h
- * @author Dan Tracy
- */
-
-/**
- *  Copyright (c) 2010 zoidberg engine
- *
- *  This file is part of the zoidberg engine.
- *
- *  The zoidberg engine is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The zoidberg engine is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-#include <nds.h>
-#include <object.h>
-#include <level.h>
-
-namespace physics{
-static const int gravity = 10;
-
-bool intersection(const object sprite1, const object sprite2);
-bool smallProjectileCollide(const object sprite, const object bullet);
-void jump(object sprite);
+#include "physics.h"
+#include <stdio.h>
+using namespace decapod;
 
 
 /* (y - w/2)       (y + w/2)
@@ -54,8 +16,10 @@ void jump(object sprite);
 *
 */
 
-bool intersection(const object sprite1, const object sprite2)
+bool decapod :: intersection( object sprite1,  object sprite2)
 {
+	// if its the same object then ignore 
+	if(&sprite1 == &sprite2) return false;
 	// Create the bounding boxes for the sprites
 	int s1top, s1bottom, s1left, s1right;
 	int s2top, s2bottom, s2left, s2right;
@@ -67,6 +31,7 @@ bool intersection(const object sprite1, const object sprite2)
 	int sprite2height = sprite2.getColHeight();
 	int sprite2width  = sprite2.getColWidth();
 
+	printf("Sprite 1 height = %d\nSprite 1 width = %d\n", sprite2height, sprite2width);
 	s1top 	  =	sprite1.getYcoord() + sprite1height;
 	s2top 	  =	sprite2.getYcoord() + sprite2height;
 
@@ -80,7 +45,7 @@ bool intersection(const object sprite1, const object sprite2)
 	s2right   =	sprite2.getYcoord() - sprite2width;
 
 
-	if 		( s1right <= s2left ) return true;
+	if 	( s1right <= s2left ) return true;
 	else if ( s1bottom <= s2top ) return true;
 	else if ( s1left >= s2right ) return true;
 	else if ( s1bottom >= s2top ) return true;
@@ -88,7 +53,7 @@ bool intersection(const object sprite1, const object sprite2)
 	return false;
 }
 
-bool smallProjectileCollide(const object sprite, const object bullet)
+bool decapod :: smallProjectileCollide(const object sprite, const object bullet)
 {	/**
 	* @author Dan Tracy
 	* We assume the projectile is small enough to only consider the center point
@@ -113,7 +78,7 @@ bool smallProjectileCollide(const object sprite, const object bullet)
 	return false;
 }
 
-void jump(object sprite, level lvl)
+void decapod :: jump(object sprite)
 {	/**
 	* @author Dan Tracy
 	* @param object sprite 
@@ -137,4 +102,4 @@ void jump(object sprite, level lvl)
 }
 
 
-}
+
