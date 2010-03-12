@@ -1,4 +1,7 @@
 #include "level.h"
+#include "physics.h"
+#include <stdio.h>
+using namespace decapod;
 
 // level constructor
 level::level()
@@ -131,8 +134,11 @@ void level::update()
 	//iterate through all the objects in that list
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
-		// run their respective update functions
+		// run their respective update functions		
+		if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
 		objects[i]->update(touch);
+
+		
 	}
 }
 
