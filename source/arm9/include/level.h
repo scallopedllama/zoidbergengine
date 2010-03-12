@@ -45,8 +45,10 @@
 #include <vector>
 #include "object.h" //addSprite function needs this
 #include "hero.h"  //addSprite can add a hero to the mix
-
+#include "physics.h"
 using namespace std;
+
+using namespace decapod;
 
 static const int SPRITE_DMA_CHANNEL = 3;
 

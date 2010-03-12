@@ -252,11 +252,11 @@ protected:
 	 * priority  - The priority (z-index) of the sprite. Can be OBJPRIORITY_[0123]. 0 is highest.
 	 * rotationIndex - (when isRotoScale set) affine parameter number to use.
 	 * shape     - Shape of the sprite. Can be OBJSHAPE_SQUARE (w == h), OBJSHAPE_WIDE (w > h), OBJSHAPE_TALL (w < h),
-     *             or OBJSHAPE_FORBIDDEN (undefined)
-     * size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
-     * vFlip     - whether to flip this sprite vertically or not
-     * x         - Sprite's x position
-     * y         - Sprite's y position
+     	*             or OBJSHAPE_FORBIDDEN (undefined)
+     	* size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
+     	* vFlip     - whether to flip this sprite vertically or not
+     	* x         - Sprite's x position
+     	* y         - Sprite's y position
 	 */
 	SpriteEntry *sprite;
 
@@ -278,9 +278,9 @@ protected:
 	vector2D<float> position, velocity, acceleration;
 
 	//these are only valid when isRotateScale == true
-    int width;
-    int height;
-    int angle;
+    	int width;
+    	int height;
+    	int angle;
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT
 };

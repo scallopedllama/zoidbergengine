@@ -61,7 +61,9 @@ void initVideo() {
 
     /*  Set the video mode on the sub screen. */
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                    DISPLAY_BG3_ACTIVE); // Enable BG3 for display
+                   DISPLAY_BG1_ACTIVE); // Enable BG3 for display
+    consoleDemoInit();
+BG_PALETTE_SUB[255] = RGB15(31,31,31);
 }
 
 void initBackgrounds() {
@@ -172,13 +174,13 @@ int main() {
 	/* Display the backgrounds. */
 	displayStarField();
 	displayPlanet();
-	displaySplash();
+	//displaySplash();
 
 	//make a level
 	level *lvl = new level();
 	//void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 	lvl->addSprite(true, orangeShuttleTiles, orangeShuttleTilesLen, orangeShuttlePal, orangeShuttlePalLen, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
-	lvl->addSprite(false, moonTiles, moonTilesLen, moonPal, moonPalLen, 150, 100, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
+	lvl->addSprite(false, moonTiles, moonTilesLen, moonPal, moonPalLen, 25, 40, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
 	lvl->run();
 
 	return 0;

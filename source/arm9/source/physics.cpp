@@ -31,7 +31,6 @@ bool decapod :: intersection( object sprite1,  object sprite2)
 	int sprite2height = sprite2.getColHeight();
 	int sprite2width  = sprite2.getColWidth();
 
-	printf("Sprite 1 height = %d\nSprite 1 width = %d\n", sprite2height, sprite2width);
 	s1top 	  =	sprite1.getYcoord() + sprite1height;
 	s2top 	  =	sprite2.getYcoord() + sprite2height;
 
