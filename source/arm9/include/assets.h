@@ -43,6 +43,7 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#include <stdio.h>
 #include <nds.h>
 #include <fat.h>
 #include <vector>
@@ -56,12 +57,58 @@ using namespace std;
  */
 class assets {
 public:
-	assets();
-	~assets();
+	/**
+	 * @param char *filename
+	 *   The zbe file to use for this game
+	 * @author Joe Balough
+	 */
+	assets(char *filename);
+
+	/**
+	 * parseZbe function
+	 *
+	 * Parses a zbe file and notes indices for loading
+	 *
+	 * @author Joe Balough
+	 */
+	void parseZbe();
 
 private:
+	/**
+	 * fread[32|16] functions
+	 *
+	 * the fread[] functions here will read an integer of the specified size off of the
+	 * passed input FILE and put into variable.
+	 *
+	 * @param FILE *input
+	 *   The file from which to read the number
+	 * @param uint[32|16] &variable
+	 *   Passed by reference, the variable into which the read number should be placed
+	 */
+	void fread32(FILE *input, uint32 &variable);
+	void fread16(FILE *input, uint16 &variable);
 
+	// The zbe filename
+	char *filename;
+
+	/**
+	 * These vectors contain seek positions in the zbe file where assets are stored.
+	 * In all of these, the index of each entry is that entry's id.
+	 */
+	// Tiles' position
+	vector<fpos_t> tilePos;
+	// Palettes' position
+	vector<fpos_t> palPos;
+
+	/**
+	 * These vectors correspond to the seek vectors above. These indicate how may bytes
+	 * to read to get all of the data
+	 */
+	// Palettes' length
+	vector<uint16> palLen;
+	// Tiles' length
+	vector<uint16> tileLen;
 };
 
 
-#endif // ASSETS_CPP_INCLUDED
+#endif // ASSETS_H_INCLUDED

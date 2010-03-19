@@ -12,23 +12,25 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "level.h" //initOAM updateOAM
+#include "level.h"
+#include "assets.h"
 
-/* Backgrounds */
+// Backgrounds
 #include "starField.h"
 #include "planet.h"
 #include "splash.h"
-/* Sprites */
+// Sprites
 #include "orangeShuttle.h"
 #include "moon.h"
-/* Sounds */
+// Sounds
 #include "soundbank.h"
 #include "soundbank_bin.h"
 
-/* Select a low priority DMA channel to perform our background copying. */
+// Select a low priority DMA channel to perform our background copying.
 static const int DMA_CHANNEL = 3;
 
-void initVideo() {
+void initVideo()
+{
 	//  Turn on the 2D graphics core.
 	powerOn(POWER_ALL_2D);
 	lcdMainOnBottom();
@@ -57,7 +59,7 @@ void initVideo() {
 
     vramSetBankE(VRAM_E_MAIN_SPRITE);
 
-    /*  Set the video mode on the main screen. */
+    //  Set the video mode on the main screen.
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
                  DISPLAY_BG2_ACTIVE | // Enable BG2 for display
                  DISPLAY_BG3_ACTIVE | // Enable BG3 for display
@@ -65,14 +67,15 @@ void initVideo() {
                  DISPLAY_SPR_1D       // Enable 1D tiled sprites
                  );
 
-    /*  Set the video mode on the sub screen. */
+    //  Set the video mode on the sub screen.
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
                    DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
 
     consoleDemoInit();
 }
 
-void initBackgrounds() {
+void initBackgrounds()
+{
     /*  Set up affine background 3 on main as a 16-bit color background. */
     REG_BG3CNT = BG_BMP16_256x256 |
                  BG_BMP_BASE(0) | // The starting place in memory
@@ -131,7 +134,8 @@ void initBackgrounds() {
     REG_BG3Y_SUB = 0;
 }
 
-void displayStarField() {
+void displayStarField()
+{
     dmaCopyHalfWords(DMA_CHANNEL,
                      starFieldBitmap, /* This variable is generated for us by
                                        * grit. */
@@ -140,7 +144,8 @@ void displayStarField() {
                      starFieldBitmapLen);
 }
 
-void displayPlanet() {
+void displayPlanet()
+{
     dmaCopyHalfWords(DMA_CHANNEL,
                      planetBitmap, /* This variable is generated for us by
                                     * grit. */
@@ -149,17 +154,8 @@ void displayPlanet() {
                      planetBitmapLen);
 }
 
-void displaySplash() {
-    dmaCopyHalfWords(DMA_CHANNEL,
-                     splashBitmap, /* This variable is generated for us by
-                                    * grit. */
-                     (uint16 *)BG_BMP_RAM_SUB(0), /* Our address for sub
-                                                     background 3 */
-                     splashBitmapLen);
-}
-
-
-int main() {
+int main()
+{
 	initVideo();
 	initBackgrounds();
 
@@ -172,13 +168,13 @@ int main() {
 	// Display the backgrounds
 	displayStarField();
 	displayPlanet();
-	//displaySplash();
 
-	iprintf("test\nfoobar!\n");
+	// test assets
+	assets testAssets((char*) "/0 zoidberg/test.zbe");
 
-	//make a level
+	// make a level
 	level *lvl = new level();
-	//void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
+	// void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 	lvl->addSprite(true, orangeShuttleTiles, orangeShuttleTilesLen, orangeShuttlePal, orangeShuttlePalLen, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
 	lvl->addSprite(false, moonTiles, moonTilesLen, moonPal, moonPalLen, 25, 40, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
 	lvl->run();
