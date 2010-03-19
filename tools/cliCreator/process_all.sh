@@ -11,6 +11,13 @@ if [ "$1" == "" ]
     out_filename=$1
 fi
 
+#run grit on all the files in the gfx folder, 
+#should result with bin files in the current directory
+$DEVKITARM/bin/grit ./gfx/*.png &> /dev/null
+
+#remove those pesky header files
+rm *.h
+
 #process all of the bin files
 for i in `ls | grep '.bin$'`
 do
@@ -22,6 +29,9 @@ do
 	
 	#prepend that number to the bin file and save it with a .zbe extension
 	./numPrefix/numPrefix16 $i $num_bytes $i.zbe > /dev/null
+	
+	#remove this file
+	rm $i
 	
 	echo "done ($num_bytes bytes)."
 done

@@ -1,0 +1,26 @@
+@file cliCreator readme
+@author Joe Balough
+
+This folder contains a shell script that will generate a v1 zbe datafile.
+The description of the data in that file can be found on the wiki here:
+http://sites.google.com/site/zoidbergengine/documentation/zeg-datafile/zbe-v-1-0
+
+To use this script, drop all the graphics files you want into gfx and make
+sure they have a grit file with them. Things to note: They need to be tiled (-gt),
+have a bit depth of 16 (for now) (-gB4), and THEY MUST OUTPUT to a BINARY file (-ftb).
+Also note that these files will lose all names associated with them and are assigned
+an id based on alphabetical order of the files so name them with an id prefix 
+(i.e. 00-first.png, 01-second.png). Also note that there CANNOT be any spaces in that
+filename.
+
+After you have your graphics data in there, open up a bash shell in the
+cliCreator directory and simply run the script
+ $./process_all.sh [out name]
+If you don't specify [out name] it will create a file called assets.zbe.
+The shell script will run grit on all the graphics in the gfx folder and use
+the numPrefix programs to prefix them with lengths.
+
+The numPrefix programs serve only one purpose: take a filename and a number
+and prepend that number to the start of the binary in the file. It does that
+by writing the number to the output file then copying the data from the input
+file after that number.
