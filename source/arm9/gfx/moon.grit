@@ -9,3 +9,6 @@
 
 # Set the bit depth to 4 (16 colors)
 -gB4
+
+# Set output to binary files
+-ftb
