@@ -19,9 +19,6 @@
 #include "starField.h"
 #include "planet.h"
 #include "splash.h"
-// Sprites
-#include "orangeShuttle.h"
-#include "moon.h"
 // Sounds
 #include "soundbank.h"
 #include "soundbank_bin.h"
