@@ -10,5 +10,3 @@
 # Set the bit depth to 16
 -gB16
 
-# Set output to binary files
--ftb
