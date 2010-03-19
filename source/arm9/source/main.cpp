@@ -10,6 +10,7 @@
 #include <maxmod9.h>
 #include <fat.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "level.h" //initOAM updateOAM
 
@@ -28,6 +29,10 @@
 static const int DMA_CHANNEL = 3;
 
 void initVideo() {
+	//  Turn on the 2D graphics core.
+	powerOn(POWER_ALL_2D);
+	lcdMainOnBottom();
+
     /*
      *  Map VRAM to display a background on the main and sub screens.
      *
@@ -62,9 +67,11 @@ void initVideo() {
 
     /*  Set the video mode on the sub screen. */
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                   DISPLAY_BG1_ACTIVE); // Enable BG3 for display
+                   DISPLAY_BG1_ACTIVE); // Enable BG1 for display
+
     consoleDemoInit();
-BG_PALETTE_SUB[255] = RGB15(31,31,31);
+
+	BG_PALETTE_SUB[255] = RGB15(31,31,31);
 }
 
 void initBackgrounds() {
@@ -155,9 +162,6 @@ void displaySplash() {
 
 
 int main() {
-	//  Turn on the 2D graphics core.
-	powerOn(POWER_ALL_2D);
-	lcdMainOnBottom();
 	initVideo();
 	initBackgrounds();
 
@@ -171,7 +175,7 @@ int main() {
 	displayStarField();
 	displayPlanet();
 	//displaySplash();
-
+printf("test\nfoobar!\n");
 	//make a level
 	level *lvl = new level();
 	//void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
