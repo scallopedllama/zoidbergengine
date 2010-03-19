@@ -43,12 +43,43 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#define ZOIDBERG_ASSET_NOT_LOADED -3
+
 #include <stdio.h>
 #include <nds.h>
 #include <fat.h>
 #include <vector>
 
 using namespace std;
+
+/**
+ * asset_index union. Used by the asset_status struct below.
+ * Used because tiles have a u16 index while palettes have a u8 index.
+ *
+ * @author Joe Balough
+ */
+union assetIndex
+{
+	u16 index16;
+	u8 index8;
+};
+
+/**
+ * asset_status struct. Used in the assets class in vectors to keep track of which
+ * assets have been loaded and where they reside in memory if they have been loaded.
+ *
+ * @author Joe Balough
+ */
+struct assetStatus
+{
+	assetStatus()
+	{
+		loaded = false;
+	}
+
+	bool loaded;
+	assetIndex index;
+};
 
 /**
  * The assets class, manages all assets that are stored in the zbe datafile
@@ -67,12 +98,40 @@ public:
 	/**
 	 * parseZbe function
 	 *
-	 * Parses a zbe file and notes indices for loading
+	 * Parses a zbe file and notes indices for loading. Loads only the lengths into memory.
+	 * All actual data (tiles, palettes, etc.) are loaded upon request.
 	 *
 	 * @author Joe Balough
 	 */
 	void parseZbe();
 
+	/**
+	 * loadTiles function
+	 *
+	 * Loads the requested id of tiles into memory (if not already loaded) and sets tilesIndex
+	 * to the proper index to locate the tiles.
+	 *
+	 * @param int id
+	 *   The unique identifier for the asset
+	 * @param u16 &tilesIndex
+	 *   Passed by reference. Will be set to the index of these tiles
+	 * @author Joe Balough
+	 */
+	void loadTiles(int id, u16 &tilesIndex);
+
+	/**
+	 * loadPalette function
+	 *
+	 * Loads the requested id of palette into memory (if not already loaded) and sets palIndex
+	 * to the proper index to locate the palette.
+	 *
+	 * @param int id
+	 *   The unique identifier for the asset
+	 * @param u8 &palIndex
+	 *   Passed by reference. Will be set to the index of this palette
+	 * @author Joe Balough
+	 */
+	void loadPalette(int id, u8 &palIndex);
 private:
 	/**
 	 * fread[32|16] functions
@@ -89,7 +148,7 @@ private:
 	void fread16(FILE *input, uint16 &variable);
 
 	// The zbe filename
-	char *filename;
+	FILE *zbeData;
 
 	/**
 	 * These vectors contain seek positions in the zbe file where assets are stored.
@@ -104,11 +163,19 @@ private:
 	 * These vectors correspond to the seek vectors above. These indicate how may bytes
 	 * to read to get all of the data
 	 */
-	// Palettes' length
-	vector<uint16> palLen;
 	// Tiles' length
 	vector<uint16> tileLen;
-};
+	// Palettes' length
+	vector<uint16> palLen;
 
+	/**
+	 * These vectors correspond to the status of the assets. They indicate whether or not the
+	 * id asset are loaded and their index if loaded.
+	 */
+	 // Tiles' status
+	 vector<assetStatus> tileStatus;
+	 // Palettes' status
+	 vector<assetStatus> palStatus;
+};
 
 #endif // ASSETS_H_INCLUDED
