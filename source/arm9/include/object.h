@@ -34,6 +34,7 @@
 #define OBJECT_H_INCLUDED
 
 #include <nds.h>
+#include <stdio.h>
 #include "vector.h"
 
 /**
@@ -186,7 +187,7 @@ public:
 	/**
 	* getXcoord()
 	* getYcoord()
-	* 
+	*
 	* Constant accessor function that returns the respective X and Y coordinates of the object.
 	*
 	* @return int
@@ -198,11 +199,11 @@ public:
 	const int getXcoord() const { return position.x; }
 	const int getYcoord() const { return position.y; }
 	void setPosition( vector2D<float> pos ){ position = pos; }
-	
+
 	/**
 	* getColWidth
 	* getColHeight
-	* 
+	*
 	* Constant accessor function that returns the respective width and height of the object.
 	*
 	* @return int
@@ -216,7 +217,7 @@ public:
 
 	/**
 	* getAngle
-	* 
+	*
 	* Constant accessor function that returns the angle of the object.
 	*
 	* @return int
@@ -227,13 +228,13 @@ public:
 	*/
 	const int getAngle() const { return angle; }
 	void setAngle(int angleInRadians) { angle = angleInRadians; }
-	
+
 	const vector2D<float> getVelocity() const { return velocity; }
 	void setVelocity(vector2D<float> v)	{ velocity = v; }
-	
+
 	const vector2D<float> getAcceleration() const { return acceleration; }
 	void setAcceleration(vector2D<float> accel) { acceleration = accel; }
-	
+
 
 protected:
 	/**

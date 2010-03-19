@@ -108,13 +108,19 @@ void assets::fread16(FILE *input, uint16 &variable)
 // Loads tiles with id into memory
 void assets::loadTiles(u32 id, u16 &tilesIndex)
 {
+	iprintf("tile[%d] requested\n", id);
+
 	// See if it's already loaded
 	if (tileStatus[id].loaded)
 	{
+		iprintf(" cache hit->%d\n", tileStatus[id].index.index16);
+
 		// Already loaded so set the index and return
 		tilesIndex = tileStatus[id].index.index16;
 		return;
 	}
+
+	iprintf(" cache miss\n");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
@@ -133,25 +139,38 @@ void assets::loadTiles(u32 id, u16 &tilesIndex)
     static const int BYTES_PER_16_COLOR_TILE = 32;
 
 	// Start copying
-	fread(&SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], sizeof(uint8), tileLen[id], zbeData);
+	if (fread(&SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], sizeof(uint8), tileLen[id], zbeData) < tileLen[id])
+	{
+		iprintf(" data load error.\n");
+	}
 
 	// Update some variables
-	curIndex += tileLen[id] / BYTES_PER_16_COLOR_TILE;
 	tileStatus[id].loaded = true;
 	tileStatus[id].index.index16 = curIndex;
 	tilesIndex = curIndex;
+
+	iprintf(" loaded->%d\n", tilesIndex);
+
+	// Update the index for the next call
+	curIndex += tileLen[id] / BYTES_PER_16_COLOR_TILE;
 }
 
 // Loads palette with id into memory
 void assets::loadPalette(u32 id, u8 &palIndex)
 {
+	iprintf("palette[%d] requested\n", id);
+
 	// See if it's already loaded
 	if (palStatus[id].loaded)
 	{
+		iprintf(" cache hit->%d\n", palStatus[id].index.index8);
+
 		// Already loaded so set the index and return
 		palIndex = palStatus[id].index.index8;
 		return;
 	}
+
+	iprintf(" cache miss\n");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
@@ -162,11 +181,18 @@ void assets::loadPalette(u32 id, u8 &palIndex)
     static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
-	fread(&SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], sizeof(uint8), palLen[id], zbeData);
+	if (fread(&SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], sizeof(uint8), palLen[id], zbeData) < palLen[id])
+	{
+		iprintf(" data load error.\n");
+	}
 
 	// Update some variables
-	curIndex += palLen[id];
 	palStatus[id].loaded = true;
 	palStatus[id].index.index8 = curIndex;
 	palIndex = curIndex;
+
+	iprintf(" loaded->%d\n", palIndex);
+
+	// Update the index for the next call
+	curIndex += palLen[id];
 }
