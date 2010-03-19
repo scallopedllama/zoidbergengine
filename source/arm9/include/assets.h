@@ -56,6 +56,8 @@ using namespace std;
  */
 class assets {
 public:
+	assets();
+	~assets();
 
 private:
 

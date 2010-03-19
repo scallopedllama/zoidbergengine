@@ -61,6 +61,7 @@
 		<Unit filename="../source/arm7/source/main.cpp" />
 		<Unit filename="../source/arm9/Makefile" />
 		<Unit filename="../source/arm9/include/ai.h" />
+		<Unit filename="../source/arm9/include/assets.h" />
 		<Unit filename="../source/arm9/include/hero.h" />
 		<Unit filename="../source/arm9/include/level.h" />
 		<Unit filename="../source/arm9/include/object.h" />
@@ -68,6 +69,7 @@
 		<Unit filename="../source/arm9/include/util.h" />
 		<Unit filename="../source/arm9/include/vector.h" />
 		<Unit filename="../source/arm9/source/ai.cpp" />
+		<Unit filename="../source/arm9/source/assets.cpp" />
 		<Unit filename="../source/arm9/source/hero.cpp" />
 		<Unit filename="../source/arm9/source/level.cpp" />
 		<Unit filename="../source/arm9/source/main.cpp" />
