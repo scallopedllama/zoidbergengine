@@ -11,6 +11,10 @@ if [ "$1" == "" ]
     out_filename=$1
 fi
 
+#build the numPrefix programs
+cc -o numPrefix/numPrefix16 numPrefix/numPrefix16.c
+cc -o numPrefix/numPrefix32 numPrefix/numPrefix32.c
+
 #run grit on all the files in the gfx folder, 
 #should result with bin files in the current directory
 $DEVKITARM/bin/grit ./gfx/*.png &> /dev/null

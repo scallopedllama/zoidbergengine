@@ -1,2 +1,4 @@
 *.bin
 *.zbe
+numPrefix/numPrefix32
+numPrefix/numPrefix16
