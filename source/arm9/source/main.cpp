@@ -167,7 +167,7 @@ int main()
 	displayPlanet();
 
 	// test assets
-	assets zegAssets((char*) "/0 zoidberg/test.zbe");
+	assets zegAssets((char*) "/assets.zbe");
 
 	// make a level
 	level *lvl = new level(&zegAssets);

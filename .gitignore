@@ -18,3 +18,6 @@ NO$GBA.INP
 
 #build stuff
 source/arm9/build/*
+
+#mac trashes
+.DS_Store
