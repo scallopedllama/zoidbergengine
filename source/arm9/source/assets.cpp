@@ -139,10 +139,11 @@ void assets::loadTiles(u32 id, u16 &tilesIndex)
     static const int BYTES_PER_16_COLOR_TILE = 32;
 
 	// Start copying
-	if (fread(&SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], sizeof(uint8), tileLen[id], zbeData) < tileLen[id])
-	{
-		iprintf(" data load error.\n");
-	}
+	void *data = malloc(tileLen[id] * sizeof(u8));
+	if (fread(data, sizeof(u8), tileLen[id], zbeData) < tileLen[id])
+		iprintf(" data load error\n");
+	dmaCopyHalfWords(3, data, &SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], tileLen[id]);
+	free(data);
 
 	// Update some variables
 	tileStatus[id].loaded = true;
@@ -181,10 +182,11 @@ void assets::loadPalette(u32 id, u8 &palIndex)
     static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
-	if (fread(&SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], sizeof(uint8), palLen[id], zbeData) < palLen[id])
-	{
-		iprintf(" data load error.\n");
-	}
+	void *data = malloc(palLen[id] * sizeof(u8));
+	if (fread(data, sizeof(u8), palLen[id], zbeData) < palLen[id])
+		iprintf(" data load error\n");
+	dmaCopyHalfWords(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], palLen[id]);
+	free(data);
 
 	// Update some variables
 	palStatus[id].loaded = true;
@@ -194,5 +196,5 @@ void assets::loadPalette(u32 id, u8 &palIndex)
 	iprintf(" loaded->%d\n", palIndex);
 
 	// Update the index for the next call
-	curIndex += palLen[id];
+	curIndex++;
 }
