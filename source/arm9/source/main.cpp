@@ -67,10 +67,9 @@ void initVideo() {
 
     /*  Set the video mode on the sub screen. */
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                   DISPLAY_BG2_ACTIVE | // Enable BG1 for display of console
-                   DISPLAY_BG3_ACTIVE); // Enable BG3 for display of splash
+                   DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
 
-    consoleInit(NULL, 1, BgType_Text4bpp, BgSize_T_256x256, 31, 0, false, true);
+    consoleDemoInit();
 }
 
 void initBackgrounds() {
@@ -173,9 +172,9 @@ int main() {
 	// Display the backgrounds
 	displayStarField();
 	displayPlanet();
-	displaySplash();
+	//displaySplash();
 
-	printf("test\nfoobar!\n");
+	iprintf("test\nfoobar!\n");
 
 	//make a level
 	level *lvl = new level();
