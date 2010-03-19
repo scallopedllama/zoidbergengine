@@ -8,6 +8,7 @@
 
 #include <nds.h>
 #include <maxmod9.h>
+#include <fat.h>
 #include <assert.h>
 
 #include "level.h" //initOAM updateOAM
@@ -154,24 +155,19 @@ void displaySplash() {
 
 
 int main() {
-	/*  Turn on the 2D graphics core. */
+	//  Turn on the 2D graphics core.
 	powerOn(POWER_ALL_2D);
-
-	/*
-	*  Configure the VRAM and background control registers.
-	*
-	*  Place the main screen on the bottom physical screen. Then arrange the
-	*  VRAM banks. Next, confiure the background control registers.
-	*/
-
 	lcdMainOnBottom();
 	initVideo();
 	initBackgrounds();
 
-	/* Initialize maxmod using the memory based soundbank set up. */
+	// Initialize maxmod using the memory based soundbank set up.
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 
-	/* Display the backgrounds. */
+	// Initialize libfat
+	fatInitDefault();
+
+	// Display the backgrounds
 	displayStarField();
 	displayPlanet();
 	//displaySplash();
