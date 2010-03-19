@@ -81,6 +81,8 @@ int object::removeRotateScale()
 // only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
 void object::rotate(int Angle)
 {
+	// NOTE: I borrowed this code from that guys example. libnds provides a function to handle all this
+	// without any annoyance: oamRotateScale
 	angle = Angle;
 	s16 s = sinLerp(angle) >> 4;
 	s16 c = cosLerp(angle) >> 4;
