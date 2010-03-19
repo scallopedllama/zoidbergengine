@@ -49,6 +49,9 @@ void assets::parseZbe()
 			fpos_t curPos;
 			fgetpos(input, &curPos);
 			tilePos.push_back(curPos);
+
+			// Seek past this object
+			fseek(input, thisLen, SEEK_CUR);
 		}
 
 		// Get the number of palettes
@@ -71,6 +74,9 @@ void assets::parseZbe()
 			fpos_t curPos;
 			fgetpos(input, &curPos);
 			palPos.push_back(curPos);
+
+			// Seek past this object
+			fseek(input, thisLen, SEEK_CUR);
 		}
 	}
 }
@@ -78,11 +84,11 @@ void assets::parseZbe()
 // Reads a 32 bit integer from the input file
 void assets::fread32(FILE *input, uint32 &variable)
 {
-	fread( &variable, sizeof(uint32), 1, input);
+	fread(&variable, sizeof(uint32), 1, input);
 }
 
 // Reads a 16 bit integer from the input file
 void assets::fread16(FILE *input, uint16 &variable)
 {
-	fread( &variable, sizeof(uint16), 1, input);
+	fread(&variable, sizeof(uint16), 1, input);
 }
