@@ -14,7 +14,7 @@ fi
 #process all of the bin files
 for i in `ls | grep '.bin$'`
 do
-	echo Now processing $i...
+	echo -n "Now processing $i... "
 	
 	#use wc (word count) to count the bytes (-c) in each file.
 	#pipe that to awk to only get the bytes number
@@ -22,6 +22,8 @@ do
 	
 	#prepend that number to the bin file and save it with a .zbe extension
 	./numPrefix/numPrefix16 $i $num_bytes $i.zbe > /dev/null
+	
+	echo "done ($num_bytes bytes)."
 done
 
 #count all the gfx and pal files
@@ -30,7 +32,7 @@ no_pal=`ls | grep '.pal.bin.zbe$' | wc -w`
 no_all=$(($no_gfx+$no_pal))
 
 #happy echo
-echo Got $no_gfx graphics + $no_pal palettes = $no_all total assets.
+echo "Got $no_gfx graphics + $no_pal palettes = $no_all total assets."
 
 #group all of the images and pals and save them into intermediate files
 cat `ls | grep '.img.bin.zbe$'` > allgfx.zbe.tmp
@@ -58,4 +60,4 @@ rm allgfx.zbe.tmp allpal.zbe.tmp allgfx.zbe allpal.zbe
 #final cleanup
 rm all.zbe.tmp numd.zbe.tmp 
 
-echo All done. Assets saved into file $out_filename
+echo "All done. Assets saved into file $out_filename"
