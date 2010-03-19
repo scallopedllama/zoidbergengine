@@ -4,7 +4,7 @@
 using namespace decapod;
 
 // level constructor
-level::level()
+level::level(assets *a)
 {
 	// initialize the oam table
 	initOAM(oam);
@@ -16,7 +16,8 @@ level::level()
 		spriteAvail[i] = true;
 	}
 
-	// load up all the necessary assets n stuff
+	// Save the pointer to the assets
+	zegAssets = a;
 }
 
 // level destructor
@@ -60,37 +61,21 @@ int level::getSpriteEntry()
 }
 
 // TEMP FCTN: adds a sprite to the level
-void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
+void level::addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
 {
-    /*  Define some sprite configuration specific constants.
-     *
-     *  We will use these to compute the proper index into memory for certain
-     *  tiles or palettes.
-     *
-     *  OFFSET_MULTIPLIER is calculated based on the following formula from
-     *  GBATEK (http://nocash.emubase.de/gbatek.htm#dsvideoobjs):
-     *      TileVramAddress = TileNumber * BoundaryValue
-     *  Since SPRITE_GFX is a uint16*, the compiler will increment the address
-     *  it points to by 2 for each change in 1 of the array index into
-     *  SPRITE_GFX. (The compiler does pointer arithmetic.)
-     */
-    static const int BYTES_PER_16_COLOR_TILE = 32;
-    static const int COLORS_PER_PALETTE = 16;
-    //This is the default boundary value (can be set in REG_DISPCNT)
-    static const int BOUNDARY_VALUE = 32;
-    static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
+	// Request the assets for this sprite be loaded
+	u16 tilesIndex;
+	u8 palIndex;
+	zegAssets->loadTiles(tilesId, tilesIndex);
+	zegAssets->loadPalette(palId, palIndex);
 
-    // Keep track of the gfx index and palette index
-    static int gfxIndex = 0;
-    static int palIndex = 0;
-
-    // Create the sprite and make it a rotozoomer
+    // Create the sprite
     int spriteIndex = getSpriteEntry();
     object *newObj;
     if (mkeHero)
-		newObj = (object *) new hero(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
+		newObj = (object *) new hero(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, tilesIndex, palIndex);
     else
-		newObj = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, gfxIndex, palIndex);
+		newObj = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, tilesIndex, palIndex);
 	if(angle > 0)
 	{
 		int matrixIndex = getMatrix();
@@ -98,16 +83,7 @@ void level::addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void 
 	}
 	newObj->setPriority(OBJPRIORITY_0);
 
-    // Copy palette
-    dmaCopyHalfWords(SPRITE_DMA_CHANNEL, palette, &SPRITE_PALETTE[palIndex * COLORS_PER_PALETTE], paletteLen);
-    // Copy sprite
-    dmaCopyHalfWords(SPRITE_DMA_CHANNEL, tiles, &SPRITE_GFX[gfxIndex * OFFSET_MULTIPLIER], tilesLen);
-
-	// increment starting index for the next sprite
-	gfxIndex += tilesLen / BYTES_PER_16_COLOR_TILE;
-	palIndex++;
-
-	// add that object to the list
+	// Add that object to the list
 	objects.push_back(newObj);
 }
 
@@ -134,11 +110,11 @@ void level::update()
 	//iterate through all the objects in that list
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
-		// run their respective update functions		
+		// run their respective update functions
 		if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
 		objects[i]->update(touch);
 
-		
+
 	}
 }
 

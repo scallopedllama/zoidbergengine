@@ -170,13 +170,13 @@ int main()
 	displayPlanet();
 
 	// test assets
-	assets testAssets((char*) "/0 zoidberg/test.zbe");
+	assets zegAssets((char*) "/0 zoidberg/test.zbe");
 
 	// make a level
-	level *lvl = new level();
-	// void addSprite(const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
-	lvl->addSprite(true, orangeShuttleTiles, orangeShuttleTilesLen, orangeShuttlePal, orangeShuttlePalLen, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
-	lvl->addSprite(false, moonTiles, moonTilesLen, moonPal, moonPalLen, 25, 40, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
+	level *lvl = new level(&zegAssets);
+	// void addSprite(bool hero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
+	lvl->addSprite(true, 0, 0, 25, 45, 32, 32, 29568, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_64);
+	lvl->addSprite(false, 1, 1, 25, 40, 32, 32, 0, OBJMODE_NORMAL, OBJCOLOR_16, OBJSHAPE_SQUARE, OBJSIZE_32);
 	lvl->run();
 
 	return 0;

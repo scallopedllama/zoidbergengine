@@ -1,6 +1,6 @@
 #include "assets.h"
 
-assets::assets(char *_filename)
+assets::assets(char *filename)
 {
 	// Load the file
 	iprintf("Opening %s\n", filename);
@@ -106,7 +106,7 @@ void assets::fread16(FILE *input, uint16 &variable)
 }
 
 // Loads tiles with id into memory
-void assets::loadTiles(int id, u16 &tilesIndex)
+void assets::loadTiles(u32 id, u16 &tilesIndex)
 {
 	// See if it's already loaded
 	if (tileStatus[id].loaded)
@@ -118,7 +118,7 @@ void assets::loadTiles(int id, u16 &tilesIndex)
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, tilePos[id]);
+	fsetpos(zbeData, &tilePos[id]);
 
 	// Set some variables
 	static int curIndex = 0;
@@ -142,9 +142,8 @@ void assets::loadTiles(int id, u16 &tilesIndex)
 	tilesIndex = curIndex;
 }
 
-
 // Loads palette with id into memory
-void assets::loadTiles(int id, u8 &palIndex)
+void assets::loadPalette(u32 id, u8 &palIndex)
 {
 	// See if it's already loaded
 	if (palStatus[id].loaded)
@@ -156,7 +155,7 @@ void assets::loadTiles(int id, u8 &palIndex)
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, palPos[id]);
+	fsetpos(zbeData, &palPos[id]);
 
 	// Set some variables
 	static int curIndex = 0;

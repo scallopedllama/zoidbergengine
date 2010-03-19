@@ -39,13 +39,14 @@
 #define LEVEL_H_INCLUDED
 
 #define ZOIDBERG_NO_MATRICES -1
-#define ZOIDBERG_NO_SPRITES -1
+#define ZOIDBERG_NO_SPRITES -2
 
 #include <nds.h>
 #include <vector>
 #include "object.h" //addSprite function needs this
 #include "hero.h"  //addSprite can add a hero to the mix
 #include "physics.h"
+#include "assets.h"
 using namespace std;
 
 using namespace decapod;
@@ -71,9 +72,11 @@ public:
 	 * Initializes the local copy of the OAMTable and sets up the arrays that keep track of what
 	 * SpriteEntries and what matrices are available.
 	 *
+	 * @param assets *a
+	 *   A pointer to the assets class to use. Should be already initialized
 	 * @author Joe Balough
 	 */
-	level();
+	level(assets *a);
 
 	/**
 	 * level deconstructor
@@ -118,7 +121,7 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */
-	void addSprite(bool mkeHero, const void *tiles, u32 tilesLen, const void *palette, u32 paletteLen, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
+	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
 
 	/**
 	 * initOAM function
@@ -144,17 +147,20 @@ public:
 	void updateOAM(OAMTable &oam);
 
 private:
-	//The level's local copy of the OAM Table
+	// The level's local copy of the OAM Table
 	OAMTable oam;
 
-	//a standard library vector containing all of the objects in this level
+	// A pointer to the assets class to use
+	assets *zegAssets;
+
+	// A standard library vector containing all of the objects in this level
 	vector<object*> objects;
 
-	//an array of boolean variables indicating whether or not the index matrix is being used by a sprite
-	//used by the getMatrix and freeMatrix functions
+	// An array of boolean variables indicating whether or not the index matrix is being used by a sprite
+	// used by the getMatrix and freeMatrix functions
 	bool matrixAvail[MATRIX_COUNT];
 
-	//an array of boolean variables indicating whether or not the index sprite is being used
+	// An array of boolean variables indicating whether or not the index sprite is being used
 	bool spriteAvail[SPRITE_COUNT];
 
 	/**
@@ -173,8 +179,6 @@ private:
 		return &oam.matrixBuffer[index];
 	}
 
-	//tries to get an affine transformation matrix for use with the rotoZoom style sprite.
-	//returns the matrix id or -1 if they're all taken
 	/**
 	 * getMatrix function
 	 *
@@ -183,7 +187,8 @@ private:
 	 * It does this by scanning through the matrixAvail[] array looking for one set to true.
 	 *
 	 * @return int
-	 *   The matrixId corresponding to the SpriteRotation matrix available for use
+	 *   The matrixId corresponding to the SpriteRotation matrix available for use or ZOIDBERG_NO_MATRICES
+	 *   if they're all taken
 	 * @author Joe Balough
 	 */
 	int getMatrix();
@@ -227,7 +232,7 @@ private:
 	 * It does this by scanning through the spriteAvail[] array looking for one set to true.
 	 *
 	 * @return int
-	 *   The spriteID corresponding to the SpriteEntry available for use
+	 *   The spriteID corresponding to the SpriteEntry available for use or ZOIDBERG_NO_SPRITES if none available
 	 * @author Joe Balough
 	 */
 	int getSpriteEntry();

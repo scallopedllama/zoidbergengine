@@ -117,7 +117,7 @@ public:
 	 *   Passed by reference. Will be set to the index of these tiles
 	 * @author Joe Balough
 	 */
-	void loadTiles(int id, u16 &tilesIndex);
+	void loadTiles(u32 id, u16 &tilesIndex);
 
 	/**
 	 * loadPalette function
@@ -131,7 +131,7 @@ public:
 	 *   Passed by reference. Will be set to the index of this palette
 	 * @author Joe Balough
 	 */
-	void loadPalette(int id, u8 &palIndex);
+	void loadPalette(u32 id, u8 &palIndex);
 private:
 	/**
 	 * fread[32|16] functions
