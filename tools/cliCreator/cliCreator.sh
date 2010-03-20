@@ -25,7 +25,7 @@ do
 	out=`$DEVKITARM/bin/grit ./gfx/$i 2>&1 | awk '/STATUS: Work-DIB creation complete:/ {print $5}'`
 	outMod=$(echo $out | tr "x" " " | tr "@" " ")
 	width=`echo $outMod | awk '{print $1}'`
-	# height=`echo $outMod | awk '{print $2}'`
+	height=`echo $outMod | awk '{print $2}'`
 	
 	# figure out what the filename is for the processed file by stripping off its extension
 	# and adding img.bin and pal.bin
@@ -41,13 +41,14 @@ do
 	./numPrefix/numPrefix16 $img_bin $num_bytes_img $img_bin.zbe.tmp > /dev/null
 	./numPrefix/numPrefix16 $pal_bin $num_bytes_pal $pal_bin.zbe > /dev/null
 	
-	# prepend the size to the gfx bin 
+	# prepend the height then width to the gfx bin 
+	./numPrefix/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe > /dev/null
 	./numPrefix/numPrefix8 $img_bin.zbe.tmp $width $img_bin.zbe > /dev/null
 	
 	# clean up as much as possible
-	rm $img_bin.zbe.tmp $img_bin $pal_bin *.img.h *.pal.h
+	rm $img_bin.zbe.tmp $img_bin $pal_bin
 		
-	echo "done (img: $num_bytes_img bytes, $width pixels; palette: $num_bytes_pal bytes)."
+	echo "done (img: $num_bytes_img bytes, $width x $height; palette: $num_bytes_pal bytes)."
 done
 
 # count all the gfx and pal files

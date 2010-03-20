@@ -161,6 +161,19 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &gfxStatus[id].position);
 
+	// Request space to load this graphic
+	tilesIndex = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
+	
+	// Start copying
+	uint16 length = gfxStatus[id].length;
+	void *data = malloc(length * sizeof(u8));
+	if (fread(data, sizeof(u8), length, zbeData) < length)
+		iprintf(" data load error\n");
+	dmaCopyHalfWords(3, data, &SPRITE_GFX[tilesIndex], length);
+	free(data);
+	
+	iprintf(" loaded->%d\n", tilesIndex);
+	
 	// Set some variables
 	static int curIndex = 0;
 	/*
@@ -168,6 +181,7 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
      *  GBATEK (http://nocash.emubase.de/gbatek.htm#dsvideoobjs):
      *      TileVramAddress = TileNumber * BoundaryValue
      */
+	/*
     // This is the default boundary value (can be set in REG_DISPCNT)
     static const int BOUNDARY_VALUE = 32;
     static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -189,7 +203,7 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	iprintf(" loaded->%d\n", tilesIndex);
 
 	// Update the index for the next call
-	curIndex += length / BYTES_PER_16_COLOR_TILE;
+	curIndex += length / BYTES_PER_16_COLOR_TILE;*/
 }
 
 // Loads palette with id into memory
