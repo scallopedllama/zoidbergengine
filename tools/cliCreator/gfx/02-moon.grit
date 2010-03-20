@@ -12,3 +12,6 @@
 
 # Set output to binary files
 -ftb
+
+# No need for headers
+-fh!
