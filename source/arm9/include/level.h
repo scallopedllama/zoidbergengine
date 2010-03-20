@@ -72,11 +72,11 @@ public:
 	 * Initializes the local copy of the OAMTable and sets up the arrays that keep track of what
 	 * SpriteEntries and what matrices are available.
 	 *
-	 * @param assets *a
-	 *   A pointer to the assets class to use. Should be already initialized
+	 * @param char *filename
+	 *   Filename to use to initialize the assets object
 	 * @author Joe Balough
 	 */
-	level(assets *a);
+	level(char *filename);
 
 	/**
 	 * level deconstructor
@@ -107,22 +107,6 @@ public:
 	 */
 	void update();
 
-	//this is a temporary function to tell the level to load a sprite with specified graphics and settings
-	/**
-	 * addSprite function
-	 *
-	 * This should be considered a temporary function to test out the object class. In the future, sprites will be loaded
-	 * using information from the assets class.
-	 *
-	 * addSprite adds an object to the level with the passed parameters. See the object class for more param details.
-	 *
-	 * @param bool mkeHero
-	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
-	 * @see object::object()
-	 * @author Joe Balough
-	 */
-	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
-
 	/**
 	 * initOAM function
 	 *
@@ -145,13 +129,31 @@ public:
 	 * @author Joe Balough
 	 */
 	void updateOAM(OAMTable &oam);
-
+	
+	/**
+	 * These are temporary functions. They will probably go away!
+	 */
+	/**
+	 * addSprite function
+	 *
+	 * This should be considered a temporary function to test out the object class. In the future, sprites will be loaded
+	 * using information from the assets class.
+	 *
+	 * addSprite adds an object to the level with the passed parameters. See the object class for more param details.
+	 *
+	 * @param bool mkeHero
+	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
+	 * @see object::object()
+	 * @author Joe Balough
+	 */
+	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
+	
 private:
 	// The level's local copy of the OAM Table
 	OAMTable oam;
 
 	// A pointer to the assets class to use
-	assets *zegAssets;
+	assets *zbeAssets;
 
 	// A standard library vector containing all of the objects in this level
 	vector<object*> objects;

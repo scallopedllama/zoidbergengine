@@ -1,7 +1,10 @@
 #include "assets.h"
 
-assets::assets(char *filename)
+assets::assets(char *filename, OAMTable *table)
 {
+	// Set variables
+	oam = table;
+	
 	// Load the file
 	iprintf("Opening %s\n", filename);
 	zbeData = fopen(filename, "rb");

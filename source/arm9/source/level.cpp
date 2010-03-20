@@ -4,20 +4,20 @@
 using namespace decapod;
 
 // level constructor
-level::level(assets *a)
+level::level(char *filename)
 {
 	// initialize the oam table
 	initOAM(oam);
-
+	
+	// initialize the assets
+	zbeAssets = new assets(filename, &oam);
+	
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
 		spriteAvail[i] = true;
 	}
-
-	// Save the pointer to the assets
-	zegAssets = a;
 }
 
 // level destructor
@@ -66,8 +66,8 @@ void level::addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int wi
 	// Request the assets for this sprite be loaded
 	u16 tilesIndex;
 	u8 palIndex;
-	zegAssets->loadGfx(tilesId, tilesIndex);
-	zegAssets->loadPalette(palId, palIndex);
+	zbeAssets->loadGfx(tilesId, tilesIndex);
+	zbeAssets->loadPalette(palId, palIndex);
 
     // Create the sprite
     int spriteIndex = getSpriteEntry();

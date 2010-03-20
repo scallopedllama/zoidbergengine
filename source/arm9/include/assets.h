@@ -102,9 +102,11 @@ public:
 	/**
 	 * @param char *filename
 	 *   The zbe file to use for this game
+	 * @param OAMTable *oam
+	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */
-	assets(char *filename);
+	assets(char *filename, OAMTable *oam);
 
 	/**
 	 * parseZbe function
@@ -162,6 +164,9 @@ private:
 
 	// The zbe filename
 	FILE *zbeData;
+	
+	// A pointer to the local oamTable
+	OAMTable *oam;
 
 	/**
 	 * These vectors correspond to the status of the assets. They indicate whether or not the
