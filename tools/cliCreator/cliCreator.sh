@@ -42,11 +42,11 @@ do
 	./numPrefix/numPrefix16 $pal_bin $num_bytes_pal $pal_bin.zbe > /dev/null
 	
 	# prepend the height then width to the gfx bin 
-	./numPrefix/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe > /dev/null
-	./numPrefix/numPrefix8 $img_bin.zbe.tmp $width $img_bin.zbe > /dev/null
+	./numPrefix/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe.tmp1 > /dev/null
+	./numPrefix/numPrefix8 $img_bin.zbe.tmp1 $width $img_bin.zbe > /dev/null
 	
 	# clean up as much as possible
-	rm $img_bin.zbe.tmp $img_bin $pal_bin
+	rm $img_bin.zbe.tmp* $img_bin $pal_bin
 		
 	echo "done (img: $num_bytes_img bytes, $width x $height; palette: $num_bytes_pal bytes)."
 done
