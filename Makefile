@@ -21,6 +21,7 @@ all: $(TARGET).nds
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
+	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7	: $(SOURCES)/arm7/$(TARGET).elf
