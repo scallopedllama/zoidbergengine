@@ -18,7 +18,8 @@ assets::assets(char *filename)
 
 void assets::parseZbe()
 {
-	// TODO: actually handle the return values on all these file functions. They're all ignored so there is not fault tolerance.
+	// TODO: actually handle the return values on all these file functions. 
+	//       They're all ignored so there is not fault tolerance.
 
 	// Get the version number out of the zeg file
 	uint16 version = 0;
