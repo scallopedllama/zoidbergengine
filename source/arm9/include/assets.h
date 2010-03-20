@@ -43,8 +43,6 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
-#define ZOIDBERG_ASSET_NOT_LOADED -3
-
 #include <stdio.h>
 #include <nds.h>
 #include <fat.h>
@@ -65,8 +63,8 @@ union assetIndex
 };
 
 /**
- * asset_status struct. Used in the assets class in vectors to keep track of which
- * assets have been loaded and where they reside in memory if they have been loaded.
+ * asset_status struct. Used in the assets class in vectors to keep track assets in
+ * the datafile. Contains information like if it's loaded and what's its id.
  *
  * @author Joe Balough
  */
@@ -76,10 +74,23 @@ struct assetStatus
 	{
 		loaded = false;
 	}
-
+	
+	// Where the asset is located in the data file
+	fpos_t position;
+	
+	// How many bytes long is it
+	uint16 length;
+	
+	// Loaded from the file?
 	bool loaded;
+	
+	// Its index in the file
 	assetIndex index;
+	
+	// Its size (if applicable)
+	ObjSize size;
 };
+	
 
 /**
  * The assets class, manages all assets that are stored in the zbe datafile
@@ -106,7 +117,7 @@ public:
 	void parseZbe();
 
 	/**
-	 * loadTiles function
+	 * loadGfx function
 	 *
 	 * Loads the requested id of tiles into memory (if not already loaded) and sets tilesIndex
 	 * to the proper index to locate the tiles.
@@ -117,7 +128,7 @@ public:
 	 *   Passed by reference. Will be set to the index of these tiles
 	 * @author Joe Balough
 	 */
-	void loadTiles(u32 id, u16 &tilesIndex);
+	void loadGfx(u32 id, u16 &tilesIndex);
 
 	/**
 	 * loadPalette function
@@ -134,46 +145,31 @@ public:
 	void loadPalette(u32 id, u8 &palIndex);
 private:
 	/**
-	 * fread[32|16] functions
+	 * fread[32|16|8] functions
 	 *
 	 * the fread[] functions here will read an integer of the specified size off of the
-	 * passed input FILE and put into variable.
+	 * passed input FILE and return it.
 	 *
 	 * @param FILE *input
 	 *   The file from which to read the number
-	 * @param uint[32|16] &variable
-	 *   Passed by reference, the variable into which the read number should be placed
+	 * @return uint[32|16|8]
+	 *   The value read from the file
+	 * @author Joe Balough
 	 */
-	void fread32(FILE *input, uint32 &variable);
-	void fread16(FILE *input, uint16 &variable);
+	uint32 fread32(FILE *input);
+	uint16 fread16(FILE *input);
+	uint8 fread8(FILE *input);
 
 	// The zbe filename
 	FILE *zbeData;
 
 	/**
-	 * These vectors contain seek positions in the zbe file where assets are stored.
-	 * In all of these, the index of each entry is that entry's id.
-	 */
-	// Tiles' position
-	vector<fpos_t> tilePos;
-	// Palettes' position
-	vector<fpos_t> palPos;
-
-	/**
-	 * These vectors correspond to the seek vectors above. These indicate how may bytes
-	 * to read to get all of the data
-	 */
-	// Tiles' length
-	vector<uint16> tileLen;
-	// Palettes' length
-	vector<uint16> palLen;
-
-	/**
 	 * These vectors correspond to the status of the assets. They indicate whether or not the
-	 * id asset are loaded and their index if loaded.
+	 * id asset are loaded, their index if loaded, the position in the file, length, size, etc.
+	 * @see assetStatus
 	 */
 	 // Tiles' status
-	 vector<assetStatus> tileStatus;
+	 vector<assetStatus> gfxStatus;
 	 // Palettes' status
 	 vector<assetStatus> palStatus;
 };

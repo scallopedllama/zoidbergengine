@@ -66,7 +66,7 @@ void level::addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int wi
 	// Request the assets for this sprite be loaded
 	u16 tilesIndex;
 	u8 palIndex;
-	zegAssets->loadTiles(tilesId, tilesIndex);
+	zegAssets->loadGfx(tilesId, tilesIndex);
 	zegAssets->loadPalette(palId, palIndex);
 
     // Create the sprite

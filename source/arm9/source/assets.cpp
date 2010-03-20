@@ -22,102 +22,133 @@ void assets::parseZbe()
 	//       They're all ignored so there is not fault tolerance.
 
 	// Get the version number out of the zeg file
-	uint16 version = 0;
-	fread16(zbeData, version);
+	uint16 version = fread16(zbeData);
 	iprintf("v %d\n", version);
 
 	// Get the total number of assets
-	uint32 numAssets = 0;
-	fread32(zbeData, numAssets);
+	uint32 numAssets = fread32(zbeData);
 	iprintf("#assets %d\n", numAssets);
 
 	// Get the number of tiles
-	uint32 numTiles = 0;
-	fread32(zbeData, numTiles);
+	uint32 numTiles = fread32(zbeData);
 	iprintf("#gfx %d\n", numTiles);
 
-	// Get all of the tiles
+	// Get all of the gfx tiles
 	for (uint32 i = 0; i < numTiles; i++)
 	{
-		// Get the length of this tile
-		uint16 thisLen = 0;
-		fread16(zbeData, thisLen);
-		iprintf(" %d's len %d\n", i, thisLen);
-
-		// Store it on the end of the vector
-		tileLen.push_back(thisLen);
+		// Make a new assetStatus for the vector
+		assetStatus newAsset;
+		
+		// The very first byte of data in gfx tiles is its size
+		uint8 size = fread8(zbeData);
+		switch (size)
+		{
+			case 8:
+				newAsset.size = OBJSIZE_8;
+				iprintf(" %d's size 8x8\n", i);
+				break;
+			case 16:
+				newAsset.size = OBJSIZE_16;
+				iprintf(" %d's size 16x16\n", i);
+				break;
+			case 32:
+				newAsset.size = OBJSIZE_32;
+				iprintf(" %d's size 32x32\n", i);
+				break;
+			case 64:
+				newAsset.size = OBJSIZE_64;
+				iprintf(" %d's size 64x64\n", i);
+		}
+		
+		// Get the length of this gfx tiles
+		newAsset.length = fread16(zbeData);
+		iprintf(" len %d\n", newAsset.length);
 
 		// Add the current position in the file to the vector
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
-		tilePos.push_back(curPos);
+		newAsset.position = curPos;
 
-		// Add a new status to the end of the tileStatus vector
-		// Don't forget to set the status appropriately
-		assetStatus thisStatus;
-		thisStatus.index.index16 = ZOIDBERG_ASSET_NOT_LOADED;
-		tileStatus.push_back(thisStatus);
+		// Set that it is not loaded, assign a value to the union
+		// to get it using the proper value
+		newAsset.loaded = false;
+		newAsset.index.index16 = 0;
+		
+		// Push this asset on the array
+		gfxStatus.push_back(newAsset);
 
 		// Seek past this object
-		fseek(zbeData, thisLen, SEEK_CUR);
+		fseek(zbeData, newAsset.length, SEEK_CUR);
 	}
 
 	// Get the number of palettes
-	uint32 numPals = 0;
-	fread32(zbeData, numPals);
+	uint32 numPals = fread32(zbeData);
 	iprintf("#pals %d\n", numPals);
 
 	// Get all of the palettes
 	for (uint32 i = 0; i < numPals; i++)
 	{
+		// Make a new status for this palette
+		assetStatus newAsset;
+		
 		// Get the length of this palette
-		uint16 thisLen = 0;
-		fread16(zbeData, thisLen);
-		iprintf(" %d's len %d\n", i, thisLen);
-
-		// Store it on the end of the vector
-		palLen.push_back(thisLen);
+		newAsset.length = fread16(zbeData);
+		iprintf(" %d's len %d\n", i, newAsset.length);
 
 		// Add the current position in the file to the vector
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
-		palPos.push_back(curPos);
+		newAsset.position = curPos;
 
-		// Add a new status to the end of the palStatus vector
-		// Don't forget to set the status appropriately
-		assetStatus thisStatus;
-		thisStatus.index.index8 = ZOIDBERG_ASSET_NOT_LOADED;
-		palStatus.push_back(thisStatus);
+		// Initialize the index so the union is set up
+		// Then mark that it isn't loaded
+		newAsset.index.index8 = 0;
+		newAsset.loaded=false;
+		
+		// Push the new asset on to the array
+		palStatus.push_back(newAsset);
 
 		// Seek past this object
-		fseek(zbeData, thisLen, SEEK_CUR);
+		fseek(zbeData, newAsset.length, SEEK_CUR);
 	}
 }
 
 // Reads a 32 bit integer from the input file
-void assets::fread32(FILE *input, uint32 &variable)
+uint32 assets::fread32(FILE *input)
 {
+	uint32 variable;
 	fread(&variable, sizeof(uint32), 1, input);
+	return variable;
 }
 
 // Reads a 16 bit integer from the input file
-void assets::fread16(FILE *input, uint16 &variable)
+uint16 assets::fread16(FILE *input)
 {
+	uint16 variable;
 	fread(&variable, sizeof(uint16), 1, input);
+	return variable;
+}
+
+// Reads an 8 bit integer from the input file
+uint8 assets::fread8(FILE *input)
+{
+	uint8 variable;
+	fread(&variable, sizeof(uint8), 1, input);
+	return variable;
 }
 
 // Loads tiles with id into memory
-void assets::loadTiles(u32 id, u16 &tilesIndex)
+void assets::loadGfx(u32 id, u16 &tilesIndex)
 {
 	iprintf("tile[%d] requested\n", id);
 
 	// See if it's already loaded
-	if (tileStatus[id].loaded)
+	if (gfxStatus[id].loaded)
 	{
-		iprintf(" cache hit->%d\n", tileStatus[id].index.index16);
+		iprintf(" cache hit->%d\n", gfxStatus[id].index.index16);
 
 		// Already loaded so set the index and return
-		tilesIndex = tileStatus[id].index.index16;
+		tilesIndex = gfxStatus[id].index.index16;
 		return;
 	}
 
@@ -125,7 +156,7 @@ void assets::loadTiles(u32 id, u16 &tilesIndex)
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &tilePos[id]);
+	fsetpos(zbeData, &gfxStatus[id].position);
 
 	// Set some variables
 	static int curIndex = 0;
@@ -140,21 +171,22 @@ void assets::loadTiles(u32 id, u16 &tilesIndex)
     static const int BYTES_PER_16_COLOR_TILE = 32;
 
 	// Start copying
-	void *data = malloc(tileLen[id] * sizeof(u8));
-	if (fread(data, sizeof(u8), tileLen[id], zbeData) < tileLen[id])
+	uint16 length = gfxStatus[id].length;
+	void *data = malloc(length * sizeof(u8));
+	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, &SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], tileLen[id]);
+	dmaCopyHalfWords(3, data, &SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], length);
 	free(data);
 
 	// Update some variables
-	tileStatus[id].loaded = true;
-	tileStatus[id].index.index16 = curIndex;
+	gfxStatus[id].loaded = true;
+	gfxStatus[id].index.index16 = curIndex;
 	tilesIndex = curIndex;
 
 	iprintf(" loaded->%d\n", tilesIndex);
 
 	// Update the index for the next call
-	curIndex += tileLen[id] / BYTES_PER_16_COLOR_TILE;
+	curIndex += length / BYTES_PER_16_COLOR_TILE;
 }
 
 // Loads palette with id into memory
@@ -176,17 +208,18 @@ void assets::loadPalette(u32 id, u8 &palIndex)
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &palPos[id]);
+	fsetpos(zbeData, &palStatus[id].position);
 
 	// Set some variables
 	static int curIndex = 0;
     static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
-	void *data = malloc(palLen[id] * sizeof(u8));
-	if (fread(data, sizeof(u8), palLen[id], zbeData) < palLen[id])
+	uint16 length = palStatus[id].length;
+	void *data = malloc(length * sizeof(u8));
+	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], palLen[id]);
+	dmaCopyHalfWords(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
 	free(data);
 
 	// Update some variables
