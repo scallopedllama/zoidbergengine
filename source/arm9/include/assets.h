@@ -88,7 +88,7 @@ struct assetStatus
 	assetIndex index;
 	
 	// Its size (if applicable)
-	ObjSize size;
+	SpriteSize size;
 };
 	
 

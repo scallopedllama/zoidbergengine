@@ -42,26 +42,73 @@ void assets::parseZbe()
 		// Make a new assetStatus for the vector
 		assetStatus newAsset;
 		
-		// The very first byte of data in gfx tiles is its size
-		uint8 size = fread8(zbeData);
-		switch (size)
+		// The very first byte of data in gfx tiles is its width, second is height
+		uint8 width = fread8(zbeData);
+		uint8 height = fread8(zbeData);
+		iprintf(" %d x %d\n", width, height);
+		// Wow this is intense but it's the only way I can come up with to do this.
+		switch (width)
 		{
 			case 8:
-				newAsset.size = OBJSIZE_8;
-				iprintf(" %d's size 8x8\n", i);
+				switch (height)
+				{
+					case 8:
+						newAsset.size = SpriteSize_8x8;
+						break;
+					case 16:
+						newAsset.size = SpriteSize_8x16;
+						break;
+					case 32:
+						newAsset.size = SpriteSize_8x32;
+						break;
+				}
 				break;
 			case 16:
-				newAsset.size = OBJSIZE_16;
-				iprintf(" %d's size 16x16\n", i);
+				switch (height)
+				{
+				case 8:
+					newAsset.size = SpriteSize_16x8;
+					break;
+				case 16:
+					newAsset.size = SpriteSize_16x16;
+					break;
+				case 32:
+					newAsset.size = SpriteSize_16x32;
+					break;
+				}
 				break;
 			case 32:
-				newAsset.size = OBJSIZE_32;
-				iprintf(" %d's size 32x32\n", i);
+				switch (height)
+				{
+				case 8:
+					newAsset.size = SpriteSize_32x8;
+					break;
+				case 16:
+					newAsset.size = SpriteSize_32x16;
+					break;
+				case 32:
+					newAsset.size = SpriteSize_32x32;
+					break;
+				case 64:
+					newAsset.size = SpriteSize_32x64;
+					break;
+				}
 				break;
 			case 64:
-				newAsset.size = OBJSIZE_64;
-				iprintf(" %d's size 64x64\n", i);
+				switch (height)
+				{
+					case 32:
+						newAsset.size = SpriteSize_64x32;
+						break;
+					case 64:
+						newAsset.size = SpriteSize_64x64;
+						break;
+				}
+				break;
 		}
+				
+				
+				
 		
 		// Get the length of this gfx tiles
 		newAsset.length = fread16(zbeData);
@@ -162,7 +209,7 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	fsetpos(zbeData, &gfxStatus[id].position);
 
 	// Request space to load this graphic
-	tilesIndex = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
+	tilesIndex =  oamGfxPtrToOffset(&oamMain, oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color));
 	
 	// Start copying
 	uint16 length = gfxStatus[id].length;
@@ -175,7 +222,7 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	iprintf(" loaded->%d\n", tilesIndex);
 	
 	// Set some variables
-	static int curIndex = 0;
+	// static int curIndex = 0;
 	/*
 	 *  OFFSET_MULTIPLIER is calculated based on the following formula from
      *  GBATEK (http://nocash.emubase.de/gbatek.htm#dsvideoobjs):
