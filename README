@@ -17,9 +17,13 @@ In this directory:
   bin/		        The ultimate destination for the .NDS file
   build/	        Intermediate directory for binary object files
   emu/              Contains a copy of the lates no$gba for Windows
-  vs_project        A working visual studio 2008 project and its
+  vs_project/       A working visual studio 2008 project and its
                        files. This references C:\devkitpro
-  cb_project_linux  A working code::block project and its files for
+  cb_project_linux/ A working code::block project and its files for
                        development in Linux, references ./devkitpro
-  cb_project_win    A working code::blocks project and its files for
+  cb_project_win/   A working code::blocks project and its files for
                        development in Windows
+  docs/				Numerous documents associated with the zoidberg
+						engine including the logo
+  tools/			Contains other tools useful to building zbe games
+						such as the cliCreator tool.
