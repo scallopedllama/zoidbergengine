@@ -21,7 +21,6 @@ all: $(TARGET).nds
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
-	$(TOPDIR)/tools/cliCreator/cliCreator.sh $(TARGET).zbe
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
 
 #---------------------------------------------------------------------------------
