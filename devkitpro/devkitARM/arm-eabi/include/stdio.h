@@ -164,10 +164,12 @@ typedef _fpos64_t fpos64_t;
  * Functions defined in ANSI C standard.
  */
 
+#ifndef __VALIST
 #ifdef __GNUC__
 #define __VALIST __gnuc_va_list
 #else
 #define __VALIST char*
+#endif
 #endif
 
 FILE *	_EXFUN(tmpfile, (void));
@@ -230,7 +232,7 @@ int	_EXFUN(sprintf, (char *, const char *, ...)
 int	_EXFUN(remove, (const char *));
 int	_EXFUN(rename, (const char *, const char *));
 #endif
-#ifndef __STRICT_ANSI__
+#if !defined(__STRICT_ANSI__) || defined(__USE_XOPEN2K)
 #ifdef _COMPILING_NEWLIB
 int	_EXFUN(fseeko, (FILE *, _off_t, int));
 _off_t	_EXFUN(ftello, ( FILE *));
@@ -238,6 +240,8 @@ _off_t	_EXFUN(ftello, ( FILE *));
 int	_EXFUN(fseeko, (FILE *, off_t, int));
 off_t	_EXFUN(ftello, ( FILE *));
 #endif
+#endif
+#if !defined(__STRICT_ANSI__) || (__STDC_VERSION__ >= 199901L)
 #ifndef _REENT_ONLY
 int	_EXFUN(asiprintf, (char **, const char *, ...)
                _ATTRIBUTE ((__format__ (__printf__, 2, 3))));
@@ -344,7 +348,6 @@ FILE *	_EXFUN(fmemopen, (void *, size_t, const char *));
 FILE *	_EXFUN(open_memstream, (char **, size_t *));
 #if defined (__CYGWIN__)
 int	_EXFUN(renameat, (int, const char *, int, const char *));
-int	_EXFUN(symlinkat, (const char *, int, const char *));
 #endif
 int	_EXFUN(vdprintf, (int, const char *, __VALIST)
                _ATTRIBUTE ((__format__ (__printf__, 2, 0))));
@@ -389,6 +392,7 @@ FILE *	_EXFUN(_fopen_r, (struct _reent *, const char *, const char *));
 FILE *	_EXFUN(_freopen_r, (struct _reent *, const char *, const char *, FILE *));
 int	_EXFUN(_fprintf_r, (struct _reent *, FILE *, const char *, ...)
                _ATTRIBUTE ((__format__ (__printf__, 3, 4))));
+int	_EXFUN(_fpurge_r, (struct _reent *, FILE *));
 int	_EXFUN(_fputc_r, (struct _reent *, int, FILE *));
 int	_EXFUN(_fputs_r, (struct _reent *, const char *, FILE *));
 size_t	_EXFUN(_fread_r, (struct _reent *, _PTR, size_t _size, size_t _n, FILE *));
@@ -409,8 +413,6 @@ int	_EXFUN(_iprintf_r, (struct _reent *, const char *, ...)
                _ATTRIBUTE ((__format__ (__printf__, 2, 3))));
 int	_EXFUN(_iscanf_r, (struct _reent *, const char *, ...)
                _ATTRIBUTE ((__format__ (__scanf__, 2, 3))));
-int	_EXFUN(_mkstemp_r, (struct _reent *, char *));
-char *	_EXFUN(_mktemp_r, (struct _reent *, char *));
 FILE *	_EXFUN(_open_memstream_r, (struct _reent *, char **, size_t *));
 void	_EXFUN(_perror_r, (struct _reent *, const char *));
 int	_EXFUN(_printf_r, (struct _reent *, const char *, ...)
@@ -482,6 +484,9 @@ int	_EXFUN(_vsprintf_r, (struct _reent *, char *, const char *, __VALIST)
 int	_EXFUN(_vsscanf_r, (struct _reent *, const char *, const char *, __VALIST)
                _ATTRIBUTE ((__format__ (__scanf__, 3, 0))));
 
+/* Other extensions.  */
+
+int	_EXFUN(fpurge, (FILE *));
 ssize_t _EXFUN(__getdelim, (char **, size_t *, int, FILE *));
 ssize_t _EXFUN(__getline, (char **, size_t *, FILE *));
 
@@ -589,28 +594,9 @@ FILE *_EXFUN(_fopencookie_r,(struct _reent *, void *__cookie,
   There are two possible means to this end when compiling with GCC,
   one when compiling with a standard C99 compiler, and for other
   compilers we're just stuck.  At the moment, this issue only
-  affects the Cygwin target, so we'll most likely be using GCC.
+  affects the Cygwin target, so we'll most likely be using GCC. */
 
-  The traditional meaning of 'extern inline' for GCC is not
-  to emit the function body unless the address is explicitly
-  taken.  However this behaviour is changing to match the C99
-  standard, which uses 'extern inline' to indicate that the
-  function body *must* be emitted.  If we are using GCC, but do
-  not have the new behaviour, we need to use extern inline; if
-  we are using a new GCC with the C99-compatible behaviour, or
-  a non-GCC compiler (which we will have to hope is C99, since
-  there is no other way to achieve the effect of omitting the
-  function if it isn't referenced) we just use plain 'inline',
-  which c99 defines to mean more-or-less the same as the Gnu C
-  'extern inline'.  */
-#if defined(__GNUC__) && !defined(__GNUC_STDC_INLINE__)
-/* We're using GCC, but without the new C99-compatible behaviour.  */
-#define _ELIDABLE_INLINE extern __inline__ _ATTRIBUTE ((__always_inline__))
-#else
-/* We're using GCC in C99 mode, or an unknown compiler which 
-  we just have to hope obeys the C99 semantics of inline.  */
-#define _ELIDABLE_INLINE __inline__
-#endif
+_ELIDABLE_INLINE int __sgetc_r(struct _reent *__ptr, FILE *__p);
 
 _ELIDABLE_INLINE int __sgetc_r(struct _reent *__ptr, FILE *__p)
   {

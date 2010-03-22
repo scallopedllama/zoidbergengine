@@ -23,7 +23,7 @@ developing GNU and promoting software freedom."
    This file documents the GNU debugger GDB.
 
    This is the Ninth Edition, of `Debugging with GDB: the GNU
-Source-Level Debugger' for GDB (GDB) Version 7.0.
+Source-Level Debugger' for GDB (GDB) Version 7.0.1.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
@@ -48,7 +48,7 @@ Debugging with GDB
 
 This file describes GDB, the GNU symbolic debugger.
 
-   This is the Ninth Edition, for GDB (GDB) Version 7.0.
+   This is the Ninth Edition, for GDB (GDB) Version 7.0.1.
 
    Copyright (C) 1988-2009 Free Software Foundation, Inc.
 
@@ -477,7 +477,7 @@ Let us use GDB to try to see what is going on.
      There is absolutely no warranty for GDB; type "show warranty"
       for details.
 
-     GDB 7.0, Copyright 1999 Free Software Foundation, Inc...
+     GDB 7.0.1, Copyright 1999 Free Software Foundation, Inc...
      (gdb)
 
 GDB reads only enough symbol data to know where to find the rest when

@@ -62,8 +62,12 @@
 #  define __IEEE_BIG_ENDIAN
 # endif
 #else
-# define __IEEE_BIG_ENDIAN
 # ifdef __ARMEL__
+#  define __IEEE_LITTLE_ENDIAN
+# else
+#  define __IEEE_BIG_ENDIAN
+# endif
+# ifdef __ARMWEL__
 #  define __IEEE_BYTES_LITTLE_ENDIAN
 # endif
 #endif
@@ -80,12 +84,8 @@
           (__extension__ ({__typeof__(y) __y = (y); \
                            (sizeof (__y) == sizeof (float))  ? (1) : \
                            fpclassify(__y) != FP_INFINITE && fpclassify(__y) != FP_NAN;}))
-#define isinf(x) \
-          (__extension__ ({__typeof__(x) __x = (x); \
-                           (sizeof (__x) == sizeof (float))  ? (0) : __isinfd(__x);}))
-#define isnan(x) \
-          (__extension__ ({__typeof__(x) __x = (x); \
-                           (sizeof (__x) == sizeof (float))  ? (0) : __isnand(__x);}))
+#define isinf(__x) ((sizeof (__x) == sizeof (float))  ?  (0) : __isinfd(__x))
+#define isnan(__x) ((sizeof (__x) == sizeof (float))  ?  (0) : __isnand(__x))
 
 /*
  * Macros for use in ieeefp.h. We can't just define the real ones here
@@ -121,6 +121,13 @@
 #define _FLOAT_ARG float
 #define _DOUBLE_IS_32BITS
 #endif
+
+#if defined (__xc16x__) || defined (__xc16xL__) || defined (__xc16xS__)
+#define __IEEE_LITTLE_ENDIAN
+#define _FLOAT_ARG float
+#define _DOUBLE_IS_32BITS
+#endif
+
 
 #ifdef __sh__
 #ifdef __LITTLE_ENDIAN__
@@ -262,6 +269,10 @@
 #define __IEEE_BIG_ENDIAN
 #endif
 
+#ifdef __moxie__
+#define __IEEE_BIG_ENDIAN
+#endif
+
 #ifdef __ia64__
 #ifdef __BIG_ENDIAN__
 #define __IEEE_BIG_ENDIAN
@@ -320,6 +331,28 @@
 #else
 #define __IEEE_BIG_ENDIAN
 #endif
+#endif
+
+#ifdef __MICROBLAZE__
+#define __IEEE_BIG_ENDIAN
+#endif
+
+#ifdef __RX__
+
+#ifdef __RX_BIG_ENDIAN__
+#define __IEEE_BIG_ENDIAN
+#else
+#define __IEEE_LITTLE_ENDIAN
+#endif
+
+#ifndef __RX_64BIT_DOUBLES__
+#define _DOUBLE_IS_32BITS
+#endif
+
+#ifdef __RX_16BIT_INTS__
+#define __SMALL_BITFIELDS
+#endif
+
 #endif
 
 #ifndef __IEEE_BIG_ENDIAN

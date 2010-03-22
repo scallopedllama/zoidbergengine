@@ -291,6 +291,8 @@ typedef struct OamState
        SpriteEntry *oamMemory; /**< pointer to shadow oam memory */
 	   SpriteRotation *oamRotationMemory; /**< pointer to shadow oam memory for rotation */
    };
+   SpriteMapping spriteMapping;
+
 }OamState;
 
 #ifdef __cplusplus
@@ -449,7 +451,7 @@ int oamCountFragments(OamState *oam);
 
 void oamAllocReset(OamState *oam);
 
-unsigned int oamGfxPtrToOffset(const void* offset);
+unsigned int oamGfxPtrToOffset(OamState *oam, const void* offset);
 
 
 #ifdef __cplusplus

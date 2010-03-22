@@ -349,7 +349,7 @@ build: i686-pc-linux-gnu
 target: arm-unknown-eabi
 __EOF__
       cat >> $file << \__EOF__
-configured with: ../../gcc-4.4.2/configure --enable-languages=c,c++,objc --with-cpu=arm7tdmi --enable-interwork --enable-multilib --with-gcc --with-gnu-ld --with-gnu-as --disable-dependency-tracking --disable-shared --disable-threads --disable-win32-registry --disable-nls --disable-debug --disable-libmudflap --disable-libssp --disable-libgomp --disable-libstdcxx-pch --target=arm-eabi --with-newlib --prefix=/opt/devkitpro/devkitARM --with-bugurl=http://wiki.devkitpro.org/index.php/Bug_Reports --with-pkgversion='devkitARM release 27'
+configured with: ../../gcc-4.4.3/configure --enable-languages=c,c++,objc --with-cpu=arm7tdmi --enable-interwork --enable-multilib --with-gcc --with-gnu-ld --with-gnu-as --disable-dependency-tracking --disable-shared --disable-threads --disable-win32-registry --disable-nls --disable-debug --disable-libmudflap --disable-libssp --disable-libgomp --disable-libstdcxx-pch --target=arm-eabi --with-newlib --prefix=/opt/devkitpro/devkitARM --with-bugurl=http://wiki.devkitpro.org/index.php/Bug_Reports --with-pkgversion='devkitARM release 28'
 __EOF__
       cat >> $file << __EOF__
 >Description:

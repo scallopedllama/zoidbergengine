@@ -15,7 +15,7 @@
  *  OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY OF THIS
  *  SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  *
- *  $Id: features.h,v 1.16 2008/12/12 17:16:03 jjohnstn Exp $
+ *  $Id: features.h,v 1.19 2009/07/06 18:59:04 jjohnstn Exp $
  */
 
 #ifndef _SYS_FEATURES_H
@@ -73,7 +73,17 @@ extern "C" {
 #define _POSIX_INTERRUPT_CONTROL		1
 #define _POSIX_ADVISORY_INFO			1
 
+/* UNIX98 added some new pthread mutex attributes */
+#define _UNIX98_THREAD_MUTEX_ATTRIBUTES         1
+
 #endif
+
+/* XMK loosely adheres to POSIX -- 1003.1 */
+#ifdef __XMK__
+#define _POSIX_THREADS				1
+#define _POSIX_THREAD_PRIORITY_SCHEDULING	1
+#endif
+
 
 #ifdef __svr4__
 # define _POSIX_JOB_CONTROL     1
@@ -169,11 +179,6 @@ extern "C" {
 
 #endif /* !__STRICT_ANSI__ || __cplusplus || __STDC_VERSION__ >= 199901L */
 #endif /* __CYGWIN__ */
-
-#ifdef __SPU__
-/* Not much for now! */
-#define _POSIX_TIMERS				     1
-#endif
 
 #ifdef __cplusplus
 }

@@ -27,7 +27,7 @@ _BEGIN_STD_C
 
 /* necv70 was 9 as well. */
 
-#ifdef __mc68000__
+#if defined(__m68k__) || defined(__mc68000__)
 /*
  * onsstack,sigmask,sp,pc,psl,d2-d7,a2-a6,
  * fp2-fp7	for 68881.
@@ -140,6 +140,11 @@ _BEGIN_STD_C
 #define _JBTYPE double
 #endif
 
+#ifdef __MICROBLAZE__
+#define _JBLEN  20
+#define _JBTYPE unsigned int
+#endif
+
 #ifdef __hppa__
 /* %r30, %r2-%r18, %r27, pad, %fr12-%fr15.
    Note space exists for the FP registers, but they are not
@@ -185,6 +190,10 @@ _BEGIN_STD_C
 #ifdef __frv__
 #define _JBLEN (68/2)  /* room for 68 32-bit regs */
 #define _JBTYPE double
+#endif
+
+#ifdef __moxie__
+#define _JBLEN 16
 #endif
 
 #ifdef __CRX__
@@ -245,6 +254,10 @@ _BEGIN_STD_C
 #define _JBTYPE unsigned short
 #endif /* __m32c__ */
 
+#ifdef __RX__
+#define _JBLEN 0x44
+#endif
+
 #ifdef _JBLEN
 #ifdef _JBTYPE
 typedef	_JBTYPE jmp_buf[_JBLEN];
@@ -263,7 +276,11 @@ extern "C" {
 #endif
 
 /* POSIX sigsetjmp/siglongjmp macros */
-typedef int sigjmp_buf[_JBLEN+2];
+#ifdef _JBTYPE
+typedef _JBTYPE sigjmp_buf[_JBLEN+1+(sizeof (sigset_t)/sizeof (_JBTYPE))];
+#else
+typedef int sigjmp_buf[_JBLEN+1+(sizeof (sigset_t)/sizeof (int))];
+#endif
 
 #define _SAVEMASK	_JBLEN
 #define _SIGMASK	(_JBLEN+1)

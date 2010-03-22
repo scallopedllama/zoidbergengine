@@ -29,6 +29,10 @@
 #define UINT_MAX (__INT_MAX__ * 2U + 1)
 #endif
 
+#if defined (__xc16x__) || defined (__xc16xL__) || defined (__xc16xS__)
+#define __SMALL_BITFIELDS
+#endif
+
 #ifdef __W65__
 #define __SMALL_BITFIELDS
 #endif
@@ -94,6 +98,17 @@
 #endif
 #endif
 
+/* Configure small REENT structure for Xilinx MicroBlaze platforms */
+#if defined (__MICROBLAZE__)
+#ifndef _REENT_SMALL
+#define _REENT_SMALL
+#endif
+/* Xilinx XMK uses Unix98 mutex */
+#ifdef __XMK__
+#define _UNIX98_THREAD_MUTEX_ATTRIBUTES
+#endif
+#endif
+
 #if defined(__mips__) && !defined(__rtems__)
 #define __ATTRIBUTE_IMPURE_PTR__ __attribute__((__section__(".sdata")))
 #endif
@@ -124,11 +139,6 @@
 #define __BUFSIZ__ 16
 #define _REENT_SMALL
 #endif /* __m32c__ */
-
-#ifdef __thumb2__
-/* Thumb-2 based ARMv7M devices are really small.  */
-#define _REENT_SMALL
-#endif
 
 #ifdef __SPU__
 #define MALLOC_ALIGNMENT 16
@@ -178,11 +188,20 @@
 
 #if defined(__CYGWIN__)
 #include <cygwin/config.h>
+#define __LINUX_ERRNO_EXTENSIONS__ 1
+#define _MB_EXTENDED_CHARSETS_ALL 1
+#if !defined (__STRICT_ANSI__) || (__STDC_VERSION__ >= 199901L)
+#define __USE_XOPEN2K 1
+#endif
 #endif
 
 #if defined(__rtems__)
 #define __FILENAME_MAX__ 255
 #define _READ_WRITE_RETURN_TYPE _ssize_t
+#endif
+
+#ifndef __EXPORT
+#define __EXPORT
 #endif
 
 #ifndef __IMPORT
@@ -208,6 +227,14 @@
 #ifndef _REENT_SMALL
 #define _REENT_SMALL
 #endif
+#endif
+
+/* If _MB_EXTENDED_CHARSETS_ALL is set, we want all of the extended
+   charsets.  The extended charsets add a few functions and a couple
+   of tables of a few K each. */
+#ifdef _MB_EXTENDED_CHARSETS_ALL
+#define _MB_EXTENDED_CHARSETS_ISO 1
+#define _MB_EXTENDED_CHARSETS_WINDOWS 1
 #endif
 
 #endif /* __SYS_CONFIG_H__ */

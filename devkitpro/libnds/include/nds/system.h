@@ -141,6 +141,12 @@ static inline void lcdMainOnTop(void) { REG_POWERCNT |= POWER_SWAP_LCDS; }
 //!	Forces the main core to display on the bottom.
 static inline void lcdMainOnBottom(void) { REG_POWERCNT &= ~POWER_SWAP_LCDS; }
 
+//! Powers down the DS
+static inline
+void systemShutDown() {
+	powerOn(PM_SYSTEM_PWR);
+}
+
 //!	Set the arm9 vector base
 /*!	Arm9 only
 	\param highVector high vector
@@ -170,31 +176,26 @@ extern sysVectors SystemVectors;
 	the ARM7.  Trying to boot up these hardware devices via
 	the ARM9 would lead to unexpected results.
 */
-typedef enum 
-{
-	POWER_SOUND = BIT(0),	//!<	Controls the power for the sound controller.
+typedef enum {
+	POWER_SOUND = BIT(0),			//!<	Controls the power for the sound controller.
 
-	PM_CONTROL_REG   = 0, //!<	Selects the PM control register
-	PM_BATTERY_REG   = 1, //!<	Selects the PM nattery register
-	PM_AMPLIFIER_REG = 2, //!<	Selects the PM amplifier register
-	PM_READ_REGISTER = (1<<7), //!<	Selects the PM read register
-	PM_AMP_OFFSET  = 2,		//!<	Selects the PM amp register
-	PM_GAIN_OFFSET  = 3, //!<	Selects the PM gain register
-	PM_GAIN_20 = 0,	//!<	Sets the mic gain to 20db
-	PM_GAIN_40 = 1,//!<	Sets the mic gain to 40db
-	PM_GAIN_80 = 2,//!<	Sets the mic gain to 80db
-	PM_GAIN_160 = 3,//!<	Sets the mic gain to 160db
-	PM_AMP_ON     = 1, //!<	Turns the sound amp on
-	PM_AMP_OFF    = 0 //!<	Turns the sound amp off
-}ARM7_power;
-
+	PM_CONTROL_REG		= 0,		//!<	Selects the PM control register
+	PM_BATTERY_REG		= 1,		//!<	Selects the PM nattery register
+	PM_AMPLIFIER_REG	= 2,		//!<	Selects the PM amplifier register
+	PM_READ_REGISTER	= (1<<7),	//!<	Selects the PM read register
+	PM_AMP_OFFSET		= 2,		//!<	Selects the PM amp register
+	PM_GAIN_OFFSET		= 3,		//!<	Selects the PM gain register
+	PM_BACKLIGHT_LEVEL	= 4, 		//!<	Selects the DS Lite backlight register
+	PM_GAIN_20			= 0,		//!<	Sets the mic gain to 20db
+	PM_GAIN_40			= 1,		//!<	Sets the mic gain to 40db
+	PM_GAIN_80			= 2,		//!<	Sets the mic gain to 80db
+	PM_GAIN_160			= 3,		//!<	Sets the mic gain to 160db
+	PM_AMP_ON			= 1,		//!<	Turns the sound amp on
+	PM_AMP_OFF			= 0			//!<	Turns the sound amp off
+} ARM7_power;
 
 //!< PM control register bits - LED control
 #define PM_LED_CONTROL(m)  ((m)<<4)  // ?
-// Warning: These functions use the SPI chain, and are thus 'critical'
-// sections, make sure to disable interrupts during the call if you've
-// got a VBlank IRQ polling the touch screen, etc...
-
 
 //install the fifo power handler
 void installSystemFIFO(void);
@@ -203,6 +204,10 @@ void installSystemFIFO(void);
 void systemSleep(void);
 //internal can check if sleep mode is enabled
 int sleepEnabled(void);
+
+// Warning: These functions use the SPI chain, and are thus 'critical'
+// sections, make sure to disable interrupts during the call if you've
+// got a VBlank IRQ polling the touch screen, etc...
 
 // Read/write a power management register
 int writePowerManagement(int reg, int command);
@@ -213,7 +218,7 @@ int readPowerManagement(int reg) {
 }
 
 static inline
-void powerOn(PM_Bits bits) {
+void powerOn(int bits) {
 	REG_POWERCNT |= bits;
 }
 
@@ -222,14 +227,23 @@ void powerOff(PM_Bits bits) {
 	REG_POWERCNT &= ~bits;
 }
 
-static inline
-void systemShutDown() {
-	powerOn(PM_SYSTEM_PWR);
-}
-
 void readUserSettings();
+void systemShutDown();
 
 #endif /* ARM7 */
+
+//!	Backlight level settings
+/*!	Note, these are only available on DS Lite.
+*/
+typedef enum {
+	BACKLIGHT_LOW,
+	BACKLIGHT_MED,
+	BACKLIGHT_HIGH,
+	BACKLIGHT_MAX	
+} BACKLIGHT_LEVELS;
+
+// Common functions
+
 
 //!	User's DS settings.
 /*!	\struct tPERSONAL_DATA
@@ -284,15 +298,6 @@ typedef struct tPERSONAL_DATA {
   u32	RESERVED4;
 } PACKED PERSONAL_DATA ;
 
-//!	Key input register.
-/*!	On the ARM9, the hinge "button", the touch status, and the
-	X and Y buttons cannot be accessed directly.
-*/
-#define	REG_KEYINPUT	(*(vuint16*)0x04000130)
-
-//!	Key input control register.
-#define	REG_KEYCNT		(*(vuint16*)0x04000132)
-
 //!	Default location for the user's personal data (see %PERSONAL_DATA).
 #define PersonalData ((PERSONAL_DATA*)0x2FFFC80)
 
@@ -316,6 +321,14 @@ struct __argv {
 //!	Default location for the libnds argv structure.
 #define __system_argv		((struct __argv *)0x02FFFE70)
 
+#define BOOTSIG	0x62757473746F6F62ULL
+
+struct __bootstub {
+	u64	bootsig;
+	VoidFn arm9reboot;
+	VoidFn arm7reboot;
+	u32 bootsize;
+};
 
 typedef	struct {
 	u8 year;	// add 2000 to get 4 digit year
@@ -331,6 +344,11 @@ typedef	struct {
 #ifdef ARM9
 void *memCached(void *address);
 void *memUncached(void *address);
+void resetARM7(u32 address);
+#endif
+
+#ifdef ARM7
+void resetARM9(u32 address);
 #endif
 
 #endif
