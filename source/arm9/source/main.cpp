@@ -167,7 +167,7 @@ int main()
 	displayPlanet();
 
 	// make a level
-	level *lvl = new level((char*) "/zoidbergengine.zbe");
+	level *lvl = new level((char*) "/assets.zbe");
 
 	// Drop in some assets
 	// void addSprite(bool hero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
