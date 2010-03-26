@@ -76,6 +76,17 @@
 		<Unit filename="../source/arm9/source/object.cpp" />
 		<Unit filename="../source/arm9/source/physics.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
+		<Unit filename="../tools/cliCreator/Makefile" />
+		<Unit filename="../tools/cliCreator/cliCreator.sh" />
+		<Unit filename="../tools/cliCreator/numPrefix/numPrefix16.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../tools/cliCreator/numPrefix/numPrefix32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../tools/cliCreator/numPrefix/numPrefix8.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />
