@@ -83,7 +83,7 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
     object *newObj;
     if (mkeHero)
 		newObj = (object *) new hero(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color,
-		true, false, getMatrix(), 0, 29, 455, false);
+		true, false, getMatrix(), 1 << 8, 1 << 8, 23, false);
     else
 		newObj = new object(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
 	

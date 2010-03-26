@@ -184,7 +184,16 @@ public:
 	 *  The angle to set to this object
 	 * @author Joe Balough
 	 */
-	void rotate(int angle);
+	inline void rotate(int Angle)
+	{
+		// Set angle
+		angle = Angle;
+		
+		// do rotation
+		// NOTE: width and height should be "inverse scale factors" if this
+		//  function doesn't work like expected, that's why.
+		oamRotateScale(oam, matrixId, angle, width, height);
+	}
 
 	/**
 	 * isHidden function

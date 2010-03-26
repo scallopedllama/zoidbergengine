@@ -98,14 +98,3 @@ int object::removeRotateScale()
 	return toReturn;
 }
 
-// only valid when isRotateScale. sets the rotation angle in the affine transformation matrix.
-void object::rotate(int Angle)
-{
-	// Set angle
-	angle = Angle;
-	
-	// do rotation
-	// NOTE: width and height should be "inverse scale factors" if this
-	//  function doesn't work like expected, that's why.
-	oamRotateScale(oam, matrixId, angle, width, height);
-}
