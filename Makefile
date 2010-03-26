@@ -10,6 +10,7 @@ include $(DEVKITARM)/ds_rules
 export TARGET		:=	bin/$(shell basename $(CURDIR))
 export TOPDIR		:=	$(CURDIR)
 export SOURCES		:=	source
+export CLICREATOR	:=	tools/cliCreator
 
 .PHONY: $(TARGET).arm7 $(TARGET).arm9
 
@@ -19,7 +20,7 @@ export SOURCES		:=	source
 all: $(TARGET).nds
 
 #---------------------------------------------------------------------------------
-$(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
+$(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9 assets
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
 
@@ -30,10 +31,14 @@ $(TARGET).arm9	: $(SOURCES)/arm9/$(TARGET).elf
 #---------------------------------------------------------------------------------
 $(SOURCES)/arm7/$(TARGET).elf:
 	$(MAKE) -C $(SOURCES)/arm7
-	
+
 #---------------------------------------------------------------------------------
 $(SOURCES)/arm9/$(TARGET).elf:
 	$(MAKE) -C $(SOURCES)/arm9
+
+#---------------------------------------------------------------------------------
+assets:
+	$(MAKE) -C $(CLICREATOR)
 
 #---------------------------------------------------------------------------------
 clean:
