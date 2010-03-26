@@ -161,8 +161,23 @@ private:
 	uint32 fread32(FILE *input);
 	uint16 fread16(FILE *input);
 	uint8 fread8(FILE *input);
-
-	// The zbe filename
+	
+	/**
+	 * getSpriteSize function
+	 *
+	 * getSpriteSize is simply a lengthy string of switch cases to find the appropriate
+	 * SpriteSize to fit the passed width and height. It's used in the parsing function.
+	 * If a width or height has an unexpected value, it will give it the largest size in
+	 * that undefined dimension.
+	 *
+	 * @param uint8 width
+	 * @param uint8 height
+	 *   dimensions of the sprite's graphics data
+	 * @author Joe Balough
+	 */
+	SpriteSize getSpriteSize(uint8 width, uint8 height);
+	
+	// The zbe file
 	FILE *zbeData;
 	
 	// A pointer to the local oamTable

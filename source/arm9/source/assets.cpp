@@ -45,70 +45,10 @@ void assets::parseZbe()
 		// The very first byte of data in gfx tiles is its width, second is height
 		uint8 width = fread8(zbeData);
 		uint8 height = fread8(zbeData);
-		iprintf(" %d x %d\n", width, height);
-		// Wow this is intense but it's the only way I can come up with to do this.
-		switch (width)
-		{
-			case 8:
-				switch (height)
-				{
-					case 8:
-						newAsset.size = SpriteSize_8x8;
-						break;
-					case 16:
-						newAsset.size = SpriteSize_8x16;
-						break;
-					case 32:
-						newAsset.size = SpriteSize_8x32;
-						break;
-				}
-				break;
-			case 16:
-				switch (height)
-				{
-				case 8:
-					newAsset.size = SpriteSize_16x8;
-					break;
-				case 16:
-					newAsset.size = SpriteSize_16x16;
-					break;
-				case 32:
-					newAsset.size = SpriteSize_16x32;
-					break;
-				}
-				break;
-			case 32:
-				switch (height)
-				{
-				case 8:
-					newAsset.size = SpriteSize_32x8;
-					break;
-				case 16:
-					newAsset.size = SpriteSize_32x16;
-					break;
-				case 32:
-					newAsset.size = SpriteSize_32x32;
-					break;
-				case 64:
-					newAsset.size = SpriteSize_32x64;
-					break;
-				}
-				break;
-			case 64:
-				switch (height)
-				{
-					case 32:
-						newAsset.size = SpriteSize_64x32;
-						break;
-					case 64:
-						newAsset.size = SpriteSize_64x64;
-						break;
-				}
-				break;
-		}
-				
-				
-				
+		iprintf(" %d x %d\n", width, height);				
+		
+		// Set its spriteSize
+		newAsset.size = getSpriteSize(width, height);
 		
 		// Get the length of this gfx tiles
 		newAsset.length = fread16(zbeData);
@@ -162,6 +102,85 @@ void assets::parseZbe()
 		fseek(zbeData, newAsset.length, SEEK_CUR);
 	}
 }
+
+// Given a width and a height returns an appropriate SpriteSize
+SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
+{
+	// Wow this is intense but it's the only way I can come up with to do this.
+	switch (width)
+	{
+		case 8:
+			switch (height)
+			{
+				case 8:
+					return SpriteSize_8x8;
+					break;
+				case 16:
+					return SpriteSize_8x16;
+					break;
+				case 32:
+					return SpriteSize_8x32;
+					break;
+				default:
+					return SpriteSize_8x32;
+					break;
+			}
+			break;
+		case 16:
+			switch (height)
+			{
+				case 8:
+					return SpriteSize_16x8;
+					break;
+				case 16:
+					return SpriteSize_16x16;
+					break;
+				case 32:
+					return SpriteSize_16x32;
+					break;
+			default:
+					return SpriteSize_16x32;
+					break;
+			}
+			break;
+		case 32:
+			switch (height)
+			{
+				case 8:
+					return SpriteSize_32x8;
+					break;
+				case 16:
+					return SpriteSize_32x16;
+					break;
+				case 32:
+					return SpriteSize_32x32;
+					break;
+				case 64:
+					return SpriteSize_32x64;
+					break;
+				default:
+					return SpriteSize_32x64;
+			}
+			break;
+		case 64:
+			switch (height)
+			{
+				case 32:
+					return SpriteSize_64x32;
+					break;
+				case 64:
+					return SpriteSize_64x64;
+					break;
+				default:
+					return SpriteSize_64x64;
+					break;
+			}
+			break;
+		default:
+			return SpriteSize_64x64;
+			break;
+	}
+}	
 
 // Reads a 32 bit integer from the input file
 uint32 assets::fread32(FILE *input)
