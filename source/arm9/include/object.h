@@ -139,10 +139,9 @@ public:
 	 *  The index of the SpriteRotation object in the OAMTable
 	 * @param int angle
 	 *  An angle at which to start the sprite. Defaults to 0
-	 * @param int width
-	 *  The width to which the sprite should be scaled
-	 * @param int height
-	 *  The height to which the sprite should be scaled
+	 * @param int width, height
+	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
+	 *  If set to a value < 0, will use current values for width and height
 	 * @author Joe Balough
 	 */
 	void makeRotateScale(int matrixId, int angle = 0, int width = -1, int height = -1);
@@ -158,22 +157,7 @@ public:
 	 * @author Joe Balough
 	 */
 	int removeRotateScale();
-
-	/**
-	 * setPriority function
-	 *
-	 * Sets the priority of this sprite. Can be set to OBJPRIORITY_[0123] where 0 is the higest priority,
-	 * putting the sprite above others.
-	 *
-	 * @param ObjPriority priority
-	 *  The priority to assign to this sprite. Can be OBJPRIORITY_[0123] with 0 the highest priority.
-	 * @author Joe Balough
-	 */
-	inline void setPriority(int priority)
-	{
-		priority = priority;
-	}
-
+	
 	/**
 	 * rotate function
 	 *
@@ -234,6 +218,21 @@ public:
 		
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, width, height);
+	}
+
+	/**
+	 * setPriority function
+	 *
+	 * Sets the priority of this sprite. Can be set to OBJPRIORITY_[0123] where 0 is the higest priority,
+	 * putting the sprite above others.
+	 *
+	 * @param ObjPriority priority
+	 *  The priority to assign to this sprite. Can be OBJPRIORITY_[0123] with 0 the highest priority.
+	 * @author Joe Balough
+	 */
+	inline void setPriority(int priority)
+	{
+		priority = priority;
 	}
 
 	/**

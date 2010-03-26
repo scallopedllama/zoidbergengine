@@ -78,8 +78,6 @@ void object::makeRotateScale(int MatrixId, int Angle, int Width, int Height)
 	isRotateScale = true;
 
 	// do rotation
-	// NOTE: width and height should be "inverse scale factors" if this
-	//  function doesn't work like expected, that's why.
 	oamRotateScale(oam, matrixId, angle, width, height);
 }
 
