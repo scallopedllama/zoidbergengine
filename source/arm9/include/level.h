@@ -40,6 +40,9 @@
 
 #define ZOIDBERG_NO_MATRICES -1
 #define ZOIDBERG_NO_SPRITES -2
+// TODO: move the following to game when game is created.
+// On which screen should the main gameplay occur? Should probably always be oamMain.
+#define ZOIDBERG_GAMEPLAY_OAM oamMain
 
 #include <nds.h>
 #include <vector>
@@ -149,8 +152,8 @@ public:
 	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
 	
 private:
-	// The level's local copy of the OAM Table
-	OAMTable oam;
+	// A pointer to the oam table that the level should put its obects on.
+	OamState *oam;
 
 	// A pointer to the assets class to use
 	assets *zbeAssets;

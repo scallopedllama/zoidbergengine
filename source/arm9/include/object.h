@@ -62,38 +62,65 @@ public:
 	 * This function has a lot of parameters passed to it that are needed to initialize the SpriteEntry object and give
 	 * the object an initial location in the hardware sprite processor.
 	 *
-	 * @param SpriteEntry *spriteEntry
-	 *  A pointer to the SpriteEntry in the local OAMTable copy that this object should update.
+	 * @param OamState *oam
+	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
+	 *
 	 * @param int spriteId
-	 *  The index of the SpriteEntry in the OAMTable's array of SpriteEntries
+	 *  The sprite index in the oam
+	 * @param int paletteId
+	 *  The index for the palette that this object should use.
+	 *
+	 * @param void ***gfx
+	 *  A 3D array representing the gfx for all of the frames of all the animations. Loaded by assets class.
+	 *  gfx[animationId][frameNo] is gfx for frameNo'th frame of animationId'th animation.
+	 * @param int numAnim
+	 *  The number of animations available in the gfx array
+	 * @param int *numFrames
+	 *  An array representing the number of frames in the i'th animation in gfx
+	 * @param void *frame
+	 *  A pointer to the location in Video memory into which the frame's tiles should be copied.
+	 *
 	 * @param int X
 	 * @param int Y
-	 * @param int Width
-	 * @param int Height
-	 * @param ObjBlendMode blendMode
-	 *  The blending mode that the sprite should use
-	 * @param ObjColMode colorMode
-	 *  The coloring mode that the sprite should use
-	 * @param ObjShape shape
-	 *  The shape of this sprite
-	 * @param ObjSize size
+	 * @param int priority
+	 *  The z-index for this object. Must be 0-8 with 0 being the highest.
+	 * @param spriteColorFormat colorFormat
+	 *  The coloring format that the sprite should use
+	 * @param SpriteSize size
 	 *  The size of this sprite
-	 * @param u16 gfxIndex
-	 *  The index in video memory where this sprite's tiles can be found (provided by assets class)
-	 * @param u8 palette
-	 *  The index in video memory where the palette that this sprite should use can be found
+	 * @param bool isSizeDouble
+	 *  Defaults to true, whether the sprite should be clipped to fit in its square.
+	 * @param bool hidden
+	 *  Defaults to false, whether the sprite should be visible
+	 *
+	 * @param int matrixId
+	 *  Defaults to -1, the id for the matrix in the OAM that this sprite should use for affine transformations.
+	 *  Setting this to -1 turns off affine transformations and makes the width, height, and angle options meaningless
+	 *  Until affine transformations are turned on.
+	 * @param int Width
+	 *  Defaults to 1, the width to which the sprite should be scaled using an affine transformation.
+	 * @param int Height
+	 *  Defaults to 1, the height to which the sprite should be scaled using an affine transformation.
+	 * @param int angle
+	 *  Defaults to 0, the angle to which the sprite should be rotated using an affine transformation.
+	 *
 	 * @param bool mosaic
-	 *  false by default, whether or not this sprite should be a mosaic sprite
-	 * @see SpriteEntry
+	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	object(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic = false);
-
+	object(OamState *oam, 
+		   int spriteId, int paletteId, 
+		   void ***gfx, int numAnim, int numFrames[], void *frame,
+		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
+		   int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
+		   bool mosaic = false);
+	
 	/**
 	 * Object update function
 	 *
 	 * Called every frame by the level::run() function, this function updates the object's position
 	 * on screen based on game events. This is where the decapodian physics engine is implemented.
+	 * After moving the object, its entry in the oam is updated.
 	 *
 	 * @param touchPosition *touch
 	 *  A pointer to a data structure containing information about where the touch screen was last touched (if it was)
@@ -110,14 +137,15 @@ public:
 	 *
 	 * @param int matrixId
 	 *  The index of the SpriteRotation object in the OAMTable
-	 * @param SpriteRotation *mat
-	 *  A pointer to the SpriteRotation object int he OAMTable
 	 * @param int angle
 	 *  An angle at which to start the sprite. Defaults to 0
-	 * @see SpriteRotation
+	 * @param int width
+	 *  The width to which the sprite should be scaled
+	 * @param int height
+	 *  The height to which the sprite should be scaled
 	 * @author Joe Balough
 	 */
-	void makeRotateScale(int matrixId, SpriteRotation *mat, int angle = 0);
+	void makeRotateScale(int matrixId, int angle = 0, int width = -1, int height = -1);
 
 	/**
 	 * removeRotateScale function
@@ -141,9 +169,9 @@ public:
 	 *  The priority to assign to this sprite. Can be OBJPRIORITY_[0123] with 0 the highest priority.
 	 * @author Joe Balough
 	 */
-	inline void setPriority(ObjPriority priority)
+	inline void setPriority(int priority)
 	{
-		sprite->priority = priority;
+		priority = priority;
 	}
 
 	/**
@@ -161,14 +189,17 @@ public:
 	/**
 	 * isHidden function
 	 *
-	 * Sets whether or not this object is visible. Will do necessary changes to the isRotateScale option of the
-	 * SpriteEntry to make it work properly.
+	 * Sets whether or not this object is visible.
 	 *
 	 * @param bool visibility
 	 *  Whether or not this object is visible, true for visible.
 	 * @author Joe Balough
 	 */
-	void isHidden(bool visibility);
+	void isHidden(bool visibility)
+	{
+		hidden = false;
+	}
+	
 
 	/**
 	 * isHidden function
@@ -237,51 +268,59 @@ public:
 
 
 protected:
-	/**
-	 * the SpriteEntry union is provided by libnds and does the bit flipping necessary to change things about a sprite
-	 * in the DS hardware sprite engine. It provides the following:
-	 * blendMode - The object's mode, can be OBJMODE_NORMAL (nothing special), OBJMODE_BLENDED (has hw color blending),
-	 *             OBJMODE_WINDOWED (only visibile inside sprite window), or OBJMODE_BITMAP (not using tiles, using image data)
-	 * colorMode - the color mode of the sprite, can be OBJCOLOR_16 (16 colors), or OBJCOLOR_256 (256 colors)
-	 * gfxIndex  - the index of the upper left tile
-	 * hFlip     - whether to flip this sprite horizontally or not
-	 * isHidden  - whether this sprite is hidden (USE isHidden() FUNCTION!)
-	 * isMosaic  - whether this sprite is using a mosaic effect
-	 * isRotateScale - whether this sprite uses affine transformations
-	 * isSizeDouble - (when isRotoScale set) sprite bounds is doubled
-	 * palette   - The palette to use
-	 * priority  - The priority (z-index) of the sprite. Can be OBJPRIORITY_[0123]. 0 is highest.
-	 * rotationIndex - (when isRotoScale set) affine parameter number to use.
-	 * shape     - Shape of the sprite. Can be OBJSHAPE_SQUARE (w == h), OBJSHAPE_WIDE (w > h), OBJSHAPE_TALL (w < h),
-     	*             or OBJSHAPE_FORBIDDEN (undefined)
-     	* size      - Size of the sprite. Can be OBJSIZE_[8|16|32|64] to indicate major sprite size.
-     	* vFlip     - whether to flip this sprite vertically or not
-     	* x         - Sprite's x position
-     	* y         - Sprite's y position
-	 */
-	SpriteEntry *sprite;
-
-	//this is the copy of the matrixbuffer for this sprite if we're a RotateScale
-	SpriteRotation *matrix;
-
-	//whether or not this sprite is using affine transformations
-	bool isRotateScale;
-
-	//whether or not this sprite's bounds are doubled
+	// Pointer to the OamState in which this sprite should be updated
+	// Should point to either oamSub or oamMain
+	OamState *oam;
+	
+	// The current id for the for the affine matrix, the sprite, and the palette to use in the oam
+    int matrixId;
+    int spriteId;
+	int	paletteId;
+	
+	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
+	// Should only ever contain one frame of the animation
+	const void *frameMem;
+	
+	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
+	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]
+	const void ***gfxMem;
+	
+	// The number of animations available for this object
+	const int numAnimations;
+	
+	// An array representing the number of frames in the i'th animation
+	const int numFrames[];
+	
+	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
+	int	priority;
+	
+	// The size of the gfx for this object
+	SpriteSize size;
+	
+	// And its color format
+	SpriteColorFormat format;
+	
+	// Whether or not this sprite's bounds are doubled (If true it won't ever be clipped to fit in a square)
 	bool isSizeDouble;
+	
+	// Whether or not this sprite is using affine transformations
+	bool isRotateScale;
+	
+	// These are only valid when isRotateScale == true
+	// The width to which the sprite should be scaled using an affine transformation
+	int width;
+	// The height to which the sprite should be scaled using an affine transformation
+    int height;
+	// The angle to which the sprite should be rotated using an affine transformation
+    int angle;
 
-	//the current id for the for the affine matrix and the sprite in the oam table
-    	int matrixId;
-    	int spriteId;
+	// Whether or not this object is flipped horizontally, vertically, mosaic'd, or hidden
+	bool hflip, vflip, mosaic, hidden;
 
-	//obvious variables
-	//note: gravity is added to the y acceleration.
+	// obvious variables
+	// note: gravity is added to the y acceleration.
 	vector2D<float> position, velocity, acceleration;
 
-	//these are only valid when isRotateScale == true
-    	int width;
-    	int height;
-    	int angle;
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT
 };
