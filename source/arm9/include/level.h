@@ -40,6 +40,7 @@
 
 #define ZOIDBERG_NO_MATRICES -1
 #define ZOIDBERG_NO_SPRITES -2
+#define ZOIDBERG_USE_EXT_PAL false
 // TODO: move the following to game when game is created.
 // On which screen should the main gameplay occur? Should probably always be oamMain.
 #define ZOIDBERG_GAMEPLAY_OAM oamMain
@@ -109,29 +110,6 @@ public:
 	 * @author Joe Balough
 	 */
 	void update();
-
-	/**
-	 * initOAM function
-	 *
-	 * This function takes a freshly allocated OAMTable by reference and initializes it by clearing the
-	 * option bits for all the sprites and setting all the matrices to be the identity matrix.
-	 *
-	 * @param OAMTable &oam
-	 *   Passed by reference, the OAMTable to initialize
-	 * @author Joe Balough
-	 */
-	void initOAM(OAMTable &oam);
-
-	/**
-	 * updateOAM function
-	 *
-	 * Copies the local copy of the OAMTable into memory, replacing the old one.
-	 *
-	 * @param OAMTable &oam
-	 *   Passed by reference, the OAMTable to initialize
-	 * @author Joe Balough
-	 */
-	void updateOAM(OAMTable &oam);
 	
 	/**
 	 * These are temporary functions. They will probably go away!
@@ -148,8 +126,8 @@ public:
 	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
 	 * @see object::object()
 	 * @author Joe Balough
-	 */
-	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic = false);
+	 */	
+	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
 	
 private:
 	// A pointer to the oam table that the level should put its obects on.

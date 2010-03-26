@@ -207,7 +207,7 @@ uint8 assets::fread8(FILE *input)
 }
 
 // Loads tiles with id into memory
-void assets::loadGfx(u32 id, u16 &tilesIndex)
+uint16 *assets::loadGfx(uint32 id)
 {
 	iprintf("tile[%d] requested\n", id);
 
@@ -216,9 +216,8 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	{
 		iprintf(" cache hit->%d\n", gfxStatus[id].index.index16);
 
-		// Already loaded so set the index and return
-		tilesIndex = gfxStatus[id].index.index16;
-		return;
+		// Already loaded so return the index
+		return gfxStatus[id].index.index16;
 	}
 
 	iprintf(" cache miss\n");
@@ -228,53 +227,23 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	fsetpos(zbeData, &gfxStatus[id].position);
 
 	// Request space to load this graphic
-	uint16 *location = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
-	tilesIndex =  oamGfxPtrToOffset(&oamMain, location);
+	gfxStatus[id].index.index16 = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
 	
 	// Start copying
 	uint16 length = gfxStatus[id].length;
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, location, length);
+	
+	dmaCopyHalfWords(3, data, gfxStatus[id].index.index16, length);
+	
 	free(data);
 	
 	iprintf(" loaded->%d\n", tilesIndex);
-	
-	// Set some variables
-	// static int curIndex = 0;
-	/*
-	 *  OFFSET_MULTIPLIER is calculated based on the following formula from
-     *  GBATEK (http://nocash.emubase.de/gbatek.htm#dsvideoobjs):
-     *      TileVramAddress = TileNumber * BoundaryValue
-     */
-	/*
-    // This is the default boundary value (can be set in REG_DISPCNT)
-    static const int BOUNDARY_VALUE = 32;
-    static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
-    static const int BYTES_PER_16_COLOR_TILE = 32;
-
-	// Start copying
-	uint16 length = gfxStatus[id].length;
-	void *data = malloc(length * sizeof(u8));
-	if (fread(data, sizeof(u8), length, zbeData) < length)
-		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, &SPRITE_GFX[curIndex * OFFSET_MULTIPLIER], length);
-	free(data);
-
-	// Update some variables
-	gfxStatus[id].loaded = true;
-	gfxStatus[id].index.index16 = curIndex;
-	tilesIndex = curIndex;
-
-	iprintf(" loaded->%d\n", tilesIndex);
-
-	// Update the index for the next call
-	curIndex += length / BYTES_PER_16_COLOR_TILE;*/
 }
 
 // Loads palette with id into memory
-void assets::loadPalette(u32 id, u8 &palIndex)
+void assets::loadPalette(u32 id)
 {
 	iprintf("palette[%d] requested\n", id);
 
@@ -284,8 +253,7 @@ void assets::loadPalette(u32 id, u8 &palIndex)
 		iprintf(" cache hit->%d\n", palStatus[id].index.index8);
 
 		// Already loaded so set the index and return
-		palIndex = palStatus[id].index.index8;
-		return;
+		return palStatus[id].index.index8;
 	}
 
 	iprintf(" cache miss\n");
@@ -309,10 +277,10 @@ void assets::loadPalette(u32 id, u8 &palIndex)
 	// Update some variables
 	palStatus[id].loaded = true;
 	palStatus[id].index.index8 = curIndex;
-	palIndex = curIndex;
-
 	iprintf(" loaded->%d\n", palIndex);
 
 	// Update the index for the next call
 	curIndex++;
+	
+	return curIndex - 1;
 }

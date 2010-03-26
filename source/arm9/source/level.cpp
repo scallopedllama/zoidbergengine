@@ -7,10 +7,11 @@ using namespace decapod;
 level::level(char *filename)
 {
 	// initialize the oam table
-	initOAM(oam);
+	oam = ZOIDBERG_GAMEPLAY_OAM;
+	oamInit(oam, SpriteMapping_Bmp_1D_128, ZOIDBERG_USE_EXT_PAL);
 	
 	// initialize the assets
-	zbeAssets = new assets(filename, &oam);
+	zbeAssets = new assets(filename, oam);
 	
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
@@ -61,14 +62,15 @@ int level::getSpriteEntry()
 }
 
 // TEMP FCTN: adds a sprite to the level
-void level::addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int width, int height, int angle, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, bool mosaic)
+void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 {
 	// Request the assets for this sprite be loaded
-	u16 tilesIndex;
-	u8 palIndex;
-	zbeAssets->loadGfx(tilesId, tilesIndex);
-	zbeAssets->loadPalette(palId, palIndex);
-
+	uint16 *frame = zbeAssets->loadGfx(gfxId);
+	uint8 palIndex = zbeAssets->loadPalette(palId);
+	void ***gfx = NULL;
+	SpriteSize size = zbeAssets->getSpriteSize(gfxId);
+	int numAnim = 1; int numFrames[1]; numFrames[0] = 1;
+	
 	//object::object(OamState *Oam, 
 	//			   int SpriteId, int PaletteId, 
 	//			   void ***Gfx, int NumAnim, int NumFrames[], void *Frame,
@@ -76,20 +78,15 @@ void level::addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y, int wi
 	//			   int MatrixId = -1, int Width = 1, int Height = 1, int Angle = 0,
 	//			   bool Mosaic = false);
 	
+	
     // Create the sprite
     int spriteIndex = getSpriteEntry();
     object *newObj;
     if (mkeHero)
-		newObj = (object *) new hero(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, tilesIndex, palIndex);
+		newObj = (object *) new hero(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
     else
-		newObj = new object(getSpriteEntry(spriteIndex), spriteIndex, x, y, width, height, blendMode, colorMode, shape, size, tilesIndex, palIndex);
-	if(angle > 0)
-	{
-		int matrixIndex = getMatrix();
-		newObj->makeRotateScale(matrixIndex, getMatrix(matrixIndex),angle);
-	}
-	newObj->setPriority(OBJPRIORITY_0);
-
+		newObj = new object(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
+	
 	// Add that object to the list
 	objects.push_back(newObj);
 }
@@ -102,7 +99,7 @@ void level::run()
 	{
 		update();
 		swiWaitForVBlank();
-		updateOAM(oam);
+		oamUpdate(oam);
 	}
 }
 
@@ -118,42 +115,9 @@ void level::update()
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
 		// run their respective update functions
-		if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
+		//if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
 		objects[i]->update(touch);
 
 
 	}
-}
-
-// initializes a local OAMTable
-void level::initOAM(OAMTable &oam)
-{
-	// reset all the attributes
-    for (int i = 0; i < SPRITE_COUNT; i++)
-		clearSprite(&oam.oamBuffer[i]);
-
-    // and the matrices (that's the identity matrix btw)
-    for (int i = 0; i < MATRIX_COUNT; i++)
-    {
-        oam.matrixBuffer[i].hdx = 1 << 8;
-        oam.matrixBuffer[i].hdy = 0;
-        oam.matrixBuffer[i].vdx = 0;
-        oam.matrixBuffer[i].vdy = 1 << 8;
-    }
-}
-
-// clears out the attributes for a SpriteEntry
-void level::clearSprite(SpriteEntry *Sprite)
-{
-	Sprite->attribute[0] = ATTR0_DISABLED;
-	Sprite->attribute[1] = 0;
-	Sprite->attribute[2] = 0;
-}
-
-// copies a local OAMTable into memory, replacing the old one.
-void level::updateOAM(OAMTable &oam)
-{
-	// avoid any caching issues
-    DC_FlushAll();
-    dmaCopyHalfWords(SPRITE_DMA_CHANNEL, oam.oamBuffer, OAM, SPRITE_COUNT * sizeof(SpriteEntry));
 }

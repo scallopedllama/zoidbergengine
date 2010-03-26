@@ -58,7 +58,7 @@ using namespace std;
  */
 union assetIndex
 {
-	u16 index16;
+	u16 *index16;
 	u8 index8;
 };
 
@@ -130,7 +130,7 @@ public:
 	 *   Passed by reference. Will be set to the index of these tiles
 	 * @author Joe Balough
 	 */
-	void loadGfx(u32 id, u16 &tilesIndex);
+	uint16 *loadGfx(uint32 id);
 
 	/**
 	 * loadPalette function
@@ -144,7 +144,19 @@ public:
 	 *   Passed by reference. Will be set to the index of this palette
 	 * @author Joe Balough
 	 */
-	void loadPalette(u32 id, u8 &palIndex);
+	uint8 loadPalette(u32 id);
+	
+	/**
+	 * Retrieve the SpriteSize for the gfx with the specified id
+	 * @param uint32 id
+	 *  Id for the gfx whose size is desired
+	 * @author Joe Baough
+	 */
+	inline SpriteSize getSpriteSize(uint32 id)
+	{
+		return gfxStatus[id].size;
+	}
+	
 private:
 	/**
 	 * fread[32|16|8] functions
