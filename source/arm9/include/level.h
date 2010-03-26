@@ -149,22 +149,6 @@ private:
 	/**
 	 * getMatrix function
 	 *
-	 * Returns a pointer to a SpriteRotation matrix object from the local OAMTable for the specified index.
-	 *
-	 * @param int index
-	 *  The matrixID correspoding to the requested SpriteRotation matrix
-	 * @return SpriteRotation*
-	 *  A pointer to the requested SpriteRotation object
-	 * @author Joe Balough
-	 */
-	inline SpriteRotation *getMatrix(int index)
-	{
-		return &oam.matrixBuffer[index];
-	}
-
-	/**
-	 * getMatrix function
-	 *
 	 * Tries to get a matrixId for an object to use. Returns the id of a SpriteRotation matrix to use or
 	 * ZOIDBERG_NO_MATRICES if all the rotateScale sprites are being used.
 	 * It does this by scanning through the matrixAvail[] array looking for one set to true.
@@ -194,22 +178,6 @@ private:
 	/**
 	 * getSpriteEntry function
 	 *
-	 * Returns a pointer to a SpriteEntry object from the local OAMTable for the specified index.
-	 *
-	 * @param int index
-	 *  The spriteId correspoding to the requested SpriteEntry
-	 * @return SpriteEntry*
-	 *  A pointer to the requested SpriteEntry object
-	 * @author Joe Balough
-	 */
-	inline SpriteEntry *getSpriteEntry(int i)
-	{
-		return &oam.oamBuffer[i];
-	}
-
-	/**
-	 * getSpriteEntry function
-	 *
 	 * Tries to get a spriteId for an object to use. Returns the id of a SpriteEntry to use or ZOIDBERG_NO_SPRITES
 	 * if all the SpriteEntries are used.
 	 * It does this by scanning through the spriteAvail[] array looking for one set to true.
@@ -232,20 +200,7 @@ private:
 	 */
 	inline void freeSpriteEntry(int toFree){
 		spriteAvail[toFree] = true;
-		clearSprite(getSpriteEntry(toFree));
 	}
-
-	/**
-	 * clearSprite function
-	 *
-	 * Resets all the parameters in the passed SpriteEntry.
-	 *
-	 * @param SpriteEntry *sprite
-	 *   A pointer to the SpriteEntry to clear out.
-	 * @author Joe Balough
-	 */
-
-	void clearSprite(SpriteEntry *Sprite);
 };
 
 #endif // LEVEL_H_INCLUDED
