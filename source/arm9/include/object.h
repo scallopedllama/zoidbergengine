@@ -190,8 +190,49 @@ public:
 		angle = Angle;
 		
 		// do rotation
-		// NOTE: width and height should be "inverse scale factors" if this
-		//  function doesn't work like expected, that's why.
+		oamRotateScale(oam, matrixId, angle, width, height);
+	}
+	
+	/**
+	 * scale function
+	 *
+	 * Sets the scale of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
+	 * After setting the scale, it sets up the appropriate affine transformation matrix.
+	 *
+	 * @param int width, height
+	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
+	 * @author Joe Balough
+	 */
+	inline void scale(int Width, int Height)
+	{
+		// Set width and height
+		width = Width;
+		height = Height;
+		
+		// do rotation
+		oamRotateScale(oam, matrixId, angle, width, height);
+	}
+	
+	/**
+	 * rotateScale function
+	 *
+	 * Sets the rotation and scale of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
+	 * After setting the rotation and scale, it sets up the appropriate affine transformation matrix.
+	 *
+	 * @param int angle
+	 *  The angle to set to this object
+	 * @param int width, height
+	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
+	 * @author Joe Balough
+	 */
+	inline void rotateScale(int Angle, int Width, int Height)
+	{
+		// Set angle, width and height
+		angle = Angle;
+		width = Width;
+		height = Height;
+		
+		// do rotation
 		oamRotateScale(oam, matrixId, angle, width, height);
 	}
 
