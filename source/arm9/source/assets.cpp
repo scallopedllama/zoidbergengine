@@ -228,14 +228,15 @@ void assets::loadGfx(u32 id, u16 &tilesIndex)
 	fsetpos(zbeData, &gfxStatus[id].position);
 
 	// Request space to load this graphic
-	tilesIndex =  oamGfxPtrToOffset(&oamMain, oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color));
+	uint16 *location = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
+	tilesIndex =  oamGfxPtrToOffset(&oamMain, location);
 	
 	// Start copying
 	uint16 length = gfxStatus[id].length;
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, &SPRITE_GFX[tilesIndex], length);
+	dmaCopyHalfWords(3, data, location, length);
 	free(data);
 	
 	iprintf(" loaded->%d\n", tilesIndex);
