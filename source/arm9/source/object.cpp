@@ -36,6 +36,8 @@ object::object(OamState *Oam,
 	
 	hflip=vflip = false;
 	
+	position.x = float(X);
+	position.y = float(Y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	

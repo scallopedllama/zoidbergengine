@@ -209,12 +209,12 @@ uint8 assets::fread8(FILE *input)
 // Loads tiles with id into memory
 uint16 *assets::loadGfx(uint32 id)
 {
-	iprintf("tile[%d] requested\n", id);
+	iprintf("gfx[%d] requested\n", id);
 
 	// See if it's already loaded
 	if (gfxStatus[id].loaded)
 	{
-		iprintf(" cache hit->%x\n", gfxStatus[id].index.index16);
+		iprintf(" cache hit->%x\n", (unsigned int) gfxStatus[id].index.index16);
 
 		// Already loaded so return the index
 		return gfxStatus[id].index.index16;
@@ -239,7 +239,7 @@ uint16 *assets::loadGfx(uint32 id)
 	
 	free(data);
 	
-	iprintf(" loaded->%x\n", gfxStatus[id].index.index16);
+	iprintf(" loaded->%x\n", (unsigned int) gfxStatus[id].index.index16);
 	
 	return gfxStatus[id].index.index16;
 }

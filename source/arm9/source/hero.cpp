@@ -60,7 +60,7 @@ void hero::update(touchPosition *touch)
 	    if (velocity.y < -maxSpeed) {
 		velocity.y = -maxSpeed;
 	    }
-		printf("%s:\n Velocity.x = %f\nVelocity.y = %f\n\n",__func__,velocity.x, velocity.y);
+		//printf("%s:\n Velocity.x = %f\nVelocity.y = %f\n\n",__func__,velocity.x, velocity.y);
 
 	}
 
