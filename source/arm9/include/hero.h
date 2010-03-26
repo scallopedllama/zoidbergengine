@@ -56,8 +56,13 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */
-	hero(SpriteEntry *spriteEntry, int spriteId, int X, int Y, int Width, int Height, ObjBlendMode blendMode, ObjColMode colorMode, ObjShape shape, ObjSize size, u16 gfxIndex, u8 palette, bool mosaic = false);
-
+	hero(OamState *oam, 
+		 int spriteId, int paletteId, 
+		 void ***gfx, int numAnim, int numFrames[], void *frame,
+		 int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
+		 int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
+		 bool mosaic = false);
+	
 	/**
 	 * Implementation of update function
 	 *

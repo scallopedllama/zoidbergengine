@@ -214,7 +214,7 @@ uint16 *assets::loadGfx(uint32 id)
 	// See if it's already loaded
 	if (gfxStatus[id].loaded)
 	{
-		iprintf(" cache hit->%d\n", gfxStatus[id].index.index16);
+		iprintf(" cache hit->%x\n", gfxStatus[id].index.index16);
 
 		// Already loaded so return the index
 		return gfxStatus[id].index.index16;
@@ -239,11 +239,11 @@ uint16 *assets::loadGfx(uint32 id)
 	
 	free(data);
 	
-	iprintf(" loaded->%d\n", tilesIndex);
+	iprintf(" loaded->%x\n", gfxStatus[id].index.index16);
 }
 
 // Loads palette with id into memory
-void assets::loadPalette(u32 id)
+uint8 assets::loadPalette(u32 id)
 {
 	iprintf("palette[%d] requested\n", id);
 
@@ -277,7 +277,7 @@ void assets::loadPalette(u32 id)
 	// Update some variables
 	palStatus[id].loaded = true;
 	palStatus[id].index.index8 = curIndex;
-	iprintf(" loaded->%d\n", palIndex);
+	iprintf(" loaded->%d\n", curIndex);
 
 	// Update the index for the next call
 	curIndex++;

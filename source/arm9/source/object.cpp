@@ -4,9 +4,9 @@
 object::object(OamState *Oam, 
 	   int SpriteId, int PaletteId, 
 	   void ***Gfx, int NumAnim, int NumFrames[], void *Frame,
-	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble = true, bool Hidden = false,
-	   int MatrixId = -1, int Width = 1, int Height = 1, int Angle = 0,
-	   bool Mosaic = false);
+	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
+	   int MatrixId, int Width, int Height, int Angle,
+	   bool Mosaic);
 {
 	// Set all the variables
 	spriteId = SpriteId;

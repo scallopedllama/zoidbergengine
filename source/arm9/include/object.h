@@ -197,7 +197,7 @@ public:
 	 */
 	void isHidden(bool visibility)
 	{
-		hidden = false;
+		hidden = visibility;
 	}
 	
 
@@ -212,7 +212,7 @@ public:
 	 */
 	inline bool isHidden()
 	{
-		return sprite->isHidden;
+		return hidden;
 	}
 
 	/**
