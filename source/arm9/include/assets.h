@@ -51,18 +51,6 @@
 using namespace std;
 
 /**
- * asset_index union. Used by the asset_status struct below.
- * Used because tiles have a u16 index while palettes have a u8 index.
- *
- * @author Joe Balough
- */
-union assetIndex
-{
-	u16 *index16;
-	u8 index8;
-};
-
-/**
  * asset_status struct. Used in the assets class in vectors to keep track assets in
  * the datafile. Contains information like if it's loaded and what's its id.
  *
@@ -84,11 +72,22 @@ struct assetStatus
 	// Loaded from the file?
 	bool loaded;
 	
-	// Its index in the file
-	assetIndex index;
+	/**
+	 * The following Variables are only for palettes
+	 */
+	// index
+	uint8 index;
+	
+	
+	/**
+	 * The following Variables are only for Sprites
+	 */
+	// for sprites; video memory offset
+	uint16 *offset;
 	
 	// Its size (if applicable)
 	SpriteSize size;
+	
 };
 	
 

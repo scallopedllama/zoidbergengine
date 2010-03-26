@@ -62,7 +62,7 @@ void assets::parseZbe()
 		// Set that it is not loaded, assign a value to the union
 		// to get it using the proper value
 		newAsset.loaded = false;
-		newAsset.index.index16 = 0;
+		newAsset.offset = NULL;
 		
 		// Push this asset on the array
 		gfxStatus.push_back(newAsset);
@@ -90,10 +90,10 @@ void assets::parseZbe()
 		fgetpos(zbeData, &curPos);
 		newAsset.position = curPos;
 
-		// Initialize the index so the union is set up
+		// Initialize the offset so the union is set up
 		// Then mark that it isn't loaded
-		newAsset.index.index8 = 0;
-		newAsset.loaded=false;
+		newAsset.index = 0;
+		newAsset.loaded = false;
 		
 		// Push the new asset on to the array
 		palStatus.push_back(newAsset);
@@ -214,10 +214,10 @@ uint16 *assets::loadGfx(uint32 id)
 	// See if it's already loaded
 	if (gfxStatus[id].loaded)
 	{
-		iprintf(" cache hit->%x\n", (unsigned int) gfxStatus[id].index.index16);
+		iprintf(" cache hit->%x\n", (unsigned int) gfxStatus[id].offset);
 
 		// Already loaded so return the index
-		return gfxStatus[id].index.index16;
+		return gfxStatus[id].offset;
 	}
 
 	iprintf(" cache miss\n");
@@ -228,7 +228,7 @@ uint16 *assets::loadGfx(uint32 id)
 
 	// Request space to load this graphic
 	uint16 *mem = oamAllocateGfx(oam, gfxStatus[id].size, SpriteColorFormat_16Color);
-	gfxStatus[id].index.index16 = mem;
+	gfxStatus[id].offset = mem;
 	
 	// Start copying
 	uint16 length = gfxStatus[id].length;
@@ -236,22 +236,28 @@ uint16 *assets::loadGfx(uint32 id)
 	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
 	
-	DC_FlushRange(data, length);
-	dmaCopyHalfWords(3, data, mem, length);
-	
-	// This needs to be removed in the future. It makes sure that the data copied into memory correctly.
-	for (uint16 i = 0; i< length / 2; i++)
+	// Find the next free DMA channel and use it to copy the gfx into video memory
+	// It'll try channel 3 first because everybody seems to use that for this.
+	for (int i = 3; i <= 3; i++)
 	{
-		if(((uint16*)data)[i] != mem[i])
+		if (!dmaBusy(i))
 		{
-			iprintf(" error at byte %d\n", i / 2);
+			DC_FlushRange(data, length);
+			dmaCopyHalfWordsAsynch(i, data, mem, length);
+			iprintf(" Copied using DMA bus %d\n", i);
 			break;
 		}
+		else
+			iprintf(" dma bus %d busy\n", i);
+		
+		// If it made it here, all channels are busy
+		if (i == 3)
+			i = -1;
 	}
+	// This is commented out right now because the dma copy up there is asynch.
+	//free(data);
 	
-	free(data);
-	
-	iprintf(" loaded->%x\n", (unsigned int) gfxStatus[id].index.index16);
+	iprintf(" loaded->%x\n", (unsigned int) gfxStatus[id].offset);
 	
 	return mem;
 }
@@ -264,10 +270,10 @@ uint8 assets::loadPalette(u32 id)
 	// See if it's already loaded
 	if (palStatus[id].loaded)
 	{
-		iprintf(" cache hit->%d\n", palStatus[id].index.index8);
+		iprintf(" cache hit->%d\n", palStatus[id].index);
 
 		// Already loaded so set the index and return
-		return palStatus[id].index.index8;
+		return palStatus[id].index;
 	}
 
 	iprintf(" cache miss\n");
@@ -285,12 +291,31 @@ uint8 assets::loadPalette(u32 id)
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	dmaCopyHalfWords(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
-	free(data);
+	
+	// Find the next free DMA channel and use it to copy the palette into video memory
+	// It'll try channel 3 first because everybody seems to use that for this.
+	for (int i = 3; i <= 3; i++)
+	{
+		if (!dmaBusy(i))
+		{
+			DC_FlushRange(data, length);
+			dmaCopyHalfWordsAsynch(i, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
+			iprintf(" Copied using DMA bus %d\n", i);
+			break;
+		}
+		else
+			iprintf(" dma bus %d busy\n", i);
+		
+		// If it made it here, all channels are busy
+		if (i == 3)
+			i = -1;
+	}
+	// This is commented out right now because the dma copy up there is asynch.
+	//free(data);
 
 	// Update some variables
 	palStatus[id].loaded = true;
-	palStatus[id].index.index8 = curIndex;
+	palStatus[id].index = curIndex;
 	iprintf(" loaded->%d\n", curIndex);
 
 	// Update the index for the next call
