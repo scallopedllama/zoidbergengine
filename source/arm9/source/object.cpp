@@ -3,10 +3,10 @@
 // object constructor
 object::object(OamState *Oam, 
 	   int SpriteId, int PaletteId, 
-	   void ***Gfx, int NumAnim, int NumFrames[], void *Frame,
+	   void ***Gfx, int NumAnim, int *NumFrames, void *Frame,
 	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
 	   int MatrixId, int Width, int Height, int Angle,
-	   bool Mosaic);
+	   bool Mosaic)
 {
 	// Set all the variables
 	spriteId = SpriteId;
@@ -21,7 +21,7 @@ object::object(OamState *Oam,
 	
 	priority = Priority;
 	size = Size;
-	format = Format;
+	format = ColorFormat;
 	isSizeDouble = IsSizeDouble;
 	hidden = Hidden;
 	
@@ -32,7 +32,7 @@ object::object(OamState *Oam,
 	width = Width;
 	height = Height;
 	angle = Angle;
-	mosiac = Mosaic;
+	mosaic = Mosaic;
 	
 	hflip=vflip = false;
 	
@@ -50,10 +50,6 @@ void object::update(touchPosition *touch)
 	//   s = v_0 * (delta t) + .5 * a * (delta t)^2
 	//   v^2_f - v^2_o = 2 * a * (x_f - x_o)
 
-	position.x += velocity.x;
-	sprite->x = position.x;
-	position.y += velocity.y;
-	sprite->y = position.y;
 	
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if
@@ -61,7 +57,7 @@ void object::update(touchPosition *touch)
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
 	oamSet(oam, spriteId, int (position.x), int (position.y), priority, paletteId, size, format,
-		   frameMem, matrixId, sizeDouble, hidden, hflip, vflip, mosiac);
+		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
 }
 
 // makes this sprite a RotateScale sprite

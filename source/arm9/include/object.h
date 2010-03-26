@@ -279,17 +279,17 @@ protected:
 	
 	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
 	// Should only ever contain one frame of the animation
-	const void *frameMem;
+	void *frameMem;
 	
 	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
 	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]
-	const void ***gfxMem;
+	void ***gfxMem;
 	
 	// The number of animations available for this object
-	const int numAnimations;
+	int numAnimations;
 	
 	// An array representing the number of frames in the i'th animation
-	const int numFrames[];
+	int *numFrames;
 	
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
 	int	priority;

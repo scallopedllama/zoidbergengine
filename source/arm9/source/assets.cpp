@@ -1,6 +1,6 @@
 #include "assets.h"
 
-assets::assets(char *filename, OAMTable *table)
+assets::assets(char *filename, OamState *table)
 {
 	// Set variables
 	oam = table;
@@ -240,6 +240,8 @@ uint16 *assets::loadGfx(uint32 id)
 	free(data);
 	
 	iprintf(" loaded->%x\n", gfxStatus[id].index.index16);
+	
+	return gfxStatus[id].index.index16;
 }
 
 // Loads palette with id into memory

@@ -106,7 +106,7 @@ public:
 	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */
-	assets(char *filename, OAMTable *oam);
+	assets(char *filename, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -193,7 +193,7 @@ private:
 	FILE *zbeData;
 	
 	// A pointer to the local oamTable
-	OAMTable *oam;
+	OamState *oam;
 
 	/**
 	 * These vectors correspond to the status of the assets. They indicate whether or not the

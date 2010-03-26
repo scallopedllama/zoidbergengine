@@ -42,8 +42,8 @@
 #define ZOIDBERG_NO_SPRITES -2
 #define ZOIDBERG_USE_EXT_PAL false
 // TODO: move the following to game when game is created.
-// On which screen should the main gameplay occur? Should probably always be oamMain.
-#define ZOIDBERG_GAMEPLAY_OAM oamMain
+// On which screen should the main gameplay occur? Should probably always be &oamMain.
+#define ZOIDBERG_GAMEPLAY_OAM &oamMain
 
 #include <nds.h>
 #include <vector>
