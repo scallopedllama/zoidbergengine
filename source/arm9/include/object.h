@@ -77,7 +77,7 @@ public:
 	 *  The number of animations available in the gfx array
 	 * @param int *numFrames
 	 *  An array representing the number of frames in the i'th animation in gfx
-	 * @param void *frame
+	 * @param uint16 *frame
 	 *  A pointer to the location in Video memory into which the frame's tiles should be copied.
 	 *
 	 * @param int X
@@ -110,7 +110,7 @@ public:
 	 */
 	object(OamState *oam, 
 		   int spriteId, int paletteId, 
-		   void ***gfx, int numAnim, int numFrames[], void *frame,
+		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
 		   int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
 		   bool mosaic = false);
@@ -279,7 +279,7 @@ protected:
 	
 	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
 	// Should only ever contain one frame of the animation
-	void *frameMem;
+	uint16 *frameMem;
 	
 	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
 	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]

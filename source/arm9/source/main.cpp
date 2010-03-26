@@ -28,33 +28,14 @@ static const int DMA_CHANNEL = 3;
 
 void initVideo()
 {
-	//  Turn on the 2D graphics core.
 	powerOn(POWER_ALL_2D);
 	lcdMainOnBottom();
-
-    /*
-     *  Map VRAM to display a background on the main and sub screens.
-     *
-     *  The vramSetMainBanks function takes four arguments, one for each of the
-     *  major VRAM banks. We can use it as shorthand for assigning values to
-     *  each of the VRAM bank's control registers.
-     *
-     *  We map banks A and B to main screen  background memory. This gives us
-     *  256KB, which is a healthy amount for 16-bit graphics.
-     *
-     *  We map bank C to sub screen background memory.
-     *
-     *  We map bank D to LCD. This setting is generally used for when we aren't
-     *  using a particular bank.
-     *
-     *  We map bank E to main screen sprite memory (aka object memory).
-     */
-    vramSetMainBanks(VRAM_A_MAIN_BG_0x06000000,
+	     
+    vramSetMainBanks(VRAM_A_MAIN_SPRITE,
                      VRAM_B_MAIN_BG_0x06020000,
                      VRAM_C_SUB_BG_0x06200000,
-                     VRAM_D_LCD);
+                     VRAM_D_SUB_SPRITE);
 
-    vramSetBankE(VRAM_E_MAIN_SPRITE);
 
     //  Set the video mode on the main screen.
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
@@ -67,8 +48,11 @@ void initVideo()
     //  Set the video mode on the sub screen.
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
                    DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
-
-    consoleDemoInit();
+	  
+	  oamInit(&oamMain, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
+	  oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
+	
+	consoleDemoInit();
 }
 
 void initBackgrounds()
@@ -154,17 +138,17 @@ void displayPlanet()
 int main()
 {
 	initVideo();
-	initBackgrounds();
-
+	//initBackgrounds();
+	
 	// Initialize maxmod using the memory based soundbank set up.
-	mmInitDefaultMem((mm_addr)soundbank_bin);
+	//mmInitDefaultMem((mm_addr)soundbank_bin);
 
 	// Initialize libfat
 	fatInitDefault();
 
 	// Display the backgrounds
-	displayStarField();
-	displayPlanet();
+	//displayStarField();
+	//displayPlanet();
 
 	// make a level
 	level *lvl = new level((char*) "/assets.zbe");
@@ -172,7 +156,7 @@ int main()
 	// Drop in some assets
 	// void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
 	lvl->addSprite(true, 0, 0, 25, 45);
-	lvl->addSprite(false, 1, 1, 25, 40);
+	lvl->addSprite(false, 1, 1, 0, 0);
 	lvl->run();
 
 	return 0;

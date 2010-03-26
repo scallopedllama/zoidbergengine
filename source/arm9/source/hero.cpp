@@ -4,7 +4,7 @@
 // hero constructor, just passes things along to the object constructor
 hero::hero(OamState *oam, 
 	   int spriteId, int paletteId, 
-	   void ***gfx, int numAnim, int numFrames[], void *frame,
+	   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 	   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble, bool hidden,
 	   int matrixId, int Width, int Height, int angle,
 	   bool mosaic)

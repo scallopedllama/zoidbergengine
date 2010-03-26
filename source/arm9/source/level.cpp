@@ -8,7 +8,6 @@ level::level(char *filename)
 {
 	// initialize the oam table
 	oam = ZOIDBERG_GAMEPLAY_OAM;
-	oamInit(oam, SpriteMapping_Bmp_1D_128, ZOIDBERG_USE_EXT_PAL);
 	
 	// initialize the assets
 	zbeAssets = new assets(filename, oam);

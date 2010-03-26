@@ -227,21 +227,33 @@ uint16 *assets::loadGfx(uint32 id)
 	fsetpos(zbeData, &gfxStatus[id].position);
 
 	// Request space to load this graphic
-	gfxStatus[id].index.index16 = oamAllocateGfx(&oamMain, gfxStatus[id].size, SpriteColorFormat_16Color);
+	uint16 *mem = oamAllocateGfx(oam, gfxStatus[id].size, SpriteColorFormat_16Color);
+	gfxStatus[id].index.index16 = mem;
 	
 	// Start copying
 	uint16 length = gfxStatus[id].length;
-	void *data = malloc(length * sizeof(u8));
-	if (fread(data, sizeof(u8), length, zbeData) < length)
+	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
+	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
 	
-	dmaCopyHalfWords(3, data, gfxStatus[id].index.index16, length);
+	DC_FlushRange(data, length);
+	dmaCopyHalfWords(3, data, mem, length);
+	
+	// This needs to be removed in the future. It makes sure that the data copied into memory correctly.
+	for (uint16 i = 0; i< length / 2; i++)
+	{
+		if(((uint16*)data)[i] != mem[i])
+		{
+			iprintf(" error at byte %d\n", i / 2);
+			break;
+		}
+	}
 	
 	free(data);
 	
 	iprintf(" loaded->%x\n", (unsigned int) gfxStatus[id].index.index16);
 	
-	return gfxStatus[id].index.index16;
+	return mem;
 }
 
 // Loads palette with id into memory
