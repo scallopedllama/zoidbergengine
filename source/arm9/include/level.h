@@ -55,8 +55,6 @@ using namespace std;
 
 using namespace decapod;
 
-static const int SPRITE_DMA_CHANNEL = 3;
-
 /**
  * level class
  *
