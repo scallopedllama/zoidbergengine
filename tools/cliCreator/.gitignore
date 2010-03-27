@@ -1,5 +1,7 @@
 *.bin
 *.zbe
-numPrefix/numPrefix32
-numPrefix/numPrefix16
-numPrefix/numPrefix8
+bin/numPrefix32
+bin/numPrefix16
+bin/numPrefix8
+bin/objParser
+
