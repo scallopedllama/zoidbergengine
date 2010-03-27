@@ -1,7 +1,59 @@
+/**
+ * @file objParser.h
+ *
+ * @brief A tool to parse an objects description xml file
+ *
+ * This file is used by the cliCreator to parse an XML file with the following structure:
+ *
+ * <objects>
+ *   <object>
+ *     <animations>
+ *       <animation>
+ *         <frame id="23" time="3" />
+ *         <frame ... />
+ *         ...
+ *       </animation>
+ *       ...
+ *     </animations>
+ *     ...
+ *   </object>
+ *   ...
+ * </objects>
+ *
+ * into a binary file to be dropped into an assets file that will be properly loaded by the
+ * zoidberg engine.
+ *
+ * @see asset.h
+ * @author Joe Balough
+ */
+
+/**
+ *  Copyright (c) 2010 zoidberg engine
+ *
+ *  This file is part of the zoidberg engine.
+ *
+ *  The zoidberg engine is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The zoidberg engine is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
 #include "lib/tinyxml/tinyxml.h"
+
+#define TIXML_USE_STL
+
+using namespace std;
 
 void fwrite8(uint8_t val, FILE *file);
 void fwrite16(uint16_t val, FILE *file);
@@ -46,7 +98,7 @@ int main(int argc, char **argv)
 	if (!input.LoadFile())
 	{
 		printf("Failed to parse file %s\n", argv[1]);
-		exit EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	// Attempt to load up the output file
@@ -54,11 +106,11 @@ int main(int argc, char **argv)
 	if (!output)
 	{
 		printf("Failed to open %s for output.\n", argv[2]);
-		exit EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	// Get the root node
-	TiXmlElement *objects_xml = input->RootElement();
+	TiXmlElement *objects_xml = input.RootElement();
 	vector<object> objects;
 
 	// Get all the objects
@@ -83,21 +135,23 @@ int main(int argc, char **argv)
 				numFrames++;
 				frame thisFrame = {0, 0};
 
-				uint32_t gfxId;
-				uint8_t time;
+				int gfxId = -1;
+				int time = 1;
 				if (frame_xml->QueryIntAttribute("id", &gfxId) == TIXML_WRONG_TYPE)
 				{
 					printf("couldn't get the gfxId for frame %d in anim %d\n", numFrames, numAnimations);
+					continue;
 				}
 
 				if (frame_xml->QueryIntAttribute("time", &time) == TIXML_WRONG_TYPE)
 				{
 					printf("couldn't get the time for frame %d in anim %d\n", numFrames, numAnimations);
+					time = 1;
 				}
 
 				// fill out then push this frame on the animation
-				thisFrame.gfxId = gfxId;
-				thisFrame.time = time;
+				thisFrame.gfxId = (uint32_t) gfxId;
+				thisFrame.time = (uint8_t) time;
 				anim.frames.push_back(thisFrame);
 
 				// get the next frame
