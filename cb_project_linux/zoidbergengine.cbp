@@ -77,21 +77,25 @@
 		<Unit filename="../source/arm9/source/physics.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
+		<Unit filename="../tools/cliCreator/README" />
+		<Unit filename="../tools/cliCreator/bin/Makefile" />
+		<Unit filename="../tools/cliCreator/bin/numPrefix16.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../tools/cliCreator/bin/numPrefix32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../tools/cliCreator/bin/numPrefix8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../tools/cliCreator/bin/objParser.cpp" />
 		<Unit filename="../tools/cliCreator/cliCreator.sh" />
-		<Unit filename="../tools/cliCreator/numPrefix/numPrefix16.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/numPrefix/numPrefix32.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/numPrefix/numPrefix8.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />
 			</code_completion>
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
