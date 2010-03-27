@@ -88,8 +88,8 @@ int main(int argc, char **argv)
 {
 	if(argc < 3)
 	{
-		printf("Parses an object xml file and outputs its proper binary data.\n");
-		printf("Usage: %s [input filename] [output filename]\n", argv[0]);
+		fprintf(stderr, "Parses an object xml file and outputs its proper binary data.\n");
+		fprintf(stderr, "Usage: %s [input filename] [output filename]\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 	TiXmlDocument input(argv[1]);
 	if (!input.LoadFile())
 	{
-		printf("Failed to parse file %s\n", argv[1]);
+		fprintf(stderr, "Failed to parse file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 	FILE *output = fopen(argv[2], "wb");
 	if (!output)
 	{
-		printf("Failed to open %s for output.\n", argv[2]);
+		fprintf(stderr, "Failed to open %s for output.\n", argv[2]);
 		exit(EXIT_FAILURE);
 	}
 
@@ -121,7 +121,8 @@ int main(int argc, char **argv)
 		object thisObject;
 
 		// And all the animations
-		TiXmlElement *animation_xml = object_xml->FirstChildElement("animation");
+		TiXmlElement *animations_xml = object_xml->FirstChildElement("animations");
+		TiXmlElement *animation_xml = animations_xml->FirstChildElement("animation");
 		while (animation_xml)
 		{
 			numAnimations++;
@@ -179,9 +180,14 @@ int main(int argc, char **argv)
 	// first is the # objects
 	fwrite32(objects.size(), output);
 
+	printf("<objects>\n");
+
 	// put all the objects in the file
 	for (int i = 0; i < objects.size(); i++)
 	{
+		printf("\t<object>\n");
+		printf("\t\t<animations>\n");
+
 		// this object
 		object thisObject = objects[i];
 
@@ -191,6 +197,7 @@ int main(int argc, char **argv)
 		// all the animations
 		for (int j = 0; j < thisObject.animations.size(); j++)
 		{
+			printf("\t\t\t<animation>\n");
 			// this animation
 			vector<frame> theseFrames= thisObject.animations[j].frames;
 
@@ -206,9 +213,16 @@ int main(int argc, char **argv)
 				//write the gfx Id and time
 				fwrite32(thisFrame.gfxId, output);
 				fwrite8(thisFrame.time, output);
+
+				printf("\t\t\t\t<frame id=\"%d\" time=\"%d\" />\n", thisFrame.gfxId, thisFrame.time);
 			}
+			printf("\t\t\t</animation>\n");
 		}
+		printf("\t\t</animations>\n");
+		printf("\t</object>\n");
 	}
+
+	printf("</objects>\n");
 
 	// Close the output file and we're done!
 	fclose(output);
@@ -218,24 +232,24 @@ int main(int argc, char **argv)
 
 void fwrite32(uint32_t val, FILE *file)
 {
-	if (fwrite(&val, sizeof(uint32_t), 1, file) != sizeof(uint32_t))
+	if (fwrite(&val, sizeof(uint32_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing value %ld to file\n", val);
+		fprintf(stderr, "error writing uint32 value %ld to file\n", val);
 	}
 }
 
 void fwrite16(uint16_t val, FILE *file)
 {
-	if (fwrite(&val, sizeof(uint16_t), 1, file) != sizeof(uint16_t))
+	if (fwrite(&val, sizeof(uint16_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing value %ld to file\n", val);
+		fprintf(stderr, "error writing uint16 value %ld to file\n", val);
 	}
 }
 
 void fwrite8(uint8_t val, FILE *file)
 {
-	if (fwrite(&val, sizeof(uint8_t), 1, file) != sizeof(uint8_t))
+	if (fwrite(&val, sizeof(uint8_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing value %ld to file\n", val);
+		fprintf(stderr, "error writing uint8 value %ld to file\n", val);
 	}
 }

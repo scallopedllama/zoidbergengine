@@ -66,18 +66,27 @@ rm `ls | grep '.bin.zbe$'`
 ./bin/numPrefix32 allpal.zbe.tmp $no_pal allpal.zbe > /dev/null
 
 # group those two files together
-cat allgfx.zbe allpal.zbe > all.zbe.tmp
+cat allgfx.zbe allpal.zbe > allgfxpal.zbe.tmp
 
 # clean up a bit
 rm allgfx.zbe.tmp allpal.zbe.tmp allgfx.zbe allpal.zbe
 
 # prefix that with the total number of assets
-./bin/numPrefix32 all.zbe.tmp $no_all numd.zbe.tmp > /dev/null
+./bin/numPrefix32 allgfxpal.zbe.tmp $no_all allgfxpal.zbe > /dev/null
 
 # prefix that with the version
-./bin/numPrefix16 numd.zbe.tmp $zbe_ver $out_filename > /dev/null
+./bin/numPrefix16 allgfxpal.zbe $zbe_ver vertopal.zbe > /dev/null
 
-# final cleanup
-rm all.zbe.tmp numd.zbe.tmp
+# cleanup
+rm allgfxpal.zbe.tmp allgfxpal.zbe
+
+# parse the objects xml FILE
+./bin/objParser ./xml/objects.xml objects.zbe > /dev/null
+
+# cat the objects bin on to the end of the assets file
+cat vertopal.zbe objects.zbe > $out_filename
+
+# cleanup
+rm vertopal.zbe
 
 echo "All done. Assets saved into file $out_filename"
