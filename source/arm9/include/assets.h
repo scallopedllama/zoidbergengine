@@ -62,34 +62,56 @@ struct assetStatus
 	{
 		loaded = false;
 	}
-	
+
 	// Where the asset is located in the data file
 	fpos_t position;
-	
+
 	// How many bytes long is it
 	uint16 length;
-	
+
 	// Loaded from the file?
 	bool loaded;
-	
+
 	/**
 	 * The following Variables are only for palettes
 	 */
 	// index
 	uint8 index;
-	
-	
+
+
 	/**
 	 * The following Variables are only for Sprites
 	 */
 	// for sprites; video memory offset
 	uint16 *offset;
-	
+
 	// Its size (if applicable)
 	SpriteSize size;
-	
+
 };
-	
+
+
+/**
+ * frame struct. Used in keeping track of animations. Has a gfx id, time it should be on screen
+ * and a pointer to the gfx in main memory (or NULL if not loaded)
+ * @author Joe Balough
+ */
+struct frame
+{
+	uint32 gfxId;
+	uint32 *gfx;
+	uint8 time;
+};
+
+/**
+ * animation struct. Used to represent an animation. Is just a wrapper for a vector of frames.
+ * @author Joe Balough
+ */
+struct animation
+{
+	vector<frame> frames;
+};
+
 
 /**
  * The assets class, manages all assets that are stored in the zbe datafile
@@ -144,7 +166,7 @@ public:
 	 * @author Joe Balough
 	 */
 	uint8 loadPalette(u32 id);
-	
+
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
 	 * @param uint32 id
@@ -155,7 +177,7 @@ public:
 	{
 		return gfxStatus[id].size;
 	}
-	
+
 private:
 	/**
 	 * fread[32|16|8] functions
@@ -172,7 +194,7 @@ private:
 	uint32 fread32(FILE *input);
 	uint16 fread16(FILE *input);
 	uint8 fread8(FILE *input);
-	
+
 	/**
 	 * getSpriteSize function
 	 *
@@ -187,10 +209,10 @@ private:
 	 * @author Joe Balough
 	 */
 	SpriteSize getSpriteSize(uint8 width, uint8 height);
-	
+
 	// The zbe file
 	FILE *zbeData;
-	
+
 	// A pointer to the local oamTable
 	OamState *oam;
 
@@ -203,6 +225,12 @@ private:
 	 vector<assetStatus> gfxStatus;
 	 // Palettes' status
 	 vector<assetStatus> palStatus;
+
+	/**
+	 * These are vectors used by objects.
+	 */
+	// A vector of animations
+	vector<animation> animations;
 };
 
 #endif // ASSETS_H_INCLUDED

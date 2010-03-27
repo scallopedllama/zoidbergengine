@@ -4,7 +4,7 @@ assets::assets(char *filename, OamState *table)
 {
 	// Set variables
 	oam = table;
-	
+
 	// Load the file
 	iprintf("Opening %s\n", filename);
 	zbeData = fopen(filename, "rb");
@@ -21,7 +21,7 @@ assets::assets(char *filename, OamState *table)
 
 void assets::parseZbe()
 {
-	// TODO: actually handle the return values on all these file functions. 
+	// TODO: actually handle the return values on all these file functions.
 	//       They're all ignored so there is not fault tolerance.
 
 	// Get the version number out of the zeg file
@@ -41,15 +41,15 @@ void assets::parseZbe()
 	{
 		// Make a new assetStatus for the vector
 		assetStatus newAsset;
-		
+
 		// The very first byte of data in gfx tiles is its width, second is height
 		uint8 width = fread8(zbeData);
 		uint8 height = fread8(zbeData);
-		iprintf(" %d x %d\n", width, height);				
-		
+		iprintf(" %d x %d\n", width, height);
+
 		// Set its spriteSize
 		newAsset.size = getSpriteSize(width, height);
-		
+
 		// Get the length of this gfx tiles
 		newAsset.length = fread16(zbeData);
 		iprintf(" len %d\n", newAsset.length);
@@ -63,7 +63,7 @@ void assets::parseZbe()
 		// to get it using the proper value
 		newAsset.loaded = false;
 		newAsset.offset = NULL;
-		
+
 		// Push this asset on the array
 		gfxStatus.push_back(newAsset);
 
@@ -80,7 +80,7 @@ void assets::parseZbe()
 	{
 		// Make a new status for this palette
 		assetStatus newAsset;
-		
+
 		// Get the length of this palette
 		newAsset.length = fread16(zbeData);
 		iprintf(" %d's len %d\n", i, newAsset.length);
@@ -94,12 +94,53 @@ void assets::parseZbe()
 		// Then mark that it isn't loaded
 		newAsset.index = 0;
 		newAsset.loaded = false;
-		
+
 		// Push the new asset on to the array
 		palStatus.push_back(newAsset);
 
 		// Seek past this object
 		fseek(zbeData, newAsset.length, SEEK_CUR);
+	}
+
+	// Number of objects
+	uint32 numObjects = fread32(zbeData);
+	iprintf("#objs %d\n", numObjects);
+
+	// Get all the objects
+	for (uint32 i = 0; i < numObjects; i++)
+	{
+		// Number of animations
+		uint32 numAnimations = fread32(zbeData);
+		iprintf(" %d: %d animations\n", i, numAnimations);
+
+		// Get all the animations
+		for (uint32 j = 0; j < numAnimations; j++)
+		{
+			// Get the number of frames for this animation
+			uint16 numFrames = fread16(zbeData);
+			iprintf("  %d has %d frames\n", j, numFrames);
+
+			// Make a new animation
+			animation anim;
+
+			// Get all the frames
+			for (uint32 k = 0; k < numFrames; k++)
+			{
+				// Make a new frame (Init the gfx pointer to NULL)
+				frame thisFrame = {0, NULL, 0};
+
+				// The frame id for this animation frame
+				thisFrame.gfxId = fread32(zbeData);
+
+				// The time to display this frame
+				thisFrame.time = fread8(zbeData);
+
+				// Push on the vector
+				anim.frames.push_back(thisFrame);
+
+				iprintf("   %d for %d blanks\n", thisFrame.gfxId, thisFrame.time);
+			}
+		}
 	}
 }
 
@@ -180,7 +221,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 			return SpriteSize_64x64;
 			break;
 	}
-}	
+}
 
 // Reads a 32 bit integer from the input file
 uint32 assets::fread32(FILE *input)
@@ -229,13 +270,13 @@ uint16 *assets::loadGfx(uint32 id)
 	// Request space to load this graphic
 	uint16 *mem = oamAllocateGfx(oam, gfxStatus[id].size, SpriteColorFormat_16Color);
 	gfxStatus[id].offset = mem;
-	
+
 	// Start copying
 	uint16 length = gfxStatus[id].length;
 	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
 	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	
+
 	// Find the next free DMA channel and use it to copy the gfx into video memory
 	// It'll try channel 3 first because everybody seems to use that for this.
 	for (int i = 3; i <= 3; i++)
@@ -249,16 +290,16 @@ uint16 *assets::loadGfx(uint32 id)
 		}
 		else
 			iprintf(" dma bus %d busy\n", i);
-		
+
 		// If it made it here, all channels are busy
 		if (i == 3)
 			i = -1;
 	}
 	// This is commented out right now because the dma copy up there is asynch.
 	//free(data);
-	
+
 	iprintf(" loaded->%x\n", (unsigned int) gfxStatus[id].offset);
-	
+
 	return mem;
 }
 
@@ -291,7 +332,7 @@ uint8 assets::loadPalette(u32 id)
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	
+
 	// Find the next free DMA channel and use it to copy the palette into video memory
 	// It'll try channel 3 first because everybody seems to use that for this.
 	for (int i = 3; i <= 3; i++)
@@ -305,7 +346,7 @@ uint8 assets::loadPalette(u32 id)
 		}
 		else
 			iprintf(" dma bus %d busy\n", i);
-		
+
 		// If it made it here, all channels are busy
 		if (i == 3)
 			i = -1;
@@ -320,6 +361,6 @@ uint8 assets::loadPalette(u32 id)
 
 	// Update the index for the next call
 	curIndex++;
-	
+
 	return curIndex - 1;
 }
