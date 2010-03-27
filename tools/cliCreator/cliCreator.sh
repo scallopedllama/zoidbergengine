@@ -11,11 +11,6 @@ else
 	out_filename=$1
 fi
 
-# build the numPrefix programs
-cc -o numPrefix/numPrefix16 numPrefix/numPrefix16.c
-cc -o numPrefix/numPrefix32 numPrefix/numPrefix32.c
-cc -o numPrefix/numPrefix8 numPrefix/numPrefix8.c
-
 # process all of the graphic files
 for i in `ls gfx | egrep '.png$|.bmp$|.gif$|.pcx$'`
 do
@@ -38,12 +33,12 @@ do
 	num_bytes_pal=`wc -c $pal_bin | awk '{print $1}'`
 
 	# prepend that number to the bin file and save it with a .zbe extension
-	./numPrefix/numPrefix16 $img_bin $num_bytes_img $img_bin.zbe.tmp > /dev/null
-	./numPrefix/numPrefix16 $pal_bin $num_bytes_pal $pal_bin.zbe > /dev/null
+	./bin/numPrefix16 $img_bin $num_bytes_img $img_bin.zbe.tmp > /dev/null
+	./bin/numPrefix16 $pal_bin $num_bytes_pal $pal_bin.zbe > /dev/null
 
 	# prepend the height then width to the gfx bin
-	./numPrefix/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe.tmp1 > /dev/null
-	./numPrefix/numPrefix8 $img_bin.zbe.tmp1 $width $img_bin.zbe > /dev/null
+	./bin/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe.tmp1 > /dev/null
+	./bin/numPrefix8 $img_bin.zbe.tmp1 $width $img_bin.zbe > /dev/null
 
 	# clean up as much as possible
 	rm $img_bin.zbe.tmp* $img_bin $pal_bin
@@ -67,8 +62,8 @@ cat `ls | grep '.pal.bin.zbe$'` > allpal.zbe.tmp
 rm `ls | grep '.bin.zbe$'`
 
 # put the # assets on the front of those temp files
-./numPrefix/numPrefix32 allgfx.zbe.tmp $no_gfx allgfx.zbe > /dev/null
-./numPrefix/numPrefix32 allpal.zbe.tmp $no_pal allpal.zbe > /dev/null
+./bin/numPrefix32 allgfx.zbe.tmp $no_gfx allgfx.zbe > /dev/null
+./bin/numPrefix32 allpal.zbe.tmp $no_pal allpal.zbe > /dev/null
 
 # group those two files together
 cat allgfx.zbe allpal.zbe > all.zbe.tmp
@@ -77,10 +72,10 @@ cat allgfx.zbe allpal.zbe > all.zbe.tmp
 rm allgfx.zbe.tmp allpal.zbe.tmp allgfx.zbe allpal.zbe
 
 # prefix that with the total number of assets
-./numPrefix/numPrefix32 all.zbe.tmp $no_all numd.zbe.tmp > /dev/null
+./bin/numPrefix32 all.zbe.tmp $no_all numd.zbe.tmp > /dev/null
 
 # prefix that with the version
-./numPrefix/numPrefix16 numd.zbe.tmp $zbe_ver $out_filename > /dev/null
+./bin/numPrefix16 numd.zbe.tmp $zbe_ver $out_filename > /dev/null
 
 # final cleanup
 rm all.zbe.tmp numd.zbe.tmp
