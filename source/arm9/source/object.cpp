@@ -53,6 +53,9 @@ void object::update(touchPosition *touch)
 	//   s = v_0 * (delta t) + .5 * a * (delta t)^2
 	//   v^2_f - v^2_o = 2 * a * (x_f - x_o)
 	
+	velocity.x += gravity.x + acceleration.x;
+	velocity.y += gravity.y + acceleration.x;
+
 	position.x += velocity.x;
 	position.y += velocity.y;
 	

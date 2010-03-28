@@ -196,9 +196,16 @@ private:
 	 *   The spriteId corresponding to the freed SpriteEntry.
 	 * @author Joe Balough
 	 */
-	inline void freeSpriteEntry(int toFree){
+	inline void freeSpriteEntry(int toFree)
+	{
 		spriteAvail[toFree] = true;
 	}
+
+	/*
+	 * Gravity vector to dynamically change the direction of the 
+	 * acceleration due to gravity
+	 */
+	vector2D<float> gravity;
 };
 
 #endif // LEVEL_H_INCLUDED

@@ -20,7 +20,7 @@ export CLICREATOR	:=	tools/cliCreator
 all: $(TARGET).nds
 
 #---------------------------------------------------------------------------------
-$(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9 assets
+$(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
 

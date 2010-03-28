@@ -306,14 +306,19 @@ public:
 	* @see physics.h
 	* @author Dan Tracy
 	*/
-	const int getAngle() const { return angle; }
-	void setAngle(int angleInRadians) { angle = angleInRadians; }
+	const inline int getAngle() const { return angle; }
+	inline void setAngle(int angleInRadians) { angle = angleInRadians; }
 
-	const vector2D<float> getVelocity() const { return velocity; }
-	void setVelocity(vector2D<float> v)	{ velocity = v; }
+	const inline vector2D<float> getVelocity() const { return velocity; }
+	inline void setVelocity(vector2D<float> v)	{ velocity = v; }
 
-	const vector2D<float> getAcceleration() const { return acceleration; }
-	void setAcceleration(vector2D<float> accel) { acceleration = accel; }
+	const inline vector2D<float> getAcceleration() const { return acceleration; }
+	inline void setAcceleration(vector2D<float> accel) { acceleration = accel; }
+	inline void setGravity(vector2D<float> grav)
+	{ 
+		gravity.x = grav.x; 
+		gravity.y = grav.y;
+	}
 
 
 protected:
@@ -368,7 +373,7 @@ protected:
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
-	vector2D<float> position, velocity, acceleration;
+	vector2D<float> position, velocity, acceleration, gravity;
 
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT

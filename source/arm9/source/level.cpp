@@ -18,6 +18,8 @@ level::level(char *filename)
 		matrixAvail[i] = true;
 		spriteAvail[i] = true;
 	}
+	// gravity default value CAN BE CHANGED
+	gravity.y = 0.05;
 }
 
 // level destructor
@@ -87,6 +89,8 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
     else
 		newObj = new object(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
 	
+	newObj->setGravity(gravity);
+
 	// Add that object to the list
 	objects.push_back(newObj);
 }
