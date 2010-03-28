@@ -108,13 +108,13 @@ public:
 	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	object(OamState *oam, 
-		   int spriteId, int paletteId, 
+	object(OamState *oam,
+		   int spriteId, int paletteId,
 		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
-		   int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
+		   int matrixId = -1, int Width = 1 << 8, int Height = 1 << 8, int angle = 0,
 		   bool mosaic = false);
-	
+
 	/**
 	 * Object update function
 	 *
@@ -157,7 +157,7 @@ public:
 	 * @author Joe Balough
 	 */
 	int removeRotateScale();
-	
+
 	/**
 	 * rotate function
 	 *
@@ -172,11 +172,11 @@ public:
 	{
 		// Set angle
 		angle = Angle;
-		
+
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, width, height);
 	}
-	
+
 	/**
 	 * scale function
 	 *
@@ -192,11 +192,11 @@ public:
 		// Set width and height
 		width = Width;
 		height = Height;
-		
+
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, width, height);
 	}
-	
+
 	/**
 	 * rotateScale function
 	 *
@@ -215,7 +215,7 @@ public:
 		angle = Angle;
 		width = Width;
 		height = Height;
-		
+
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, width, height);
 	}
@@ -248,7 +248,7 @@ public:
 	{
 		hidden = visibility;
 	}
-	
+
 
 	/**
 	 * isHidden function
@@ -320,41 +320,41 @@ protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
 	OamState *oam;
-	
+
 	// The current id for the for the affine matrix, the sprite, and the palette to use in the oam
     int matrixId;
     int spriteId;
 	int	paletteId;
-	
+
 	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
 	// Should only ever contain one frame of the animation
 	uint16 *frameMem;
-	
+
 	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
 	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]
 	void ***gfxMem;
-	
+
 	// The number of animations available for this object
 	int numAnimations;
-	
+
 	// An array representing the number of frames in the i'th animation
 	int *numFrames;
-	
+
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
 	int	priority;
-	
+
 	// The size of the gfx for this object
 	SpriteSize size;
-	
+
 	// And its color format
 	SpriteColorFormat format;
-	
+
 	// Whether or not this sprite's bounds are doubled (If true it won't ever be clipped to fit in a square)
 	bool isSizeDouble;
-	
+
 	// Whether or not this sprite is using affine transformations
 	bool isRotateScale;
-	
+
 	// These are only valid when isRotateScale == true
 	// The width to which the sprite should be scaled using an affine transformation
 	int width;
