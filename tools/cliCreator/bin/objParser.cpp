@@ -48,6 +48,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <vector>
 #include "lib/tinyxml/tinyxml.h"
 
@@ -214,7 +215,7 @@ int main(int argc, char **argv)
 				fwrite32(thisFrame.gfxId, output);
 				fwrite8(thisFrame.time, output);
 
-				printf("\t\t\t\t<frame id=\"%d\" time=\"%d\" />\n", thisFrame.gfxId, thisFrame.time);
+				printf("\t\t\t\t<frame id=\"%ld\" time=\"%d\" />\n", (long int) thisFrame.gfxId, (int) thisFrame.time);
 			}
 			printf("\t\t\t</animation>\n");
 		}
@@ -234,7 +235,7 @@ void fwrite32(uint32_t val, FILE *file)
 {
 	if (fwrite(&val, sizeof(uint32_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing uint32 value %ld to file\n", val);
+		fprintf(stderr, "error writing uint32 value %ld to file\n", (long int) val);
 	}
 }
 
@@ -242,7 +243,7 @@ void fwrite16(uint16_t val, FILE *file)
 {
 	if (fwrite(&val, sizeof(uint16_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing uint16 value %ld to file\n", val);
+		fprintf(stderr, "error writing uint16 value %ld to file\n", (long int) val);
 	}
 }
 
@@ -250,6 +251,6 @@ void fwrite8(uint8_t val, FILE *file)
 {
 	if (fwrite(&val, sizeof(uint8_t), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing uint8 value %ld to file\n", val);
+		fprintf(stderr, "error writing uint8 value %d to file\n", (int) val);
 	}
 }

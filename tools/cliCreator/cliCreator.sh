@@ -87,6 +87,6 @@ rm allgfxpal.zbe.tmp allgfxpal.zbe
 cat vertopal.zbe objects.zbe > $out_filename
 
 # cleanup
-rm vertopal.zbe
+rm vertopal.zbe objects.zbe
 
 echo "All done. Assets saved into file $out_filename"

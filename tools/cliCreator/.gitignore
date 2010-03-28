@@ -1,5 +1,3 @@
-*.bin
-*.zbe
 bin/numPrefix32
 bin/numPrefix16
 bin/numPrefix8

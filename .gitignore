@@ -21,3 +21,6 @@ source/arm9/build/*
 
 #mac trashes
 .DS_Store
+
+devkitpro/*/build/*
+*.s
