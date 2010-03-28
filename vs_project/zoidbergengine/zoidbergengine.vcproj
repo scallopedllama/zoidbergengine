@@ -99,12 +99,72 @@
 			<Filter
 				Name="Header Files"
 				>
+				<File
+					RelativePath="..\..\source\arm9\include\ai.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\assets.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\hero.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\level.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\object.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\physics.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\util.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\include\vector.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
 				<File
+					RelativePath="..\..\source\arm9\source\ai.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\assets.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\hero.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\level.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\arm9\source\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\object.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\physics.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\arm9\source\util.cpp"
 					>
 				</File>
 			</Filter>
