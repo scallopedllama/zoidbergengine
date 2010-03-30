@@ -32,7 +32,7 @@ void hero::update(touchPosition *touch)
 	}
 	if (keysHeld() & KEY_UP)
 	{
-		acceleration.y -= 0.5;
+		velocity.y -= 1.0;
 	}
 
 	// Done doing hero specific update functions,

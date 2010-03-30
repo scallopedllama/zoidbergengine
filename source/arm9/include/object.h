@@ -321,6 +321,15 @@ public:
 	}
 
 
+	// The width to which the sprite should be scaled using an affine transformation
+	int width;
+	// The height to which the sprite should be scaled using an affine transformation
+    int height;
+
+	// obvious variables
+	// note: gravity is added to the y acceleration.
+	vector2D<float> position, velocity, acceleration, gravity;
+
 protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
@@ -361,19 +370,14 @@ protected:
 	bool isRotateScale;
 
 	// These are only valid when isRotateScale == true
-	// The width to which the sprite should be scaled using an affine transformation
-	int width;
-	// The height to which the sprite should be scaled using an affine transformation
-    int height;
+	
 	// The angle to which the sprite should be rotated using an affine transformation
     int angle;
 
 	// Whether or not this object is flipped horizontally, vertically, mosaic'd, or hidden
 	bool hflip, vflip, mosaic, hidden;
 
-	// obvious variables
-	// note: gravity is added to the y acceleration.
-	vector2D<float> position, velocity, acceleration, gravity;
+	
 
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT

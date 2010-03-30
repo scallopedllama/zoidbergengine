@@ -1,6 +1,8 @@
 #include "level.h"
 #include "physics.h"
 #include <stdio.h>
+#include "collision.h"
+#include <math.h>
 using namespace decapod;
 
 // level constructor
@@ -19,7 +21,7 @@ level::level(char *filename)
 		spriteAvail[i] = true;
 	}
 	// gravity default value CAN BE CHANGED
-	gravity.y = 0.05;
+	gravity.y = 0.025;
 }
 
 // level destructor
@@ -118,10 +120,52 @@ void level::update()
 	//iterate through all the objects in that list
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
+		objects[i]->update(touch);
 		// run their respective update functions
 		//if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
-		objects[i]->update(touch);
+		
+		//Temperary collision detection at a horrizontal line
+		if(objects[i]->position.y > 120)
+		{
+			float diff =objects[i]->position.y - 120;
+			objects[i]->position.y -= diff + 0.005;
 
+			objects[i]->velocity.y = -objects[i]->velocity.y * 0.9;
+		}
+		//else
+		
+		
+		//do a very simple collision between objects that are moving
+		for(unsigned int j=0; j<objects.size(); j++)
+		{
+			float disty = (objects[i]->position.y+16) - (objects[j]->position.y+16);
+			float distx = (objects[i]->position.x+16) - (objects[j]->position.x+16);
+			float dist = sqrt(distx*distx+disty*disty);
+			if(dist < 32)
+			{
+				//float vtx = objects[i]->velocity.x;
+				//float vty = objects[i]->velocity.y;
+
+				objects[i]->velocity.x *= -1;//objects[j]->velocity.x;
+				objects[i]->velocity.y *= -1;//objects[j]->velocity.y;
+
+				objects[j]->velocity.x *= -1;//vtx;
+				objects[j]->velocity.y *= -1;//vty;
+				
+			}
+			
+			/*if((objects[i]->position.x - objects[j]->position.x) < objects[i]->width) 
+			{
+					objects[i]->position.x += (objects[i]->position.x - objects[j]->position.x);
+					objects[i]->velocity.x = 0;
+			}
+			if(abs(objects[j]->position.y - objects[i]->position.y) < 32)
+			{
+				//objects[i]->position.y += (objects[i]->position.y - objects[j]->position.y);
+				iprintf("pos y i:%d  j:%d \n", (int)objects[i]->position.y, (int)objects[j]->position.y);
+				//objects[i]->velocity.y = 0;
+			}*/
+		}
 
 	}
 }
