@@ -51,7 +51,7 @@
 #include "hero.h"  //addSprite can add a hero to the mix
 #include "physics.h"
 #include "assets.h"
-#include "collision.h"
+//#include "collision.h"
 using namespace std;
 
 using namespace decapod;

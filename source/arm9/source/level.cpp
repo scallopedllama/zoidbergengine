@@ -1,7 +1,7 @@
 #include "level.h"
 #include "physics.h"
 #include <stdio.h>
-#include "collision.h"
+//#include "collision.h"
 #include <math.h>
 using namespace decapod;
 
@@ -120,7 +120,8 @@ void level::update()
 	//iterate through all the objects in that list
 	for(unsigned int i=0; i<objects.size(); i++)
 	{
-		objects[i]->update(touch);
+		bool collide = false;
+		
 		// run their respective update functions
 		//if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
 		
@@ -134,11 +135,19 @@ void level::update()
 		}
 		//else
 		
-		
 		//do a very simple collision between objects that are moving
-		for(unsigned int j=0; j<objects.size(); j++)
+		for(unsigned int j=1; j<objects.size(); j++)
 		{
-			float disty = (objects[i]->position.y+16) - (objects[j]->position.y+16);
+			if(i != j)
+			{
+				if(Collide(objects[i], objects[j]))
+				{
+					//iprintf("in collide\n");
+					objects[i]->velocity.x = objects[i]->velocity.y = 0;
+					objects[j]->velocity.x = objects[j]->velocity.y = 0;
+				}
+			}
+			/*float disty = (objects[i]->position.y+16) - (objects[j]->position.y+16);
 			float distx = (objects[i]->position.x+16) - (objects[j]->position.x+16);
 			float dist = sqrt(distx*distx+disty*disty);
 			if(dist < 32)
@@ -166,6 +175,6 @@ void level::update()
 				//objects[i]->velocity.y = 0;
 			}*/
 		}
-
+		objects[i]->update(touch);
 	}
 }

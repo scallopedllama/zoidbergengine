@@ -40,6 +40,7 @@ namespace decapod{
 	bool intersection(object sprite1, object sprite2);
 	bool smallProjectileCollide(const object sprite, const object bullet);
 	void jump(object sprite);
+	bool Collide(object *object1, object *object2);
 };
 
 #endif
