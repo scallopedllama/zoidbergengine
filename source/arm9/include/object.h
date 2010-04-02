@@ -36,6 +36,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "vector.h"
+#include "collisionmatrix.h"
 
 /**
  * object class
@@ -69,7 +70,9 @@ public:
 	 *  The sprite index in the oam
 	 * @param int paletteId
 	 *  The index for the palette that this object should use.
-	 *
+	 * @param collisionMatrix *colMatrix
+	 *  A pointer to the collisionMatrix being used. THE OBJECT WILL ADD ITSELF TO THE MATRIX.
+	 * 
 	 * @param void ***gfx
 	 *  A 3D array representing the gfx for all of the frames of all the animations. Loaded by assets class.
 	 *  gfx[animationId][frameNo] is gfx for frameNo'th frame of animationId'th animation.
@@ -109,7 +112,7 @@ public:
 	 * @author Joe Balough
 	 */
 	object(OamState *oam,
-		   int spriteId, int paletteId,
+		   int spriteId, int paletteId, collisionMatrix *colMatrix,
 		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
 		   int matrixId = -1, int Width = 1 << 8, int Height = 1 << 8, int angle = 0,
@@ -324,7 +327,7 @@ public:
 	// The width to which the sprite should be scaled using an affine transformation
 	int width;
 	// The height to which the sprite should be scaled using an affine transformation
-    int height;
+	int height;
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
@@ -336,9 +339,9 @@ protected:
 	OamState *oam;
 
 	// The current id for the for the affine matrix, the sprite, and the palette to use in the oam
-    int matrixId;
-    int spriteId;
-	int	paletteId;
+	int matrixId;
+	int spriteId;
+	int paletteId;
 
 	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
 	// Should only ever contain one frame of the animation
@@ -355,7 +358,7 @@ protected:
 	int *numFrames;
 
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
-	int	priority;
+	int priority;
 
 	// The size of the gfx for this object
 	SpriteSize size;
@@ -372,12 +375,20 @@ protected:
 	// These are only valid when isRotateScale == true
 	
 	// The angle to which the sprite should be rotated using an affine transformation
-    int angle;
+	int angle;
 
 	// Whether or not this object is flipped horizontally, vertically, mosaic'd, or hidden
 	bool hflip, vflip, mosaic, hidden;
 
+	/**
+	 * Variables for collision detection
+	 */
 	
+	// The objGroup that this object is currently in
+	objGroup *objectGroup;
+	
+	// A pointer to the collisionMatrix we're using
+	collisionMatrix *colMatrix;
 
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT

@@ -2,7 +2,7 @@
 
 // object constructor
 object::object(OamState *Oam, 
-	   int SpriteId, int PaletteId, 
+	   int SpriteId, int PaletteId, collisionMatrix *ColMatrix,
 	   void ***Gfx, int NumAnim, int *NumFrames, uint16 *Frame,
 	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
 	   int MatrixId, int Width, int Height, int Angle,
@@ -42,6 +42,10 @@ object::object(OamState *Oam,
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	
+	// Add this to the collisionMatrix, setting the objectGroup
+	colMatrix = ColMatrix;
+	objectGroup = colMatrix->addObject(this);
+	
 	colHeight = height*0.8f / 2;
 	colWidth  = width*0.8f / 2;
 }
@@ -49,11 +53,10 @@ object::object(OamState *Oam,
 // object update function, applies physics to the object
 void object::update(touchPosition *touch)
 {
-	// relevant physics equations:
-	//   s = v_0 * (delta t) + .5 * a * (delta t)^2
-	//   v^2_f - v^2_o = 2 * a * (x_f - x_o)
+	// Update position
 	
-
+	// TODO: Add some kind of flag to turn off gravity if the object is up against
+	//       something and hasn't moved in a while
 	velocity.x += gravity.x;
 	velocity.y += gravity.y;
 
@@ -63,6 +66,27 @@ void object::update(touchPosition *touch)
 	position.x += velocity.x;
 	position.y += velocity.y;
 	
+	// Update the object's position in the collisionMatrix
+	objectGroup->remove(this);
+	objectGroup = collisionMatrix->addObject(this);
+	
+	//Check Collisions
+	
+	
+	
+	// TODO: (long term) robustisize our engine here by making the object only use up
+	//       an oamId if it is on screen. simply don't call oamSet if the object is off screen.
+	
+	// TODO: rename width and height to scaleX and scaleY and make width and height
+	//       actually valid variables with proper values.
+	// TODO: make the vector2D class better and enable this bit of code
+	//If the object is off screen, hide it
+	/**
+	vector2D<float> screenPos = position + screenOffset;
+	if     (screenPos.x < 0 || screenPos.x + width > SCREEN_WIDTH  ||
+		screenPos.y < 0 || screenPos.y + height > SCREEN_HEIGHT)
+		isHidden(false);
+	**/
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if
 	//       the object is hidden and if so, pass -1 for affineIndex.
@@ -70,6 +94,7 @@ void object::update(touchPosition *touch)
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
 	oamSet(oam, spriteId, int (position.x), int (position.y), priority, paletteId, size, format,
 		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
+
 }
 
 // makes this sprite a RotateScale sprite
