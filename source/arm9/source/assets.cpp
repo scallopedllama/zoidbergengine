@@ -255,6 +255,7 @@ uint16 *assets::loadGfx(uint32 id)
 	// See if it's already loaded
 	if (gfxStatus[id].loaded)
 	{
+		// TODO: this doesn't seem to work.
 		iprintf(" cache hit->%x\n", (unsigned int) gfxStatus[id].offset);
 
 		// Already loaded so return the index
@@ -311,6 +312,7 @@ uint8 assets::loadPalette(u32 id)
 	// See if it's already loaded
 	if (palStatus[id].loaded)
 	{
+		// TODO: this doesn't seem to work.
 		iprintf(" cache hit->%d\n", palStatus[id].index);
 
 		// Already loaded so set the index and return
