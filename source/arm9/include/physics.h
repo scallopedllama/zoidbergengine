@@ -35,12 +35,17 @@
 #include <nds.h>
 #include "object.h"
 
-static const int gravity = 10;
+// TODO: comment up this file. 
+
+// TODO: all these functions should take POINTERS to objects.
+
+// NOTE: gravity is to be implemented on a per-object basis (for super trippy stuff).
+
 namespace decapod{
 	bool intersection(object sprite1, object sprite2);
 	bool smallProjectileCollide(const object sprite, const object bullet);
 	void jump(object sprite);
-	bool Collide(object *object1, object *object2);
+	bool collide(object *object1, object *object2);
 	bool collisionHorrizontalLine(object *obj1, int yval)
 };
 

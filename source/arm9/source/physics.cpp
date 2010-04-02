@@ -100,7 +100,7 @@ void decapod :: jump(object sprite)
 	sprite.setPosition( vector2D<float>(x,y) );	
 }
 
-bool decapod :: Collide(object *object1, object *object2) 
+bool decapod :: collide(object *object1, object *object2) 
 {
   
     float left1, left2;
