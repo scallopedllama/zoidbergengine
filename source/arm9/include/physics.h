@@ -46,7 +46,7 @@ namespace decapod{
 	bool smallProjectileCollide(const object sprite, const object bullet);
 	void jump(object sprite);
 	bool collide(object *object1, object *object2);
-	bool collisionHorrizontalLine(object *obj1, int yval)
+	bool collisionHorrizontalLine(object *obj1, int yval);
 };
 
 #endif
