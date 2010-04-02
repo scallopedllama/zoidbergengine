@@ -19,7 +19,7 @@ hero::hero(OamState *oam,
 }
 
 // hero update function, checks for keys pressed and acts accordingly
-void hero::update(touchPosition *touch)
+bool hero::update(touchPosition *touch)
 {
 	// TODO (jbb5044#6#): Generalize the input stuff so that users can drop multiple heros in to the level with different key mappings.
 	if (keysHeld() & KEY_LEFT)

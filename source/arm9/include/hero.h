@@ -72,7 +72,7 @@ public:
 	 * @see object::update()
 	 * @author Joe Balough
 	 */
-	virtual void update(touchPosition *touch);
+	virtual bool update(touchPosition *touch);
 
 private:
 };
