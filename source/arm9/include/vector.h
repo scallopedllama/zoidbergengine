@@ -33,7 +33,7 @@
 /**
  * vector2D template class
  *
- * The vector3D template class is a simple class used to keep track of an x and a y value.
+ * The vector2D template class is a simple class used to keep track of an x and a y value.
  *
  * @author Joe Balough
  */
@@ -58,26 +58,9 @@ template <class T> struct vector2D
 		x = y = 0;
 	}
 
-/*
-	T& operator [] (int i)
-	{
-		if(i == 0)
-			return &x;
-		else
-			return &y;
-	}
-	T& x()
-	{
-		return &x;
-	}
-	T& y()
-	{
-		return &y;
-	}*/
-
 	// X and Y variables
-    T x;
-    T y;
+	T x;
+	T y;
 };
 
 #endif // VECTOR_H_INCLUDED
