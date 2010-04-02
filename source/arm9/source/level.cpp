@@ -163,9 +163,9 @@ void level::update()
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		// TODO: make width and height actually valid variables with proper values and enable them here
-		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x + screenOffset.x, objects[i]->position.x + screenOffset.x);
-		if     (screenPos.x >= 0 || screenPos.x /**+ width**/  <= SCREEN_WIDTH  ||
-			screenPos.y >= 0 || screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
+		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x + screenOffset.x, objects[i]->position.y + screenOffset.y);
+		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
+			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
 		{	
 			objects[i]->draw(spriteId);
 			++spriteId;
