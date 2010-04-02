@@ -49,10 +49,10 @@
 #include <nds.h>
 #include <vector>
 #include "object.h" //addSprite function needs this
-#include "hero.h"  //addSprite can add a hero to the mix
+#include "hero.h"   //addSprite can add a hero to the mix
+#include "collisionmatrix.h"
 #include "physics.h"
 #include "assets.h"
-//#include "collision.h"
 
 /**
  * Global Variable; screen offsset vector
@@ -117,8 +117,11 @@ public:
 	/**
 	 * update function
 	 *
-	 * Gets touchscreen information then iterates through the list of objects telling each one to update giving them
-	 * the touchscreen update information.
+	 * Gets touchscreen information then iterates through the list of objects 
+	 * telling each one to update giving them the touchscreen update information.
+	 * Those functions return a boolean value indicating whether they've moved 
+	 * because of the update. If they have moved, run collision detection on
+	 * them.
 	 *
 	 * @author Joe Balough
 	 */
@@ -221,6 +224,18 @@ private:
 	 * acceleration due to gravity
 	 */
 	vector2D<float> gravity;
+	
+	/**
+	 * Variables for collision detection
+	 */
+	
+	// An array of pointers to objGroups. Each index represents an object id which points
+	// to its objGroup.. probalby not best, but it'll work for now.
+	vector<objGroup*> objectsGroups;
+	
+	// A pointer to the collisionMatrix we're using
+	collisionMatrix *colMatrix;
+
 };
 
 #endif // LEVEL_H_INCLUDED

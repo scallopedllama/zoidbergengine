@@ -19,8 +19,12 @@ level::level(char *filename)
 		matrixAvail[i] = true;
 		spriteAvail[i] = true;
 	}
+	
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
+	
+	// initialize the collisionMatrix
+	colMatrix = new collisionMatrix(SCREEN_WIDTH, SCREEN_HEIGHT, 70);
 }
 
 // level destructor
@@ -30,6 +34,7 @@ level::~level()
 	{
 		delete objects[i];
 	}
+	delete colMatrix;
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -116,64 +121,53 @@ void level::update()
 	touchPosition *touch = NULL;
 	touchRead(touch);
 
-	//iterate through all the objects in that list
-	for(unsigned int i=0; i<objects.size(); i++)
+	// A vector of object ids that have moved because of their update function
+	vector<int> moved;
+	
+	// Iterate through all the objects in the level
+	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		bool collide = false;
+		// Run the update function to move the objects. If they return true,
+		// Add to the moved vector
+		if (objects[i]->update(touch))
+			moved.push_back(i);
+	}
+	
+	// Now that all objects have moved, run collision detection on them.
+	for (unsigned int i = 0; i < moved.size(); i++
+	{
+		int objId = moved[i];
 		
-		// run their respective update functions
-		//if( !decapod::intersection( *objects[0], *objects[1] ) ) printf("\nCollision Detected!\n");
+		// Pull this object out of its old objGroup and reinsert it.
+		objectsGroups[objId]->remove(objects[objId]);
+		objectsGroups[objId] = collisionMatrix->addObject(objects[objId]);
 		
-		//Temperary collision detection at a horrizontal line
+		// Temperary collision detection at a horrizontal line
 		if(objects[i]->position.y > 120)
 		{
 			float diff =objects[i]->position.y - 120;
 			objects[i]->position.y -= diff + 0.005;
-
+			// bouncy bouncy
 			objects[i]->velocity.y = -objects[i]->velocity.y * 0.9;
 		}
-		//else
-		
-		//do a very simple collision between objects that are moving
-		for(unsigned int j=1; j<objects.size(); j++)
+		if(objects[i]->position.y < 0)
 		{
-			if(i != j)
-			{
-				if(Collide(objects[i], objects[j]))
-				{
-					//iprintf("in collide\n");
-					objects[i]->velocity.x = objects[i]->velocity.y = 0;
-					objects[j]->velocity.x = objects[j]->velocity.y = 0;
-				}
-			}
-			/*float disty = (objects[i]->position.y+16) - (objects[j]->position.y+16);
-			float distx = (objects[i]->position.x+16) - (objects[j]->position.x+16);
-			float dist = sqrt(distx*distx+disty*disty);
-			if(dist < 32)
-			{
-				//float vtx = objects[i]->velocity.x;
-				//float vty = objects[i]->velocity.y;
-
-				objects[i]->velocity.x *= -1;//objects[j]->velocity.x;
-				objects[i]->velocity.y *= -1;//objects[j]->velocity.y;
-
-				objects[j]->velocity.x *= -1;//vtx;
-				objects[j]->velocity.y *= -1;//vty;
-				
-			}
-			
-			/*if((objects[i]->position.x - objects[j]->position.x) < objects[i]->width) 
-			{
-					objects[i]->position.x += (objects[i]->position.x - objects[j]->position.x);
-					objects[i]->velocity.x = 0;
-			}
-			if(abs(objects[j]->position.y - objects[i]->position.y) < 32)
-			{
-				//objects[i]->position.y += (objects[i]->position.y - objects[j]->position.y);
-				iprintf("pos y i:%d  j:%d \n", (int)objects[i]->position.y, (int)objects[j]->position.y);
-				//objects[i]->velocity.y = 0;
-			}*/
+			objects[i]->position.y = 0.1;
+			objects[i]->velocity.y = 0.0;
 		}
-		objects[i]->update(touch);
+		
+		// Get the objects that MIGHT be colliding with it
+		vector<object*> candidates = collisionMatrix->getCollisionCandidates(objects[objId]->position);
+		
+		// Test for collision with them
+		for (unsigned int j = 0; j < candidates.size(); j++)
+		{
+			if (i != j && collide(objects[i], objects[j]))
+			{
+				// We have a collision
+				objects[i]->velocity.x = objects[i]->velocity.y = 0;
+				objects[j]->velocity.x = objects[j]->velocity.y = 0;
+			}
+		}
 	}
 }
