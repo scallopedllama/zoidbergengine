@@ -155,8 +155,8 @@ int main()
 
 	// Drop in some assets
 	// void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
-	lvl->addSprite(true, 1, 0, 25, 99);
-	lvl->addSprite(true, 1, 1, 25, 0);
+	lvl->addSprite(true, 1, 0, 25, 0);
+	lvl->addSprite(false, 1, 1, 25, 100);
 	/*lvl->addSprite(true, 1, 0, 20, 20);
 	lvl->addSprite(true, 1, 1, 50, 50);
 	lvl->addSprite(true, 1, 0, 100, 5);

@@ -101,6 +101,8 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	objects.push_back(newObj);
 	
 	// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
+	// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
+	//       collision actions to the collisionMatrix.
 	objectsGroups.push_back(colMatrix->addObject(newObj));
 }
 
@@ -149,10 +151,8 @@ void level::update()
 		// Temperary collision detection at a horrizontal line
 		if(objects[i]->position.y > 120)
 		{
-			float diff =objects[i]->position.y - 120;
-			objects[i]->position.y -= diff + 0.005;
-			// bouncy bouncy
-			objects[i]->velocity.y = -objects[i]->velocity.y * 0.9;
+			objects[i]->position.y = 119.9;
+			objects[i]->velocity.y = 0.0;
 		}
 		if(objects[i]->position.y < 0)
 		{
@@ -169,8 +169,8 @@ void level::update()
 			if (i != j && collide(objects[i], objects[j]))
 			{
 				// We have a collision
-				objects[i]->velocity.x = objects[i]->velocity.y = 0;
-				objects[j]->velocity.x = objects[j]->velocity.y = 0;
+				objects[i]->velocity = objects[i]->velocity = vector2D<float>(0.0, 0.0);
+				
 			}
 		}
 	}
