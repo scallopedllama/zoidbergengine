@@ -145,6 +145,23 @@ public:
 	 */
 	objGroup* addObject(object *add);
 	
+	/**
+	 * getCollisionCandidates function
+	 *
+	 * Takes a position and returns an array full of pointers of all of the
+	 * objects that MIGHT be colliding with an object at these coordinates.
+	 * Takes the object pointers from a region of the nearest 4 objGroups
+	 * and adds them together for the return.
+	 *
+	 * @param vector2D<float> position
+	 *   The position at which collisions are being looked for
+	 * @return vector<object*>
+	 *   A vector of object pointers that may be colliding with an object
+	 *   at position
+	 * @author Joe Balough
+	 */
+	vector<object*> getCollisionCandidates(vector2D<float> position);
+	
 private:
 	/**
 	 * convertCoords function

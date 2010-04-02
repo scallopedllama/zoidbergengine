@@ -100,5 +100,44 @@ objGroup *collisionMatrix::addObject(object *add)
 	return &groups[coords.x][coords.y];
 }
 
-
+// Return an array of object pointers that may be colliding with object at x, y
+vector <object*> collisionMatrix::getCollisionCandidates(vector2D<float> position)
+{
+	// First, convert the coordinates and return an empty array if invalid
+	vector2D<int> coords = convertCoords(position);
+	if(coords.x < 0 || coords.y < 0)
+		return vector<object*>();
+	
+	// Now, we want to return the objects in the objGroup for these coordinates
+	// plus the objGroup above, to the left, and to the upperleft. These groups
+	// contain the only objects that could possibly be colliding with this object
+	// This group
+	vector<object*> toReturn = groups[coords.x][coords.y].objects;
+	
+	// The others -- Make sure that they are valid first
+	// Left
+	if (coords.x > 0)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x - 1][coords.y].objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Up
+	if (coords.y > 0)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x][coords.y - 1].objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Up-Left
+	if (coords.x > 0 && coords.y > 0)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x - 1][coords.y - 1].objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	
+	// all done, just need to return the vector
+	return toReturn;
+}
 
