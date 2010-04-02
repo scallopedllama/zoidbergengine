@@ -149,5 +149,15 @@ bool decapod :: Collide(object *object1, object *object2)
     return(true);
 };
 
+// Moved out of collision.cpp jb
+bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
+{
+	if(obj1->position.y > yval)
+	{
+		int diff =(int)obj1->position.y - yval;
+		obj1->position.y -= diff;
+		obj1->velocity.y = 0;
+	}
+}
 
 

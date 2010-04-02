@@ -1,7 +1,6 @@
 #include "level.h"
 #include "physics.h"
 #include <stdio.h>
-//#include "collision.h"
 #include <math.h>
 using namespace decapod;
 
