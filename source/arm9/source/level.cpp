@@ -149,12 +149,13 @@ void level::update()
 		objectsGroups[i] = colMatrix->addObject(objects[i]);
 		
 		// Temperary collision detection at a horrizontal line
-		if(objects[i]->position.y > 120)
+		if(objects[i]->position.y > 120.0)
 		{
-			objects[i]->position.y = 119.9;
+			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
 		}
-		if(objects[i]->position.y < 0)
+		iprintf("object[%d] y: %d\n", i, (int)objects[i]->position.y);
+		if(objects[i]->position.y < 0.0)
 		{
 			objects[i]->position.y = 0.1;
 			objects[i]->velocity.y = 0.0;
@@ -169,8 +170,8 @@ void level::update()
 			if (i != j && collide(objects[i], objects[j]))
 			{
 				// We have a collision
-				objects[i]->velocity = objects[i]->velocity = vector2D<float>(0.0, 0.0);
-				
+				objects[i]->velocity = objects[j]->velocity = vector2D<float>(0.0, 0.0);
+				objects[i]->falling = objects[j]->falling = false;
 			}
 		}
 	}

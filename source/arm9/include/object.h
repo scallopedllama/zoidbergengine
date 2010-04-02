@@ -336,7 +336,11 @@ public:
 		gravity.y = grav.y;
 	}
 
-
+	
+	// Indicates whether or not the object is falling. If the object is falling, it will be
+	// moved by gravity in the update funciton. If not, gravity won't move it at all.
+	bool falling;
+	
 	// The width and height to which the sprite should be scaled using an affine transformation
 	vector2D<int> scale, dimensions;
 

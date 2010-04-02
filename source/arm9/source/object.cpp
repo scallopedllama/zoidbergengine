@@ -35,12 +35,15 @@ object::object(OamState *Oam,
 	angle = Angle;
 	mosaic = Mosaic;
 	
-	hflip=vflip = false;
+	hflip = vflip = false;
 	
 	position.x = float(X);
 	position.y = float(Y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
+	
+	// Objects default to being affected by gravity. This is changeable though.
+	falling = true;
 	
 	colHeight = scale.y*0.8f / 2;
 	colWidth  = scale.x*0.8f / 2;
@@ -53,8 +56,11 @@ bool object::update(touchPosition *touch)
 	
 	// TODO: Add some kind of flag to turn off gravity if the object is up against
 	//       something and hasn't moved in a while
-	velocity.x += gravity.x;
-	velocity.y += gravity.y;
+	if (falling)
+	{
+		velocity.x += gravity.x;
+		velocity.y += gravity.y;
+	}
 
 	velocity.x += acceleration.x;
 	velocity.y += acceleration.y;
@@ -62,10 +68,7 @@ bool object::update(touchPosition *touch)
 	position.x += velocity.x;
 	position.y += velocity.y;
 	
-	
-	
-	
-	if (velocity.x > 0 || velocity.y > 0)
+	if (velocity.x != 0 || velocity.y != 0)
 		return true;
 	else return false;
 }
