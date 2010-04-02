@@ -159,9 +159,6 @@ private:
 	// used by the getMatrix and freeMatrix functions
 	bool matrixAvail[MATRIX_COUNT];
 
-	// An array of boolean variables indicating whether or not the index sprite is being used
-	bool spriteAvail[SPRITE_COUNT];
-
 	/**
 	 * getMatrix function
 	 *
@@ -189,34 +186,6 @@ private:
 	inline void freeMatrix(int index)
 	{
 		matrixAvail[index] =true;
-	}
-
-	/**
-	 * getSpriteEntry function
-	 *
-	 * Tries to get a spriteId for an object to use. Returns the id of a SpriteEntry to use or ZOIDBERG_NO_SPRITES
-	 * if all the SpriteEntries are used.
-	 * It does this by scanning through the spriteAvail[] array looking for one set to true.
-	 *
-	 * @return int
-	 *   The spriteID corresponding to the SpriteEntry available for use or ZOIDBERG_NO_SPRITES if none available
-	 * @author Joe Balough
-	 */
-	int getSpriteEntry();
-
-	/**
-	 * freeSpriteEntry function
-	 *
-	 * Marks the SpriteEntry with the indicated spriteID as being available. Called when a sprite
-	 * is removed from the level. It marks that SpriteEntry as available, then clears the spriteEntry.
-	 *
-	 * @param int index
-	 *   The spriteId corresponding to the freed SpriteEntry.
-	 * @author Joe Balough
-	 */
-	inline void freeSpriteEntry(int toFree)
-	{
-		spriteAvail[toFree] = true;
 	}
 
 	/*

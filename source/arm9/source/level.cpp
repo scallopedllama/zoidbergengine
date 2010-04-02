@@ -16,7 +16,6 @@ level::level(char *filename)
 	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
-		spriteAvail[i] = true;
 	}
 	
 	// gravity default value CAN BE CHANGED
@@ -50,21 +49,6 @@ int level::getMatrix()
 	}
 	// must be all taken
 	return ZOIDBERG_NO_MATRICES;
-}
-
-// tries to get a spriteEntry for a constructor to use. Returns index of spriteEntry or ZOIDBERG_NO_SPRITES if it can't.
-int level::getSpriteEntry()
-{
-	for (int i = 0; i < SPRITE_COUNT; i++)
-	{
-		if (spriteAvail[i])
-		{
-			spriteAvail[i] = false;
-			return i;
-		}
-	}
-	// must be all taken
-	return ZOIDBERG_NO_SPRITES;
 }
 
 // TEMP FCTN: adds a sprite to the level
@@ -185,6 +169,10 @@ void level::update()
 		{	
 			objects[i]->draw(spriteId);
 			++spriteId;
+			
+			// We can only show so many sprites. For now, just don't show the overflow.
+			if(spriteId > SPRITE_COUNT)
+				break;
 		}
 	}
 }
