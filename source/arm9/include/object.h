@@ -95,12 +95,12 @@ public:
 	 *
 	 * @param int matrixId
 	 *  Defaults to -1, the id for the matrix in the OAM that this sprite should use for affine transformations.
-	 *  Setting this to -1 turns off affine transformations and makes the width, height, and angle options meaningless
+	 *  Setting this to -1 turns off affine transformations and makes the scaleX, scaleY, and angle options meaningless
 	 *  Until affine transformations are turned on.
-	 * @param int Width
-	 *  Defaults to 1, the width to which the sprite should be scaled using an affine transformation.
-	 * @param int Height
-	 *  Defaults to 1, the height to which the sprite should be scaled using an affine transformation.
+	 * @param int scaleX
+	 *  Defaults to 1 << 8, the width to which the sprite should be scaled using an affine transformation.
+	 * @param int scaleY
+	 *  Defaults to 1 << 8, the scaleY to which the sprite should be scaled using an affine transformation.
 	 * @param int angle
 	 *  Defaults to 0, the angle to which the sprite should be rotated using an affine transformation.
 	 *
@@ -112,7 +112,7 @@ public:
 		   int spriteId, int paletteId,
 		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
-		   int matrixId = -1, int Width = 1 << 8, int Height = 1 << 8, int angle = 0,
+		   int matrixId = -1, int scaleX = 1 << 8, int scaleY = 1 << 8, int angle = 0,
 		   bool mosaic = false);
 
 	/**
@@ -152,12 +152,12 @@ public:
 	 *  The index of the SpriteRotation object in the OAMTable
 	 * @param int angle
 	 *  An angle at which to start the sprite. Defaults to 0
-	 * @param int width, height
+	 * @param int scaleX, scaleY
 	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
-	 *  If set to a value < 0, will use current values for width and height
+	 *  If set to a value < 0, will use current values for scaleX and scaleY
 	 * @author Joe Balough
 	 */
-	void makeRotateScale(int matrixId, int angle = 0, int width = -1, int height = -1);
+	void makeRotateScale(int matrixId, int angle = 0, int scaleX = -1, int scaleY = -1);
 
 	/**
 	 * removeRotateScale function
@@ -187,7 +187,7 @@ public:
 		angle = Angle;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, width, height);
+		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
 	}
 
 	/**
@@ -196,18 +196,18 @@ public:
 	 * Sets the scale of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
 	 * After setting the scale, it sets up the appropriate affine transformation matrix.
 	 *
-	 * @param int width, height
+	 * @param int scaleX, scaleY
 	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
 	 * @author Joe Balough
 	 */
-	inline void scale(int Width, int Height)
+	inline void scale(int ScaleX, int ScaleY)
 	{
-		// Set width and height
-		width = Width;
-		height = Height;
+		// Set scaleX and scaleY
+		scaleX = ScaleX;
+		scaleY = ScaleY;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, width, height);
+		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
 	}
 
 	/**
@@ -218,19 +218,19 @@ public:
 	 *
 	 * @param int angle
 	 *  The angle to set to this object
-	 * @param int width, height
+	 * @param int scaleX, scaleY
 	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
 	 * @author Joe Balough
 	 */
-	inline void rotateScale(int Angle, int Width, int Height)
+	inline void rotateScale(int Angle, int ScaleX, int ScaleY)
 	{
-		// Set angle, width and height
+		// Set angle, scaleX and scaleY
 		angle = Angle;
-		width = Width;
-		height = Height;
+		scaleX = ScaleX;
+		scaleY = ScaleY;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, width, height);
+		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
 	}
 
 	/**
@@ -338,9 +338,9 @@ public:
 
 
 	// The width to which the sprite should be scaled using an affine transformation
-	int width;
+	int scaleX;
 	// The height to which the sprite should be scaled using an affine transformation
-	int height;
+	int scaleY;
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.

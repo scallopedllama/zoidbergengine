@@ -5,7 +5,7 @@ object::object(OamState *Oam,
 	   int SpriteId, int PaletteId, 
 	   void ***Gfx, int NumAnim, int *NumFrames, uint16 *Frame,
 	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
-	   int MatrixId, int Width, int Height, int Angle,
+	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 {
 	// Set all the variables
@@ -30,8 +30,8 @@ object::object(OamState *Oam,
 	{
 		isRotateScale = true;
 	}
-	width = Width;
-	height = Height;
+	scaleX = ScaleX;
+	scaleY = ScaleY;
 	angle = Angle;
 	mosaic = Mosaic;
 	
@@ -42,8 +42,8 @@ object::object(OamState *Oam,
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	
-	colHeight = height*0.8f / 2;
-	colWidth  = width*0.8f / 2;
+	colHeight = scaleY*0.8f / 2;
+	colWidth  = scaleX*0.8f / 2;
 }
 
 // object update function, applies physics to the object
@@ -100,19 +100,19 @@ void object::draw()
 }
 
 // makes this sprite a RotateScale sprite
-void object::makeRotateScale(int MatrixId, int Angle, int Width, int Height)
+void object::makeRotateScale(int MatrixId, int Angle, int ScaleX, int ScaleY)
 {
 	// set variables
 	matrixId = MatrixId;
 	angle = Angle;
-	width = Width < 0 ? width : Width;
-	height = Height < 0 ? height: Height;
+	scaleX = ScaleX < 0 ? scaleX : ScaleX;
+	scaleY = ScaleY < 0 ? scaleY: ScaleY;
 
 	// make rotateScale
 	isRotateScale = true;
 
 	// do rotation
-	oamRotateScale(oam, matrixId, angle, width, height);
+	oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
 }
 
 // turns off rotate scale, returns the matrixId it used to use
