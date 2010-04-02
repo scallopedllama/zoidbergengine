@@ -327,7 +327,7 @@ uint8 assets::loadPalette(u32 id)
 
 	// Set some variables
 	static int curIndex = 0;
-    static const int COLORS_PER_PALETTE = 16;
+	static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
 	uint16 length = palStatus[id].length;

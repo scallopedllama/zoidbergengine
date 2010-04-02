@@ -104,7 +104,7 @@ void level::run()
 		if(frame % 300 == 0)
 		{
 			time_t diff = time(NULL) - startTime;
-			uint32 fps = frame ;// / diff;
+			uint32 fps = frame / diff;
 			// ansi escape sequence to set print co-ordinates
 			// /x1b[line;columnH
 			iprintf("\x1b[0;24HFPS: %ld\n", fps);
