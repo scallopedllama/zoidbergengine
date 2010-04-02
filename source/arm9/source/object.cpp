@@ -2,7 +2,7 @@
 
 // object constructor
 object::object(OamState *Oam, 
-	   int SpriteId, int PaletteId, collisionMatrix *ColMatrix,
+	   int SpriteId, int PaletteId, 
 	   void ***Gfx, int NumAnim, int *NumFrames, uint16 *Frame,
 	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
 	   int MatrixId, int Width, int Height, int Angle,
@@ -41,10 +41,6 @@ object::object(OamState *Oam,
 	position.y = float(Y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
-	
-	// Add this to the collisionMatrix, setting the objectGroup
-	colMatrix = ColMatrix;
-	objectGroup = colMatrix->addObject(this);
 	
 	colHeight = height*0.8f / 2;
 	colWidth  = width*0.8f / 2;

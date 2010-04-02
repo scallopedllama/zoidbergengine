@@ -86,19 +86,22 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	//			   bool Mosaic = false);
 	
 	
-    // Create the sprite
-    int spriteIndex = getSpriteEntry();
-    object *newObj;
-    if (mkeHero)
+	// Create the sprite
+	int spriteIndex = getSpriteEntry();
+	object *newObj;
+	if (mkeHero)
 		newObj = (object *) new hero(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color,
 		true, false, getMatrix(), 1 << 8, 1 << 8, 23, false);
-    else
+	else
 		newObj = new object(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
 	
 	newObj->setGravity(gravity);
 
 	// Add that object to the list
 	objects.push_back(newObj);
+	
+	// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
+	objectsGroups.push_back(colMatrix->addObject(newObj));
 }
 
 // The 'main game loop' for this level
@@ -134,13 +137,14 @@ void level::update()
 	}
 	
 	// Now that all objects have moved, run collision detection on them.
-	for (unsigned int i = 0; i < moved.size(); i++
+	for (unsigned int m = 0; m < moved.size(); m++)
 	{
-		int objId = moved[i];
+		// The index of the object that moved
+		int i = moved[m];
 		
 		// Pull this object out of its old objGroup and reinsert it.
-		objectsGroups[objId]->remove(objects[objId]);
-		objectsGroups[objId] = collisionMatrix->addObject(objects[objId]);
+		objectsGroups[i]->remove(objects[i]);
+		objectsGroups[i] = colMatrix->addObject(objects[i]);
 		
 		// Temperary collision detection at a horrizontal line
 		if(objects[i]->position.y > 120)
@@ -157,7 +161,7 @@ void level::update()
 		}
 		
 		// Get the objects that MIGHT be colliding with it
-		vector<object*> candidates = collisionMatrix->getCollisionCandidates(objects[objId]->position);
+		vector<object*> candidates = colMatrix->getCollisionCandidates(objects[i]->position);
 		
 		// Test for collision with them
 		for (unsigned int j = 0; j < candidates.size(); j++)
@@ -169,5 +173,11 @@ void level::update()
 				objects[j]->velocity.x = objects[j]->velocity.y = 0;
 			}
 		}
+	}
+	
+	// Things should now be where they need to be. Draw them up.
+	for (unsigned int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->draw();
 	}
 }
