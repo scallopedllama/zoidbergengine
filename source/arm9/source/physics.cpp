@@ -95,7 +95,7 @@ void decapod :: jump(object sprite)
 	
 	int y = yPos + yVelo;
 	int x = xPos + sprite.getVelocity().x;
-	
+	int gravity = 0;
 	sprite.setVelocity( vector2D<float>(x, (yVelo - gravity) ) );
 	sprite.setPosition( vector2D<float>(x,y) );	
 }
@@ -140,7 +140,7 @@ bool decapod :: collide(object *object1, object *object2)
 		if (left1 > right2) return(false);
 
 
-		iprintf("Collide!\n");
+		//iprintf("Collide!\n");
 		//for(float g; g<999999 ;g+=0.25){}
 	
 	int diffx;
