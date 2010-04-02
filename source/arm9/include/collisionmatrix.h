@@ -54,6 +54,10 @@
 
 using namespace std;
 
+// TODO: Though I have this coded and implemented and everything, I haven't really
+//       fully tested it. I need to make sure that everything is working correctly here.
+
+
 /**
  * objGroup class
  * 
