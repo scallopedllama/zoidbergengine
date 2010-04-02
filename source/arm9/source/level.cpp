@@ -88,10 +88,28 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 // The 'main game loop' for this level
 void level::run()
 {
+	// These are used in keeping track of the framerate
+	uint32 frame = 0;
+	time_t startTime = time(NULL);
+	
 	// start running the main loop
 	while(true)
 	{
 		update();
+		
+		// Update frame rate
+		// NOTE: this doesn't work right in DeSmuME. Should work right on DS though.
+		++frame;
+		// Only print an update if it's been 300 frames since the last update
+		if(frame % 300 == 0)
+		{
+			time_t diff = time(NULL) - startTime;
+			uint32 fps = frame / diff;
+			// ansi escape sequence to set print co-ordinates
+			// /x1b[line;columnH
+			iprintf("\x1b[0;24HFPS: %ld\n", fps);
+		}
+		
 		swiWaitForVBlank();
 		oamUpdate(oam);
 	}

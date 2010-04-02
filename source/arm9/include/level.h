@@ -48,8 +48,9 @@
 
 #include <nds.h>
 #include <vector>
-#include "object.h" //addSprite function needs this
-#include "hero.h"   //addSprite can add a hero to the mix
+#include <time.h>   // used in FPS calculation
+#include "object.h" // addSprite function needs this
+#include "hero.h"   // addSprite can add a hero to the mix
 #include "collisionmatrix.h"
 #include "physics.h"
 #include "assets.h"
