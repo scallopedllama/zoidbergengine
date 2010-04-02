@@ -102,51 +102,51 @@ void decapod :: jump(object sprite)
 
 bool decapod :: collide(object *object1, object *object2) 
 {
-  
-    float left1, left2;
-    float right1, right2;
-    float top1, top2;
-    float bottom1, bottom2;
-
+	
+	float left1, left2;
+	float right1, right2;
+	float top1, top2;
+	float bottom1, bottom2;
+	
 	//iprintf("obj1 height %d width %d\n",object1->height,object1->width);
 	//iprintf("obj2 height %d width %d\n",object2->height,object2->width);
-		left1 = object1->position.x;
-		//iprintf("L1 %d ",(int)left1);
-		left2 = object2->position.x;
-		//iprintf("L2 %d \n",(int)left2);
-		right1 = left1 + 32;//object1->width;
-		//iprintf("R1 %d ",(int)right1);
-		right2 = left2 + 32;//object2->width;
-		//iprintf("R2 %d \n",(int)right2);
-		top1 = object1->position.y;
-		//iprintf("T1 %d ",(int)top1);
-		top2 = object2->position.y;
-		//iprintf("T2 %d \n",(int)top2);
-		bottom1 = top1 + 32;//object1->height;
-		//iprintf("L1 %d ",(int)bottom1);
-		bottom2 = top2 + 32;//object2->height;
-		//iprintf("L1 %d \n",(int)bottom2);
-
-		//iprintf("B1 %d < %d T2\n",(int)bottom1,(int)top2);
-		if (bottom1 < top2) return(false);
-
-		//iprintf("T1 %d > %d B2\n",(int)top1,(int)bottom2);
-		if (top1 > bottom2) return(false);
-  
-		//iprintf("R1 %d < %d L2\n",(int)right1,(int)left2);
-		if (right1 < left2) return(false);
-
-		//iprintf("L1 %d > %d R2\n",(int)left1,(int)right2);
-		if (left1 > right2) return(false);
-
-
-		//iprintf("Collide!\n");
-		//for(float g; g<999999 ;g+=0.25){}
+	left1 = object1->position.x;
+	//iprintf("L1 %d ",(int)left1);
+	left2 = object2->position.x;
+	//iprintf("L2 %d \n",(int)left2);
+	right1 = left1 + 32;//object1->width;
+	//iprintf("R1 %d ",(int)right1);
+	right2 = left2 + 32;//object2->width;
+	//iprintf("R2 %d \n",(int)right2);
+	top1 = object1->position.y;
+	//iprintf("T1 %d ",(int)top1);
+	top2 = object2->position.y;
+	//iprintf("T2 %d \n",(int)top2);
+	bottom1 = top1 + 32;//object1->height;
+	//iprintf("L1 %d ",(int)bottom1);
+	bottom2 = top2 + 32;//object2->height;
+	//iprintf("L1 %d \n",(int)bottom2);
+	
+	//iprintf("B1 %d < %d T2\n",(int)bottom1,(int)top2);
+	if (bottom1 < top2) return(false);
+	
+	//iprintf("T1 %d > %d B2\n",(int)top1,(int)bottom2);
+	if (top1 > bottom2) return(false);
+	
+	//iprintf("R1 %d < %d L2\n",(int)right1,(int)left2);
+	if (right1 < left2) return(false);
+	
+	//iprintf("L1 %d > %d R2\n",(int)left1,(int)right2);
+	if (left1 > right2) return(false);
+	
+	
+	//iprintf("Collide!\n");
+	//for(float g; g<999999 ;g+=0.25){}
 	
 	int diffx;
 	int diffy;
-
-    return(true);
+	
+	return(true);
 };
 
 // Moved out of collision.cpp jb
