@@ -30,8 +30,8 @@ object::object(OamState *Oam,
 	{
 		isRotateScale = true;
 	}
-	scaleX = ScaleX;
-	scaleY = ScaleY;
+	scale.x = ScaleX;
+	scale.y = ScaleY;
 	angle = Angle;
 	mosaic = Mosaic;
 	
@@ -42,8 +42,8 @@ object::object(OamState *Oam,
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	
-	colHeight = scaleY*0.8f / 2;
-	colWidth  = scaleX*0.8f / 2;
+	colHeight = scale.y*0.8f / 2;
+	colWidth  = scale.x*0.8f / 2;
 }
 
 // object update function, applies physics to the object
@@ -78,8 +78,7 @@ void object::draw()
 	//       Probably do that by moving the offscreen check to the level::update() function and
 	//       passing a spriteId to use with draw.
 	
-	// TODO: rename width and height to scaleX and scaleY and make width and height
-	//       actually valid variables with proper values.
+	// TODO: make width and height actually valid variables with proper values.
 	// TODO: make the vector2D class better and enable this bit of code (don't miss the bit in oamSet)
 	//If the object is off screen, hide it
 	/**
@@ -105,14 +104,14 @@ void object::makeRotateScale(int MatrixId, int Angle, int ScaleX, int ScaleY)
 	// set variables
 	matrixId = MatrixId;
 	angle = Angle;
-	scaleX = ScaleX < 0 ? scaleX : ScaleX;
-	scaleY = ScaleY < 0 ? scaleY: ScaleY;
+	scale.x = ScaleX < 0 ? scale.x : ScaleX;
+	scale.y = ScaleY < 0 ? scale.y: ScaleY;
 
 	// make rotateScale
 	isRotateScale = true;
 
 	// do rotation
-	oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
+	oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 }
 
 // turns off rotate scale, returns the matrixId it used to use

@@ -187,7 +187,7 @@ public:
 		angle = Angle;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
+		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
 	/**
@@ -200,14 +200,14 @@ public:
 	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
 	 * @author Joe Balough
 	 */
-	inline void scale(int ScaleX, int ScaleY)
+	inline void setScale(int ScaleX, int ScaleY)
 	{
 		// Set scaleX and scaleY
-		scaleX = ScaleX;
-		scaleY = ScaleY;
+		scale.x = ScaleX;
+		scale.y = ScaleY;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
+		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
 	/**
@@ -226,11 +226,11 @@ public:
 	{
 		// Set angle, scaleX and scaleY
 		angle = Angle;
-		scaleX = ScaleX;
-		scaleY = ScaleY;
+		scale.x = ScaleX;
+		scale.y = ScaleY;
 
 		// do rotation
-		oamRotateScale(oam, matrixId, angle, scaleX, scaleY);
+		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
 	/**
@@ -337,10 +337,8 @@ public:
 	}
 
 
-	// The width to which the sprite should be scaled using an affine transformation
-	int scaleX;
-	// The height to which the sprite should be scaled using an affine transformation
-	int scaleY;
+	// The width and height to which the sprite should be scaled using an affine transformation
+	vector2D<int> scale, dimensions;
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
