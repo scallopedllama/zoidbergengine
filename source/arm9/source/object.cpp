@@ -51,7 +51,7 @@ object::object(OamState *Oam,
 }
 
 // object update function, applies physics to the object
-void object::update(touchPosition *touch)
+bool object::update(touchPosition *touch)
 {
 	// Update position
 	
@@ -66,35 +66,41 @@ void object::update(touchPosition *touch)
 	position.x += velocity.x;
 	position.y += velocity.y;
 	
-	// Update the object's position in the collisionMatrix
-	objectGroup->remove(this);
-	objectGroup = collisionMatrix->addObject(this);
-	
-	//Check Collisions
 	
 	
 	
+	if (velocity.x > 0 || velocity.y > 0)
+		return true;
+	else return false;
+}
+
+// Draw the object on screen
+void object::draw()
+{
 	// TODO: (long term) robustisize our engine here by making the object only use up
 	//       an oamId if it is on screen. simply don't call oamSet if the object is off screen.
+	//       Probably do that by moving the offscreen check to the level::update() function and
+	//       passing a spriteId to use with draw.
 	
 	// TODO: rename width and height to scaleX and scaleY and make width and height
 	//       actually valid variables with proper values.
-	// TODO: make the vector2D class better and enable this bit of code
+	// TODO: make the vector2D class better and enable this bit of code (don't miss the bit in oamSet)
 	//If the object is off screen, hide it
 	/**
 	vector2D<float> screenPos = position + screenOffset;
+	bool offscreen = false;
 	if     (screenPos.x < 0 || screenPos.x + width > SCREEN_WIDTH  ||
 		screenPos.y < 0 || screenPos.y + height > SCREEN_HEIGHT)
-		isHidden(false);
+		offscreen = true;
 	**/
+	
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if
 	//       the object is hidden and if so, pass -1 for affineIndex.
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
 	oamSet(oam, spriteId, int (position.x), int (position.y), priority, paletteId, size, format,
-		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
-
+		   frameMem, matrixId, isSizeDouble, hidden /**|| offscreen **/, hflip, vflip, mosaic);
 }
 
 // makes this sprite a RotateScale sprite

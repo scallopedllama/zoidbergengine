@@ -36,7 +36,6 @@
 #include <nds.h>
 #include <stdio.h>
 #include "vector.h"
-#include "collisionmatrix.h"
 
 /**
  * object class
@@ -70,8 +69,6 @@ public:
 	 *  The sprite index in the oam
 	 * @param int paletteId
 	 *  The index for the palette that this object should use.
-	 * @param collisionMatrix *colMatrix
-	 *  A pointer to the collisionMatrix being used. THE OBJECT WILL ADD ITSELF TO THE MATRIX.
 	 * 
 	 * @param void ***gfx
 	 *  A 3D array representing the gfx for all of the frames of all the animations. Loaded by assets class.
@@ -112,7 +109,7 @@ public:
 	 * @author Joe Balough
 	 */
 	object(OamState *oam,
-		   int spriteId, int paletteId, collisionMatrix *colMatrix,
+		   int spriteId, int paletteId,
 		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
 		   int matrixId = -1, int Width = 1 << 8, int Height = 1 << 8, int angle = 0,
@@ -127,10 +124,23 @@ public:
 	 *
 	 * @param touchPosition *touch
 	 *  A pointer to a data structure containing information about where the touch screen was last touched (if it was)
+	 * @return bool
+	 *  Whether or not this object has moved because of this update (and should thus have collision detection run).
 	 * @see touchPosition
 	 * @author Joe Balough
 	 */
-	virtual void update(touchPosition *touch);
+	virtual bool update(touchPosition *touch);
+	
+	/**
+	 * Object draw function
+	 *
+	 * Called by the level class after all collision detection has been run and all the
+	 * objects are where they need to be. Virtual in case any classes inheriting this one
+	 * need to do something weird.
+	 *
+	 * @author Joe Balough
+	 */
+	virtual void draw();
 
 	/**
 	 * makeRotateScale function
@@ -267,6 +277,9 @@ public:
 		return hidden;
 	}
 
+	// TODO: a lot of these getters are pointless. I think position, velocity, accel, and gravity
+	//       should just be public... why not!?
+	
 	/**
 	* getXcoord()
 	* getYcoord()
@@ -379,16 +392,6 @@ protected:
 
 	// Whether or not this object is flipped horizontally, vertically, mosaic'd, or hidden
 	bool hflip, vflip, mosaic, hidden;
-
-	/**
-	 * Variables for collision detection
-	 */
-	
-	// The objGroup that this object is currently in
-	objGroup *objectGroup;
-	
-	// A pointer to the collisionMatrix we're using
-	collisionMatrix *colMatrix;
 
 	int colWidth; // will be 20% of the real width for use by Physics Engine - DT
 	int colHeight; // will be 20% of the real height for use by Physics Engine - DT
