@@ -48,14 +48,24 @@
 
 #include <nds.h>
 #include <stdio.h>
-#include <vector.h>
+#include <vector>
 #include "object.h"
 #include "vector.h"
 
+using namespace std;
 
+/**
+ * objGroup class
+ * 
+ * The objGroup class is used to simply keep a vector of pointers to objects that
+ * are in a discrete region of the level. Used for good performance with collision
+ * detection.
+ * 
+ * @author Joe Balough
+ */
 struct objGroup
 {
-	vector<*object> objects;
+	vector<object*> objects;
 	
 	/**
 	 * remove function
@@ -72,6 +82,15 @@ struct objGroup
 };
 
 
+/**
+ * collisionMatrix class
+ *
+ * The collisionMatrix class is used to manage all of the objGroups. It will create
+ * and delete them and provides many useful utility functions for adding objects to
+ * groups and the like.
+ * 
+ * @author Joe Balough
+ */
 class collisionMatrix
 {
 public:

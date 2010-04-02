@@ -8,7 +8,7 @@
 bool objGroup::remove(object *remove)
 {
 	// Go through that vector looking for the object
-	for(std::vector<T>::iterator c = objects.begin(); c != objects.end(); ++c)
+	for(std::vector<object*>::iterator c = objects.begin(); c != objects.end(); ++c)
 	{
 		if (*c == remove)
 		{
@@ -41,7 +41,7 @@ collisionMatrix::collisionMatrix(int levelWidth, int levelHeight, int blockSqSz)
 	groupsHeight = levelHeight / blockSqSize + 1;
 	
 	// Allocate data for the groups array
-	groups = new *objGroup[groupsWidth];
+	groups = new objGroup*[groupsWidth];
 	for (int i = 0; i < groupsWidth; i++)
 		groups[i] = new objGroup[groupsHeight];
 }
@@ -80,7 +80,7 @@ objGroup *collisionMatrix::getObjGroup(vector2D<float> position)
 		return NULL;
 	
 	// Return group
-	return &groups[x][y];
+	return &groups[coords.x][coords.y];
 }
 
 // Add an object to its objGroup
@@ -94,10 +94,10 @@ objGroup *collisionMatrix::addObject(object *add)
 		return NULL;
 	
 	// Add to the group
-	groups[x][y].objects.push_back(add);
+	groups[coords.x][coords.y].objects.push_back(add);
 	
 	// Return that group
-	return &groups[x][y];
+	return &groups[coords.x][coords.y];
 }
 
 
