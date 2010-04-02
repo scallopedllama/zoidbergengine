@@ -65,8 +65,6 @@ public:
 	 * @param OamState *oam
 	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
 	 *
-	 * @param int spriteId
-	 *  The sprite index in the oam
 	 * @param int paletteId
 	 *  The index for the palette that this object should use.
 	 * 
@@ -109,7 +107,7 @@ public:
 	 * @author Joe Balough
 	 */
 	object(OamState *oam,
-		   int spriteId, int paletteId,
+		   int paletteId,
 		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
 		   int matrixId = -1, int scaleX = 1 << 8, int scaleY = 1 << 8, int angle = 0,
@@ -138,9 +136,11 @@ public:
 	 * objects are where they need to be. Virtual in case any classes inheriting this one
 	 * need to do something weird.
 	 *
+	 * @param int spriteId
+	 *  The sprite index to use in the oam
 	 * @author Joe Balough
 	 */
-	virtual void draw();
+	virtual void draw(int spriteId);
 
 	/**
 	 * makeRotateScale function
@@ -353,9 +353,8 @@ protected:
 	// Should point to either oamSub or oamMain
 	OamState *oam;
 
-	// The current id for the for the affine matrix, the sprite, and the palette to use in the oam
+	// The current id for the for the affine matrix, and the palette to use in the oam
 	int matrixId;
-	int spriteId;
 	int paletteId;
 
 	// This pointer points to the space in VIDEO memory that was allocated for this object to use.

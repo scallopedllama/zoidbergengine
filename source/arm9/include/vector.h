@@ -28,7 +28,10 @@
 #ifndef VECTOR_H_INCLUDED
 #define VECTOR_H_INCLUDED
 
+// TODO: Is this include needed?
 #include <nds.h>
+
+// TODO: make the vector2D class better
 
 /**
  * vector2D template class

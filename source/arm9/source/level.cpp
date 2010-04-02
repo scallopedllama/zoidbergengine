@@ -1,8 +1,7 @@
 #include "level.h"
-#include "physics.h"
-#include <stdio.h>
-#include <math.h>
-using namespace decapod;
+
+// Initialize the global screenoffset variable
+vector2D<float> screenOffset(0.0, 0.0);
 
 // level constructor
 level::level(char *filename)
@@ -79,7 +78,7 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	int numAnim = 1; int numFrames[1]; numFrames[0] = 1;
 	
 	//object::object(OamState *Oam, 
-	//			   int SpriteId, int PaletteId, 
+	//			   int PaletteId, 
 	//			   void ***Gfx, int NumAnim, int NumFrames[], void *Frame,
 	//			   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble = true, bool Hidden = false,
 	//			   int MatrixId = -1, int Width = 1, int Height = 1, int Angle = 0,
@@ -87,13 +86,12 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	
 	
 	// Create the sprite
-	int spriteIndex = getSpriteEntry();
 	object *newObj;
 	if (mkeHero)
-		newObj = (object *) new hero(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color,
+		newObj = (object *) new hero(oam, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color,
 		true, false, getMatrix(), 1 << 8, 1 << 8, 23, false);
 	else
-		newObj = new object(oam, spriteIndex, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
+		newObj = new object(oam, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
 	
 	newObj->setGravity(gravity);
 
@@ -177,8 +175,16 @@ void level::update()
 	}
 	
 	// Things should now be where they need to be. Draw them up.
+	int spriteId = 0;
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->draw();
+		// TODO: make width and height actually valid variables with proper values and enable them here
+		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x + screenOffset.x, objects[i]->position.x + screenOffset.x);
+		if     (screenPos.x >= 0 || screenPos.x /**+ width**/  <= SCREEN_WIDTH  ||
+			screenPos.y >= 0 || screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
+		{	
+			objects[i]->draw(spriteId);
+			++spriteId;
+		}
 	}
 }

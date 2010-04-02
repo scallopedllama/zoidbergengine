@@ -57,7 +57,7 @@ public:
 	 * @author Joe Balough
 	 */
 	hero(OamState *oam, 
-		 int spriteId, int paletteId, 
+		 int paletteId, 
 		 void ***gfx, int numAnim, int numFrames[], uint16 *frame,
 		 int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
 		 int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
