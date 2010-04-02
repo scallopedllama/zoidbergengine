@@ -53,19 +53,8 @@
 #include "collisionmatrix.h"
 #include "physics.h"
 #include "assets.h"
+#include "util.h"
 
-/**
- * Global Variable; screen offsset vector
- * 
- * You read that right, Global variable. All objects are placed in their position in the WORLD
- * offset from the top-left of the level (0, 0). Their velocities and accelerations are all relative
- * to that point as well. When a hero moves, this value is updated to represent where the screen begins
- * in relation to the world's coordinates. When objects update, they either call oamSet() to put themselves
- * on screen or hide themselves.
- * 
- * @author Joe Balough
- */
-extern vector2D<float> screenOffset;
 
 using namespace std;
 using namespace decapod;

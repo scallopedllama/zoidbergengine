@@ -1,8 +1,5 @@
 #include "level.h"
 
-// Initialize the global screenoffset variable
-vector2D<float> screenOffset(0.0, 0.0);
-
 // level constructor
 level::level(char *filename)
 {
@@ -22,7 +19,7 @@ level::level(char *filename)
 	gravity.y = 0.025;
 	
 	// initialize the collisionMatrix
-	colMatrix = new collisionMatrix(SCREEN_WIDTH, SCREEN_HEIGHT, 70);
+	colMatrix = new collisionMatrix(1200, SCREEN_HEIGHT, 70);
 }
 
 // level destructor
@@ -130,18 +127,29 @@ void level::update()
 		objectsGroups[i]->remove(objects[i]);
 		objectsGroups[i] = colMatrix->addObject(objects[i]);
 		
-		// Temperary collision detection at a horrizontal line
+		/**
+		 *  BEGIN TEMPORARY STUFF
+		 */
+		// iprintf("object[%d] x: %d y: %d\n", i, (int)objects[i]->position.x, (int)objects[i]->position.y);
 		if(objects[i]->position.y > 120.0)
 		{
 			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
+			objects[i]->position.y = 120.0;
 		}
-		iprintf("object[%d] y: %d\n", i, (int)objects[i]->position.y);
 		if(objects[i]->position.y < 0.0)
 		{
-			objects[i]->position.y = 0.1;
+			objects[i]->position.y = 0.0;
 			objects[i]->velocity.y = 0.0;
 		}
+		if(objects[i]->position.x < 0.0)
+		{
+			objects[i]->position.x = 0.0;
+			objects[i]->velocity.x = 0.0;
+		}
+		/**
+		 *   END TEMPORARY STUFF
+		 */
 		
 		// Get the objects that MIGHT be colliding with it
 		vector<object*> candidates = colMatrix->getCollisionCandidates(objects[i]->position);
@@ -163,7 +171,7 @@ void level::update()
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		// TODO: make width and height actually valid variables with proper values and enable them here
-		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x + screenOffset.x, objects[i]->position.y + screenOffset.y);
+		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
 		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
 			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
 		{	

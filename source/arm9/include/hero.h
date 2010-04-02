@@ -34,6 +34,7 @@
 #include <nds.h>
 #include <math.h>
 #include "object.h"
+#include "level.h"
 
 /**
  * hero class

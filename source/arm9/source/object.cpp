@@ -80,7 +80,7 @@ void object::draw(int spriteId)
 	//       the object is hidden and if so, pass -1 for affineIndex.
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
-	oamSet(oam, spriteId, int (position.x), int (position.y), priority, paletteId, size, format,
+	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, size, format,
 		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
 }
 

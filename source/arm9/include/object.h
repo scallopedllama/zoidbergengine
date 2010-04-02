@@ -36,6 +36,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "vector.h"
+#include "util.h"
 
 /**
  * object class
