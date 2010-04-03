@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<zbe>
+	<bin>
+		<graphics>
+			<gfx bin="gfx/01-orangeShuttle.img.bin" w="44" h="55" top="3" left="8"/>
+			<gfx bin="gfx/02-moon.img.bin" w="32" h="32" top="0" left="0"/>
+		</graphics>
+		<palettes>
+			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
+			<palette bin="gfx/02-moon.pal.bin"/>
+		</palettes>
+	</bin>
+</zbe>
