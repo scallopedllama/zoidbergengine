@@ -35,6 +35,8 @@
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define TIXML_USE_STL
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -42,7 +44,6 @@
 #include <string>
 #include "lib/tinyxml/tinyxml.h"
 
-#define TIXML_USE_STL
 
 /**
  *   Define the zbe verison here!!
@@ -59,6 +60,7 @@ void goWrite16(uint16_t val, fpos_t *pos, FILE *file);
 void goWrite32(uint32_t val, fpos_t *pos, FILE *file);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
+uint16_t appendData(FILE *output, string inFile);
 
 int main(int argc, char **argv)
 {
@@ -277,17 +279,17 @@ int main(int argc, char **argv)
 		// Go back and write the number of animations for this object
 		fsetpos(output, &totalAnimationsPos);
 		fwrite32(totalAnimations, output);
-		fseek(ouput, 0, SEEK_END);
+		fseek(output, 0, SEEK_END);
 		
 		// get the next one
 		objectXML = objectXML->NextSiblingElement("object");
 	}
 	
 	// Finally, go back and write the number of objects
-	fsetpos(output, &totalObjectsPos);
-	fwrite32(totalObjects, output);
+	fsetpos(output, &totalObjPos);
+	fwrite32(totalObj, output);
 	fseek(output, 0, SEEK_END);
-	totalAssets += totalObjects;
+	totalAssets += totalObj;
 	
 	
 	
@@ -303,6 +305,9 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+
+// TODO: replace all of these with template functions to write that type to the file
+// TODO: Replace hard-coded zbe file piece sizes with #define'd types
 
 void fwrite32(uint32_t val, FILE *file)
 {
@@ -360,10 +365,11 @@ int getIntAttr(TiXmlElement *elem, string attr)
 string getStrAttr(TiXmlElement *elem, string attr)
 {
 	string toReturn;
-	if (elem->QueryStringAttribute(attr, &toReturn) == TIXML_WRONG_TYPE)
+	if (elem->QueryStringAttribute(attr.c_str(), &toReturn) == TIXML_WRONG_TYPE)
 	{
 		fprintf(stderr, "Error getting string value of attribute %s\n", attr.c_str());
 	}
+	return toReturn;
 }
 
 uint16_t appendData(FILE *output, string inFile)
