@@ -355,7 +355,7 @@ void goWrite8(uint8_t val, fpos_t *pos, FILE *file)
 int getIntAttr(TiXmlElement *elem, string attr)
 {
 	int toReturn = -1;
-	if (elem->QueryIntAttribute(attr, &toReturn) == TIXML_WRONG_TYPE)
+	if (elem->QueryIntAttribute(attr.c_str(), &toReturn) == TIXML_WRONG_TYPE)
 	{
 		fprintf(stderr, "Error getting int value of attribute %s\n", attr.c_str());
 	}
