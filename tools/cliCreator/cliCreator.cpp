@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <vector>
 #include <string>
-#include "bin/lib/tinyxml/tinyxml.h"
+#include "lib/tinyxml/tinyxml.h"
 
 #define TIXML_USE_STL
 
@@ -54,6 +54,9 @@ using namespace std;
 void fwrite8(uint8_t val, FILE *file);
 void fwrite16(uint16_t val, FILE *file);
 void fwrite32(uint32_t val, FILE *file);
+void goWrite8(uint8_t val, fpos_t *pos, FILE *file);
+void goWrite16(uint16_t val, fpos_t *pos, FILE *file);
+void goWrite32(uint32_t val, fpos_t *pos, FILE *file);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 
@@ -91,6 +94,8 @@ int main(int argc, char **argv)
 	TiXmlElement *zbeXML = input.RootElement();
 	
 	
+	
+	
 	/**
 	 *    ZBE GAME DATA
 	 */
@@ -106,6 +111,7 @@ int main(int argc, char **argv)
 	uint32_t totalAssets = 0;
 	fgetpos(output, &totalAssetsPos);
 	fwrite32(0, output);
+	
 	
 	
 	
@@ -205,7 +211,83 @@ int main(int argc, char **argv)
 
 	
 	
+	/**
+	 *   OBJECTS
+	 */
 	
+	// Total # objects.
+	fpos_t totalObjPos;
+	uint32_t totalObj = 0;
+	fgetpos(output, &totalObjPos);
+	fwrite32(0, output);
+	
+	// For all the objects
+	TiXmlElement *objectsXML = zbeXML->FirstChildElement("objects");
+	TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
+	while (objectXML)
+	{
+		
+		// Total # Animations
+		uint32_t totalAnimations = 0;
+		fpos_t totalAnimationsPos;
+		fgetpos(output, &totalAnimationsPos);
+		fwrite32(0, output);
+		
+		// And all the animations
+		TiXmlElement *animationsXML = objectXML->FirstChildElement("animations");
+		TiXmlElement *animationXML = animationsXML->FirstChildElement("animation");
+		while (animationXML)
+		{
+			++totalAnimations;
+			
+			
+			// Total # frames for this animation
+			uint16_t totalFrames = 0;
+			fpos_t totalFramesPos;
+			fgetpos(output, &totalFramesPos);
+			fwrite16(0, output);
+
+			// Start getting frames
+			TiXmlElement *frameXML = animationXML->FirstChildElement("frame");
+			while (frameXML)
+			{
+				++totalFrames;
+				
+				// Get the attributes
+				int gfxId = getIntAttr(frameXML, "id");
+				int time = getIntAttr(frameXML, "time");
+				
+				// Write them to the file
+				fwrite32((uint32_t) gfxId, output);
+				fwrite8((uint8_t) time, output);
+				
+				// get the next frame
+				frameXML = frameXML->NextSiblingElement("frame");
+			}
+			
+			// Go back and write the number of frames in this animation
+			fsetpos(output, &totalFramesPos);
+			fwrite16(totalFrames, output);
+			fseek(output, 0, SEEK_END);
+			
+			// get the next animation
+			animationXML = animationXML->NextSiblingElement("animation");
+		}
+		
+		// Go back and write the number of animations for this object
+		fsetpos(output, &totalAnimationsPos);
+		fwrite32(totalAnimations, output);
+		fseek(ouput, 0, SEEK_END);
+		
+		// get the next one
+		objectXML = objectXML->NextSiblingElement("object");
+	}
+	
+	// Finally, go back and write the number of objects
+	fsetpos(output, &totalObjectsPos);
+	fwrite32(totalObjects, output);
+	fseek(output, 0, SEEK_END);
+	totalAssets += totalObjects;
 	
 	
 	
@@ -244,6 +326,25 @@ void fwrite8(uint8_t val, FILE *file)
 	{
 		fprintf(stderr, "error writing uint8 value %d to file\n", (int) val);
 	}
+}
+
+void goWrite32(uint32_t val, fpos_t *pos, FILE *file)
+{
+	fsetpos(file, pos);
+	fwrite32(val, file);
+	fseek(file, 0, SEEK_END);
+}
+void goWrite16(uint16_t val, fpos_t *pos, FILE *file)
+{
+	fsetpos(file, pos);
+	fwrite16(val, file);
+	fseek(file, 0, SEEK_END);
+}
+void goWrite8(uint8_t val, fpos_t *pos, FILE *file)
+{
+	fsetpos(file, pos);
+	fwrite8(val, file);
+	fseek(file, 0, SEEK_END);
 }
 
 int getIntAttr(TiXmlElement *elem, string attr)
