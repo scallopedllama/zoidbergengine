@@ -1,5 +1,5 @@
 
-# The default task here is to make the assets.zbe file. It needs to make sure all the tools are built first
+# The default task here is to make the cliCreator tool. 
 all: cliCreator
 
 cliCreator: cliCreator.cpp
@@ -7,3 +7,4 @@ cliCreator: cliCreator.cpp
 
 clean:
 	rm -f cliCreator
+
