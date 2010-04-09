@@ -52,12 +52,8 @@
 
 using namespace std;
 
-void fwrite8(uint8_t val, FILE *file);
-void fwrite16(uint16_t val, FILE *file);
-void fwrite32(uint32_t val, FILE *file);
-void goWrite8(uint8_t val, fpos_t *pos, FILE *file);
-void goWrite16(uint16_t val, fpos_t *pos, FILE *file);
-void goWrite32(uint32_t val, fpos_t *pos, FILE *file);
+template <class T> void fwrite(T val, FILE *file);
+template <class T> void goWrite(T val, fpos_t *pos, FILE *file);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
@@ -103,7 +99,7 @@ int main(int argc, char **argv)
 	 */
 	 
 	// Version Number
-	fwrite16(ZBE_VERSION, output);
+	fwrite<uint16_t>(ZBE_VERSION, output);
 	
 	// Total # assets. There is no way of knowing how may assets we will end up
 	// with, so write a 32 bit int 0 to the file and remember the position.
@@ -112,7 +108,7 @@ int main(int argc, char **argv)
 	fpos_t totalAssetsPos;
 	uint32_t totalAssets = 0;
 	fgetpos(output, &totalAssetsPos);
-	fwrite32(0, output);
+	fwrite<uint32_t>(0, output);
 	
 	
 	
@@ -125,7 +121,7 @@ int main(int argc, char **argv)
 	fpos_t totalGfxPos;
 	uint32_t totalGfx = 0;
 	fgetpos(output, &totalGfxPos);
-	fwrite32(0, output);
+	fwrite<uint32_t>(0, output);
 	
 	
 	// For all the graphics in the XML file
@@ -144,20 +140,20 @@ int main(int argc, char **argv)
 		int l = getIntAttr(gfxXML, "left");
 		
 		// Copy it into the zbe file
-		fwrite8((uint8_t) w, output);
-		fwrite8((uint8_t) h, output);
-		fwrite8((uint8_t) t, output);
-		fwrite8((uint8_t) l, output);
+		fwrite<uint8_t>((uint8_t) w, output);
+		fwrite<uint8_t>((uint8_t) h, output);
+		fwrite<uint8_t>((uint8_t) t, output);
+		fwrite<uint8_t>((uint8_t) l, output);
 		// The length is unknown right now, it'll be counted in the copy op and returned
 		// so we'll return here after that copy is done
 		fpos_t lenPos;
 		fgetpos(output, &lenPos);
-		fwrite16(0, output);
+		fwrite<uint16_t>(0, output);
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
-		fwrite16((uint16_t) len, output);
+		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
 		
 		// Get the next sibling
@@ -165,7 +161,7 @@ int main(int argc, char **argv)
 	}
 	// Now that the total number of gfx are known, go back and write that down
 	fsetpos(output, &totalGfxPos);
-	fwrite32(totalGfx, output);
+	fwrite<uint32_t>(totalGfx, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalGfx;
 	
@@ -174,7 +170,7 @@ int main(int argc, char **argv)
 	fpos_t totalPalPos;
 	uint32_t totalPal = 0;
 	fgetpos(output, &totalPalPos);
-	fwrite32(0, output);
+	fwrite<uint32_t>(0, output);
 	
 	// For all the palettes in the XML file
 	TiXmlElement *palettesXML = zbeXML->FirstChildElement("bin")->FirstChildElement("palettes");
@@ -191,12 +187,12 @@ int main(int argc, char **argv)
 		// so we'll return here after that copy is done
 		fpos_t lenPos;
 		fgetpos(output, &lenPos);
-		fwrite16(0, output);
+		fwrite<uint16_t>(0, output);
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
-		fwrite16((uint16_t) len, output);
+		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
 		
 		// Get the next sibling
@@ -204,7 +200,7 @@ int main(int argc, char **argv)
 	}
 	// Now that the total number of palettes are known, go back and write that down
 	fsetpos(output, &totalPalPos);
-	fwrite32(totalPal, output);
+	fwrite<uint32_t>(totalPal, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalPal;
 	
@@ -221,7 +217,7 @@ int main(int argc, char **argv)
 	fpos_t totalObjPos;
 	uint32_t totalObj = 0;
 	fgetpos(output, &totalObjPos);
-	fwrite32(0, output);
+	fwrite<uint32_t>(0, output);
 	
 	// For all the objects
 	TiXmlElement *objectsXML = zbeXML->FirstChildElement("objects");
@@ -233,7 +229,7 @@ int main(int argc, char **argv)
 		uint32_t totalAnimations = 0;
 		fpos_t totalAnimationsPos;
 		fgetpos(output, &totalAnimationsPos);
-		fwrite32(0, output);
+		fwrite<uint32_t>(0, output);
 		
 		// And all the animations
 		TiXmlElement *animationsXML = objectXML->FirstChildElement("animations");
@@ -247,7 +243,7 @@ int main(int argc, char **argv)
 			uint16_t totalFrames = 0;
 			fpos_t totalFramesPos;
 			fgetpos(output, &totalFramesPos);
-			fwrite16(0, output);
+			fwrite<uint16_t>(0, output);
 
 			// Start getting frames
 			TiXmlElement *frameXML = animationXML->FirstChildElement("frame");
@@ -260,8 +256,8 @@ int main(int argc, char **argv)
 				int time = getIntAttr(frameXML, "time");
 				
 				// Write them to the file
-				fwrite32((uint32_t) gfxId, output);
-				fwrite8((uint8_t) time, output);
+				fwrite<uint32_t>((uint32_t) gfxId, output);
+				fwrite<uint8_t>((uint8_t) time, output);
 				
 				// get the next frame
 				frameXML = frameXML->NextSiblingElement("frame");
@@ -269,7 +265,7 @@ int main(int argc, char **argv)
 			
 			// Go back and write the number of frames in this animation
 			fsetpos(output, &totalFramesPos);
-			fwrite16(totalFrames, output);
+			fwrite<uint16_t>(totalFrames, output);
 			fseek(output, 0, SEEK_END);
 			
 			// get the next animation
@@ -278,7 +274,7 @@ int main(int argc, char **argv)
 		
 		// Go back and write the number of animations for this object
 		fsetpos(output, &totalAnimationsPos);
-		fwrite32(totalAnimations, output);
+		fwrite<uint32_t>(totalAnimations, output);
 		fseek(output, 0, SEEK_END);
 		
 		// get the next one
@@ -287,7 +283,7 @@ int main(int argc, char **argv)
 	
 	// Finally, go back and write the number of objects
 	fsetpos(output, &totalObjPos);
-	fwrite32(totalObj, output);
+	fwrite<uint32_t>(totalObj, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalObj;
 	
@@ -297,7 +293,7 @@ int main(int argc, char **argv)
 	
 	// Now that the total number of assets are known, go back and write that down
 	fsetpos(output, &totalAssetsPos);
-	fwrite32(totalAssets, output);
+	fwrite<uint32_t>(totalAssets, output);
 	fseek(output, 0, SEEK_END);
 	
 	// Close the output file and we're done!
@@ -306,49 +302,20 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-// TODO: replace all of these with template functions to write that type to the file
 // TODO: Replace hard-coded zbe file piece sizes with #define'd types
 
-void fwrite32(uint32_t val, FILE *file)
+template <class T> void fwrite(T val, FILE *file)
 {
-	if (fwrite(&val, sizeof(uint32_t), 1, file) != 1)
+	if (fwrite(&val, sizeof(T), 1, file) != 1)
 	{
-		fprintf(stderr, "error writing uint32 value %ld to file\n", (long int) val);
+		fprintf(stderr, "error writing value %d to file\n", (int) val);
 	}
 }
 
-void fwrite16(uint16_t val, FILE *file)
-{
-	if (fwrite(&val, sizeof(uint16_t), 1, file) != 1)
-	{
-		fprintf(stderr, "error writing uint16 value %ld to file\n", (long int) val);
-	}
-}
-
-void fwrite8(uint8_t val, FILE *file)
-{
-	if (fwrite(&val, sizeof(uint8_t), 1, file) != 1)
-	{
-		fprintf(stderr, "error writing uint8 value %d to file\n", (int) val);
-	}
-}
-
-void goWrite32(uint32_t val, fpos_t *pos, FILE *file)
+template <class T> void goWrite(T val, fpos_t *pos, FILE *file)
 {
 	fsetpos(file, pos);
-	fwrite32(val, file);
-	fseek(file, 0, SEEK_END);
-}
-void goWrite16(uint16_t val, fpos_t *pos, FILE *file)
-{
-	fsetpos(file, pos);
-	fwrite16(val, file);
-	fseek(file, 0, SEEK_END);
-}
-void goWrite8(uint8_t val, fpos_t *pos, FILE *file)
-{
-	fsetpos(file, pos);
-	fwrite8(val, file);
+	fwrite<T>(val, file);
 	fseek(file, 0, SEEK_END);
 }
 
@@ -381,7 +348,7 @@ uint16_t appendData(FILE *output, string inFile)
 	while ( fread(&byte, sizeof(uint8_t), 1, input) )
 	{
 		++bytes;
-		fwrite8(byte, output);
+		fwrite<uint8_t>(byte, output);
 	}
 	// That while could cancel because of a bad read, let's check for that
 	if (ferror(input))
