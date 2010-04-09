@@ -99,6 +99,7 @@ int main(int argc, char **argv)
 	 */
 	 
 	// Version Number
+	printf("Version Number\n");
 	fwrite<uint16_t>(ZBE_VERSION, output);
 	
 	// Total # assets. There is no way of knowing how may assets we will end up
@@ -108,6 +109,7 @@ int main(int argc, char **argv)
 	fpos_t totalAssetsPos;
 	uint32_t totalAssets = 0;
 	fgetpos(output, &totalAssetsPos);
+	printf("Temp Total Assets\n");
 	fwrite<uint32_t>(0, output);
 	
 	
@@ -121,6 +123,7 @@ int main(int argc, char **argv)
 	fpos_t totalGfxPos;
 	uint32_t totalGfx = 0;
 	fgetpos(output, &totalGfxPos);
+	printf("Temp Total GFX\n");
 	fwrite<uint32_t>(0, output);
 	
 	
@@ -140,6 +143,7 @@ int main(int argc, char **argv)
 		int l = getIntAttr(gfxXML, "left");
 		
 		// Copy it into the zbe file
+		printf("\tGFX: %d x %d at (%d, %d)\n", w, h, t, l);
 		fwrite<uint8_t>((uint8_t) w, output);
 		fwrite<uint8_t>((uint8_t) h, output);
 		fwrite<uint8_t>((uint8_t) t, output);
@@ -148,19 +152,24 @@ int main(int argc, char **argv)
 		// so we'll return here after that copy is done
 		fpos_t lenPos;
 		fgetpos(output, &lenPos);
+		printf("\tTemp Tiles length\n");
 		fwrite<uint16_t>(0, output);
+		printf("\tAppending GFX's Tiles Data\n");
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
+		printf("\tTiles' length: %d B\n", int(len));
 		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
 		
 		// Get the next sibling
 		gfxXML = gfxXML->NextSiblingElement("gfx");
+		printf("GFX done\n");
 	}
 	// Now that the total number of gfx are known, go back and write that down
 	fsetpos(output, &totalGfxPos);
+	printf("%d GFX processed\n\n", int(totalGfx));
 	fwrite<uint32_t>(totalGfx, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalGfx;
@@ -170,6 +179,7 @@ int main(int argc, char **argv)
 	fpos_t totalPalPos;
 	uint32_t totalPal = 0;
 	fgetpos(output, &totalPalPos);
+	printf("Temp Total Palettes\n");
 	fwrite<uint32_t>(0, output);
 	
 	// For all the palettes in the XML file
@@ -187,19 +197,24 @@ int main(int argc, char **argv)
 		// so we'll return here after that copy is done
 		fpos_t lenPos;
 		fgetpos(output, &lenPos);
+		printf("\tTemp Palette Length\n");
 		fwrite<uint16_t>(0, output);
+		printf("\tAppending Palette Data\n");
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
+		printf("\tPalette's Length: %d B\n", len);
 		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
 		
 		// Get the next sibling
 		gfxXML = gfxXML->NextSiblingElement("palette");
+		printf("Palette Done\n");
 	}
 	// Now that the total number of palettes are known, go back and write that down
 	fsetpos(output, &totalPalPos);
+	printf("%d Palettes Processed\n\n", int(totalPal));
 	fwrite<uint32_t>(totalPal, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalPal;
@@ -217,6 +232,7 @@ int main(int argc, char **argv)
 	fpos_t totalObjPos;
 	uint32_t totalObj = 0;
 	fgetpos(output, &totalObjPos);
+	printf("Temp Total Objects\n");
 	fwrite<uint32_t>(0, output);
 	
 	// For all the objects
@@ -229,6 +245,7 @@ int main(int argc, char **argv)
 		uint32_t totalAnimations = 0;
 		fpos_t totalAnimationsPos;
 		fgetpos(output, &totalAnimationsPos);
+		printf("\tTemp Total Animations\n");
 		fwrite<uint32_t>(0, output);
 		
 		// And all the animations
@@ -243,6 +260,7 @@ int main(int argc, char **argv)
 			uint16_t totalFrames = 0;
 			fpos_t totalFramesPos;
 			fgetpos(output, &totalFramesPos);
+			printf("\t\tTemp Total Frames\n");
 			fwrite<uint16_t>(0, output);
 
 			// Start getting frames
@@ -256,6 +274,7 @@ int main(int argc, char **argv)
 				int time = getIntAttr(frameXML, "time");
 				
 				// Write them to the file
+				printf("\t\t\tFrame: GFX ID %d for %d blanks\n", gfxId, time);
 				fwrite<uint32_t>((uint32_t) gfxId, output);
 				fwrite<uint8_t>((uint8_t) time, output);
 				
@@ -265,6 +284,7 @@ int main(int argc, char **argv)
 			
 			// Go back and write the number of frames in this animation
 			fsetpos(output, &totalFramesPos);
+			printf("\t\t%d Frames Processed\n", int(totalFrames));
 			fwrite<uint16_t>(totalFrames, output);
 			fseek(output, 0, SEEK_END);
 			
@@ -274,15 +294,18 @@ int main(int argc, char **argv)
 		
 		// Go back and write the number of animations for this object
 		fsetpos(output, &totalAnimationsPos);
+		printf("\t%d Animations Processed\n", int(totalAnimations));
 		fwrite<uint32_t>(totalAnimations, output);
 		fseek(output, 0, SEEK_END);
 		
 		// get the next one
 		objectXML = objectXML->NextSiblingElement("object");
+		printf("Object done\n");
 	}
 	
 	// Finally, go back and write the number of objects
 	fsetpos(output, &totalObjPos);
+	printf("%d Objects processed\n\n", int(totalObj));
 	fwrite<uint32_t>(totalObj, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalObj;
@@ -293,12 +316,13 @@ int main(int argc, char **argv)
 	
 	// Now that the total number of assets are known, go back and write that down
 	fsetpos(output, &totalAssetsPos);
+	printf("%d Assets Processed\n\n", int(totalAssets));
 	fwrite<uint32_t>(totalAssets, output);
 	fseek(output, 0, SEEK_END);
 	
 	// Close the output file and we're done!
 	fclose(output);
-
+	printf("Done!\n");
 	return 0;
 }
 
