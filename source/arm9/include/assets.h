@@ -52,8 +52,7 @@
 using namespace std;
 
 /**
- * asset_status struct. Used in the assets class in vectors to keep track assets in
- * the datafile. Contains information like if it's loaded and what's its id.
+ * asset_status struct. This is just a base class and isn't used anywhere else.
  *
  * @author Joe Balough
  */
@@ -74,6 +73,11 @@ struct assetStatus
 	bool loaded;
 };
 
+/**
+ * palStatus struct, inherits assetStatus and includes an additional uint8 index
+ *
+ * @author Joe Balough
+ */
 struct palStatus : public assetStatus
 {
 	palStatus() : assetStatus()
@@ -83,6 +87,13 @@ struct palStatus : public assetStatus
 	uint8 index;
 };
 
+/**
+ * gfxStats struct, inherits assetStatus and includes an additional uint16* offset
+ * value to track where the gfx is in memroy, its size, dimensions, and top left
+ * position of the gfx.
+ *
+ * @author Joe Balough
+ */
 struct gfxStatus : public assetStatus
 {
 	gfxStatus() : assetStatus()
@@ -91,7 +102,7 @@ struct gfxStatus : public assetStatus
 	// for gfx; video memory offset
 	uint16 *offset;
 
-	// Its size (if applicable)
+	// Its size
 	SpriteSize size;
 	
 	// Dimensions and position
