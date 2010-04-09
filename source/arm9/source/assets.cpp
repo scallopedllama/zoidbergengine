@@ -162,6 +162,17 @@ void assets::parseZbe()
 	} // all objects
 	
 	
+	
+	/**
+	 *
+	 *
+	 *        NOTE: assets handle and parse the file for the parts that DEFINE
+	 *              asset IDs. Anything that ONLY REFERENCES asset IDs should
+	 *              be loaded in their respective class (e.g. cine, level, etc.)
+	 *
+	 *
+	 */
+	
 	// Number of levels
 	uint32 numLvls = load<uint32>(zbeData);
 	iprintf("#lvls %d\n", numLvls);
