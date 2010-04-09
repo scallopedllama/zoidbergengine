@@ -389,7 +389,7 @@ uint16_t appendData(FILE *output, string inFile)
 	FILE *input = fopen(inFile.c_str(), "rb");
 	if (!input)
 	{
-			fprintf(stderr, "ERROR: Failed to open file %s\n", inFile);
+			fprintf(stderr, "ERROR: Failed to open file %s\n", inFile.c_str());
 		exit(EXIT_FAILURE);
 	}
 	uint8_t byte;
