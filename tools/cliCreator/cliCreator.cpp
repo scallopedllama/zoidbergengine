@@ -4,15 +4,10 @@
  * @brief A tool to parse a zbe description xml file
  *
  * This file is the new cliCreator and will generate an assets.zbe file based on the
- * following xml structure:
- *
- * <zbe>
- * </zbe>
- *
- * into a binary file to be dropped into an assets file that will be properly loaded by the
- * zoidberg engine.
+ * xml structure detailed in the xmlDesc variable below
  *
  * @see asset.h
+ * @see xmlDesc
  * @author Joe Balough
  */
 
@@ -53,31 +48,16 @@
 
 using namespace std;
 
+
+
+// Function Prototypes
+int debug(char* fmt, ...);
 template <class T> void fwrite(T val, FILE *file);
 template <class T> void goWrite(T val, fpos_t *pos, FILE *file);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
 
-/**
- * debug Function
- * 
- * A very basic wrapper for printf, all it does is make sure that verbose output is enabled.
- * If it is, it will pass everything through to printf. If not, it just returns.
- *
- * @param ...
- *  Accepts parameters exactly as printf would.
- * @author Joe Balough
- */
-int debug(char* fmt, ...){
-	
-	int toReturn = 0;
-	va_list ap;
-	va_start(ap, fmt);
-	toReturn = vprintf(fmt, ap);
-	va_end(ap);
-	return toReturn;
-}
 
 int main(int argc, char **argv)
 {
@@ -350,6 +330,27 @@ int main(int argc, char **argv)
 
 // TODO: Replace hard-coded zbe file piece sizes with #define'd types
 
+
+/**
+ *    file writing utilities
+ */
+
+
+/**
+ * fwrite wrapper function
+ *
+ * This is a template wrapper function for fwrite that will write the passed val
+ * of template type to the file and performs error checking to make sure that 
+ * was written properly. Prints an error message if it failed.
+ * Note that this function will not seek in the file so the value is written at
+ * the file's current position.
+ * 
+ * @param T val
+ *  The value to write to the file
+ * @param FILE *file
+ *  The file to which val should be written
+ * @author Joe Balough
+ */
 template <class T> void fwrite(T val, FILE *file)
 {
 	if (fwrite(&val, sizeof(T), 1, file) != 1)
@@ -358,6 +359,24 @@ template <class T> void fwrite(T val, FILE *file)
 	}
 }
 
+
+/**
+ * fwrite wrapper function: goWrite
+ *
+ * This is a template wrapper function for fwrite that will write the passed val
+ * of template type to the file at file position pos and performs error checking
+ * to make sure that it was written properly. Prints an error message if it failed.
+ * Note that after writing the data at position pos, it will seek to the end of the
+ * file.
+ * 
+ * @param T val
+ *  The value to write to the file
+ * @param fpos_t *pos
+ *  The position in the file where val should be written
+ * @param FILE *file
+ *  The file to which val should be written
+ * @author Joe Balough
+ */
 template <class T> void goWrite(T val, fpos_t *pos, FILE *file)
 {
 	fsetpos(file, pos);
@@ -365,6 +384,28 @@ template <class T> void goWrite(T val, fpos_t *pos, FILE *file)
 	fseek(file, 0, SEEK_END);
 }
 
+
+
+
+/**
+ * TinyXML utilities
+ */
+ 
+ 
+/**
+ * getIntAttr function
+ * 
+ * Gets an Integer attribute from the passed TiXmlElement.
+ * Will print an error if it failed.
+ *
+ * @param TiXmlElement *elem
+ *  The TiXmlElement from which an attribute should be queried
+ * @param string attr
+ *  The name of the attribute to query
+ * @return int
+ *  Returns the integer value of attribute
+ * @author Joe Balough
+ */
 int getIntAttr(TiXmlElement *elem, string attr)
 {
 	int toReturn = -1;
@@ -375,6 +416,21 @@ int getIntAttr(TiXmlElement *elem, string attr)
 	return toReturn;
 }
 
+
+/**
+ * getStrAttr function
+ * 
+ * Gets a string attribute from the passed TiXmlElement.
+ * Will print an error if it failed.
+ *
+ * @param TiXmlElement *elem
+ *  The TiXmlElement from which an attribute should be queried
+ * @param string attr
+ *  The name of the attribute to query
+ * @return string
+ *  Returns the string value of attribute
+ * @author Joe Balough
+ */
 string getStrAttr(TiXmlElement *elem, string attr)
 {
 	string toReturn;
@@ -385,6 +441,30 @@ string getStrAttr(TiXmlElement *elem, string attr)
 	return toReturn;
 }
 
+
+
+
+/**
+ *   Utility functions
+ */
+ 
+
+/**
+ * appendData function
+ *
+ * Opens a file for reading and appends its binary contents to a FILE pointer.
+ * Used to put the binary output files from GRIT into the assets file
+ * Note that this function will not seek to the end of the file, so inFil is appended
+ * to the current position in the output file. 
+ *
+ * @param FILE* output
+ *  file pointer to the binary write opened file to append data to
+ * @param string inFile
+ *  filename of a file to open and append data to output FILE
+ * @return uint16_t
+ *  Returns the number of bytes copied, i.e. the size in bytes of the input file.
+ * @author Joe Balough
+ */
 uint16_t appendData(FILE *output, string inFile)
 {
 	FILE *input = fopen(inFile.c_str(), "rb");
@@ -411,4 +491,27 @@ uint16_t appendData(FILE *output, string inFile)
 	// Return the length of the data
 	return bytes;
 }
+
+
+/**
+ * debug Function
+ * 
+ * A very basic wrapper for printf, all it does is make sure that verbose output is enabled.
+ * If it is, it will pass everything through to printf. If not, it just returns.
+ *
+ * @param ...
+ *  Accepts parameters exactly as printf would.
+ * @author Joe Balough
+ */
+int debug(char* fmt, ...)
+{
+	if(!verbose)
+		return;
 	
+	int toReturn = 0;
+	va_list ap;
+	va_start(ap, fmt);
+	toReturn = vprintf(fmt, ap);
+	va_end(ap);
+	return toReturn;
+}
