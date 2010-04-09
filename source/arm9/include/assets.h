@@ -47,6 +47,7 @@
 #include <nds.h>
 #include <fat.h>
 #include <vector>
+#include "vector.h"
 
 using namespace std;
 
@@ -80,14 +81,17 @@ struct assetStatus
 
 
 	/**
-	 * The following Variables are only for Sprites
+	 * The following Variables are only for gfx
 	 */
-	// for sprites; video memory offset
+	// for gfx; video memory offset
 	uint16 *offset;
 
 	// Its size (if applicable)
 	SpriteSize size;
-
+	
+	// Dimensions and position
+	vector2D<uint8> dimensions;
+	vector2D<uint8> topleft;
 };
 
 

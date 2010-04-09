@@ -45,8 +45,14 @@ void assets::parseZbe()
 		// The very first byte of data in gfx tiles is its width, second is height
 		uint8 width = fread8(zbeData);
 		uint8 height = fread8(zbeData);
-		iprintf(" %d x %d\n", width, height);
-
+		uint8 top = fread8(zbeData);
+		uint8 left = fread8(zbeData);
+		iprintf(" %d x %d @ (%d, %d)\n", width, height, top, left);
+		
+		// Set its dimensions
+		newAsset.dimensions = vector2D<uint8>(width, height);
+		newAsset.topleft = vector2D<uint8>(left, top);
+		
 		// Set its spriteSize
 		newAsset.size = getSpriteSize(width, height);
 
@@ -147,11 +153,30 @@ void assets::parseZbe()
 // Given a width and a height returns an appropriate SpriteSize
 SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 {
+	// Convert the width and height to 8, 16, 32, or 64 to contain it
+	uint8 swidth, sheight;
+	if (width <= 8)
+		swidth = 8;
+	else if (width <= 16)
+		swidth = 16;
+	else if (width <= 32)
+		swidth = 32;
+	else if (width <= 64)
+		swidth = 64;
+	if (height <= 8)
+		sheight = 8;
+	else if (height <= 16)
+		sheight = 16;
+	else if (height <= 32)
+		sheight = 32;
+	else if (height <= 64)
+		height = 64;
+	
 	// Wow this is intense but it's the only way I can come up with to do this.
-	switch (width)
+	switch (swidth)
 	{
 		case 8:
-			switch (height)
+			switch (sheight)
 			{
 				case 8:
 					return SpriteSize_8x8;
@@ -168,7 +193,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 			}
 			break;
 		case 16:
-			switch (height)
+			switch (sheight)
 			{
 				case 8:
 					return SpriteSize_16x8;
@@ -185,7 +210,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 			}
 			break;
 		case 32:
-			switch (height)
+			switch (sheight)
 			{
 				case 8:
 					return SpriteSize_32x8;
@@ -204,7 +229,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 			}
 			break;
 		case 64:
-			switch (height)
+			switch (sheight)
 			{
 				case 32:
 					return SpriteSize_64x32;

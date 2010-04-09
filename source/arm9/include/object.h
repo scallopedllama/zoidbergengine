@@ -347,7 +347,7 @@ public:
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
-	vector2D<float> position, velocity, acceleration, gravity;
+	vector2D<float> position, velocity, acceleration, gravity, gfxDimensions, gfxTopleft;
 
 protected:
 	// Pointer to the OamState in which this sprite should be updated

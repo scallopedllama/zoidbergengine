@@ -53,8 +53,6 @@ bool object::update(touchPosition *touch)
 {
 	// Update position
 	
-	// TODO: Add some kind of flag to turn off gravity if the object is up against
-	//       something and hasn't moved in a while
 	if (falling)
 	{
 		velocity.x += gravity.x;
