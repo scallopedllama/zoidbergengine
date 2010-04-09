@@ -4,3 +4,7 @@ all: cliCreator
 
 cliCreator:
 	g++ -o cliCreator cliCreator.cpp ./lib/tinyxml/tinyxml.cpp ./lib/tinyxml/tinyxmlparser.cpp ./lib/tinyxml/tinyxmlerror.cpp ./lib/tinyxml/tinystr.cpp
+
+clean:
+	rm -f cliCreator
+	
