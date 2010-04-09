@@ -109,9 +109,10 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
+
+
 	// Get the root node
 	TiXmlElement *zbeXML = input.RootElement();
-	
 	
 	
 	
@@ -120,7 +121,7 @@ int main(int argc, char **argv)
 	 */
 	 
 	// Version Number
-	debug("zbe Version %d\n", int(ZBE_VERSION));
+	debug("zbe Version %d\n\n", int(ZBE_VERSION));
 	fwrite<uint16_t>(ZBE_VERSION, output);
 	
 	// Total # assets. There is no way of knowing how may assets we will end up
@@ -130,7 +131,7 @@ int main(int argc, char **argv)
 	fpos_t totalAssetsPos;
 	uint32_t totalAssets = 0;
 	fgetpos(output, &totalAssetsPos);
-	debug("Temp Total Assets\n");
+	debug("Temp Total Assets\n\n");
 	fwrite<uint32_t>(0, output);
 	
 	
@@ -175,7 +176,7 @@ int main(int argc, char **argv)
 		fgetpos(output, &lenPos);
 		debug("\tTemp Tiles length\n");
 		fwrite<uint16_t>(0, output);
-		debug("\tAppending GFX's Tiles Data\n");
+		debug("\tAppending GFX's Tiles Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
@@ -212,7 +213,7 @@ int main(int argc, char **argv)
 		++totalPal;
 		
 		// Get all the needed attributes
-		string thisBin = getStrAttr(gfxXML, "bin");
+		string thisBin = getStrAttr(palXML, "bin");
 
 		// The length is unknown right now, it'll be counted in the copy op and returned
 		// so we'll return here after that copy is done
@@ -220,7 +221,7 @@ int main(int argc, char **argv)
 		fgetpos(output, &lenPos);
 		debug("\tTemp Palette Length\n");
 		fwrite<uint16_t>(0, output);
-		debug("\tAppending Palette Data\n");
+		debug("\tAppending Palette Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
 		
 		// Now we have the length, so go back and write it down
@@ -230,7 +231,7 @@ int main(int argc, char **argv)
 		fseek(output, 0, SEEK_END);
 		
 		// Get the next sibling
-		gfxXML = gfxXML->NextSiblingElement("palette");
+		palXML = palXML->NextSiblingElement("palette");
 		debug("Palette Done\n");
 	}
 	// Now that the total number of palettes are known, go back and write that down
