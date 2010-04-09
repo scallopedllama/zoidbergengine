@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 	 */
 	 
 	// Version Number
-	debug("Version Number\n");
+	debug("zbe Version %d\n", int(ZBE_VERSION));
 	fwrite<uint16_t>(ZBE_VERSION, output);
 	
 	// Total # assets. There is no way of knowing how may assets we will end up
@@ -387,6 +387,11 @@ string getStrAttr(TiXmlElement *elem, string attr)
 uint16_t appendData(FILE *output, string inFile)
 {
 	FILE *input = fopen(inFile.c_str(), "rb");
+	if (!input)
+	{
+			fprintf(stderr, "ERROR: Failed to open file %s\n", inFile);
+		exit(EXIT_FAILURE);
+	}
 	uint8_t byte;
 	uint16_t bytes = 0;
 	// fread returns the number of elements read. if file ended, should be 0
