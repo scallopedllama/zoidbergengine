@@ -14,26 +14,25 @@
 		<object weight="45">
 			<animations>
 				<animation>
-					<frame id="0" time="10" />
-					<frame id="1" time="10" />
-				</animation>
-				<animation>
-					<frame id="0" time="10" />
-					<frame id="1" time="10"/>
+					<frame id="0" pal="0" time="10" />
+					<frame id="0" pal="1" time="10" />
 				</animation>
 			</animations>
 		</object>
 		<object weight="10">
 			<animations>
 				<animation>
-					<frame id="0" time="10" />
-					<frame id="1" time="10"/>
-				</animation>
-				<animation>
-					<frame id="0" time="10" />
-					<frame id="1" time="10"/>
+					<frame id="0" pal="1" time="10" />
 				</animation>
 			</animations>
 		</object>
 	</objects>
+	<levels>
+		<level>
+			<objects>
+				<object id="0" x="55" y="34" />
+				<object id="1" x="100" y="10" />
+			</objects>
+		</level>
+	</levels>
 </zbe>

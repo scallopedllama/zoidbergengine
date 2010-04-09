@@ -164,11 +164,11 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 	
-	// Attempt to load up argv[1] as a tinyxml document
+	// Attempt to load up inFilename as a tinyxml document
 	TiXmlDocument input(inFilename.c_str());
 	if (!input.LoadFile())
 	{
-		fprintf(stderr, "Failed to parse file %s\n", argv[1]);
+		fprintf(stderr, "Failed to parse file %s\n", inFilename.c_str());
 		exit(EXIT_FAILURE);
 	}
 
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 	FILE *output = fopen(outFilename.c_str(), "wb");
 	if (!output)
 	{
-		fprintf(stderr, "Failed to open %s for output.\n", argv[2]);
+		fprintf(stderr, "Failed to open %s for output.\n", outFilename.c_str());
 		exit(EXIT_FAILURE);
 	}
 
@@ -333,6 +333,12 @@ int main(int argc, char **argv)
 	TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
 	while (objectXML)
 	{
+		++totalObj;
+		
+		// Weight
+		int weight = getIntAttr(objectXML, "weight");
+		debug("\tWeight : %d\n", weight);
+		fwrite<uint8_t>(uint8_t(weight), output);
 		
 		// Total # Animations
 		uint32_t totalAnimations = 0;
@@ -347,7 +353,6 @@ int main(int argc, char **argv)
 		while (animationXML)
 		{
 			++totalAnimations;
-			
 			
 			// Total # frames for this animation
 			uint16_t totalFrames = 0;
@@ -405,6 +410,78 @@ int main(int argc, char **argv)
 	
 	
 	
+	/**
+	 *    LEVELS
+	 */
+	
+	
+	
+	// Total # levels
+	fpos_t totalLvlPos;
+	uint32_t totalLvl = 0;
+	fgetpos(output, &totalLvlPos);
+	debug("Temp Total Levels\n");
+	fwrite<uint32_t>(0, output);
+	
+	// For all the levels in the XML file
+	TiXmlElement *levelsXML = zbeXML->FirstChildElement("levels");
+	TiXmlElement *levelXML = levelsXML->FirstChildElement("level");
+	while (levelXML)
+	{
+		// Increment total level counter
+		++totalLvl;
+		
+		// Get all the needed attributes
+		
+		
+		// Level Objects
+		//Total objects
+		fpos_t totalLvlObjPos;
+		uint32_t totalLvlObj = 0;
+		fgetpos(output, &totalLvlObjPos);
+		debug("\tTemp total level objects\n");
+		fwrite<uint32_t>(0, output);
+		
+		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
+		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
+		while (objectXML)
+		{
+			++totalLvlObj;
+			
+			// Get the relevant infos
+			int x = getIntAttr(objectXML, "x");
+			int y = getIntAttr(objectXML, "y");
+			int id = getIntAttr(objectXML, "id");
+			
+			// Write them up
+			debug("\t\tObject %d at (%d, %d)\n", id, x, y);
+			fwrite<uint32_t>(uint32_t(id), output);
+			fwrite<uint16_t>(uint16_t(x), output);
+			fwrite<uint16_t>(uint16_t(y), output);
+			
+			// Get the next object
+			objectXML = objectXML->NextSiblingElement("object");
+		}
+		//go write the total number of objects
+		fsetpos(output, &totalLvlObjPos);
+		debug("\t%d Level objects\n", int(totalLvlObj));
+		fwrite<uint32_t>(totalLvlObj, output);
+		fseek(output, 0, SEEK_END);
+		
+		
+		// Get the next sibling
+		levelXML = levelXML->NextSiblingElement("level");
+		debug("Level Done\n");
+	}
+	// Now that the total number of palettes are known, go back and write that down
+	fsetpos(output, &totalLvlPos);
+	debug("%d Levels Processed\n\n", int(totalLvl));
+	fwrite<uint32_t>(totalLvl, output);
+	fseek(output, 0, SEEK_END);
+	totalAssets += totalLvl;
+	
+	
+	
 	
 	
 	// Now that the total number of assets are known, go back and write that down
@@ -419,6 +496,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+// TODO: Update README
 // TODO: Replace hard-coded zbe file piece sizes with #define'd types
 
 
