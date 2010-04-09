@@ -12,12 +12,9 @@ level::level(char *filename)
 		matrixAvail[i] = true;
 	}
 	
-	// initialize the assets
-	zbeAssets = new assets(filename, oam, &objects);
-	
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-	
+	/*
 	// initialize the collisionMatrix
 	colMatrix = new collisionMatrix(1200, SCREEN_HEIGHT, 70);
 	
@@ -25,7 +22,7 @@ level::level(char *filename)
 	// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
 	//       collision actions to the collisionMatrix.
 	for (int i = 0; i < objects.size(); i++)
-		objectsGroups.push_back(colMatrix->addObject(newObj));
+		objectsGroups.push_back(colMatrix->addObject(newObj));*/
 }
 
 // level destructor

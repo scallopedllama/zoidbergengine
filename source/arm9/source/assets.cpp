@@ -1,6 +1,6 @@
 #include "assets.h"
 
-assets::assets(char *filename, OamState *table, vector<object*> &objects)
+assets::assets(char *filename, OamState *table)
 {
 	// Set variables
 	oam = table;
@@ -19,7 +19,7 @@ assets::assets(char *filename, OamState *table, vector<object*> &objects)
 	}
 }
 
-void assets::parseZbe(vector<object*> &objects)
+void assets::parseZbe()
 {
 	// TODO: actually handle the return values on all these file functions.
 	//       They're all ignored so there is not fault tolerance.
@@ -169,9 +169,18 @@ void assets::parseZbe(vector<object*> &objects)
 	// for each level
 	for (uint32 i = 0; i < numLvls; i++)
 	{
+		// Push the current file position on the levelPositions vector
+		fpos_t curPos;
+		fgetpos(zbeData, &curPos);
+		levelPositions.push_back(curPos);
+		
+		/**
+		 *   The rest of the level stuff is loaded but forgotten, It should all probably
+		 *   replaced with a seek past all this stuff but for now this works, just slowly.
+		 */
+		
 		// number of level objects
 		uint32 numLvlObjs = load<uint32>(zbeData);
-		iprintf(" #objs %d\n", numLvlObjs);
 		
 		// for each level objects
 		for (uint32 j = 0; j < numLvlObjs; j++)
@@ -180,15 +189,39 @@ void assets::parseZbe(vector<object*> &objects)
 			uint32 objId = load<uint32>(zbeData);
 			uint16 x = load<uint16>(zbeData);
 			uint16 y = load<uint16>(zbeData);
-			
-			// Make a new object
-			// object(OamState *Oam, assets *Assets, vector<animation> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
-			object *newObj = new object(oam, this, &(objectAssets[objId].animations), x, y, false);
-			
-			// Add it to the objects vector
-			objects->push_back(newObj);
 		}
+	}
 }
+
+/*
+level* assets::loadLevel(uint32 id)
+{
+	// Seek to the proper place in the file
+	fsetpos(zbeData, &levelPositions);
+	
+	// Make a new level
+	
+	
+	// number of level objects
+	uint32 numLvlObjs = load<uint32>(zbeData);
+	iprintf(" #objs %d\n", numLvlObjs);
+	
+	// for each level objects
+	for (uint32 j = 0; j < numLvlObjs; j++)
+	{
+		// load relevant datas
+		uint32 objId = load<uint32>(zbeData);
+		uint16 x = load<uint16>(zbeData);
+		uint16 y = load<uint16>(zbeData);
+		
+		// Make a new object
+		// object(OamState *Oam, assets *Assets, vector<animation> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
+		object *newObj = new object(oam, this, &(objectAssets[objId].animations), x, y, false);
+		
+		// Add it to the objects vector
+		objects->push_back(newObj);
+	}
+}*/
 
 // Given a width and a height returns an appropriate SpriteSize
 SpriteSize assets::getSpriteSize(uint8 width, uint8 height)

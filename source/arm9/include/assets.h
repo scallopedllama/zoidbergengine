@@ -48,7 +48,6 @@
 #include <fat.h>
 #include <vector>
 #include "vector.h"
-#include "object.h"
 
 using namespace std;
 
@@ -170,7 +169,7 @@ public:
 	 * @author Joe Balough
 	 */
 	// TODO: update the docs for this
-	assets(char *filename, OamState *oam, vector<object*> &objects);
+	assets(char *filename, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -181,7 +180,7 @@ public:
 	 * @author Joe Balough
 	 */
 	// TODO: update the docs for this too
-	void parseZbe(vector<object*> &objects);
+	void parseZbe();
 
 	/**
 	 * loadGfx function
@@ -270,6 +269,9 @@ private:
 	
 	// All of the objectAssets defined in the datafile
 	vector<objectAsset> objectAssets;
+	
+	// Vector of positions in the file where the level descriptions begin
+	vector<fpos_t> levelPositions;
 };
 
 #endif // ASSETS_H_INCLUDED

@@ -42,10 +42,6 @@
 #define ZOIDBERG_NO_SPRITES -2
 #define ZOIDBERG_USE_EXT_PAL false
 
-// TODO: move the following to game when game is created.
-// On which screen should the main gameplay occur? Should probably always be &oamMain.
-#define ZOIDBERG_GAMEPLAY_OAM &oamMain
-
 #include <nds.h>
 #include <vector>
 #include <time.h>   // used in FPS calculation
@@ -53,7 +49,6 @@
 #include "hero.h"   // addSprite can add a hero to the mix
 #include "collisionmatrix.h"
 #include "physics.h"
-#include "assets.h"
 #include "util.h"
 
 
@@ -79,11 +74,9 @@ public:
 	 * Initializes the local copy of the OAMTable and sets up the arrays that keep track of what
 	 * SpriteEntries and what matrices are available.
 	 *
-	 * @param char *filename
-	 *   Filename to use to initialize the assets object
 	 * @author Joe Balough
 	 */
-	level(char *filename);
+	level();
 
 	/**
 	 * level deconstructor
