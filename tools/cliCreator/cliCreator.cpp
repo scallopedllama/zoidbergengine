@@ -37,6 +37,8 @@
 #include <stdlib.h>
 #include <stdint.h>  // for the uint[]_t types
 #include <stdarg.h>  // for the ... in functions ability used in debug()
+#include <ctype.h>   // for isprint()
+#include <unistd.h>  // for getopt()
 #include <vector>
 #include <string>
 #include "lib/tinyxml/tinyxml.h"
@@ -87,10 +89,10 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"\t\t</object>\n"
 	"\t\t...\n"
 	"\t</objects>\n"
-	"</zbe>";
+	"</zbe>\n";
 
 // Whether or not verbose debug output should be enabled
-bool verbose = true;
+bool verbose = false;
 
 
 // Function Prototypes
@@ -100,6 +102,7 @@ template <class T> void goWrite(T val, fpos_t *pos, FILE *file);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
+void printUsage(char *pgm);
 
 
 
@@ -123,20 +126,46 @@ uint16_t appendData(FILE *output, string inFile);
  */
 int main(int argc, char **argv)
 {
-	if(argc < 3)
-	{
-		fprintf(stderr, "Parses an asset xml file and outputs its proper binary data.\n");
-		fprintf(stderr, "Usage: %s [input filename] [output filename]\n", argv[0]);
-		if(argv[1] == "h")
+	// Parse the input arguments
+	// Accepts should be [-v] filename [filename]
+	string inFilename = "";
+	string outFilename = "assets.zbe";
+	int c = 0;
+	while ((c = getopt (argc, argv, "vi:o:")) != -1)
+		switch (c)
 		{
-			fprintf(stderr, "Expects XML file to be in the following form:\n");
-			fprintf(stderr, "%s", xmlDesc.c_str());
+			case 'v':
+				verbose = true;
+				break;
+			case 'i':
+				inFilename = string(optarg);
+				break;
+			case 'o':
+				outFilename = string(optarg);
+				break;
+			case ':':
+				fprintf (stderr, "You must provide a filename to open for option -%c\n", optopt);
+				printUsage(argv[0]);
+				return EXIT_FAILURE;
+			case '?':
+				fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+				printUsage(argv[0]);
+				return EXIT_FAILURE;
+			default:
+				fprintf(stderr, "Parses an asset xml file and builds a proper zbe assets file.\n");
+				printUsage(argv[0]);
+				return EXIT_FAILURE;
 		}
+	// Make sure that the input file was set
+	if (inFilename.empty())
+	{
+		fprintf (stderr, "You must provide an XML file to parse.\n");
+		printUsage(argv[0]);
 		return EXIT_FAILURE;
 	}
-
+	
 	// Attempt to load up argv[1] as a tinyxml document
-	TiXmlDocument input(argv[1]);
+	TiXmlDocument input(inFilename.c_str());
 	if (!input.LoadFile())
 	{
 		fprintf(stderr, "Failed to parse file %s\n", argv[1]);
@@ -144,7 +173,7 @@ int main(int argc, char **argv)
 	}
 
 	// Attempt to load up the output file
-	FILE *output = fopen(argv[2], "wb");
+	FILE *output = fopen(outFilename.c_str(), "wb");
 	if (!output)
 	{
 		fprintf(stderr, "Failed to open %s for output.\n", argv[2]);
@@ -576,4 +605,31 @@ int debug(char* fmt, ...)
 	toReturn = vprintf(fmt, ap);
 	va_end(ap);
 	return toReturn;
+}
+
+
+/**
+ * printHelp function
+ *
+ * Tells the user how to use this program. Used in the program options block in main.
+ *
+ * @author Joe Balough
+ */
+void printUsage(char *pgm)
+{
+	fprintf(stderr, "Usage: %s -i input_filename.xml [-o output_filename.zbe] [-v]\n", pgm);
+	fprintf(stderr, "          -i is required, it is the filename of the XML file to parse\n");
+	fprintf(stderr, "          -o is optional, it will overwrite (!) file 'assets.zbe' if omitted.\n");
+	fprintf(stderr, "          -v is optional, it enables verbose output.\n");
+	
+	if (verbose)
+	{
+		fprintf(stderr, "Expects XML file to be in the following form:\n");
+		fprintf(stderr, "\t... means that the previous line can be repeated as many times as desired.\n");
+		fprintf(stderr, "\tbin=\"filename\" should point to a binary file output by GRIT (with the -ftb option)\n");
+		fprintf(stderr, "\tgfx width and height should be the width and height of the actual graphic contained in the file, not the file itself.\n");
+		fprintf(stderr, "%s", xmlDesc.c_str());
+	}
+	else
+		fprintf(stderr, "Note: run `%s -v` for XML details\n", pgm);
 }
