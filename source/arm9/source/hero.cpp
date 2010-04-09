@@ -2,18 +2,16 @@
 
 #include<stdio.h>
 // hero constructor, just passes things along to the object constructor
-hero::hero(OamState *oam, 
-	   int paletteId, 
-	   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
-	   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble, bool hidden,
-	   int matrixId, int Width, int Height, int angle,
-	   bool mosaic)
-: object(oam, 
-		 paletteId, 
-		 gfx, numAnim, numFrames, frame,
-		 X, Y, priority, size, colorFormat, isSizeDouble, hidden,
-		 matrixId, Width, Height, angle,
-		 mosaic)
+hero::hero(OamState *Oam,
+	   vector<animation> *anim, 
+	   int X, int Y, bool Hidden,
+	   int MatrixId, int ScaleX, int ScaleY, int Angle,
+	   bool Mosaic)
+: object(Oam,
+		 anim, 
+		 X, Y, hidden,
+		 matrixId, ScaleX, ScaleY, Angle,
+		 Mosaic)
 {
 
 }

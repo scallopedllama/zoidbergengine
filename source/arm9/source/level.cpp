@@ -3,11 +3,8 @@
 // level constructor
 level::level(char *filename)
 {
-	// initialize the oam table
+	// set the oam
 	oam = ZOIDBERG_GAMEPLAY_OAM;
-	
-	// initialize the assets
-	zbeAssets = new assets(filename, oam);
 	
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
@@ -15,11 +12,20 @@ level::level(char *filename)
 		matrixAvail[i] = true;
 	}
 	
+	// initialize the assets
+	zbeAssets = new assets(filename, oam, &objects);
+	
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
 	
 	// initialize the collisionMatrix
 	colMatrix = new collisionMatrix(1200, SCREEN_HEIGHT, 70);
+	
+	// Add all objects to the collisionMatrix and push their objGroup onto the objectsGroups vector
+	// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
+	//       collision actions to the collisionMatrix.
+	for (int i = 0; i < objects.size(); i++)
+		objectsGroups.push_back(colMatrix->addObject(newObj));
 }
 
 // level destructor
@@ -49,7 +55,7 @@ int level::getMatrix()
 }
 
 // TEMP FCTN: adds a sprite to the level
-void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
+/*void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 {
 	// Request the assets for this sprite be loaded
 	uint16 *frame = zbeAssets->loadGfx(gfxId);
@@ -60,7 +66,7 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	
 	//object::object(OamState *Oam, 
 	//			   int PaletteId, 
-	//			   void ***Gfx, int NumAnim, int NumFrames[], void *Frame,
+	//			   int NumAnim, int NumFrames[],
 	//			   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble = true, bool Hidden = false,
 	//			   int MatrixId = -1, int Width = 1, int Height = 1, int Angle = 0,
 	//			   bool Mosaic = false);
@@ -69,10 +75,10 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	// Create the sprite
 	object *newObj;
 	if (mkeHero)
-		newObj = (object *) new hero(oam, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color,
+		newObj = (object *) new hero(oam, palIndex, numAnim, numFrames, x, y, 0, size, SpriteColorFormat_16Color,
 		true, false, getMatrix(), 1 << 8, 1 << 8, 23, false);
 	else
-		newObj = new object(oam, palIndex, gfx, numAnim, numFrames, frame, x, y, 0, size, SpriteColorFormat_16Color);
+		newObj = new object(oam, palIndex, numAnim, numFrames, x, y, 0, size, SpriteColorFormat_16Color);
 	
 	newObj->setGravity(gravity);
 
@@ -83,7 +89,7 @@ void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
 	// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
 	//       collision actions to the collisionMatrix.
 	objectsGroups.push_back(colMatrix->addObject(newObj));
-}
+}*/
 
 // The 'main game loop' for this level
 void level::run()

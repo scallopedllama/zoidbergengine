@@ -1,28 +1,21 @@
 #include "object.h"
 
 // object constructor
-object::object(OamState *Oam, 
-	   int PaletteId, 
-	   void ***Gfx, int NumAnim, int *NumFrames, uint16 *Frame,
-	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
+object::object(OamState *Oam,
+	   vector<animation> *anim, 
+	   int X, int Y, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 {
 	// Set all the variables
 	oam = Oam;
-	paletteId = PaletteId;
+	animations = anim;
+	
 	matrixId = MatrixId;
 	
-	frameMem = Frame;
-	gfxMem = Gfx;
-	
-	numAnimations = NumAnim;
-	numFrames = NumFrames;
-	
-	priority = Priority;
+	priority = 2;
 	size = Size;
-	format = ColorFormat;
-	isSizeDouble = IsSizeDouble;
+	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
 	
 	if (MatrixId > 0)
@@ -79,7 +72,7 @@ void object::draw(int spriteId)
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
 	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, size, format,
-		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
+		   frameMem, matrixId, true, hidden, hflip, vflip, mosaic);
 }
 
 // makes this sprite a RotateScale sprite

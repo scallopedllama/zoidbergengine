@@ -65,6 +65,7 @@ using namespace std;
  * @see http://sites.google.com/site/zoidbergengine/documentation/zeg-datafile/zbe-v-1-0
  * @author Joe Balough
  */
+// TODO: Make sure this is up to date
 string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"<zbe>\n"
 	"\t<bin>\n"

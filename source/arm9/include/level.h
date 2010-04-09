@@ -133,14 +133,11 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */	
-	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
+	//void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
 	
 private:
 	// A pointer to the oam table that the level should put its obects on.
 	OamState *oam;
-
-	// A pointer to the assets class to use
-	assets *zbeAssets;
 
 	// A standard library vector containing all of the objects in this level
 	vector<object*> objects;
@@ -175,7 +172,7 @@ private:
 	 */
 	inline void freeMatrix(int index)
 	{
-		matrixAvail[index] =true;
+		matrixAvail[index] = true;
 	}
 
 	/*

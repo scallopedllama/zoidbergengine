@@ -1,6 +1,6 @@
 #include "assets.h"
 
-assets::assets(char *filename, OamState *table)
+assets::assets(char *filename, OamState *table, vector<object*> &objects)
 {
 	// Set variables
 	oam = table;
@@ -15,11 +15,11 @@ assets::assets(char *filename, OamState *table)
 	else
 	{
 		iprintf("Success\n");
-		parseZbe();
+		parseZbe(objects);
 	}
 }
 
-void assets::parseZbe()
+void assets::parseZbe(vector<object*> &objects)
 {
 	// TODO: actually handle the return values on all these file functions.
 	//       They're all ignored so there is not fault tolerance.
@@ -115,6 +115,9 @@ void assets::parseZbe()
 	// Get all the objects
 	for (uint32 i = 0; i < numObjects; i++)
 	{
+		// Weight of this object
+		uint8 weight = load<uint8>(zbeData);
+		
 		// Number of animations
 		uint32 numAnimations = load<uint32>(zbeData);
 		iprintf(" %d: %d animations\n", i, numAnimations);
@@ -133,21 +136,58 @@ void assets::parseZbe()
 			for (uint32 k = 0; k < numFrames; k++)
 			{
 				// Make a new frame (Init the gfx pointer to NULL)
-				frame thisFrame = {0, NULL, 0};
+				frame thisFrame = {0, 0, NULL, 0};
 
 				// The frame id for this animation frame
 				thisFrame.gfxId = load<uint32>(zbeData);
-
+				thisFrame.gfx = gfxStatuses[thisFrame.gfxId];
+				
+				// The palette id for this animation frame
+				thisFrame.palId = load<uint32>(zbeData);
+				
 				// The time to display this frame
 				thisFrame.time = load<uint8>(zbeData);
 
 				// Push on the vector
 				anim.frames.push_back(thisFrame);
 
-				iprintf("   %d for %d blanks\n", thisFrame.gfxId, thisFrame.time);
-			}
+				iprintf("   %d w/ %d for %d blanks\n", thisFrame.gfxId, thisFrame.palId, thisFrame.time);
+			} // this animation
+		} // all animations
+		
+		// make a new objectAsset
+		objectAsset newObjectAsset(anim, weight);
+		objectAssets.push_back(newObjectAsset);
+		
+	} // all objects
+	
+	
+	// Number of levels
+	uint32 numLvls = load<uint32>(zbeData);
+	iprintf("#lvls %d\n", numLvls);
+	
+	// for each level
+	for (uint32 i = 0; i < numLvls; i++)
+	{
+		// number of level objects
+		uint32 numLvlObjs = load<uint32>(zbeData);
+		iprintf(" #objs %d\n", numLvlObjs);
+		
+		// for each level objects
+		for (uint32 j = 0; j < numLvlObjs; j++)
+		{
+			// load relevant datas
+			uint32 objId = load<uint32>(zbeData);
+			uint16 x = load<uint16>(zbeData);
+			uint16 y = load<uint16>(zbeData);
+			
+			// Make a new object
+			// object(OamState *Oam, assets *Assets, vector<animation> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
+			object *newObj = new object(oam, this, &(objectAssets[objId].animations), x, y, false);
+			
+			// Add it to the objects vector
+			objects->push_back(newObj);
 		}
-	}
 }
 
 // Given a width and a height returns an appropriate SpriteSize

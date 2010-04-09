@@ -31,6 +31,7 @@
 
 #include <nds.h>
 #include "vector.h"
+#include "assets.h"
 
 /**
  * Global Variable; screen offsset vector
@@ -45,5 +46,9 @@
  */
 extern vector2D<float> screenOffset;
 
+
+// A pointer to the assets class to use
+// TODO : flesh out this documentation
+extern assets *zbeAssets;
 
 #endif // UTIL_H_INCLUDED

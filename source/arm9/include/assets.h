@@ -48,6 +48,7 @@
 #include <fat.h>
 #include <vector>
 #include "vector.h"
+#include "object.h"
 
 using namespace std;
 
@@ -119,7 +120,8 @@ struct gfxStatus : public assetStatus
 struct frame
 {
 	uint32 gfxId;
-	uint32 *gfx;
+	uint32 palId;
+	gfxStatus *gfxStat;
 	uint8 time;
 };
 
@@ -130,6 +132,26 @@ struct frame
 struct animation
 {
 	vector<frame> frames;
+};
+
+
+/**
+ * objectAsset class. contains the object data from the asset file
+ * @author Joe Balough
+ */
+struct objectAsset
+{
+	objectAsset(vector<animation> anim, uint8 w)
+	{
+		animations = anim;
+		weight = w;
+	}
+	
+	// This object's animations
+	vector<animation> animations;
+	
+	// The weight of this object
+	uint8 weight;
 };
 
 
@@ -147,7 +169,8 @@ public:
 	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */
-	assets(char *filename, OamState *oam);
+	// TODO: update the docs for this
+	assets(char *filename, OamState *oam, vector<object*> &objects);
 
 	/**
 	 * parseZbe function
@@ -157,7 +180,8 @@ public:
 	 *
 	 * @author Joe Balough
 	 */
-	void parseZbe();
+	// TODO: update the docs for this too
+	void parseZbe(vector<object*> &objects);
 
 	/**
 	 * loadGfx function
@@ -239,16 +263,13 @@ private:
 	 * id asset are loaded, their index if loaded, the position in the file, length, size, etc.
 	 * @see assetStatus
 	 */
-	 // Tiles' status
-	 vector<gfxStatus> gfxStatuses;
-	 // Palettes' status
-	 vector<palStatus> palStatuses;
-
-	/**
-	 * These are vectors used by objects.
-	 */
-	// A vector of animations
-	vector<animation> animations;
+	// Tiles' status
+	vector<gfxStatus> gfxStatuses;
+	// Palettes' status
+	vector<palStatus> palStatuses;
+	
+	// All of the objectAssets defined in the datafile
+	vector<objectAsset> objectAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

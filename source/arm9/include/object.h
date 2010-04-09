@@ -66,31 +66,8 @@ public:
 	 * @param OamState *oam
 	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
 	 *
-	 * @param int paletteId
-	 *  The index for the palette that this object should use.
-	 * 
-	 * @param void ***gfx
-	 *  A 3D array representing the gfx for all of the frames of all the animations. Loaded by assets class.
-	 *  gfx[animationId][frameNo] is gfx for frameNo'th frame of animationId'th animation.
-	 * @param int numAnim
-	 *  The number of animations available in the gfx array
-	 * @param int *numFrames
-	 *  An array representing the number of frames in the i'th animation in gfx
-	 * @param uint16 *frame
-	 *  A pointer to the location in Video memory into which the frame's tiles should be copied.
-	 *
 	 * @param int X
 	 * @param int Y
-	 * @param int priority
-	 *  The z-index for this object. Must be 0-8 with 0 being the highest.
-	 * @param spriteColorFormat colorFormat
-	 *  The coloring format that the sprite should use
-	 * @param SpriteSize size
-	 *  The size of this sprite
-	 * @param bool isSizeDouble
-	 *  Defaults to true, whether the sprite should be clipped to fit in its square.
-	 * @param bool hidden
-	 *  Defaults to false, whether the sprite should be visible
 	 *
 	 * @param int matrixId
 	 *  Defaults to -1, the id for the matrix in the OAM that this sprite should use for affine transformations.
@@ -107,12 +84,12 @@ public:
 	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	object(OamState *oam,
-		   int paletteId,
-		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
-		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
-		   int matrixId = -1, int scaleX = 1 << 8, int scaleY = 1 << 8, int angle = 0,
-		   bool mosaic = false);
+	 // TODO: Update the documentation for this
+	object(OamState *Oam, 
+	   vector<animation> *anim, 
+	   int X, int Y, bool Hidden,
+	   int MatrixId, int ScaleX, int ScaleY, int Angle,
+	   bool Mosaic);
 
 	/**
 	 * Object update function
@@ -347,30 +324,24 @@ public:
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
-	vector2D<float> position, velocity, acceleration, gravity, gfxDimensions, gfxTopleft;
+	vector2D<float> position, velocity, acceleration, gravity;
+	
+	// The gfxStatus of the gfx currently being viewed
+	gfxStatus frame;
 
 protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
 	OamState *oam;
+	
+	// Pointer to the assets class that was created in the level class
+	assets *zbeAssets;
+	
+	// Pointer to this object's animations
+	vector<animation> *animations;
 
 	// The current id for the for the affine matrix, and the palette to use in the oam
 	int matrixId;
-	int paletteId;
-
-	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
-	// Should only ever contain one frame of the animation
-	uint16 *frameMem;
-
-	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
-	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]
-	void ***gfxMem;
-
-	// The number of animations available for this object
-	int numAnimations;
-
-	// An array representing the number of frames in the i'th animation
-	int *numFrames;
 
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
 	int priority;
@@ -380,9 +351,6 @@ protected:
 
 	// And its color format
 	SpriteColorFormat format;
-
-	// Whether or not this sprite's bounds are doubled (If true it won't ever be clipped to fit in a square)
-	bool isSizeDouble;
 
 	// Whether or not this sprite is using affine transformations
 	bool isRotateScale;

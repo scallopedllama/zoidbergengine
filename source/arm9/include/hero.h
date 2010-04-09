@@ -57,12 +57,11 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */
-	hero(OamState *oam, 
-		 int paletteId, 
-		 void ***gfx, int numAnim, int numFrames[], uint16 *frame,
-		 int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
-		 int matrixId = -1, int Width = 1, int Height = 1, int angle = 0,
-		 bool mosaic = false);
+	hero(OamState *Oam, 
+	   vector<animation> *anim, 
+	   int X, int Y, bool Hidden,
+	   int MatrixId, int ScaleX, int ScaleY, int Angle,
+	   bool Mosaic);
 	
 	/**
 	 * Implementation of update function
