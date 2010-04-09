@@ -72,17 +72,22 @@ struct assetStatus
 
 	// Loaded from the file?
 	bool loaded;
+};
 
-	/**
-	 * The following Variables are only for palettes
-	 */
+struct palStatus : public assetStatus
+{
+	palStatus() : assetStatus()
+	{}
+	
 	// index
 	uint8 index;
+};
 
-
-	/**
-	 * The following Variables are only for gfx
-	 */
+struct gfxStatus : public assetStatus
+{
+	gfxStatus() : assetStatus()
+	{}
+	
 	// for gfx; video memory offset
 	uint16 *offset;
 
@@ -179,25 +184,23 @@ public:
 	 */
 	inline SpriteSize getSpriteSize(uint32 id)
 	{
-		return gfxStatus[id].size;
+		return gfxStatuses[id].size;
 	}
 
 private:
 	/**
-	 * fread[32|16|8] functions
+	 * fread wrapper; load
 	 *
-	 * the fread[] functions here will read an integer of the specified size off of the
+	 * the load function reads a number of the specified type off of the
 	 * passed input FILE and return it.
 	 *
 	 * @param FILE *input
 	 *   The file from which to read the number
-	 * @return uint[32|16|8]
+	 * @return T
 	 *   The value read from the file
 	 * @author Joe Balough
 	 */
-	uint32 fread32(FILE *input);
-	uint16 fread16(FILE *input);
-	uint8 fread8(FILE *input);
+	template <class T> T load(FILE *input);
 
 	/**
 	 * getSpriteSize function
@@ -217,7 +220,7 @@ private:
 	// The zbe file
 	FILE *zbeData;
 
-	// A pointer to the local oamTable
+	// A pointer to the oamState
 	OamState *oam;
 
 	/**
@@ -226,9 +229,9 @@ private:
 	 * @see assetStatus
 	 */
 	 // Tiles' status
-	 vector<assetStatus> gfxStatus;
+	 vector<gfxStatus> gfxStatuses;
 	 // Palettes' status
-	 vector<assetStatus> palStatus;
+	 vector<palStatus> palStatuses;
 
 	/**
 	 * These are vectors used by objects.
