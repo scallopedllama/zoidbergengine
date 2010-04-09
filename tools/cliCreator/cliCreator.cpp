@@ -30,12 +30,13 @@
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Force TinyXML to use the standard library
 #define TIXML_USE_STL
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <stdarg.h>  // for the ... ability
+#include <stdint.h>  // for the uint[]_t types
+#include <stdarg.h>  // for the ... in functions ability used in debug()
 #include <vector>
 #include <string>
 #include "lib/tinyxml/tinyxml.h"
@@ -46,8 +47,50 @@
  */
 #define ZBE_VERSION 1
 
+
+// Yes, we use the C++ standard library here.
 using namespace std;
 
+/**
+ *    Global Variables
+ */
+
+/**
+ * This string is printed when the user requested help with running the cliCreator.
+ * it describes the XML file structure it expects for proper zbe asset file creation.
+ * This should be kept up-to-date along with the wiki page.
+ *
+ * @see http://sites.google.com/site/zoidbergengine/documentation/zeg-datafile/zbe-v-1-0
+ * @author Joe Balough
+ */
+string xmlDesc = "<?xml version=\"1.0\" ?>\n"
+	"<zbe>\n"
+	"\t<bin>\n"
+	"\t\t<graphics>\n"
+	"\t\t\t<gfx bin=\"filename\" w=\"width\" h=\"height\" top=\"top-offset\" left=\"left-offset\" />\n"
+	"\t\t\t...\n"
+	"\t\t</graphics>\n"
+	"\t\t<palettes>\n"
+	"\t\t\t<palette bin=\"filename\" />\n"
+	"\t\t\t...\n"
+	"\t\t</palettes>\n"
+	"\t</bin>\n"
+	"\t<objects>\n"
+	"\t\t<object weight=\"weight for collision resolution\">\n"
+	"\t\t\t<animations>\n"
+	"\t\t\t\t<animation>\n"
+	"\t\t\t\t\t<frame id=\"gfxId\" time=\"time in blanks\" />\n"
+	"\t\t\t\t\t...\n"
+	"\t\t\t\t</animation>\n"
+	"\t\t\t\t...\n"
+	"\t\t\t</animations>\n"
+	"\t\t</object>\n"
+	"\t\t...\n"
+	"\t</objects>\n"
+	"</zbe>";
+
+// Whether or not verbose debug output should be enabled
+bool verbose = true;
 
 
 // Function Prototypes
@@ -59,6 +102,25 @@ string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
 
 
+
+/**
+ * main function
+ *
+ * Performs essentially all operations in the conversion of an input xml file
+ * to an output zbe binary file.
+ * The very first thing it does is make sure the user knows what they're doing
+ * and takes care of any help output
+ *
+ * Then the program parses the XML file in the order in which it is written and
+ * does corresponding fwrites to the output file.
+ * In the tricky situations where a total number of something is needed in zbe
+ * before the representation of those objects, the file position is saved and a
+ * temporary value of 0 is written. After the total number is known, it seeks
+ * back to that position in the file and writes over the 0 value with the actual
+ * total number.
+ *
+ * @author Joe Balough
+ */
 int main(int argc, char **argv)
 {
 	if(argc < 3)
@@ -68,7 +130,7 @@ int main(int argc, char **argv)
 		if(argv[1] == "h")
 		{
 			fprintf(stderr, "Expects XML file to be in the following form:\n");
-			// TODO: fill this in
+			fprintf(stderr, "%s", xmlDesc.c_str());
 		}
 		return EXIT_FAILURE;
 	}
@@ -506,7 +568,7 @@ uint16_t appendData(FILE *output, string inFile)
 int debug(char* fmt, ...)
 {
 	if(!verbose)
-		return;
+		return 0; // Return that we wrote 0 characters
 	
 	int toReturn = 0;
 	va_list ap;
