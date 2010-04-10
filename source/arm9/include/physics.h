@@ -41,10 +41,31 @@
 
 // NOTE: gravity is to be implemented on a per-object basis (for super trippy stuff).
 
-namespace decapod{
-	bool intersection(object sprite1, object sprite2);
-	bool smallProjectileCollide(const object sprite, const object bullet);
-	void jump(object sprite);
+namespace decapod
+{
+	
+	//bool intersection(object sprite1, object sprite2);
+	
+	/**
+	* @author Dan Tracy
+	* We assume the projectile is small enough to only consider the center point
+	* to be the bound in question.  ie. if the center point hits the bounding box
+	* of the sprite then it collided with it (return true)
+	*/
+	//bool smallProjectileCollide(const object sprite, const object bullet);
+	
+	/**
+	* @author Dan Tracy
+	* @param object sprite 
+	* The sprite that wants to jump.
+	* @param level lvl
+	* The level object, will be used to see if the sprite lands.
+	*
+	* We want the sprite to jump so this will handle and modify the x and
+	* y coordinates then compensate for gravity in the Y direction.  The level
+	* is passed to see if the sprite hits the ground or not.
+	*/
+	//void jump(object sprite);*/
 	bool collide(object *object1, object *object2);
 	bool collisionHorrizontalLine(object *obj1, int yval);
 };

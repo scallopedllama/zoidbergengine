@@ -15,7 +15,7 @@ using namespace decapod;
 *       +-----------+  --- (x - h/2)
 *
 */
-
+/*
 bool decapod :: intersection( object sprite1,  object sprite2)
 {
 	// if its the same object then ignore 
@@ -53,12 +53,7 @@ bool decapod :: intersection( object sprite1,  object sprite2)
 }
 
 bool decapod :: smallProjectileCollide(const object sprite, const object bullet)
-{	/**
-	* @author Dan Tracy
-	* We assume the projectile is small enough to only consider the center point
-	* to be the bound in question.  ie. if the center point hits the bounding box
-	* of the sprite then it collided with it (return true)
-	*/
+{
 	int top, bottom, left, right;
 	int height = sprite.getColHeight();
 	int width  = sprite.getColWidth();
@@ -78,17 +73,7 @@ bool decapod :: smallProjectileCollide(const object sprite, const object bullet)
 }
 
 void decapod :: jump(object sprite)
-{	/**
-	* @author Dan Tracy
-	* @param object sprite 
-	* The sprite that wants to jump.
-	* @param level lvl
-	* The level object, will be used to see if the sprite lands.
-	*
-	* We want the sprite to jump so this will handle and modify the x and
-	* y coordinates then compensate for gravity in the Y direction.  The level
-	* is passed to see if the sprite hits the ground or not.
-	*/
+{
 	int xPos  = sprite.getXcoord();
 	int yPos  = sprite.getYcoord();
 	int yVelo = sprite.getVelocity().y;
@@ -98,7 +83,7 @@ void decapod :: jump(object sprite)
 	int gravity = 0;
 	sprite.setVelocity( vector2D<float>(x, (yVelo - gravity) ) );
 	sprite.setPosition( vector2D<float>(x,y) );	
-}
+}*/
 
 bool decapod :: collide(object *object1, object *object2) 
 {
@@ -108,14 +93,16 @@ bool decapod :: collide(object *object1, object *object2)
 	float top1, top2;
 	float bottom1, bottom2;
 	
+	// TODO: this does not take into account the image's topleft value.
+	
 	left1 = object1->position.x;
 	left2 = object2->position.x;
-	right1 = left1 + object1->gfxDimensions.x;
-	right2 = left2 + object2->gfxDimensions.x;
+	right1 = left1 + object1->frame->dimensions.x;
+	right2 = left2 + object2->frame->dimensions.x;
 	top1 = object1->position.y;
 	top2 = object2->position.y;
-	bottom1 = top1 + object1->gfxDimensions.y;
-	bottom2 = top2 + object2->gfxDimensions.y;
+	bottom1 = top1 + object1->frame->dimensions.y;
+	bottom2 = top2 + object2->frame->dimensions.y;
 	
 	if (bottom1 < top2) return(false);
 	if (top1 > bottom2) return(false);
