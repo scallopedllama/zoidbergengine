@@ -107,9 +107,8 @@ struct gfxAsset : public assetStatus
  */
 struct frameAsset
 {
-	uint32 gfxId;
-	uint32 palId;
-	gfxAsset *gfxStat;
+	gfxAsset *gfx;
+	paletteAsset *pal;
 	uint8 time;
 };
 
