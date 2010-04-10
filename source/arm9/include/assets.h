@@ -74,13 +74,13 @@ struct assetStatus
 };
 
 /**
- * palStatus struct, inherits assetStatus and includes an additional uint8 index
+ * paletteAsset struct, inherits assetStatus and includes an additional uint8 index
  *
  * @author Joe Balough
  */
-struct palStatus : public assetStatus
+struct paletteAsset : public assetStatus
 {
-	palStatus() : assetStatus()
+	paletteAsset() : assetStatus()
 	{}
 	
 	// index
@@ -94,9 +94,9 @@ struct palStatus : public assetStatus
  *
  * @author Joe Balough
  */
-struct gfxStatus : public assetStatus
+struct gfxAsset : public assetStatus
 {
-	gfxStatus() : assetStatus()
+	gfxAsset() : assetStatus()
 	{}
 	
 	// for gfx; video memory offset
@@ -112,25 +112,25 @@ struct gfxStatus : public assetStatus
 
 
 /**
- * frame struct. Used in keeping track of animations. Has a gfx id, time it should be on screen
+ * frameAsset struct. Used in keeping track of animations. Has a gfx id, time it should be on screen
  * and a pointer to the gfx in main memory (or NULL if not loaded)
  * @author Joe Balough
  */
-struct frame
+struct frameAsset
 {
 	uint32 gfxId;
 	uint32 palId;
-	gfxStatus *gfxStat;
+	gfxAsset *gfxStat;
 	uint8 time;
 };
 
 /**
- * animation struct. Used to represent an animation. Is just a wrapper for a vector of frames.
+ * animationAsset struct. Used to represent an animation. Is just a wrapper for a vector of frameAssets.
  * @author Joe Balough
  */
-struct animation
+struct animationAsset
 {
-	vector<frame> frames;
+	vector<frameAsset> frames;
 };
 
 
@@ -140,14 +140,14 @@ struct animation
  */
 struct objectAsset
 {
-	objectAsset(vector<animation> anim, uint8 w)
+	objectAsset(vector<animationAsset> anim, uint8 w)
 	{
 		animations = anim;
 		weight = w;
 	}
 	
-	// This object's animations
-	vector<animation> animations;
+	// This object's animationAssets
+	vector<animationAsset> animations;
 	
 	// The weight of this object
 	uint8 weight;
@@ -218,7 +218,7 @@ public:
 	 */
 	inline SpriteSize getSpriteSize(uint32 id)
 	{
-		return gfxStatuses[id].size;
+		return gfxAssets[id].size;
 	}
 
 private:
@@ -263,9 +263,9 @@ private:
 	 * @see assetStatus
 	 */
 	// Tiles' status
-	vector<gfxStatus> gfxStatuses;
+	vector<gfxAsset> gfxAssets;
 	// Palettes' status
-	vector<palStatus> palStatuses;
+	vector<paletteAsset> paletteAssets;
 	
 	// All of the objectAssets defined in the datafile
 	vector<objectAsset> objectAssets;

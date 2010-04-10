@@ -40,7 +40,7 @@ void assets::parseZbe()
 	for (uint32 i = 0; i < numTiles; i++)
 	{
 		// Make a new assetStatus for the vector
-		gfxStatus newAsset;
+		gfxAsset newAsset;
 
 		// The very first byte of data in gfx tiles is its width, second is height
 		uint8 width = load<uint8>(zbeData);
@@ -71,7 +71,7 @@ void assets::parseZbe()
 		newAsset.offset = NULL;
 
 		// Push this asset on the array
-		gfxStatuses.push_back(newAsset);
+		gfxAssets.push_back(newAsset);
 
 		// Seek past this object
 		fseek(zbeData, newAsset.length, SEEK_CUR);
@@ -85,7 +85,7 @@ void assets::parseZbe()
 	for (uint32 i = 0; i < numPals; i++)
 	{
 		// Make a new status for this palette
-		palStatus newAsset;
+		paletteAsset newAsset;
 
 		// Get the length of this palette
 		newAsset.length = load<uint16>(zbeData);
@@ -102,7 +102,7 @@ void assets::parseZbe()
 		newAsset.loaded = false;
 
 		// Push the new asset on to the array
-		palStatuses.push_back(newAsset);
+		paletteAssets.push_back(newAsset);
 
 		// Seek past this object
 		fseek(zbeData, newAsset.length, SEEK_CUR);
@@ -129,18 +129,18 @@ void assets::parseZbe()
 			uint16 numFrames = load<uint16>(zbeData);
 			iprintf("  %d has %d frames\n", j, numFrames);
 
-			// Make a new animation
-			animation anim;
+			// Make a new animationAsset
+			animationAsset anim;
 
 			// Get all the frames
 			for (uint32 k = 0; k < numFrames; k++)
 			{
-				// Make a new frame (Init the gfx pointer to NULL)
-				frame thisFrame = {0, 0, NULL, 0};
+				// Make a new frameAsset (Init the gfx pointer to NULL)
+				frameAsset thisFrame = {0, 0, NULL, 0};
 
 				// The frame id for this animation frame
 				thisFrame.gfxId = load<uint32>(zbeData);
-				thisFrame.gfx = gfxStatuses[thisFrame.gfxId];
+				thisFrame.gfx = gfxAssets[thisFrame.gfxId];
 				
 				// The palette id for this animation frame
 				thisFrame.palId = load<uint32>(zbeData);
@@ -226,7 +226,7 @@ level* assets::loadLevel(uint32 id)
 		uint16 y = load<uint16>(zbeData);
 		
 		// Make a new object
-		// object(OamState *Oam, assets *Assets, vector<animation> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
+		// object(OamState *Oam, assets *Assets, vector<animationAsset> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
 		object *newObj = new object(oam, this, &(objectAssets[objId].animations), x, y, false);
 		
 		// Add it to the objects vector
@@ -338,27 +338,27 @@ uint16 *assets::loadGfx(uint32 id)
 	iprintf("gfx[%d] ", id);
 
 	// See if it's already loaded
-	if (gfxStatuses[id].loaded)
+	if (gfxAssets[id].loaded)
 	{
 		// TODO: this doesn't seem to work.
-		iprintf("hit->%x\n", (unsigned int) gfxStatuses[id].offset);
+		iprintf("hit->%x\n", (unsigned int) gfxAssets[id].offset);
 
 		// Already loaded so return the index
-		return gfxStatuses[id].offset;
+		return gfxAssets[id].offset;
 	}
 
 	iprintf("miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &gfxStatuses[id].position);
+	fsetpos(zbeData, &gfxAssets[id].position);
 
 	// Request space to load this graphic
-	uint16 *mem = oamAllocateGfx(oam, gfxStatuses[id].size, SpriteColorFormat_16Color);
-	gfxStatuses[id].offset = mem;
+	uint16 *mem = oamAllocateGfx(oam, gfxAssets[id].size, SpriteColorFormat_16Color);
+	gfxAssets[id].offset = mem;
 
 	// Start copying
-	uint16 length = gfxStatuses[id].length;
+	uint16 length = gfxAssets[id].length;
 	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
 	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
@@ -382,7 +382,7 @@ uint16 *assets::loadGfx(uint32 id)
 	// This is commented out right now because the dma copy up there is asynch.
 	//free(data);
 
-	iprintf("%x\n", (unsigned int) gfxStatuses[id].offset);
+	iprintf("%x\n", (unsigned int) gfxAssets[id].offset);
 
 	return mem;
 }
@@ -393,27 +393,27 @@ uint8 assets::loadPalette(u32 id)
 	iprintf("palette[%d] requested\n", id);
 
 	// See if it's already loaded
-	if (palStatuses[id].loaded)
+	if (paletteAssets[id].loaded)
 	{
 		// TODO: this doesn't seem to work.
-		iprintf(" cache hit->%d\n", palStatuses[id].index);
+		iprintf(" cache hit->%d\n", paletteAssets[id].index);
 
 		// Already loaded so set the index and return
-		return palStatuses[id].index;
+		return paletteAssets[id].index;
 	}
 
 	iprintf(" cache miss\n");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &palStatuses[id].position);
+	fsetpos(zbeData, &paletteAssets[id].position);
 
 	// Set some variables
 	static int curIndex = 0;
 	static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
-	uint16 length = palStatuses[id].length;
+	uint16 length = paletteAssets[id].length;
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
@@ -440,8 +440,8 @@ uint8 assets::loadPalette(u32 id)
 	//free(data);
 
 	// Update some variables
-	palStatuses[id].loaded = true;
-	palStatuses[id].index = curIndex;
+	paletteAssets[id].loaded = true;
+	paletteAssets[id].index = curIndex;
 	iprintf(" loaded->%d\n", curIndex);
 
 	// Update the index for the next call
