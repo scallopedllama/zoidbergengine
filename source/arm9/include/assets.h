@@ -44,6 +44,8 @@
 #define ASSETS_H_INCLUDED
 
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <nds.h>
 #include <fat.h>
 #include <vector>

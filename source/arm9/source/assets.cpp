@@ -46,24 +46,24 @@ void assets::parseZbe()
 		
 		// Set its spriteSize
 		newAsset.size = getSpriteSize(width, height);
-
+		
 		// Get the length of this gfx tiles
 		newAsset.length = load<uint16>(zbeData);
-		iprintf(" len %d\n", newAsset.length);
-
+		iprintf(" len %d\n, ", newAsset.length);
+		
 		// Add the current position in the file to the vector
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset.position = curPos;
-
+		
 		// Set that it is not loaded, assign a value to the union
 		// to get it using the proper value
 		newAsset.loaded = false;
 		newAsset.offset = NULL;
-
+		
 		// Push this asset on the array
 		gfxAssets.push_back(newAsset);
-
+		
 		// Seek past this object
 		fseek(zbeData, newAsset.length, SEEK_CUR);
 	}
@@ -239,6 +239,9 @@ levelAsset *assets::loadLevel(uint32 id)
 // Loads tiles with id into memory
 uint16 *assets::loadGfx(gfxAsset *gfx)
 {
+	if (!gfx) 
+		return 0;
+	
 	iprintf("gfx load, ");
 
 	// See if it's already loaded
@@ -250,13 +253,23 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 		// Already loaded so return the index
 		return gfx->offset;
 	}
-
+	
+	if(ferror(zbeData))
+	{
+		iprintf("\n data error: %s\n", strerror(errno));
+		while(true);
+	}
+	
 	iprintf("miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &(gfx->position));
-
+	if (fsetpos(zbeData, &(gfx->position)))
+	{
+		iprintf("\n seek error: %s\n", strerror(errno));
+		while(true);
+	}
+	
 	// Request space to load this graphic
 	uint16 *mem = oamAllocateGfx(oam, gfx->size, SpriteColorFormat_16Color);
 	gfx->offset = mem;
@@ -274,6 +287,7 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 
 	iprintf("%x\n", (unsigned int) gfx->offset);
 
+while(true);
 	return mem;
 }
 
@@ -309,26 +323,9 @@ uint8 assets::loadPalette(paletteAsset *pal)
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
 
-	// Find the next free DMA channel and use it to copy the palette into video memory
-	// It'll try channel 3 first because everybody seems to use that for this.
-	for (int i = 3; i <= 3; i++)
-	{
-		if (!dmaBusy(i))
-		{
-			DC_FlushRange(data, length);
-			dmaCopyHalfWordsAsynch(i, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
-			iprintf(" Copied using DMA bus %d\n", i);
-			break;
-		}
-		else
-			iprintf(" dma bus %d busy\n", i);
-
-		// If it made it here, all channels are busy
-		if (i == 3)
-			i = -1;
-	}
-	// This is commented out right now because the dma copy up there is asynch.
-	//free(data);
+	DC_FlushRange(data, length);
+	dmaCopyHalfWordsAsynch(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
+	free(data);
 
 	// Update some variables
 	pal->loaded = true;
@@ -346,7 +343,16 @@ uint8 assets::loadPalette(paletteAsset *pal)
 template <class T> T assets::load(FILE *input)
 {
 	T variable;
-	fread(&variable, sizeof(T), 1, input);
+	if(fread(&variable, sizeof(T), 1, input) < 1)
+	{
+		iprintf("fread error\n");
+		while (true);
+	}
+	if(ferror(input))
+	{
+		iprintf("file error: %s\n", strerror(errno));
+		while (true);
+	}
 	return variable;
 }
 
