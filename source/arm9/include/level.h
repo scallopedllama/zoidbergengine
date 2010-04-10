@@ -44,11 +44,19 @@
 
 #include <nds.h>
 #include <vector>
-#include <time.h>   // used in FPS calculation
-#include "object.h" // addSprite function needs this
-#include "hero.h"   // addSprite can add a hero to the mix
-#include "collisionmatrix.h"
+#include <time.h>  // used in FPS calculation
+
+// Level objects
+#include "object.h"
+#include "hero.h"
+
+// For Collision detection
 #include "physics.h"
+#include "collisionmatrix.h"
+
+// For zbeAssets
+#include "assets.h"
+#include "assettypes.h"
 #include "util.h"
 
 
@@ -76,7 +84,7 @@ public:
 	 *
 	 * @author Joe Balough
 	 */
-	level();
+	level(levelAsset *metadata, OamState *oam);
 
 	/**
 	 * level deconstructor
