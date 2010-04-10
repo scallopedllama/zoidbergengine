@@ -63,7 +63,7 @@ public:
 	/**
 	 * @param char *filename
 	 *   The zbe file to use for this game
-	 * @param OAMTable *oam
+	 * @param OamState *oam
 	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */

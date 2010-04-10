@@ -174,7 +174,7 @@ void assets::parseZbe()
 		
 		/**
 		 *   The rest of the level stuff is loaded but forgotten, It should all probably
-		 *   replaced with a seek past all this stuff but for now this works, just slowly.
+		 *   replaced with a seek past all this stuff but for now this works, just a little slowly.
 		 */
 		
 		// number of level objects
