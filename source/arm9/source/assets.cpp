@@ -154,17 +154,6 @@ void assets::parseZbe()
 	} // all objects
 	
 	
-	
-	/**
-	 *
-	 *
-	 *        NOTE: assets handle and parse the file for the parts that DEFINE
-	 *              asset IDs. Anything that ONLY REFERENCES asset IDs should
-	 *              be loaded in their respective class (e.g. cine, level, etc.)
-	 *
-	 *
-	 */
-	
 	// Number of levels
 	uint32 numLvls = load<uint32>(zbeData);
 	iprintf("#lvls %d\n", numLvls);
@@ -172,10 +161,16 @@ void assets::parseZbe()
 	// for each level
 	for (uint32 i = 0; i < numLvls; i++)
 	{
-		// Push the current file position on the levelPositions vector
+		// Make a new levelAsset
+		levelAsset newAsset();
+		
+		// Set the location variable
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
-		levelPositions.push_back(curPos);
+		newAsset.position = curPos;
+		
+		// Push this asset onto the levelAssets vector
+		levelAssets.push_back(newAsset);
 		
 		/**
 		 *   The rest of the level stuff is loaded but forgotten, It should all probably
@@ -196,14 +191,26 @@ void assets::parseZbe()
 	}
 }
 
-/*
-level* assets::loadLevel(uint32 id)
+
+// Load and return a level's metadata
+levelAsset *assets::loadLevel(uint32 id)
 {
+	// keep track of the last one opened
+	static levelAsset *last = NULL;
+	
+	// Clear out the last one if this isn't the first time
+	if (last)
+	{
+		last->clear();
+		last = NULL;
+	}
+	
+	// Update last
+	last = &(levelAssets[id]);
+	
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &levelPositions);
-	
-	// Make a new level
-	
+	fsetpos(zbeData, &(levelAssets[id].position));
+	iprintf("lvl %d requested\n", id);
 	
 	// number of level objects
 	uint32 numLvlObjs = load<uint32>(zbeData);
@@ -217,14 +224,14 @@ level* assets::loadLevel(uint32 id)
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
 		
-		// Make a new object
-		// object(OamState *Oam, assets *Assets, vector<animationAsset> *anim, int X, int Y, bool Hidden, int MatrixId, int ScaleX, int ScaleY, int Angle, bool Mosaic)
-		object *newObj = new object(oam, this, &(objectAssets[objId].animations), x, y, false);
-		
-		// Add it to the objects vector
-		objects->push_back(newObj);
+		// Make a new levelObjectAsset and add it to the vector
+		levelObjectAsset lvlObj(vector2D<float>(float(x), float(y)), objectAssets[objId]);
+		levelAssets[id].objects.push_back(lvlObj);
 	}
-}*/
+	
+	// Return that levelAsset
+	return last;
+}
 
 // Given a width and a height returns an appropriate SpriteSize
 SpriteSize assets::getSpriteSize(uint8 width, uint8 height)

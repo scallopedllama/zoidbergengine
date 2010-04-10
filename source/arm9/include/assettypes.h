@@ -155,12 +155,48 @@ struct levelAsset : assetStatus
 	levelAsset() : assetStatus()
 	{}
 	
+	// TODO: Every time this struct is updated, this clear() function needs to be
+	//       updated too.
+	// Clears out all the pointer vectors and resets loaded
+	clear()
+	{
+		// Clear out vectors
+		objects.clear();
+		
+		// Reset loaded variable
+		loaded = false;
+	}
+	
 	// all the objects in this level
-	vector<objectAsset *> objects;
+	vector<levelObjectAsset> objects;
 	
 	// to add: level geometry, villians, etc.
 	
 };
+
+
+/**
+ * levelObjectAsset struct. A simple wrapper for the objectAsset that is used
+ * by levelAsset to manage all the objects in a level.
+ * Contains a pointer to the objectAsset that generally describes this object
+ * and its coordinates on screen.
+ * @author Joe Balough
+ */
+struct levelObjectAsset
+{
+	// Construcotr
+	levelObjectAsset(vector2D<float> pos, objectAsset *o)
+	{
+		position = pos;
+		obj = o;
+	}
+	
+	// coordinates on screen
+	vector2D<float> position;
+	
+	// pointer to general objectAsset
+	objectAsset *obj;
+}
  
 
 #endif

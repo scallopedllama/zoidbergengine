@@ -110,6 +110,21 @@ public:
 	uint8 loadPalette(u32 id);
 
 	/**
+	 * loadLevel function
+	 *
+	 * Used by the level class to get the metadata for a level. This function will free up any
+	 * memory used by the last loaded levelAsset object then parse the zbeData file to load up
+	 * the relevant vectors and return the levelAsset object.
+	 *
+	 * @param uint32 id
+	 *   id for the level to load
+	 * @return levelAsset*
+	 *   A pointer to the level's metadata to be used by the level class to load up objects and the like
+	 * @author Joe Balough
+	 */
+	levelAsset *loadLevel(uint32 id);
+
+	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
 	 * @param uint32 id
 	 *  Id for the gfx whose size is desired
