@@ -31,7 +31,6 @@
 #include <stdio.h>
 #include <nds.h>
 #include <fat.h>
-#include <vector>
 #include "vector.h"
 
 using namespace std;
@@ -112,15 +111,6 @@ struct frameAsset
 	uint8 time;
 };
 
-/**
- * animationAsset struct. Used to represent an animation. Is just a wrapper for a vector of frameAssets.
- * @author Joe Balough
- */
-struct animationAsset
-{
-	vector<frameAsset> frames;
-};
-
 
 /**
  * objectAsset struct. contains the object data from the asset file
@@ -128,14 +118,28 @@ struct animationAsset
  */
 struct objectAsset
 {
-	objectAsset(vector<animationAsset> anim, uint8 w)
+	objectAsset(uint8 w)
 	{
-		animations = anim;
 		weight = w;
 	}
 	
-	// This object's animationAssets
-	vector<animationAsset> animations;
+	~objectAsset()
+	{
+		for (int i = 0; animations[i] != NULL ; i++)
+		{
+			for(int j = 0; animations[i][j] != NULL; j++)
+			{
+				delete animations[i][j];
+			}
+			delete animations[i];
+		}
+		delete animations;
+	}
+	
+	// 2D array of pointers to frameAssets to represent all the animations
+	// Accessable like: animations[aniId][frameId]
+	// Note: null terminated!
+	frameAsset ***animations;
 	
 	// The weight of this object
 	uint8 weight;
@@ -184,14 +188,19 @@ struct levelAsset : assetStatus
 	void clear()
 	{
 		// Clear out vectors
-		objects.clear();
+		for (int i = 0; objects[i] != NULL; i++)
+		{
+			delete objects[i];
+		}
+		delete objects;
 		
 		// Reset loaded variable
 		loaded = false;
 	}
 	
 	// all the objects in this level
-	vector<levelObjectAsset> objects;
+	// Note: this array is null temrinated!
+	levelObjectAsset **objects;
 	
 	// to add: level geometry, villians, etc.
 	

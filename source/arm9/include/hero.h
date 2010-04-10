@@ -35,6 +35,7 @@
 #include <math.h>
 #include "object.h"
 #include "level.h"
+#include "assettypes.h"
 
 /**
  * hero class
@@ -58,10 +59,16 @@ public:
 	 * @author Joe Balough
 	 */
 	hero(OamState *Oam, 
-	   vector<animationAsset> *animations, 
-	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
-	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
-	   bool Mosaic = false);
+		frameAsset ***animations, 
+		vector2D<float> position, vector2D<float> gravity, bool hidden = false,
+		int matrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
+		bool Mosaic = false) 
+	: object(Oam,
+		 animations, 
+		 position, gravity, hidden,
+		 matrixId, ScaleX, ScaleY, Angle,
+		 Mosaic)
+	{}
 	
 	/**
 	 * Implementation of update function

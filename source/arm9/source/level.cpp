@@ -21,13 +21,13 @@ level::level(levelAsset *metadata, OamState *o)
 	
 	// Parse the levelAssets metadata
 	// Load up all the objects
-	for (unsigned int i = 0; i < metadata->objects.size(); i++)
+	for (unsigned int i = 0; metadata->objects[i] != NULL; i++)
 	{
 		// This is the objectAsset for this levelObjectAsset
-		objectAsset *obj = metadata->objects[i].obj;
+		objectAsset *obj = metadata->objects[i]->obj;
 		
 		// Make the new object
-		object *newObj = new object(oam, &(obj->animations), metadata->objects[1].position, gravity);
+		object *newObj = new object(oam, obj->animations, metadata->objects[1]->position, gravity);
 		
 		// Add the new object to the list of objects
 		objects.push_back(newObj);

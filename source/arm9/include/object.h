@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include "vector.h"
 #include "util.h"
+#include "assettypes.h"
 
 /**
  * object class
@@ -86,7 +87,7 @@ public:
 	 */
 	 // TODO: Update the documentation for this
 	object(OamState *Oam, 
-	   vector<animationAsset> *animations, 
+	   frameAsset ***animations, 
 	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
@@ -287,7 +288,7 @@ protected:
 	assets *zbeAssets;
 	
 	// Pointer to this object's animations
-	vector<animationAsset> *animations;
+	frameAsset ***animations;
 
 	// The current id for the for the affine matrix, and the palette to use in the oam
 	int matrixId;

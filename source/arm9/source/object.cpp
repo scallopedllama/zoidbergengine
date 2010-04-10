@@ -2,7 +2,7 @@
 
 // object constructor
 object::object(OamState *Oam,
-	   vector<animationAsset> *anim, 
+	   frameAsset ***anim, 
 	   vector2D<float> pos, vector2D<float> grav, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
@@ -66,8 +66,8 @@ bool object::update(touchPosition *touch)
 void object::draw(int spriteId)
 {
 	// Load up the gfx
-	frame = (*animations)[0].frames[0].gfx;
-	paletteAsset *pal = (*animations)[0].frames[0].pal;
+	frame = animations[0][0]->gfx;
+	paletteAsset *pal = animations[0][0]->pal;
 	
 	uint16 *frameMem = zbeAssets->loadGfx(frame);
 	uint8 paletteId = zbeAssets->loadPalette(pal);

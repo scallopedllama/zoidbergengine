@@ -134,7 +134,7 @@ public:
 	 */
 	inline SpriteSize getSpriteSize(uint32 id)
 	{
-		return gfxAssets[id].size;
+		return gfxAssets[id]->size;
 	}
 
 private:
@@ -179,15 +179,15 @@ private:
 	 * @see assetStatus
 	 */
 	// Tiles' status
-	vector<gfxAsset> gfxAssets;
+	vector<gfxAsset*> gfxAssets;
 	// Palettes' status
-	vector<paletteAsset> paletteAssets;
+	vector<paletteAsset*> paletteAssets;
 	
 	// All of the objectAssets defined in the datafile
-	vector<objectAsset> objectAssets;
+	vector<objectAsset*> objectAssets;
 	
 	// Vector of levelAssets
-	vector<levelAsset> levelAssets;
+	vector<levelAsset*> levelAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

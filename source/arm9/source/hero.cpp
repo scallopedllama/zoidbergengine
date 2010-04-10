@@ -1,20 +1,5 @@
 #include "hero.h"
 
-#include<stdio.h>
-// hero constructor, just passes things along to the object constructor
-hero::hero(OamState *Oam,
-	   vector<animationAsset> *anim, 
-	   vector2D<float> position, vector2D<float> gravity, bool hidden,
-	   int matrixId, int ScaleX, int ScaleY, int Angle,
-	   bool Mosaic)
-: object(Oam,
-		 anim, 
-		 position, gravity, hidden,
-		 matrixId, ScaleX, ScaleY, Angle,
-		 Mosaic)
-{
-
-}
 
 // hero update function, checks for keys pressed and acts accordingly
 bool hero::update(touchPosition *touch)
