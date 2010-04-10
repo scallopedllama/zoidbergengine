@@ -21,7 +21,7 @@ level::level(levelAsset *metadata, OamState *o)
 	
 	// Parse the levelAssets metadata
 	// Load up all the objects
-	for (int i = 0; i < metadata->objects.size(); i++)
+	for (unsigned int i = 0; i < metadata->objects.size(); i++)
 	{
 		// This is the objectAsset for this levelObjectAsset
 		objectAsset *obj = metadata->objects[i].obj;
@@ -126,7 +126,7 @@ void level::run()
 			uint32 fps = frame / diff;
 			// ansi escape sequence to set print co-ordinates
 			// /x1b[line;columnH
-			iprintf("\x1b[0;24HFPS: %ld\n", fps);
+			iprintf("\x1b[0;24HFPS: %ld\n", (long int) fps);
 		}
 		
 		swiWaitForVBlank();
@@ -158,7 +158,7 @@ void level::update()
 	for (unsigned int m = 0; m < moved.size(); m++)
 	{
 		// The index of the object that moved
-		int i = moved[m];
+		unsigned int i = moved[m];
 		
 		// Pull this object out of its old objGroup and reinsert it.
 		objectsGroups[i]->remove(objects[i]);
