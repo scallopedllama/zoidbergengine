@@ -237,88 +237,74 @@ levelAsset *assets::loadLevel(uint32 id)
 
 
 // Loads tiles with id into memory
-uint16 *assets::loadGfx(uint32 id)
+uint16 *assets::loadGfx(gfxAsset *gfx)
 {
-	iprintf("gfx[%d] ", id);
+	iprintf("gfx load, ");
 
 	// See if it's already loaded
-	if (gfxAssets[id].loaded)
+	if (gfx->loaded)
 	{
 		// TODO: this doesn't seem to work.
-		iprintf("hit->%x\n", (unsigned int) gfxAssets[id].offset);
+		iprintf("hit->%x\n", (unsigned int) gfx->offset);
 
 		// Already loaded so return the index
-		return gfxAssets[id].offset;
+		return gfx->offset;
 	}
 
 	iprintf("miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &gfxAssets[id].position);
+	fsetpos(zbeData, &(gfx->position));
 
 	// Request space to load this graphic
-	uint16 *mem = oamAllocateGfx(oam, gfxAssets[id].size, SpriteColorFormat_16Color);
-	gfxAssets[id].offset = mem;
+	uint16 *mem = oamAllocateGfx(oam, gfx->size, SpriteColorFormat_16Color);
+	gfx->offset = mem;
 
 	// Start copying
-	uint16 length = gfxAssets[id].length;
+	uint16 length = gfx->length;
 	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
 	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
+	
+	DC_FlushRange(data, length);
+	dmaCopyHalfWords(3, data, mem, length);
 
-	// Find the next free DMA channel and use it to copy the gfx into video memory
-	// It'll try channel 3 first because everybody seems to use that for this.
-	for (int i = 3; i <= 3; i++)
-	{
-		if (!dmaBusy(i))
-		{
-			DC_FlushRange(data, length);
-			dmaCopyHalfWordsAsynch(i, data, mem, length);
-			iprintf(" -(%d)-> ", i);
-			break;
-		}
+	free(data);
 
-		// If it made it here, all channels are busy
-		if (i == 3)
-			i = -1;
-	}
-	// This is commented out right now because the dma copy up there is asynch.
-	//free(data);
-
-	iprintf("%x\n", (unsigned int) gfxAssets[id].offset);
+	iprintf("%x\n", (unsigned int) gfx->offset);
 
 	return mem;
 }
 
 
 // Loads palette with id into memory
-uint8 assets::loadPalette(u32 id)
+uint8 assets::loadPalette(paletteAsset *pal)
 {
-	iprintf("palette[%d] requested\n", id);
+	iprintf("palette load, ");
 
 	// See if it's already loaded
-	if (paletteAssets[id].loaded)
+	if (pal->loaded)
 	{
 		// TODO: this doesn't seem to work.
-		iprintf(" cache hit->%d\n", paletteAssets[id].index);
+		iprintf(" cache hit->%d\n", pal->index);
 
 		// Already loaded so set the index and return
-		return paletteAssets[id].index;
+		return pal->index;
 	}
 
 	iprintf(" cache miss\n");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &paletteAssets[id].position);
+	fsetpos(zbeData, &(pal->position));
 
 	// Set some variables
 	static int curIndex = 0;
 	static const int COLORS_PER_PALETTE = 16;
 
 	// Start copying
-	uint16 length = paletteAssets[id].length;
+	uint16 length = pal->length;
 	void *data = malloc(length * sizeof(u8));
 	if (fread(data, sizeof(u8), length, zbeData) < length)
 		iprintf(" data load error\n");
@@ -345,8 +331,8 @@ uint8 assets::loadPalette(u32 id)
 	//free(data);
 
 	// Update some variables
-	paletteAssets[id].loaded = true;
-	paletteAssets[id].index = curIndex;
+	pal->loaded = true;
+	pal->index = curIndex;
 	iprintf(" loaded->%d\n", curIndex);
 
 	// Update the index for the next call

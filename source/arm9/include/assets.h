@@ -87,13 +87,13 @@ public:
 	 * Loads the requested id of tiles into memory (if not already loaded) and sets tilesIndex
 	 * to the proper index to locate the tiles.
 	 *
-	 * @param int id
-	 *   The unique identifier for the asset
-	 * @param u16 &tilesIndex
-	 *   Passed by reference. Will be set to the index of these tiles
+	 * @param gfxAsset *gfx
+	 *   the gfxAsset to load
+	 * @return uint16 pointer
+	 *   a pointer to the location in video memory into which the gfx were loaded
 	 * @author Joe Balough
 	 */
-	uint16 *loadGfx(uint32 id);
+	uint16 *loadGfx(gfxAsset *gfx);
 
 	/**
 	 * loadPalette function
@@ -101,13 +101,13 @@ public:
 	 * Loads the requested id of palette into memory (if not already loaded) and sets palIndex
 	 * to the proper index to locate the palette.
 	 *
-	 * @param int id
-	 *   The unique identifier for the asset
-	 * @param u8 &palIndex
-	 *   Passed by reference. Will be set to the index of this palette
+	 * @param palAsset *pal
+	 *   A pointer to the palAsset of the palette to load
+	 * @return uint8
+	 *   The index of the loaded palette
 	 * @author Joe Balough
 	 */
-	uint8 loadPalette(u32 id);
+	uint8 loadPalette(paletteAsset *pal);
 
 	/**
 	 * loadLevel function
