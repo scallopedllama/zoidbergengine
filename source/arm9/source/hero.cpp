@@ -4,12 +4,12 @@
 // hero constructor, just passes things along to the object constructor
 hero::hero(OamState *Oam,
 	   vector<animationAsset> *anim, 
-	   vector2D<float> position, vector2D<float> gravity, bool Hidden,
-	   int MatrixId, int ScaleX, int ScaleY, int Angle,
+	   vector2D<float> position, vector2D<float> gravity, bool hidden,
+	   int matrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 : object(Oam,
 		 anim, 
-		 position, graivty, hidden,
+		 position, gravity, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
 {
