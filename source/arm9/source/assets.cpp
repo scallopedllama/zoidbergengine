@@ -98,11 +98,11 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset.length, SEEK_CUR);
 	}
-
+	
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
 	iprintf("#objs %d\n", numObjects);
-
+	
 	// Get all the objects
 	for (uint32 i = 0; i < numObjects; i++)
 	{
@@ -122,16 +122,16 @@ void assets::parseZbe()
 			// Get the number of frames for this animation
 			uint16 numFrames = load<uint16>(zbeData);
 			iprintf("  %d has %d frames\n", j, numFrames);
-
+			
 			// Make a new animationAsset
 			animationAsset anim;
-
+			
 			// Get all the frames
 			for (uint32 k = 0; k < numFrames; k++)
 			{
 				// Make a new frameAsset (Init the gfx pointer to NULL)
 				frameAsset thisFrame = {NULL, NULL, 0};
-
+				
 				// The gfx for this animation frame
 				uint32 gfxId = load<uint32>(zbeData);
 				thisFrame.gfx = &(gfxAssets[gfxId]);
@@ -225,12 +225,12 @@ levelAsset *assets::loadLevel(uint32 id)
 		uint32 objId = load<uint32>(zbeData);
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
+		iprintf("  #%d: obj%d at (%d, %d)\n", (int) j, (int) objId, (int) x, (int) y);
 		
 		// Make a new levelObjectAsset and add it to the vector
 		levelObjectAsset lvlObj(vector2D<float>(float(x), float(y)), &(objectAssets[objId]));
 		levelAssets[id].objects.push_back(lvlObj);
 	}
-	
 	// Return that levelAsset
 	return last;
 }
