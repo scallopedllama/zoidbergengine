@@ -68,7 +68,7 @@ public:
 	 * @author Joe Balough
 	 */
 	// TODO: update the docs for this
-	assets(char *filename, OamState *oam);
+	assets(FILE *zbeFile, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -169,8 +169,8 @@ private:
 	// All of the objectAssets defined in the datafile
 	vector<objectAsset> objectAssets;
 	
-	// Vector of positions in the file where the level descriptions begin
-	vector<fpos_t> levelPositions;
+	// Vector of levelAssets
+	vector<levelAsset> levelAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

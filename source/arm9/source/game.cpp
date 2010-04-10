@@ -2,9 +2,17 @@
 
 game::game(char *filename)
 {
-	
-	
-	// initialize the assets
-	zbeAssets = new assets(filename, ZOIDBERG_GAMEPLAY_OAM);
+	// Open the zbe datafile
+	zbeFile = fopen(filename, "rb");
+	if(zbeData == NULL)
+	{
+		iprintf("Fail\n");
+	}
+	else
+	{
+		iprintf("Success\n");
+		// initialize the assets
+		zbeAssets = new assets(zbeFile, ZOIDBERG_GAMEPLAY_OAM);
+	}
 	
 }

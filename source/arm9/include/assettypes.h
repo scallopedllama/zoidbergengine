@@ -52,9 +52,6 @@ struct assetStatus
 	// Where the asset is located in the data file
 	fpos_t position;
 
-	// How many bytes long is it
-	uint16 length;
-
 	// Loaded from the file?
 	bool loaded;
 };
@@ -71,6 +68,9 @@ struct paletteAsset : public assetStatus
 	
 	// index
 	uint8 index;
+
+	// How many bytes long is it
+	uint16 length;
 };
 
 /**
@@ -90,6 +90,9 @@ struct gfxAsset : public assetStatus
 
 	// Its size
 	SpriteSize size;
+
+	// How many bytes long is it
+	uint16 length;
 	
 	// Dimensions and position
 	vector2D<uint8> dimensions;
@@ -121,7 +124,7 @@ struct animationAsset
 
 
 /**
- * objectAsset class. contains the object data from the asset file
+ * objectAsset struct. contains the object data from the asset file
  * @author Joe Balough
  */
 struct objectAsset
@@ -138,5 +141,26 @@ struct objectAsset
 	// The weight of this object
 	uint8 weight;
 };
+
+
+/**
+ * levelAsset struct. contains the data needed to define a level.
+ * assets has a vector of these things but upon initial parsing, the only value
+ * loaded into them is their file position. The rest of the data is parsed when
+ * a call to loadLevel is made.
+ * @author Joe Balough
+ */
+struct levelAsset : assetStatus
+{
+	levelAsset() : assetStatus()
+	{}
+	
+	// all the objects in this level
+	vector<objectAsset *> objects;
+	
+	// to add: level geometry, villians, etc.
+	
+};
+ 
 
 #endif

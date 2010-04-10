@@ -58,6 +58,8 @@ public:
 	
 private:
 	
+	// The zbe datafile FILE pointer
+	FILE *zbeFile;
 };
 
 #endif

@@ -1,22 +1,14 @@
 #include "assets.h"
 
-assets::assets(char *filename, OamState *table)
+assets::assets(FILE *zbeFile, OamState *table)
 {
 	// Set variables
 	oam = table;
 
 	// Load the file
 	iprintf("Opening %s\n", filename);
-	zbeData = fopen(filename, "rb");
-	if(zbeData == NULL)
-	{
-		iprintf("Fail\n");
-	}
-	else
-	{
-		iprintf("Success\n");
-		parseZbe(objects);
-	}
+	zbeData = zbeFile;
+	parseZbe();
 }
 
 void assets::parseZbe()
