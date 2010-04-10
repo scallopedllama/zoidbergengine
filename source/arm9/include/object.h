@@ -295,9 +295,6 @@ protected:
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
 	int priority;
 
-	// The size of the gfx for this object
-	SpriteSize size;
-
 	// And its color format
 	SpriteColorFormat format;
 

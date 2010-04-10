@@ -14,7 +14,6 @@ object::object(OamState *Oam,
 	matrixId = MatrixId;
 	
 	priority = 2;
-	size = Size;
 	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
 	
@@ -29,8 +28,8 @@ object::object(OamState *Oam,
 	
 	hflip = vflip = false;
 	
-	position = vector2D(pos.x, pos.y);
-	gravity = vector2D(grav.x, grav.y);
+	position = vector2D<float>(pos.x, pos.y);
+	gravity = vector2D<float>(grav.x, grav.y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	
@@ -66,12 +65,19 @@ bool object::update(touchPosition *touch)
 // Draw the object on screen
 void object::draw(int spriteId)
 {
+	// Load up the gfx
+	gfxAsset *gfx = (*animations)[0].frames[0].gfx;
+	paletteAsset *pal = (*animations)[0].frames[0].pal;
+	
+	uint16 *frameMem = zbeAssets->loadGfx(gfx);
+	uint8 paletteId = zbeAssets->loadPalette(pal);
+	
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if
 	//       the object is hidden and if so, pass -1 for affineIndex.
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
-	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, size, format,
+	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, gfx->size, format,
 		   frameMem, matrixId, true, hidden, hflip, vflip, mosaic);
 }
 
