@@ -12,8 +12,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "level.h"
-#include "assets.h"
+#include "game.h"
 
 // Backgrounds
 #include "starField.h"
@@ -151,7 +150,7 @@ int main()
 	//displayPlanet();
 
 	// make a game
-	game g((char*) "/assets.zbe")
+	game g((char*) "/assets.zbe");
 	g.run();
 
 	return 0;
