@@ -66,10 +66,10 @@ bool object::update(touchPosition *touch)
 void object::draw(int spriteId)
 {
 	// Load up the gfx
-	gfxAsset *gfx = (*animations)[0].frames[0].gfx;
+	frame = (*animations)[0].frames[0].gfx;
 	paletteAsset *pal = (*animations)[0].frames[0].pal;
 	
-	uint16 *frameMem = zbeAssets->loadGfx(gfx);
+	uint16 *frameMem = zbeAssets->loadGfx(frame);
 	uint8 paletteId = zbeAssets->loadPalette(pal);
 	
 	// Update the OAM
@@ -77,7 +77,7 @@ void object::draw(int spriteId)
 	//       the object is hidden and if so, pass -1 for affineIndex.
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
-	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, gfx->size, format,
+	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, frame->size, format,
 		   frameMem, matrixId, true, hidden, hflip, vflip, mosaic);
 }
 
