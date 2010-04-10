@@ -58,10 +58,10 @@ public:
 	 * @author Joe Balough
 	 */
 	hero(OamState *Oam, 
-	   vector<animation> *anim, 
-	   int X, int Y, bool Hidden,
-	   int MatrixId, int ScaleX, int ScaleY, int Angle,
-	   bool Mosaic);
+	   vector<animationAsset> *animations, 
+	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
+	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
+	   bool Mosaic = false);
 	
 	/**
 	 * Implementation of update function

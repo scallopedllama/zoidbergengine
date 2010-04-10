@@ -3,13 +3,13 @@
 #include<stdio.h>
 // hero constructor, just passes things along to the object constructor
 hero::hero(OamState *Oam,
-	   vector<animation> *anim, 
-	   int X, int Y, bool Hidden,
+	   vector<animationAsset> *anim, 
+	   vector2D<float> position, vector2D<float> gravity, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 : object(Oam,
 		 anim, 
-		 X, Y, hidden,
+		 position, graivty, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
 {
