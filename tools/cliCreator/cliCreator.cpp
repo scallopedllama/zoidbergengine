@@ -82,7 +82,7 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"\t\t<object weight=\"weight for collision resolution\">\n"
 	"\t\t\t<animations>\n"
 	"\t\t\t\t<animation>\n"
-	"\t\t\t\t\t<frame id=\"gfxId\" time=\"time in blanks\" />\n"
+	"\t\t\t\t\t<frame id=\"gfxId\" pal=\"paletteId\" time=\"time in blanks\" />\n"
 	"\t\t\t\t\t...\n"
 	"\t\t\t\t</animation>\n"
 	"\t\t\t\t...\n"
@@ -370,11 +370,13 @@ int main(int argc, char **argv)
 				
 				// Get the attributes
 				int gfxId = getIntAttr(frameXML, "id");
+				int palId = getIntAttr(frameXML, "pal");
 				int time = getIntAttr(frameXML, "time");
 				
 				// Write them to the file
-				debug("\t\t\tFrame: GFX ID %d for %d blanks\n", gfxId, time);
+				debug("\t\t\tFrame: GFX ID %d with Palette ID %d for %d blanks\n", gfxId, palId, time);
 				fwrite<uint32_t>((uint32_t) gfxId, output);
+				fwrite<uint32_t>((uint32_t) palId, output);
 				fwrite<uint8_t>((uint8_t) time, output);
 				
 				// get the next frame
