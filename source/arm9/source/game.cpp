@@ -3,6 +3,7 @@
 game::game(char *filename)
 {
 	// Open the zbe datafile
+	iprintf("Opening %s\n", filename);
 	zbeFile = fopen(filename, "rb");
 	if(zbeData == NULL)
 	{
