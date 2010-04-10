@@ -91,6 +91,7 @@ public:
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
 
+
 	/**
 	 * Object update function
 	 *
@@ -119,6 +120,7 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual void draw(int spriteId);
+	
 
 	/**
 	 * makeRotateScale function
@@ -137,6 +139,7 @@ public:
 	 */
 	void makeRotateScale(int matrixId, int angle = 0, int scaleX = -1, int scaleY = -1);
 
+
 	/**
 	 * removeRotateScale function
 	 *
@@ -148,6 +151,7 @@ public:
 	 * @author Joe Balough
 	 */
 	int removeRotateScale();
+	
 
 	/**
 	 * rotate function
@@ -167,6 +171,7 @@ public:
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
+	
 
 	/**
 	 * scale function
@@ -187,6 +192,7 @@ public:
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
+
 
 	/**
 	 * rotateScale function
@@ -211,6 +217,7 @@ public:
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
+
 	/**
 	 * setPriority function
 	 *
@@ -225,6 +232,7 @@ public:
 	{
 		priority = priority;
 	}
+
 
 	/**
 	 * isHidden function
@@ -254,62 +262,8 @@ public:
 	{
 		return hidden;
 	}
-
-	// TODO: a lot of these getters are pointless. I think position, velocity, accel, and gravity
-	//       should just be public... why not!?
 	
-	/**
-	* getXcoord()
-	* getYcoord()
-	*
-	* Constant accessor function that returns the respective X and Y coordinates of the object.
-	*
-	* @return int
-	* returns the X or Y coordinate on the DS screen, for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const int getXcoord() const { return position.x; }
-	const int getYcoord() const { return position.y; }
-	void setPosition( vector2D<float> pos ){ position = pos; }
 
-	/**
-	* getColWidth
-	* getColHeight
-	*
-	* Constant accessor function that returns the respective width and height of the object.
-	*
-	* @return int
-	* returns the width or height of the object for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const int getColHeight() const { return colHeight; }
-	const int getColWidth()  const { return colWidth;  }
-
-	/**
-	* getAngle
-	*
-	* Constant accessor function that returns the angle of the object.
-	*
-	* @return int
-	* returns the angle of the object for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const inline int getAngle() const { return angle; }
-	inline void setAngle(int angleInRadians) { angle = angleInRadians; }
-
-	const inline vector2D<float> getVelocity() const { return velocity; }
-	inline void setVelocity(vector2D<float> v)	{ velocity = v; }
-
-	const inline vector2D<float> getAcceleration() const { return acceleration; }
-	inline void setAcceleration(vector2D<float> accel) { acceleration = accel; }
-
-	
 	// Indicates whether or not the object is falling. If the object is falling, it will be
 	// moved by gravity in the update funciton. If not, gravity won't move it at all.
 	bool falling;
