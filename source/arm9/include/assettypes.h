@@ -164,7 +164,7 @@ struct levelObjectAsset
 	
 	// pointer to general objectAsset
 	objectAsset *obj;
-}
+};
 
 
 /**
