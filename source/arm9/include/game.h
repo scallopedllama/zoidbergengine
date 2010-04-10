@@ -31,12 +31,17 @@
 // On which screen should the main gameplay occur? Should probably always be &oamMain.
 #define ZOIDBERG_GAMEPLAY_OAM &oamMain
 
+
 #include <nds.h>
 #include <stdio.h>
 #include <vector>
+
+// for zbeAssets
 #include "assets.h"
 #include "assettypes.h" // for levelAsset struct
-#include "util.h"       // for zbeAssets variable
+#include "util.h"
+
+#include "level.h"
 
 /**
  * game class
@@ -44,7 +49,7 @@
  *
  * @author Joe Balough
  */
-class object
+class game
 {
 public:
 	/**
