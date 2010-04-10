@@ -87,9 +87,9 @@ public:
 	 // TODO: Update the documentation for this
 	object(OamState *Oam, 
 	   vector<animation> *anim, 
-	   int X, int Y, bool Hidden,
-	   int MatrixId, int ScaleX, int ScaleY, int Angle,
-	   bool Mosaic);
+	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
+	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
+	   bool Mosaic = false);
 
 	/**
 	 * Object update function
@@ -308,11 +308,6 @@ public:
 
 	const inline vector2D<float> getAcceleration() const { return acceleration; }
 	inline void setAcceleration(vector2D<float> accel) { acceleration = accel; }
-	inline void setGravity(vector2D<float> grav)
-	{ 
-		gravity.x = grav.x; 
-		gravity.y = grav.y;
-	}
 
 	
 	// Indicates whether or not the object is falling. If the object is falling, it will be

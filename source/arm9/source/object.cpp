@@ -3,7 +3,7 @@
 // object constructor
 object::object(OamState *Oam,
 	   vector<animation> *anim, 
-	   int X, int Y, bool Hidden,
+	   vector2D<float> pos, vector2D<float> grav, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 {
@@ -18,7 +18,7 @@ object::object(OamState *Oam,
 	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
 	
-	if (MatrixId > 0)
+	if (MatrixId >= 0)
 	{
 		isRotateScale = true;
 	}
@@ -29,8 +29,8 @@ object::object(OamState *Oam,
 	
 	hflip = vflip = false;
 	
-	position.x = float(X);
-	position.y = float(Y);
+	position = vector2D(pos.x, pos.y);
+	gravity = vector2D(grav.x, grav.y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 	
