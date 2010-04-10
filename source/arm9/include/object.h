@@ -86,7 +86,7 @@ public:
 	 */
 	 // TODO: Update the documentation for this
 	object(OamState *Oam, 
-	   vector<animation> *anim, 
+	   vector<animationAsset> *animations, 
 	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
@@ -322,7 +322,7 @@ public:
 	vector2D<float> position, velocity, acceleration, gravity;
 	
 	// The gfxStatus of the gfx currently being viewed
-	gfxStatus frame;
+	gfxAsset *frame;
 
 protected:
 	// Pointer to the OamState in which this sprite should be updated
@@ -333,7 +333,7 @@ protected:
 	assets *zbeAssets;
 	
 	// Pointer to this object's animations
-	vector<animation> *animations;
+	vector<animationAsset> *animations;
 
 	// The current id for the for the affine matrix, and the palette to use in the oam
 	int matrixId;

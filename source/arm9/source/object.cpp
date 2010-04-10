@@ -2,7 +2,7 @@
 
 // object constructor
 object::object(OamState *Oam,
-	   vector<animation> *anim, 
+	   vector<animationAsset> *anim, 
 	   vector2D<float> pos, vector2D<float> grav, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
