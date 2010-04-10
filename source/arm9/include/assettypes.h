@@ -144,38 +144,6 @@ struct objectAsset
 
 
 /**
- * levelAsset struct. contains the data needed to define a level.
- * assets has a vector of these things but upon initial parsing, the only value
- * loaded into them is their file position. The rest of the data is parsed when
- * a call to loadLevel is made.
- * @author Joe Balough
- */
-struct levelAsset : assetStatus
-{
-	levelAsset() : assetStatus()
-	{}
-	
-	// TODO: Every time this struct is updated, this clear() function needs to be
-	//       updated too.
-	// Clears out all the pointer vectors and resets loaded
-	clear()
-	{
-		// Clear out vectors
-		objects.clear();
-		
-		// Reset loaded variable
-		loaded = false;
-	}
-	
-	// all the objects in this level
-	vector<levelObjectAsset> objects;
-	
-	// to add: level geometry, villians, etc.
-	
-};
-
-
-/**
  * levelObjectAsset struct. A simple wrapper for the objectAsset that is used
  * by levelAsset to manage all the objects in a level.
  * Contains a pointer to the objectAsset that generally describes this object
@@ -197,6 +165,38 @@ struct levelObjectAsset
 	// pointer to general objectAsset
 	objectAsset *obj;
 }
+
+
+/**
+ * levelAsset struct. contains the data needed to define a level.
+ * assets has a vector of these things but upon initial parsing, the only value
+ * loaded into them is their file position. The rest of the data is parsed when
+ * a call to loadLevel is made.
+ * @author Joe Balough
+ */
+struct levelAsset : assetStatus
+{
+	levelAsset() : assetStatus()
+	{}
+	
+	// TODO: Every time this struct is updated, this clear() function needs to be
+	//       updated too.
+	// Clears out all the pointer vectors and resets loaded
+	void clear()
+	{
+		// Clear out vectors
+		objects.clear();
+		
+		// Reset loaded variable
+		loaded = false;
+	}
+	
+	// all the objects in this level
+	vector<levelObjectAsset> objects;
+	
+	// to add: level geometry, villians, etc.
+	
+};
  
 
 #endif
