@@ -34,7 +34,9 @@
 #include <nds.h>
 #include <stdio.h>
 #include <vector>
-#include "util.h"
+#include "assets.h"
+#include "assettypes.h" // for levelAsset struct
+#include "util.h"       // for zbeAssets variable
 
 /**
  * game class
@@ -55,6 +57,26 @@ public:
 	 * @author Joe Balough
 	 */
 	game(char *filename);
+	
+	
+	/**
+	 * game class deconstructor
+	 *
+	 * Deletes the zbeAssets object and sets it to NULL
+	 *
+	 * @author Joe Balough
+	 */
+	~game();
+	
+	
+	/**
+	 * run function
+	 * 
+	 * Called by the main function to play the game.
+	 * 
+	 * @author Joe Balough
+	 */
+	void run();
 	
 private:
 	
