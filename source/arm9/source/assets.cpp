@@ -262,7 +262,7 @@ levelAsset *assets::loadLevel(uint32 id)
 void assets::loadGfx(gfxAsset *gfx)
 {
 	// If passed NULL or the gfx is already in main memory, return
-	if (!gfx || !gfx->mmLoaded) return;
+	if (!gfx || gfx->mmLoaded) return;
 
 	// Need to load the gfx from the file and check for errors
 	openFile();
@@ -282,6 +282,8 @@ void assets::loadGfx(gfxAsset *gfx)
 		iprintf("Error reading gfx from file:\n  %s", strerror(errno));
 		die();
 	}
+
+	iprintf("gfx mmLoaded -> %x\n", (unsigned int) gfx->data);
 
 	// Everything is A-Okay! close the file and set the gfx to mmLoaded
 	closeFile();
@@ -347,6 +349,8 @@ void assets::loadPalette(paletteAsset *pal)
 		iprintf("Error reading palette from file:\n  %s", strerror(errno));
 		die();
 	}
+
+	iprintf("pal mmLoaded -> %x\n", (unsigned int) pal->data);
 
 	// All done, close the file and set mmLoaded
 	closeFile();
