@@ -35,7 +35,6 @@
 #include <nds.h>
 #include <stdio.h>
 #include <vector>
-#include <string>
 
 // for zbeAssets
 #include "assets.h"
@@ -62,7 +61,7 @@ public:
 	 *   Filename to use to initialize the assets object
 	 * @author Joe Balough
 	 */
-	game(string filename);
+	game(char* filename);
 
 
 	/**

@@ -29,7 +29,7 @@ void initVideo()
 {
 	powerOn(POWER_ALL_2D);
 	lcdMainOnBottom();
-	     
+
     vramSetMainBanks(VRAM_A_MAIN_SPRITE,
                      VRAM_B_MAIN_BG_0x06020000,
                      VRAM_C_SUB_BG_0x06200000,
@@ -47,10 +47,10 @@ void initVideo()
     //  Set the video mode on the sub screen.
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
                    DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
-	  
+
 	  oamInit(&oamMain, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
 	  oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
-	
+
 	consoleDemoInit();
 }
 
@@ -138,7 +138,7 @@ int main()
 {
 	initVideo();
 	//initBackgrounds();
-	
+
 	// Initialize maxmod using the memory based soundbank set up.
 	//mmInitDefaultMem((mm_addr)soundbank_bin);
 
@@ -150,7 +150,7 @@ int main()
 	//displayPlanet();
 
 	// make a game
-	game g((char*) "/assets.zbe");
+	game g("/assets.zbe");
 	g.run();
 
 	return 0;

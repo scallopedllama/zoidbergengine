@@ -1,10 +1,10 @@
 #include "assets.h"
 
-assets::assets(string input, OamState *table)
+assets::assets(char* input, OamState *table)
 {
 	// Set variables
 	oam = table;
-	zbeFile = string(input);
+	zbeFile = input;
 
 	// Parse the file
 	parseZbe();
@@ -15,6 +15,7 @@ void assets::parseZbe()
 	// TODO: actually handle the return values on all these file functions.
 	//       They're all ignored so there is not fault tolerance.
 
+	// Open up the file to parse
 	openFile();
 
 	// Get the version number out of the zeg file
@@ -263,14 +264,9 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 	if (!gfx)
 		return 0;
 
-	iprintf("gfx load, ");
-
 	// See if it's already loaded
 	if (gfx->loaded)
 	{
-		// TODO: this doesn't seem to work.
-		iprintf("hit->%x\n", (unsigned int) gfx->offset);
-
 		// Already loaded so return the index
 		return gfx->offset;
 	}
@@ -284,7 +280,7 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 		while(true);
 	}
 
-	iprintf("miss");
+	iprintf("gfx load cache miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
@@ -297,6 +293,7 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 	// Request space to load this graphic
 	uint16 *mem = oamAllocateGfx(oam, gfx->size, SpriteColorFormat_16Color);
 	gfx->offset = mem;
+	gfx->loaded = true;
 
 	// Start copying
 	uint16 length = gfx->length;
@@ -306,10 +303,12 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 
 	DC_FlushRange(data, length);
 	dmaCopyHalfWords(3, data, mem, length);
+	gfx->loaded = true;
 
 	free(data);
+	gfx->loaded = true;
 
-	iprintf("%x\n", (unsigned int) gfx->offset);
+	iprintf(" -> %x\n", (unsigned int) gfx->offset);
 
 	// Close the File before returning
 	closeFile();
@@ -321,14 +320,9 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 // Loads palette with id into memory
 uint8 assets::loadPalette(paletteAsset *pal)
 {
-	iprintf("palette load, ");
-
 	// See if it's already loaded
 	if (pal->loaded)
 	{
-		// TODO: this doesn't seem to work.
-		iprintf(" cache hit->%d\n", pal->index);
-
 		// Already loaded so set the index and return
 		return pal->index;
 	}
@@ -336,7 +330,7 @@ uint8 assets::loadPalette(paletteAsset *pal)
 	// Need to load the gfx from the file
 	openFile();
 
-	iprintf(" cache miss\n");
+	iprintf("palette load cache miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
@@ -359,7 +353,7 @@ uint8 assets::loadPalette(paletteAsset *pal)
 	// Update some variables
 	pal->loaded = true;
 	pal->index = curIndex;
-	iprintf(" loaded->%d\n", curIndex);
+	iprintf(" -> %d\n", curIndex);
 
 	// Update the index for the next call
 	curIndex++;

@@ -1,6 +1,6 @@
 #include "game.h"
 
-game::game(string filename)
+game::game(char* filename)
 {
 	// Open the zbe datafile
 	zbeAssets = new assets(filename, ZOIDBERG_GAMEPLAY_OAM);

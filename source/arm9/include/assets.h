@@ -49,7 +49,6 @@
 #include <nds.h>
 #include <fat.h>
 #include <vector>
-#include <string>
 #include "vector.h"
 #include "assettypes.h"
 
@@ -64,14 +63,13 @@ using namespace std;
 class assets {
 public:
 	/**
-	 * @param char *filename
+	 * @param string filename
 	 *   The zbe file to use for this game
 	 * @param OamState *oam
 	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */
-	// TODO: update the docs for this
-	assets(string filename, OamState *oam);
+	assets(char* filename, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -163,9 +161,9 @@ private:
 	 */
 	inline void openFile()
 	{
-		zbeData = fopen(zbeFile.c_str(), "rb");
+		zbeData = fopen(zbeFile, "rb");
 		if (!zbeData)
-			iprintf("Error opening datafile %s!\n", zbeFile.c_str());
+			iprintf("Error opening datafile %s: %s\n", zbeFile, strerror(errno));
 	}
 
 	/**
@@ -204,7 +202,7 @@ private:
 	FILE *zbeData;
 
 	// zbe Filename
-	string zbeFile;
+	char *zbeFile;
 
 	// A pointer to the oamState
 	OamState *oam;
