@@ -5,7 +5,7 @@
 bool hero::update(touchPosition *touch)
 {
 	// TODO (jbb5044#6#): Generalize the input stuff so that users can drop multiple heros in to the level with different key mappings.
-	
+
 	// If the user is pressing left or right, move the object slightly to the left or right
 	// if the user is pressing up, jump.
 	// In all of those cases, set falling to true to force gravity.
@@ -28,11 +28,12 @@ bool hero::update(touchPosition *touch)
 	// Done doing hero specific update functions,
 	// pass back to the object update function
 	bool moved = object::update(touch);
-	
+
 	// Update the screenOffset to keep the hero center
 	screenOffset.x = position.x - (SCREEN_WIDTH  / 2);
 	screenOffset.y = position.y - (SCREEN_HEIGHT / 2);
-	
+
 	// don't forget to indicate whether or not it moved
 	return moved;
 }
+

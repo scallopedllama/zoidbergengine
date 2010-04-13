@@ -58,18 +58,18 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */
-	hero(OamState *Oam, 
-		frameAsset ***animations, 
+	hero(OamState *Oam,
+		frameAsset ***animations,
 		vector2D<float> position, vector2D<float> gravity, bool hidden = false,
 		int matrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
-		bool Mosaic = false) 
+		bool Mosaic = false)
 	: object(Oam,
-		 animations, 
+		 animations,
 		 position, gravity, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
 	{}
-	
+
 	/**
 	 * Implementation of update function
 	 *
@@ -80,6 +80,24 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual bool update(touchPosition *touch);
+
+
+	virtual void draw(int spriteId)
+	{
+		// Write the hero's x and y in the top right of the screen
+		static uint32 numCalls = 0;
+		if(numCalls % 100 == 0)
+		{
+			// ansi escape sequence to set print co-ordinates
+			// /x1b[line;columnH
+			iprintf("\x1b[1;24HX: %ld\n", (long int) position.x);
+			iprintf("\x1b[2;24HY: %ld\n", (long int) position.y);
+		}
+		++numCalls;
+
+		// Call object's draw
+		object::draw(spriteId);
+	}
 
 private:
 };
