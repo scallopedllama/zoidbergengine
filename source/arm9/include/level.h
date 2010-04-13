@@ -118,24 +118,6 @@ public:
 	 */
 	void update();
 
-	/**
-	 * These are temporary functions. They will probably go away!
-	 */
-	/**
-	 * addSprite function
-	 *
-	 * This should be considered a temporary function to test out the object class. In the future, sprites will be loaded
-	 * using information from the assets class.
-	 *
-	 * addSprite adds an object to the level with the passed parameters. See the object class for more param details.
-	 *
-	 * @param bool mkeHero
-	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
-	 * @see object::object()
-	 * @author Joe Balough
-	 */
-	//void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
-
 private:
 	// A pointer to the oam table that the level should put its obects on.
 	OamState *oam;

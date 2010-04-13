@@ -5,40 +5,40 @@ level::level(levelAsset *metadata, OamState *o)
 {
 	// set the oam
 	oam = o;
-	
+
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
 	}
-	
+
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-	
+
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
 	colMatrix = new collisionMatrix(1200, 1000, 70);
-	
+
 	// Parse the levelAssets metadata
 	// Load up all the objects
 	for (unsigned int i = 0; metadata->objects[i] != NULL; i++)
 	{
 		// This is the objectAsset for this levelObjectAsset
 		objectAsset *obj = metadata->objects[i]->obj;
-		
+
 		// Make the new object
 		object *newObj = new object(oam, obj->animations, metadata->objects[1]->position, gravity);
-		
+
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
-		
+
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
 		// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
 		//       collision actions to the collisionMatrix.
 		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
-	
-	
+
+
 }
 
 // level destructor
@@ -67,55 +67,18 @@ int level::getMatrix()
 	return ZOIDBERG_NO_MATRICES;
 }
 
-// TEMP FCTN: adds a sprite to the level
-/*void level::addSprite(bool mkeHero, u32 gfxId, u32 palId, int x, int y)
-{
-	// Request the assets for this sprite be loaded
-	uint16 *frame = zbeAssets->loadGfx(gfxId);
-	uint8 palIndex = zbeAssets->loadPalette(palId);
-	void ***gfx = NULL;
-	SpriteSize size = zbeAssets->getSpriteSize(gfxId);
-	int numAnim = 1; int numFrames[1]; numFrames[0] = 1;
-	
-	//object::object(OamState *Oam, 
-	//			   int PaletteId, 
-	//			   int NumAnim, int NumFrames[],
-	//			   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble = true, bool Hidden = false,
-	//			   int MatrixId = -1, int Width = 1, int Height = 1, int Angle = 0,
-	//			   bool Mosaic = false);
-	
-	
-	// Create the sprite
-	object *newObj;
-	if (mkeHero)
-		newObj = (object *) new hero(oam, palIndex, numAnim, numFrames, x, y, 0, size, SpriteColorFormat_16Color,
-		true, false, getMatrix(), 1 << 8, 1 << 8, 23, false);
-	else
-		newObj = new object(oam, palIndex, numAnim, numFrames, x, y, 0, size, SpriteColorFormat_16Color);
-	
-	newObj->setGravity(gravity);
-
-	// Add that object to the list
-	objects.push_back(newObj);
-	
-	// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
-	// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
-	//       collision actions to the collisionMatrix.
-	objectsGroups.push_back(colMatrix->addObject(newObj));
-}*/
-
 // The 'main game loop' for this level
 void level::run()
 {
 	// These are used in keeping track of the framerate
 	uint32 frame = 0;
 	time_t startTime = time(NULL);
-	
+
 	// start running the main loop
 	while(true)
 	{
 		update();
-		
+
 		// Update frame rate
 		// NOTE: this doesn't work right in DeSmuME. Should work right on DS though.
 		++frame;
@@ -128,7 +91,7 @@ void level::run()
 			// /x1b[line;columnH
 			iprintf("\x1b[0;24HFPS: %ld\n", (long int) fps);
 		}
-		
+
 		swiWaitForVBlank();
 		oamUpdate(oam);
 	}
@@ -144,7 +107,7 @@ void level::update()
 
 	// A vector of object ids that have moved because of their update function
 	vector<int> moved;
-	
+
 	// Iterate through all the objects in the level
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
@@ -153,17 +116,17 @@ void level::update()
 		if (objects[i]->update(touch))
 			moved.push_back(i);
 	}
-	
+
 	// Now that all objects have moved, run collision detection on them.
 	for (unsigned int m = 0; m < moved.size(); m++)
 	{
 		// The index of the object that moved
 		unsigned int i = moved[m];
-		
+
 		// Pull this object out of its old objGroup and reinsert it.
 		objectsGroups[i]->remove(objects[i]);
 		objectsGroups[i] = colMatrix->addObject(objects[i]);
-		
+
 		/**
 		 *  BEGIN TEMPORARY STUFF
 		 */
@@ -187,10 +150,10 @@ void level::update()
 		/**
 		 *   END TEMPORARY STUFF
 		 */
-		
+
 		// Get the objects that MIGHT be colliding with it
 		vector<object*> candidates = colMatrix->getCollisionCandidates(objects[i]->position);
-		
+
 		// Test for collision with them
 		for (unsigned int j = 0; j < candidates.size(); j++)
 		{
@@ -202,7 +165,7 @@ void level::update()
 			}
 		}
 	}
-	
+
 	// Things should now be where they need to be. Draw them up.
 	int spriteId = 0;
 	for (unsigned int i = 0; i < objects.size(); i++)
@@ -211,10 +174,10 @@ void level::update()
 		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
 		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
 			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
-		{	
+		{
 			objects[i]->draw(spriteId);
 			++spriteId;
-			
+
 			// We can only show so many sprites. For now, just don't show the overflow.
 			if(spriteId > SPRITE_COUNT)
 				break;
