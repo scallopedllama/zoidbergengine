@@ -57,7 +57,7 @@
 // For zbeAssets
 #include "assets.h"
 #include "assettypes.h"
-#include "util.h"
+#include "vars.h"
 
 
 using namespace std;
@@ -108,16 +108,16 @@ public:
 	/**
 	 * update function
 	 *
-	 * Gets touchscreen information then iterates through the list of objects 
+	 * Gets touchscreen information then iterates through the list of objects
 	 * telling each one to update giving them the touchscreen update information.
-	 * Those functions return a boolean value indicating whether they've moved 
+	 * Those functions return a boolean value indicating whether they've moved
 	 * because of the update. If they have moved, run collision detection on
 	 * them.
 	 *
 	 * @author Joe Balough
 	 */
 	void update();
-	
+
 	/**
 	 * These are temporary functions. They will probably go away!
 	 */
@@ -133,9 +133,9 @@ public:
 	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
 	 * @see object::object()
 	 * @author Joe Balough
-	 */	
+	 */
 	//void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
-	
+
 private:
 	// A pointer to the oam table that the level should put its obects on.
 	OamState *oam;
@@ -177,19 +177,19 @@ private:
 	}
 
 	/*
-	 * Gravity vector to dynamically change the direction of the 
+	 * Gravity vector to dynamically change the direction of the
 	 * acceleration due to gravity
 	 */
 	vector2D<float> gravity;
-	
+
 	/**
 	 * Variables for collision detection
 	 */
-	
+
 	// An array of pointers to objGroups. Each index represents an object id which points
 	// to its objGroup.. probalby not best, but it'll work for now.
 	vector<objGroup*> objectsGroups;
-	
+
 	// A pointer to the collisionMatrix we're using
 	collisionMatrix *colMatrix;
 

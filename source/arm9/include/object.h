@@ -36,7 +36,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "vector.h"
-#include "util.h"
+#include "vars.h"
 #include "assettypes.h"
 
 /**

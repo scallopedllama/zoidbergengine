@@ -39,7 +39,7 @@
 // for zbeAssets
 #include "assets.h"
 #include "assettypes.h" // for levelAsset struct
-#include "util.h"
+#include "vars.h"
 
 #include "level.h"
 
