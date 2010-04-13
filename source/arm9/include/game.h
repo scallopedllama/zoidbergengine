@@ -62,8 +62,8 @@ public:
 	 * @author Joe Balough
 	 */
 	game(char *filename);
-	
-	
+
+
 	/**
 	 * game class deconstructor
 	 *
@@ -72,21 +72,19 @@ public:
 	 * @author Joe Balough
 	 */
 	~game();
-	
-	
+
+
 	/**
 	 * run function
-	 * 
+	 *
 	 * Called by the main function to play the game.
-	 * 
+	 *
 	 * @author Joe Balough
 	 */
 	void run();
-	
+
 private:
-	
-	// The zbe datafile FILE pointer
-	FILE *zbeFile;
+
 };
 
 #endif

@@ -150,7 +150,39 @@ private:
 	 *   The value read from the file
 	 * @author Joe Balough
 	 */
-	template <class T> T load(FILE *input);
+	template <class T> T load(char *input);
+
+	/**
+	 * openFile function
+	 *
+	 * Opens the zbeData file for reading. All functions parsing data from the file needs
+	 * to call this before attempting any reading and should call closeFile() before returning.
+	 *
+	 * @author Joe Balough
+	 */
+	inline void openFile()
+	{
+		zbeData = fopen(zbeFile, "rb");
+		if (!zbeData)
+			iprintf("Error opening datafile %s!\n", zbeFile);
+	}
+
+	/**
+	 * closefile function
+	 *
+	 * Closes the zbeData file previously opened with openFile. Should be called before
+	 * returning on any function that parses data from the zbeFile.
+	 *
+	 * @author Joe Balough
+	 */
+	inline void closeFile()
+	{
+		if(zbeData)
+		{
+			fclose(zbeData);
+			zbeData = NULL;
+		}
+	}
 
 	/**
 	 * getSpriteSize function
@@ -170,6 +202,9 @@ private:
 	// The zbe file
 	FILE *zbeData;
 
+	// zbe Filename
+	char *zbeFile;
+
 	// A pointer to the oamState
 	OamState *oam;
 
@@ -182,10 +217,10 @@ private:
 	vector<gfxAsset*> gfxAssets;
 	// Palettes' status
 	vector<paletteAsset*> paletteAssets;
-	
+
 	// All of the objectAssets defined in the datafile
 	vector<objectAsset*> objectAssets;
-	
+
 	// Vector of levelAssets
 	vector<levelAsset*> levelAssets;
 };

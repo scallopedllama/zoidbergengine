@@ -1,11 +1,11 @@
 #include "assets.h"
 
-assets::assets(FILE *zbeFile, OamState *table)
+assets::assets(char *input, OamState *table)
 {
 	// Set variables
 	oam = table;
-	zbeData = zbeFile;
-	
+	zbeFile = input;
+
 	// Parse the file
 	parseZbe();
 }
@@ -14,6 +14,8 @@ void assets::parseZbe()
 {
 	// TODO: actually handle the return values on all these file functions.
 	//       They're all ignored so there is not fault tolerance.
+
+	openFile();
 
 	// Get the version number out of the zeg file
 	uint16 version = load<uint16>(zbeData);
@@ -39,31 +41,31 @@ void assets::parseZbe()
 		uint8 top = load<uint8>(zbeData);
 		uint8 left = load<uint8>(zbeData);
 		iprintf(" %d x %d @ (%d, %d)\n", width, height, top, left);
-		
+
 		// Set its dimensions
 		newAsset->dimensions = vector2D<uint8>(width, height);
 		newAsset->topleft = vector2D<uint8>(left, top);
-		
+
 		// Set its spriteSize
 		newAsset->size = getSpriteSize(width, height);
-		
+
 		// Get the length of this gfx tiles
 		newAsset->length = load<uint16>(zbeData);
 		iprintf(" len %d\n, ", newAsset->length);
-		
+
 		// Add the current position in the file to the vector
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
-		
+
 		// Set that it is not loaded, assign a value to the union
 		// to get it using the proper value
 		newAsset->loaded = false;
 		newAsset->offset = NULL;
-		
+
 		// Push this asset on the array
 		gfxAssets.push_back(newAsset);
-		
+
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
@@ -98,92 +100,92 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-	
+
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
 	iprintf("#objs %d\n", numObjects);
-	
+
 	// Get all the objects
 	for (uint32 i = 0; i < numObjects; i++)
 	{
 		// Weight of this object
 		uint8 weight = load<uint8>(zbeData);
-		
+
 		// Number of animations
 		uint32 numAnimations = load<uint32>(zbeData);
 		iprintf(" %d: %d animations\n", i, numAnimations);
-		
+
 		// Make the objectAsset and allocate for enough animations
 		objectAsset *newAsset = new objectAsset(weight);
 		newAsset->animations = new frameAsset**[numAnimations + 1];
 		// null terminate that dimension
 		newAsset->animations[numAnimations] = NULL;
-		
+
 		// Get all the animations
 		for (uint32 j = 0; j < numAnimations; j++)
 		{
 			// Get the number of frames for this animation
 			uint16 numFrames = load<uint16>(zbeData);
 			iprintf("  %d has %d frames\n", j, numFrames);
-			
+
 			// Allocate enough pointers for this animation
 			newAsset->animations[j] = new frameAsset*[numFrames + 1];
 			// null terminate it
 			newAsset->animations[j][numFrames] = NULL;
-			
+
 			// Get all the frames
 			for (uint32 k = 0; k < numFrames; k++)
 			{
 				// Make a new frameAsset (Init the gfx pointer to NULL)
 				frameAsset *thisFrame = new frameAsset;
-				
+
 				// The gfx for this animation frame
 				uint32 gfxId = load<uint32>(zbeData);
 				thisFrame->gfx = gfxAssets[gfxId];
-				
+
 				// The palette for this animation frame
 				uint32 palId = load<uint32>(zbeData);
 				thisFrame->pal = paletteAssets[palId];
-				
+
 				// The time to display this frame
 				thisFrame->time = load<uint8>(zbeData);
-				
+
 				// Set it up on the array
 				newAsset->animations[j][k] = thisFrame;
-				
+
 				iprintf("   %d w/ %d for %d blanks\n", gfxId, palId, thisFrame->time);
 			} // this animation
-			
+
 		} // all animations
-		
+
 		// make a new objectAsset
 		objectAssets.push_back(newAsset);
-		
+
 	} // all objects
-	
-	
+
+
 	// Number of levels
 	uint32 numLvls = load<uint32>(zbeData);
 	iprintf("#lvls %d\n", numLvls);
-	
+
 	// for each level
 	for (uint32 i = 0; i < numLvls; i++)
 	{
 		// Make a new levelAsset
 		levelAsset *newAsset = new levelAsset;
 		newAsset->objects = NULL;
-		
+
 		// Set the location variable
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
-		
+
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
-		
+
 		// number of level objects
 		uint32 numLvlObjs = load<uint32>(zbeData);
-		
+
 		// for each level objects
 		// TODO: replace this with a bit of seeking magic to get rid of warnings and speed things up a bit
 		for (uint32 j = 0; j < numLvlObjs; j++)
@@ -194,6 +196,8 @@ void assets::parseZbe()
 			uint16 y = load<uint16>(zbeData);
 		}
 	}
+
+	closeFile();
 }
 
 
@@ -203,31 +207,34 @@ void assets::parseZbe()
 // Load and return a level's metadata
 levelAsset *assets::loadLevel(uint32 id)
 {
+	// open the file
+	openFile();
+
 	// keep track of the last one opened
 	static levelAsset *lvl = NULL;
-	
+
 	// Clear out the last one if this isn't the first time
 	if (lvl)
 	{
 		lvl->clear();
 		lvl = NULL;
 	}
-	
+
 	// Update last
 	lvl = levelAssets[id];
-	
+
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
-	
+
 	// number of level objects
 	uint32 numLvlObjs = load<uint32>(zbeData);
 	iprintf(" #objs %d\n", numLvlObjs);
-	
+
 	// Allocate enough space for all the level objects
 	lvl->objects = new levelObjectAsset*[numLvlObjs + 1];
 	lvl->objects[numLvlObjs] = NULL;
-	
+
 	// for each level object
 	for (uint32 j = 0; j < numLvlObjs; j++)
 	{
@@ -236,12 +243,15 @@ levelAsset *assets::loadLevel(uint32 id)
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
 		iprintf("  #%d: obj%d at (%d, %d)\n", (int) j, (int) objId, (int) x, (int) y);
-		
+
 		// Make a new levelObjectAsset and add it to the vector
 		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
 		lvl->objects[j] = lvlObj;
 	}
-	
+
+	//close the file
+	closeFile();
+
 	// Return that levelAsset
 	return lvl;
 }
@@ -250,9 +260,9 @@ levelAsset *assets::loadLevel(uint32 id)
 // Loads tiles with id into memory
 uint16 *assets::loadGfx(gfxAsset *gfx)
 {
-	if (!gfx) 
+	if (!gfx)
 		return 0;
-	
+
 	iprintf("gfx load, ");
 
 	// See if it's already loaded
@@ -264,13 +274,16 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 		// Already loaded so return the index
 		return gfx->offset;
 	}
-	
+
+	// Need to load the gfx from the file
+	openFile();
+
 	if(ferror(zbeData))
 	{
 		iprintf("\n data error: %s\n", strerror(errno));
 		while(true);
 	}
-	
+
 	iprintf("miss");
 
 	// Need to load it from disk into memory
@@ -280,7 +293,7 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 		iprintf("\n seek error: %s\n", strerror(errno));
 		while(true);
 	}
-	
+
 	// Request space to load this graphic
 	uint16 *mem = oamAllocateGfx(oam, gfx->size, SpriteColorFormat_16Color);
 	gfx->offset = mem;
@@ -290,7 +303,7 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
 	if (fread(data, sizeof(uint8), length, zbeData) < length)
 		iprintf(" data load error\n");
-	
+
 	DC_FlushRange(data, length);
 	dmaCopyHalfWords(3, data, mem, length);
 
@@ -298,7 +311,9 @@ uint16 *assets::loadGfx(gfxAsset *gfx)
 
 	iprintf("%x\n", (unsigned int) gfx->offset);
 
-while(true);
+	// Close the File before returning
+	closeFile();
+
 	return mem;
 }
 
@@ -317,6 +332,9 @@ uint8 assets::loadPalette(paletteAsset *pal)
 		// Already loaded so set the index and return
 		return pal->index;
 	}
+
+	// Need to load the gfx from the file
+	openFile();
 
 	iprintf(" cache miss\n");
 
@@ -345,6 +363,9 @@ uint8 assets::loadPalette(paletteAsset *pal)
 
 	// Update the index for the next call
 	curIndex++;
+
+	// Close the File before returning
+	closeFile();
 
 	return curIndex - 1;
 }
@@ -389,7 +410,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 		sheight = 32;
 	else if (height <= 64)
 		height = 64;
-	
+
 	// Wow this is intense but it's the only way I can come up with to do this.
 	switch (swidth)
 	{
