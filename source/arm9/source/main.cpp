@@ -150,7 +150,7 @@ int main()
 	//displayPlanet();
 
 	// make a game
-	game g("/assets.zbe");
+	game g((char *) "/assets.zbe");
 	g.run();
 
 	return 0;
