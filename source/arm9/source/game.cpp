@@ -1,9 +1,8 @@
 #include "game.h"
 
-game::game(char *filename)
+game::game(string filename)
 {
 	// Open the zbe datafile
-	iprintf("Opening %s\n", filename);
 	zbeAssets = new assets(filename, ZOIDBERG_GAMEPLAY_OAM);
 }
 

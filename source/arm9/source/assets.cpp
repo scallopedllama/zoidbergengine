@@ -1,10 +1,10 @@
 #include "assets.h"
 
-assets::assets(char *input, OamState *table)
+assets::assets(string input, OamState *table)
 {
 	// Set variables
 	oam = table;
-	zbeFile = input;
+	zbeFile = string(input);
 
 	// Parse the file
 	parseZbe();
@@ -191,9 +191,9 @@ void assets::parseZbe()
 		for (uint32 j = 0; j < numLvlObjs; j++)
 		{
 			// load relevant datas
-			uint32 objId = load<uint32>(zbeData);
-			uint16 x = load<uint16>(zbeData);
-			uint16 y = load<uint16>(zbeData);
+			load<uint32>(zbeData);
+			load<uint16>(zbeData);
+			load<uint16>(zbeData);
 		}
 	}
 

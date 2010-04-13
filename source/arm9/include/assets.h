@@ -49,6 +49,7 @@
 #include <nds.h>
 #include <fat.h>
 #include <vector>
+#include <string>
 #include "vector.h"
 #include "assettypes.h"
 
@@ -70,7 +71,7 @@ public:
 	 * @author Joe Balough
 	 */
 	// TODO: update the docs for this
-	assets(FILE *zbeFile, OamState *oam);
+	assets(string filename, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -150,7 +151,7 @@ private:
 	 *   The value read from the file
 	 * @author Joe Balough
 	 */
-	template <class T> T load(char *input);
+	template <class T> T load(FILE *input);
 
 	/**
 	 * openFile function
@@ -162,16 +163,16 @@ private:
 	 */
 	inline void openFile()
 	{
-		zbeData = fopen(zbeFile, "rb");
+		zbeData = fopen(zbeFile.c_str(), "rb");
 		if (!zbeData)
-			iprintf("Error opening datafile %s!\n", zbeFile);
+			iprintf("Error opening datafile %s!\n", zbeFile.c_str());
 	}
 
 	/**
 	 * closefile function
 	 *
 	 * Closes the zbeData file previously opened with openFile. Should be called before
-	 * returning on any function that parses data from the zbeFile.
+	 * returning on any function that parses data from the zbeData.
 	 *
 	 * @author Joe Balough
 	 */
@@ -203,7 +204,7 @@ private:
 	FILE *zbeData;
 
 	// zbe Filename
-	char *zbeFile;
+	string zbeFile;
 
 	// A pointer to the oamState
 	OamState *oam;
