@@ -45,14 +45,24 @@ struct assetStatus
 {
 	assetStatus()
 	{
-		loaded = false;
+		mmLoaded = vmLoaded = false;
+		data = NULL;
+	}
+	~assetStatus()
+	{
+		// Delete any data if there is any allocated
+		if(data)
+			delete data;
 	}
 
 	// Where the asset is located in the data file
 	fpos_t position;
 
-	// Loaded from the file?
-	bool loaded;
+	// The actual data loaded into main Memory
+	uint16 *data;
+
+	// Loaded into Main Memory? Loaded into Video Memory?
+	bool mmLoaded, vmLoaded;
 };
 
 /**
@@ -64,7 +74,7 @@ struct paletteAsset : public assetStatus
 {
 	paletteAsset() : assetStatus()
 	{}
-	
+
 	// index
 	uint8 index;
 
@@ -83,7 +93,7 @@ struct gfxAsset : public assetStatus
 {
 	gfxAsset() : assetStatus()
 	{}
-	
+
 	// for gfx; video memory offset
 	uint16 *offset;
 
@@ -92,7 +102,7 @@ struct gfxAsset : public assetStatus
 
 	// How many bytes long is it
 	uint16 length;
-	
+
 	// Dimensions and position
 	vector2D<uint8> dimensions;
 	vector2D<uint8> topleft;
@@ -122,7 +132,7 @@ struct objectAsset
 	{
 		weight = w;
 	}
-	
+
 	~objectAsset()
 	{
 		for (int i = 0; animations[i] != NULL ; i++)
@@ -135,12 +145,12 @@ struct objectAsset
 		}
 		delete animations;
 	}
-	
+
 	// 2D array of pointers to frameAssets to represent all the animations
 	// Accessable like: animations[aniId][frameId]
 	// Note: null terminated!
 	frameAsset ***animations;
-	
+
 	// The weight of this object
 	uint8 weight;
 };
@@ -161,10 +171,10 @@ struct levelObjectAsset
 		position = pos;
 		obj = o;
 	}
-	
+
 	// coordinates on screen
 	vector2D<float> position;
-	
+
 	// pointer to general objectAsset
 	objectAsset *obj;
 };
@@ -181,7 +191,7 @@ struct levelAsset : assetStatus
 {
 	levelAsset() : assetStatus()
 	{}
-	
+
 	// TODO: Every time this struct is updated, this clear() function needs to be
 	//       updated too.
 	// Clears out all the pointer vectors and resets loaded
@@ -193,18 +203,18 @@ struct levelAsset : assetStatus
 			delete objects[i];
 		}
 		delete objects;
-		
+
 		// Reset loaded variable
-		loaded = false;
+		mmLoaded = vmLoaded = false;
 	}
-	
+
 	// all the objects in this level
 	// Note: this array is null temrinated!
 	levelObjectAsset **objects;
-	
+
 	// to add: level geometry, villians, etc.
-	
+
 };
- 
+
 
 #endif

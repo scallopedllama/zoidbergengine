@@ -61,7 +61,7 @@ void assets::parseZbe()
 
 		// Set that it is not loaded, assign a value to the union
 		// to get it using the proper value
-		newAsset->loaded = false;
+		newAsset->mmLoaded = newAsset->vmLoaded = false;
 		newAsset->offset = NULL;
 
 		// Push this asset on the array
@@ -93,7 +93,7 @@ void assets::parseZbe()
 		// Initialize the offset so the union is set up
 		// Then mark that it isn't loaded
 		newAsset->index = 0;
-		newAsset->loaded = false;
+		newAsset->mmLoaded = newAsset->vmLoaded = false;
 
 		// Push the new asset on to the array
 		paletteAssets.push_back(newAsset);
@@ -258,109 +258,133 @@ levelAsset *assets::loadLevel(uint32 id)
 }
 
 
-// Loads tiles with id into memory
-uint16 *assets::loadGfx(gfxAsset *gfx)
+// Loads a gfx into main memory
+void assets::loadGfx(gfxAsset *gfx)
 {
-	if (!gfx)
-		return 0;
+	// If passed NULL or the gfx is already in main memory, return
+	if (!gfx || !gfx->mmLoaded) return;
 
-	// See if it's already loaded
-	if (gfx->loaded)
-	{
-		// Already loaded so return the index
-		return gfx->offset;
-	}
-
-	// Need to load the gfx from the file
+	// Need to load the gfx from the file and check for errors
 	openFile();
-
-	if(ferror(zbeData))
-	{
-		iprintf("\n data error: %s\n", strerror(errno));
-		while(true);
-	}
-
-	iprintf("gfx load cache miss");
 
 	// Need to load it from disk into memory
 	// Seek to the proper place in the file
 	if (fsetpos(zbeData, &(gfx->position)))
 	{
-		iprintf("\n seek error: %s\n", strerror(errno));
-		while(true);
+		iprintf("Seek error: %s\n", strerror(errno));
+		die();
 	}
 
-	// Request space to load this graphic
+	// Load up the data
+	gfx->data = (uint16*) malloc(gfx->length * sizeof(uint8));
+	if (fread(gfx->data, sizeof(uint8), gfx->length, zbeData) < gfx->length)
+	{
+		iprintf("Error reading gfx from file:\n  %s", strerror(errno));
+		die();
+	}
+
+	// Everything is A-Okay! close the file and set the gfx to mmLoaded
+	closeFile();
+	gfx->mmLoaded = true;
+}
+
+
+// returns the offset for the gfxAsset in video memory. DMA copies if needed
+uint16 *assets::getGfx(gfxAsset *gfx)
+{
+	// Don't do anything if passed a NULL pointer
+	if (!gfx)
+		return 0;
+
+	// If it's already loaded, just return its offset
+	if (gfx->vmLoaded)
+		return gfx->offset;
+
+	// If the gfx isn't in main memory (which it should be), run loadGfx()
+	if (!gfx->mmLoaded)
+		loadGfx(gfx);
+
+	// It would appear that the gfx is in main memory, but video memory.
+	// So load it up!
+
+	// Allocate video memory for the gfx
 	uint16 *mem = oamAllocateGfx(oam, gfx->size, SpriteColorFormat_16Color);
 	gfx->offset = mem;
-	gfx->loaded = true;
+	gfx->vmLoaded = true;
 
-	// Start copying
+	// Start copying asynchronously
 	uint16 length = gfx->length;
-	uint16 *data = (uint16*) malloc(length * sizeof(uint8));
-	if (fread(data, sizeof(uint8), length, zbeData) < length)
-		iprintf(" data load error\n");
+	DC_FlushRange(gfx->data, length);
+	dmaCopyHalfWordsAsynch(3, gfx->data, mem, length);
 
-	DC_FlushRange(data, length);
-	dmaCopyHalfWords(3, data, mem, length);
-	gfx->loaded = true;
-
-	free(data);
-	gfx->loaded = true;
-
-	iprintf(" -> %x\n", (unsigned int) gfx->offset);
-
-	// Close the File before returning
-	closeFile();
+	iprintf("gfx vmLoaded -> %x\n", (unsigned int) gfx->offset);
 
 	return mem;
 }
 
 
-// Loads palette with id into memory
-uint8 assets::loadPalette(paletteAsset *pal)
+// Loads a palette off of the disk and into main memory
+void assets::loadPalette(paletteAsset *pal)
 {
-	// See if it's already loaded
-	if (pal->loaded)
-	{
-		// Already loaded so set the index and return
-		return pal->index;
-	}
+	// If passed NULL or if it's already loaded, return
+	if (!pal || pal->mmLoaded) return;
 
 	// Need to load the gfx from the file
 	openFile();
 
-	iprintf("palette load cache miss");
-
-	// Need to load it from disk into memory
 	// Seek to the proper place in the file
-	fsetpos(zbeData, &(pal->position));
+	if (fsetpos(zbeData, &(pal->position)))
+	{
+		iprintf("Seek error: %s\n", strerror(errno));
+		die();
+	}
 
-	// Set some variables
-	static int curIndex = 0;
-	static const int COLORS_PER_PALETTE = 16;
-
-	// Start copying
+	// Load into main memory. If it fails, die
 	uint16 length = pal->length;
-	void *data = malloc(length * sizeof(u8));
-	if (fread(data, sizeof(u8), length, zbeData) < length)
-		iprintf(" data load error\n");
+	pal->data = (uint16*) malloc(length * sizeof(u8));
+	if (fread(pal->data, sizeof(u8), length, zbeData) < length)
+	{
+		iprintf("Error reading palette from file:\n  %s", strerror(errno));
+		die();
+	}
 
-	DC_FlushRange(data, length);
-	dmaCopyHalfWordsAsynch(3, data, &SPRITE_PALETTE[curIndex * COLORS_PER_PALETTE], length);
-	free(data);
+	// All done, close the file and set mmLoaded
+	closeFile();
+	pal->mmLoaded = true;
+}
 
-	// Update some variables
-	pal->loaded = true;
+// Returns index of passed paletteAsset in video memory. DMA copies it if needed
+uint8 assets::getPalette(paletteAsset *pal)
+{
+	// Don't do anything if passed NULL
+	if (!pal) return 0;
+
+	// Return its index if it's already loaded
+	if (pal->vmLoaded)
+		return pal->index;
+
+	// If it's not in main memory for some reason, load it
+	if (!pal->mmLoaded)
+		loadPalette(pal);
+
+	// Keep track of which index a palette can be loaded into
+	static int curIndex = 0;
+
+	// TODO: add support for 256 color palettes
+	static const int numColors = 16;
+
+	DC_FlushRange(pal->data, pal->length);
+	dmaCopyHalfWordsAsynch(3, pal->data, &SPRITE_PALETTE[curIndex * numColors], pal->length);
+
+	// Update the paletteAsset's information
+	pal->vmLoaded = true;
 	pal->index = curIndex;
-	iprintf(" -> %d\n", curIndex);
+	iprintf("pal vmLoaded -> %d\n", curIndex);
 
 	// Update the index for the next call
 	curIndex++;
 
-	// Close the File before returning
-	closeFile();
-
+	// return index
 	return curIndex - 1;
 }
 

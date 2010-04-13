@@ -51,6 +51,7 @@
 #include <vector>
 #include "vector.h"
 #include "assettypes.h"
+#include "util.h" // die()
 
 using namespace std;
 
@@ -83,10 +84,10 @@ public:
 	void parseZbe();
 
 	/**
-	 * loadGfx function
+	 * getGfx function
 	 *
-	 * Loads the requested id of tiles into memory (if not already loaded) and sets tilesIndex
-	 * to the proper index to locate the tiles.
+	 * Returns a pointer to the location in video memory where the tiles for the passed gfxAsset
+	 * can be found. Will copy those tiles into video memory if needed.
 	 *
 	 * @param gfxAsset *gfx
 	 *   the gfxAsset to load
@@ -94,13 +95,13 @@ public:
 	 *   a pointer to the location in video memory into which the gfx were loaded
 	 * @author Joe Balough
 	 */
-	uint16 *loadGfx(gfxAsset *gfx);
+	uint16 *getGfx(gfxAsset *gfx);
 
 	/**
-	 * loadPalette function
+	 * getPalette function
 	 *
-	 * Loads the requested id of palette into memory (if not already loaded) and sets palIndex
-	 * to the proper index to locate the palette.
+	 * Returns the index to the location in video memory where the palette data for the passed paletteAsset
+	 * can be found. Will copy that palette into video memory if needed.
 	 *
 	 * @param palAsset *pal
 	 *   A pointer to the palAsset of the palette to load
@@ -108,7 +109,7 @@ public:
 	 *   The index of the loaded palette
 	 * @author Joe Balough
 	 */
-	uint8 loadPalette(paletteAsset *pal);
+	uint8 getPalette(paletteAsset *pal);
 
 	/**
 	 * loadLevel function
@@ -151,6 +152,29 @@ private:
 	 */
 	template <class T> T load(FILE *input);
 
+
+	/**
+	 * loadGfx() function
+	 *
+	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
+	 * call to getGfx()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadGfx(gfxAsset *gfx);
+
+
+	/**
+	 * loadPalette() function
+	 *
+	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
+	 * call to getPalette()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadPalette(paletteAsset *gfx);
+
+
 	/**
 	 * openFile function
 	 *
@@ -161,9 +185,13 @@ private:
 	 */
 	inline void openFile()
 	{
+		// Try to open the file. If it fails, print something and die.
 		zbeData = fopen(zbeFile, "rb");
 		if (!zbeData)
+		{
 			iprintf("Error opening datafile %s: %s\n", zbeFile, strerror(errno));
+			die();
+		}
 	}
 
 	/**
@@ -176,6 +204,7 @@ private:
 	 */
 	inline void closeFile()
 	{
+		// Don't try to close it if it's not open. if it's open, close the file and set the pointer to NULL.
 		if(zbeData)
 		{
 			fclose(zbeData);
