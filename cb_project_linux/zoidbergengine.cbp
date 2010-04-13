@@ -20,7 +20,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="./bin/zoidbergengine.nds" />
+				<Option parameters="--cflash-path=./tools/cliCreator ./bin/zoidbergengine.nds" />
 				<Option host_application="desmume" />
 				<Compiler>
 					<Add option="-g" />
@@ -69,6 +69,7 @@
 		<Unit filename="../source/arm9/include/object.h" />
 		<Unit filename="../source/arm9/include/physics.h" />
 		<Unit filename="../source/arm9/include/util.h" />
+		<Unit filename="../source/arm9/include/vars.h" />
 		<Unit filename="../source/arm9/include/vector.h" />
 		<Unit filename="../source/arm9/source/assets.cpp" />
 		<Unit filename="../source/arm9/source/collisionmatrix.cpp" />
@@ -79,6 +80,7 @@
 		<Unit filename="../source/arm9/source/object.cpp" />
 		<Unit filename="../source/arm9/source/physics.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
+		<Unit filename="../source/arm9/source/vars.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
 		<Unit filename="../tools/cliCreator/README" />
 		<Unit filename="../tools/cliCreator/bin/Makefile" />
