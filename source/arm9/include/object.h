@@ -86,8 +86,8 @@ public:
 	 * @author Joe Balough
 	 */
 	 // TODO: Update the documentation for this
-	object(OamState *Oam, 
-	   frameAsset ***animations, 
+	object(OamState *Oam,
+	   frameAsset ***animations,
 	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
@@ -108,7 +108,7 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual bool update(touchPosition *touch);
-	
+
 	/**
 	 * Object draw function
 	 *
@@ -121,7 +121,7 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual void draw(int spriteId);
-	
+
 
 	/**
 	 * makeRotateScale function
@@ -152,7 +152,7 @@ public:
 	 * @author Joe Balough
 	 */
 	int removeRotateScale();
-	
+
 
 	/**
 	 * rotate function
@@ -172,7 +172,7 @@ public:
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
-	
+
 
 	/**
 	 * scale function
@@ -263,19 +263,19 @@ public:
 	{
 		return hidden;
 	}
-	
+
 
 	// Indicates whether or not the object is falling. If the object is falling, it will be
 	// moved by gravity in the update funciton. If not, gravity won't move it at all.
 	bool falling;
-	
+
 	// The width and height to which the sprite should be scaled using an affine transformation
 	vector2D<int> scale, dimensions;
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
 	vector2D<float> position, velocity, acceleration, gravity;
-	
+
 	// The gfxStatus of the gfx currently being viewed
 	gfxAsset *frame;
 
@@ -283,10 +283,7 @@ protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
 	OamState *oam;
-	
-	// Pointer to the assets class that was created in the level class
-	assets *zbeAssets;
-	
+
 	// Pointer to this object's animations
 	frameAsset ***animations;
 
@@ -303,7 +300,7 @@ protected:
 	bool isRotateScale;
 
 	// These are only valid when isRotateScale == true
-	
+
 	// The angle to which the sprite should be rotated using an affine transformation
 	int angle;
 
