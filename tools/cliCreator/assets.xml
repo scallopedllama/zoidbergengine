@@ -22,7 +22,7 @@
 		<object weight="10">
 			<animations>
 				<animation>
-					<frame id="0" pal="1" time="10" />
+					<frame id="1" pal="1" time="10" />
 				</animation>
 			</animations>
 		</object>
@@ -33,6 +33,9 @@
 				<object id="0" x="55" y="34" />
 				<object id="1" x="100" y="10" />
 			</objects>
+			<heroes>
+				<hero id="1" x="75" y="45" />
+			</heroes>
 		</level>
 	</levels>
 </zbe>
