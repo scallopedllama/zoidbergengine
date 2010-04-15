@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 		printUsage(argv[0]);
 		return EXIT_FAILURE;
 	}
-	
+
 	// Attempt to load up inFilename as a tinyxml document
 	TiXmlDocument input(inFilename.c_str());
 	if (!input.LoadFile())
@@ -185,17 +185,17 @@ int main(int argc, char **argv)
 
 	// Get the root node
 	TiXmlElement *zbeXML = input.RootElement();
-	
-	
-	
+
+
+
 	/**
 	 *    ZBE GAME DATA
 	 */
-	 
+
 	// Version Number
 	debug("zbe Version %d\n\n", int(ZBE_VERSION));
 	fwrite<uint16_t>(ZBE_VERSION, output);
-	
+
 	// Total # assets. There is no way of knowing how may assets we will end up
 	// with, so write a 32 bit int 0 to the file and remember the position.
 	// When all parsing is done, we will return to that point in the file and
@@ -205,22 +205,22 @@ int main(int argc, char **argv)
 	fgetpos(output, &totalAssetsPos);
 	debug("Temp Total Assets\n\n");
 	fwrite<uint32_t>(0, output);
-	
-	
-	
-	
+
+
+
+
 	/**
 	 *   GRAPHICAL ASSETS
 	 */
-	
+
 	// Total # gfx. Do the same like total number assets
 	fpos_t totalGfxPos;
 	uint32_t totalGfx = 0;
 	fgetpos(output, &totalGfxPos);
 	debug("Temp Total GFX\n");
 	fwrite<uint32_t>(0, output);
-	
-	
+
+
 	// For all the graphics in the XML file
 	TiXmlElement *graphicsXML = zbeXML->FirstChildElement("bin")->FirstChildElement("graphics");
 	TiXmlElement *gfxXML = graphicsXML->FirstChildElement("gfx");
@@ -228,14 +228,14 @@ int main(int argc, char **argv)
 	{
 		// Increment total gfx counter
 		++totalGfx;
-		
+
 		// Get all the needed attributes
 		string thisBin = getStrAttr(gfxXML, "bin");
 		int w = getIntAttr(gfxXML, "w");
 		int h = getIntAttr(gfxXML, "h");
 		int t = getIntAttr(gfxXML, "top");
 		int l = getIntAttr(gfxXML, "left");
-		
+
 		// Copy it into the zbe file
 		debug("\tGFX: %d x %d at (%d, %d)\n", w, h, t, l);
 		fwrite<uint8_t>((uint8_t) w, output);
@@ -250,13 +250,13 @@ int main(int argc, char **argv)
 		fwrite<uint16_t>(0, output);
 		debug("\tAppending GFX's Tiles Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
-		
+
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
 		debug("\tTiles' length: %d B\n", int(len));
 		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
-		
+
 		// Get the next sibling
 		gfxXML = gfxXML->NextSiblingElement("gfx");
 		debug("GFX done\n");
@@ -267,15 +267,15 @@ int main(int argc, char **argv)
 	fwrite<uint32_t>(totalGfx, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalGfx;
-	
-	
+
+
 	// Total # pal. Do the same like total number assets
 	fpos_t totalPalPos;
 	uint32_t totalPal = 0;
 	fgetpos(output, &totalPalPos);
 	debug("Temp Total Palettes\n");
 	fwrite<uint32_t>(0, output);
-	
+
 	// For all the palettes in the XML file
 	TiXmlElement *palettesXML = zbeXML->FirstChildElement("bin")->FirstChildElement("palettes");
 	TiXmlElement *palXML = palettesXML->FirstChildElement("palette");
@@ -283,7 +283,7 @@ int main(int argc, char **argv)
 	{
 		// Increment total gfx counter
 		++totalPal;
-		
+
 		// Get all the needed attributes
 		string thisBin = getStrAttr(palXML, "bin");
 
@@ -295,13 +295,13 @@ int main(int argc, char **argv)
 		fwrite<uint16_t>(0, output);
 		debug("\tAppending Palette Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
-		
+
 		// Now we have the length, so go back and write it down
 		fsetpos(output, &lenPos);
 		debug("\tPalette's Length: %d B\n", len);
 		fwrite<uint16_t>((uint16_t) len, output);
 		fseek(output, 0, SEEK_END);
-		
+
 		// Get the next sibling
 		palXML = palXML->NextSiblingElement("palette");
 		debug("Palette Done\n");
@@ -312,49 +312,49 @@ int main(int argc, char **argv)
 	fwrite<uint32_t>(totalPal, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalPal;
-	
-	
-	
 
-	
-	
+
+
+
+
+
 	/**
 	 *   OBJECTS
 	 */
-	
+
 	// Total # objects.
 	fpos_t totalObjPos;
 	uint32_t totalObj = 0;
 	fgetpos(output, &totalObjPos);
 	debug("Temp Total Objects\n");
 	fwrite<uint32_t>(0, output);
-	
+
 	// For all the objects
 	TiXmlElement *objectsXML = zbeXML->FirstChildElement("objects");
 	TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
 	while (objectXML)
 	{
 		++totalObj;
-		
+
 		// Weight
 		int weight = getIntAttr(objectXML, "weight");
 		debug("\tWeight : %d\n", weight);
 		fwrite<uint8_t>(uint8_t(weight), output);
-		
+
 		// Total # Animations
 		uint32_t totalAnimations = 0;
 		fpos_t totalAnimationsPos;
 		fgetpos(output, &totalAnimationsPos);
 		debug("\tTemp Total Animations\n");
 		fwrite<uint32_t>(0, output);
-		
+
 		// And all the animations
 		TiXmlElement *animationsXML = objectXML->FirstChildElement("animations");
 		TiXmlElement *animationXML = animationsXML->FirstChildElement("animation");
 		while (animationXML)
 		{
 			++totalAnimations;
-			
+
 			// Total # frames for this animation
 			uint16_t totalFrames = 0;
 			fpos_t totalFramesPos;
@@ -367,65 +367,65 @@ int main(int argc, char **argv)
 			while (frameXML)
 			{
 				++totalFrames;
-				
+
 				// Get the attributes
 				int gfxId = getIntAttr(frameXML, "id");
 				int palId = getIntAttr(frameXML, "pal");
 				int time = getIntAttr(frameXML, "time");
-				
+
 				// Write them to the file
 				debug("\t\t\tFrame: GFX ID %d with Palette ID %d for %d blanks\n", gfxId, palId, time);
 				fwrite<uint32_t>((uint32_t) gfxId, output);
 				fwrite<uint32_t>((uint32_t) palId, output);
 				fwrite<uint8_t>((uint8_t) time, output);
-				
+
 				// get the next frame
 				frameXML = frameXML->NextSiblingElement("frame");
 			}
-			
+
 			// Go back and write the number of frames in this animation
 			fsetpos(output, &totalFramesPos);
 			debug("\t\t%d Frames Processed\n", int(totalFrames));
 			fwrite<uint16_t>(totalFrames, output);
 			fseek(output, 0, SEEK_END);
-			
+
 			// get the next animation
 			animationXML = animationXML->NextSiblingElement("animation");
 		}
-		
+
 		// Go back and write the number of animations for this object
 		fsetpos(output, &totalAnimationsPos);
 		debug("\t%d Animations Processed\n", int(totalAnimations));
 		fwrite<uint32_t>(totalAnimations, output);
 		fseek(output, 0, SEEK_END);
-		
+
 		// get the next one
 		objectXML = objectXML->NextSiblingElement("object");
 		debug("Object done\n");
 	}
-	
+
 	// Finally, go back and write the number of objects
 	fsetpos(output, &totalObjPos);
 	debug("%d Objects processed\n\n", int(totalObj));
 	fwrite<uint32_t>(totalObj, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalObj;
-	
-	
-	
+
+
+
 	/**
 	 *    LEVELS
 	 */
-	
-	
-	
+
+
+
 	// Total # levels
 	fpos_t totalLvlPos;
 	uint32_t totalLvl = 0;
 	fgetpos(output, &totalLvlPos);
 	debug("Temp Total Levels\n");
 	fwrite<uint32_t>(0, output);
-	
+
 	// For all the levels in the XML file
 	TiXmlElement *levelsXML = zbeXML->FirstChildElement("levels");
 	TiXmlElement *levelXML = levelsXML->FirstChildElement("level");
@@ -433,10 +433,10 @@ int main(int argc, char **argv)
 	{
 		// Increment total level counter
 		++totalLvl;
-		
+
 		// Get all the needed attributes
-		
-		
+
+
 		// Level Objects
 		//Total objects
 		fpos_t totalLvlObjPos;
@@ -444,24 +444,24 @@ int main(int argc, char **argv)
 		fgetpos(output, &totalLvlObjPos);
 		debug("\tTemp total level objects\n");
 		fwrite<uint32_t>(0, output);
-		
+
 		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
 		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
 		while (objectXML)
 		{
 			++totalLvlObj;
-			
+
 			// Get the relevant infos
 			int x = getIntAttr(objectXML, "x");
 			int y = getIntAttr(objectXML, "y");
 			int id = getIntAttr(objectXML, "id");
-			
+
 			// Write them up
 			debug("\t\tObject %d at (%d, %d)\n", id, x, y);
 			fwrite<uint32_t>(uint32_t(id), output);
 			fwrite<uint16_t>(uint16_t(x), output);
 			fwrite<uint16_t>(uint16_t(y), output);
-			
+
 			// Get the next object
 			objectXML = objectXML->NextSiblingElement("object");
 		}
@@ -470,8 +470,46 @@ int main(int argc, char **argv)
 		debug("\t%d Level objects\n", int(totalLvlObj));
 		fwrite<uint32_t>(totalLvlObj, output);
 		fseek(output, 0, SEEK_END);
-		
-		
+
+
+
+
+		// Level Heroes
+		//Total heroes
+		fpos_t totalLvlHroPos;
+		uint32_t totalLvlHro = 0;
+		fgetpos(output, &totalLvlHroPos);
+		debug("\tTemp total level heroes\n");
+		fwrite<uint32_t>(0, output);
+
+		TiXmlElement *heroesXML = levelXML->FirstChildElement("heroes");
+		TiXmlElement *heroXML = heroesXML->FirstChildElement("hero");
+		while (heroXML)
+		{
+			++totalLvlHro;
+
+			// Get the relevant infos
+			int x = getIntAttr(heroXML, "x");
+			int y = getIntAttr(heroXML, "y");
+			int id = getIntAttr(heroXML, "id");
+
+			// Write them up
+			debug("\t\tHero %d at (%d, %d)\n", id, x, y);
+			fwrite<uint32_t>(uint32_t(id), output);
+			fwrite<uint16_t>(uint16_t(x), output);
+			fwrite<uint16_t>(uint16_t(y), output);
+
+			// Get the next object
+			heroXML = heroXML->NextSiblingElement("hero");
+		}
+		//go write the total number of objects
+		fsetpos(output, &totalLvlHroPos);
+		debug("\t%d Level Heroes\n", int(totalLvlHro));
+		fwrite<uint32_t>(totalLvlObj, output);
+		fseek(output, 0, SEEK_END);
+
+
+
 		// Get the next sibling
 		levelXML = levelXML->NextSiblingElement("level");
 		debug("Level Done\n");
@@ -482,17 +520,17 @@ int main(int argc, char **argv)
 	fwrite<uint32_t>(totalLvl, output);
 	fseek(output, 0, SEEK_END);
 	totalAssets += totalLvl;
-	
-	
-	
-	
-	
+
+
+
+
+
 	// Now that the total number of assets are known, go back and write that down
 	fsetpos(output, &totalAssetsPos);
 	debug("%d Assets Processed\n\n", int(totalAssets));
 	fwrite<uint32_t>(totalAssets, output);
 	fseek(output, 0, SEEK_END);
-	
+
 	// Close the output file and we're done!
 	fclose(output);
 	debug("Done!\n");
@@ -512,11 +550,11 @@ int main(int argc, char **argv)
  * fwrite wrapper function
  *
  * This is a template wrapper function for fwrite that will write the passed val
- * of template type to the file and performs error checking to make sure that 
+ * of template type to the file and performs error checking to make sure that
  * was written properly. Prints an error message if it failed.
  * Note that this function will not seek in the file so the value is written at
  * the file's current position.
- * 
+ *
  * @param T val
  *  The value to write to the file
  * @param FILE *file
@@ -540,7 +578,7 @@ template <class T> void fwrite(T val, FILE *file)
  * to make sure that it was written properly. Prints an error message if it failed.
  * Note that after writing the data at position pos, it will seek to the end of the
  * file.
- * 
+ *
  * @param T val
  *  The value to write to the file
  * @param fpos_t *pos
@@ -562,11 +600,11 @@ template <class T> void goWrite(T val, fpos_t *pos, FILE *file)
 /**
  * TinyXML utilities
  */
- 
- 
+
+
 /**
  * getIntAttr function
- * 
+ *
  * Gets an Integer attribute from the passed TiXmlElement.
  * Will print an error if it failed.
  *
@@ -591,7 +629,7 @@ int getIntAttr(TiXmlElement *elem, string attr)
 
 /**
  * getStrAttr function
- * 
+ *
  * Gets a string attribute from the passed TiXmlElement.
  * Will print an error if it failed.
  *
@@ -619,7 +657,7 @@ string getStrAttr(TiXmlElement *elem, string attr)
 /**
  *   Utility functions
  */
- 
+
 
 /**
  * appendData function
@@ -627,7 +665,7 @@ string getStrAttr(TiXmlElement *elem, string attr)
  * Opens a file for reading and appends its binary contents to a FILE pointer.
  * Used to put the binary output files from GRIT into the assets file
  * Note that this function will not seek to the end of the file, so inFil is appended
- * to the current position in the output file. 
+ * to the current position in the output file.
  *
  * @param FILE* output
  *  file pointer to the binary write opened file to append data to
@@ -656,10 +694,10 @@ uint16_t appendData(FILE *output, string inFile)
 	// That while could cancel because of a bad read, let's check for that
 	if (ferror(input))
 		fprintf(stderr, "Error reading from binary file %s\n", inFile.c_str());
-	
+
 	// Don't forget to close that file
 	fclose(input);
-	
+
 	// Return the length of the data
 	return bytes;
 }
@@ -667,7 +705,7 @@ uint16_t appendData(FILE *output, string inFile)
 
 /**
  * debug Function
- * 
+ *
  * A very basic wrapper for printf, all it does is make sure that verbose output is enabled.
  * If it is, it will pass everything through to printf. If not, it just returns.
  *
@@ -679,11 +717,12 @@ int debug(char* fmt, ...)
 {
 	if(!verbose)
 		return 0; // Return that we wrote 0 characters
-	
+
 	int toReturn = 0;
 	va_list ap;
 	va_start(ap, fmt);
 	toReturn = vprintf(fmt, ap);
+	fflush(stdout);
 	va_end(ap);
 	return toReturn;
 }
@@ -702,7 +741,7 @@ void printUsage(char *pgm)
 	fprintf(stderr, "          -i is required, it is the filename of the XML file to parse\n");
 	fprintf(stderr, "          -o is optional, it will overwrite (!) file 'assets.zbe' if omitted.\n");
 	fprintf(stderr, "          -v is optional, it enables verbose output.\n");
-	
+
 	if (verbose)
 	{
 		fprintf(stderr, "Expects XML file to be in the following form:\n");
