@@ -83,18 +83,8 @@
 		<Unit filename="../source/arm9/source/vars.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
 		<Unit filename="../tools/cliCreator/README" />
-		<Unit filename="../tools/cliCreator/bin/Makefile" />
-		<Unit filename="../tools/cliCreator/bin/numPrefix16.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/numPrefix32.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/numPrefix8.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/objParser.cpp" />
-		<Unit filename="../tools/cliCreator/cliCreator.sh" />
+		<Unit filename="../tools/cliCreator/assets.xml" />
+		<Unit filename="../tools/cliCreator/cliCreator.cpp" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />
