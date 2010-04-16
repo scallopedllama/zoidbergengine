@@ -396,22 +396,26 @@ int main(int argc, char **argv)
 			bgRowXML = bgRowXML->NextSiblingElement("row");
 		}
 		
+		// Multiply the width and height by 8 (since all tiles are 8x8)
+		int adjW = maxWidth * 8;
+		int adjH = h * 8;
+		
 		// Determine the size of the bg
-		debug("Got a %d x %d background\n", maxWidth, h);
+		debug("Got a %d x %d background\n", adjW, adjH);
 		
 		int minS = 1024;
 		uint8_t size = 3;
-		if (maxWidth >= h)
+		if (adjW >= adjH)
 		{
-			if (maxWidth <= 512) size = 2;
-			if (maxWidth <= 256) size = 1;
-			if (maxWidth <= 128) size = 0;
+			if (adjW <= 512) size = 2;
+			if (adjW <= 256) size = 1;
+			if (adjW <= 128) size = 0;
 		}
 		else
 		{
-			if (h <= 512) size = 2;
-			if (h <= 256) size = 1;
-			if (h <= 128) size = 0;
+			if (adjH <= 512) size = 2;
+			if (adjH <= 256) size = 1;
+			if (adjH <= 128) size = 0;
 		}
 		switch (size)
 		{
@@ -431,26 +435,24 @@ int main(int argc, char **argv)
 		
 		// Write all those uint32_t ids
 		debug("\tWriting bg data:\n\t");
-		for (unsigned int i = 0; i < minS; i++)
+		uint32_t wroteBytes = 0;
+		for (unsigned int i = 0; i < minS / 8; i++)
 		{
-			for (unsigned int j = 0; j < minS; j++)
+			for (unsigned int j = 0; j < minS / 8; j++)
 			{
 				// Make sure to get a value within the range of the vectors
 				uint32_t toWrite = 0;
 				if ( i < tiles.size() && j < tiles[i].size() )
-				{
-					toWrite = tiles[i][j];				
-					// Only echo the defined values
-					debug("%x ", toWrite);
-				}
+					toWrite = tiles[i][j];
 				
 				// Write it to the file
+				debug("%x ", toWrite);
 				fwrite<uint32_t>(toWrite, output);
+				wroteBytes += 4;
 			}
-			if (i < tiles.size())
-				debug("\n\t");
+			debug("\n\t");
 		}
-		
+		debug("\tWrote %d bytes\n", wroteBytes);
 		
 		// Get the next sibling
 		bgXML = bgXML->NextSiblingElement("background");

@@ -85,7 +85,7 @@ void assets::parseZbe()
 		newAsset->length = load<uint16>(zbeData);
 		iprintf(" %d's len %d\n", i, newAsset->length);
 
-		// Add the current position in the file to the vector
+		// Add the current position in the file to the asset
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
@@ -101,6 +101,61 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
+	
+	
+	// Number of backrounds
+	uint32 numBackgrounds = load<uint32>(zbeData);
+	iprintf("#bgs %d\n", numBackgrounds);
+	
+	// Get all the backgrounds
+	for (unsigned int i = 0; i < numBackgrounds; i++)
+	{
+		// make a new backgroundAsset
+		backgroundAsset *newAsset = new backgroundAsset();
+		
+		// load up the reference to its palette
+		uint32 palId = load<uint32>(zbeData);
+		newAsset->palette = paletteAssets[palId];
+		
+		// set its size
+		uint8 bgSize = load<uint8>(zbeData);
+		switch (bgSize)
+		{
+			case 0:
+				// To determine the skip bytes, divide the dimension by 8 to get number
+				// of tiles in one dimension. Then square that to get total number of tiles.
+				newAsset->size = BgSize_ER_128x128;
+				newAsset->length = 256;
+				break;
+			case 1:
+				newAsset->size = BgSize_ER_256x256;
+				newAsset->length = 1024;
+				break;
+			case 2:
+				newAsset->size = BgSize_ER_512x512;
+				newAsset->length = 4096;
+				break;
+			default:
+				newAsset->size = BgSize_ER_1024x1024;
+				newAsset->length = 16384;
+				break;
+		}
+		
+		iprintf(" pal%d, size %d, %d B\n", (int) palId, (int) bgSize, (int) newAsset->length);
+		
+		// Save the position of all the tiles data
+		fpos_t curPos;
+		fgetpos(zbeData, &curPos);
+		newAsset->position = curPos;
+		
+		// Seek past all those ids
+		// That 4 is there because each id is 4 bytes
+		fseek(zbeData, newAsset->length * 4, SEEK_CUR);
+		
+		// Put this backgroundAsset on the vector
+		backgroundAssets.push_back(newAsset);
+	}
+	
 
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
@@ -187,7 +242,7 @@ void assets::parseZbe()
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
 		// NOTE: Keep this up to date!
-		const static int lvlObjSize = 4 + 2 + 2;
+		const static int lvlObjSize = 4 + 4 + 2 + 2;
 
 		// number of level heroes
 		uint32 numLvlHeroes = load<uint32>(zbeData);
@@ -231,6 +286,10 @@ levelAsset *assets::loadLevel(uint32 id)
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
+	
+	// background
+	uint32 bg0id = load<uint32>(zbeData);
+	lvl->bg0 = backgroundAssets[bg0id];
 	
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
@@ -281,6 +340,94 @@ levelAsset *assets::loadLevel(uint32 id)
 
 	// Return that levelAsset
 	return lvl;
+}
+
+
+// loads up a background
+int assets::loadBackground(backgroundAsset *background)
+{
+	// Return if nothing to do
+	if (!background) return -1;
+	
+	// Open the file
+	openFile();
+	
+	// Seek to the proper place in the file
+	if (fsetpos(zbeData, &(background->position)))
+	{
+		iprintf("Seek error: %s\n", strerror(errno));
+		die();
+	}
+	
+	// Allocate enough space for the map
+	background->map = new uint16[background->length];
+	
+	// Make a map to correspond between the ids in the file and the new ids for
+	// the tiles data
+	map<uint32, uint16> changer;
+	
+	// Go through all of the ids
+	uint16 tiles = 0;
+	for (unsigned int i = 0; i < background->length; i++)
+	{
+		// Get the gfxId for the next tile
+		uint32 gfxId = load<uint32>(zbeData);
+		
+		// See if it's already mapped
+		// find() will return the iterator for the end of the map if the passed key isn't mapped yet
+		if (changer.find(gfxId) == changer.end())
+		{
+			// not mapped, so map it
+			changer[gfxId] = tiles;
+			
+			// Increment the number of unique tiles used
+			++tiles;
+		}
+		
+		// Set the tile id for this location in the map
+		background->map[i] = changer[gfxId];
+	}
+	
+	// Allocate enough space for all the tiles
+	//   4 bits per pixel so each tile needs 8 * 8 * 4 = 32 bits = 2 uint16
+	background->tiles = new uint16[tiles * 2];
+	
+	// Iterate through all the mapped items and load their tiles
+	uint32 tilesOffset = 0;
+	for ( map<uint32, uint16>::iterator it=changer.begin() ; it != changer.end(); it++ )
+	{
+		// Make sure the gfx is loaded into main memory
+		loadGfx(gfxAssets[it->first]);
+		
+		// it into tiles
+		background->tiles[tilesOffset] = gfxAssets[it->first]->data[0];
+		background->tiles[tilesOffset + 1] = gfxAssets[it->first]->data[1];
+		
+		// Increment the tilesOffset
+		tilesOffset += 2;
+	}
+	// TODO: The code above doesn't look very good. Clean it up a bit
+	
+	// TODO: un-hard-code this layer value here
+	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
+	int bgId = bgInit(3, BgType_ExRotation, background->size, 0,2);
+	
+	// Make sure the palette is loaded into main memory
+	loadPalette(background->palette);
+	
+	// Copy the data into video memory
+	dmaCopy(background->tiles, bgGetGfxPtr(bgId), tiles * 2 * sizeof(uint16));
+    dmaCopy(background->palette->data, BG_PALETTE, background->palette->length * sizeof(uint8));
+    dmaCopy(background->map, bgGetMapPtr(bgId),  background->length * sizeof(uint16));
+	
+	// free up the memory used for those tiles and the map (since its in video memory now)
+	delete background->tiles;
+	delete background->map;
+	background->tiles = background->map = NULL;
+	
+	// All done, close the file and return
+	closeFile();
+	return bgId;
 }
 
 

@@ -49,6 +49,7 @@
 #include <nds.h>
 #include <fat.h>
 #include <vector>
+#include <map>
 #include "vector.h"
 #include "assettypes.h"
 #include "util.h" // die()
@@ -125,6 +126,20 @@ public:
 	 * @author Joe Balough
 	 */
 	levelAsset *loadLevel(uint32 id);
+
+	/**
+	 * loadBackground function
+	 *
+	 * Used by level class to tell this assets class to initialize the passed backgroundAsset
+	 * and get its data into video memory properly. This function tries to be smart about not wasting memory.
+	 * 
+	 * @param backgroundAsset *background
+	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
+	 * @return int
+	 *  The background id of the initilized background
+	 * @author Joe Balough
+	 */
+	int loadBackground(backgroundAsset *background);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
@@ -243,6 +258,7 @@ private:
 	 */
 	// Tiles' status
 	vector<gfxAsset*> gfxAssets;
+	
 	// Palettes' status
 	vector<paletteAsset*> paletteAssets;
 
@@ -251,6 +267,9 @@ private:
 
 	// Vector of levelAssets
 	vector<levelAsset*> levelAssets;
+	
+	// Vector of backgroundAssets
+	vector<backgroundAsset*> backgroundAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

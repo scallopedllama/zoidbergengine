@@ -110,6 +110,46 @@ struct gfxAsset : public assetStatus
 
 
 /**
+ * backgroundAsset struct. Inherits assetStatus and is used to manage the data needed
+ * to load and display backgrounds.
+ *
+ */
+struct backgroundAsset : public assetStatus
+{
+	backgroundAsset() : assetStatus()
+	{
+		palette = NULL;
+		map = tiles = NULL;
+		size = BgSize_ER_1024x1024;
+		length = 16384;
+	}
+	
+	~backgroundAsset()
+	{
+		if (map)
+			delete map;
+		if (tiles)
+			delete tiles;
+	}
+	
+	// Palette to use with this background
+	paletteAsset *palette;
+	
+	// size of the background
+	BgSize size;
+	
+	// Pointers to dynamically allocated arrays of uint16s
+	// for the map data and the tiles data.
+	uint16 *map;
+	uint16 *tiles;
+	
+	// How many bytes the map data takes up in the file
+	uint32 length;
+};
+
+
+
+/**
  * frameAsset struct. Used in keeping track of animations. Has a gfx id, time it should be on screen
  * and a pointer to the gfx in main memory (or NULL if not loaded)
  * @author Joe Balough
@@ -212,6 +252,9 @@ struct levelAsset : assetStatus
 		// Reset loaded variable
 		mmLoaded = vmLoaded = false;
 	}
+
+	// The background that this level uses
+	backgroundAsset *bg0;
 
 	// all the objects in this level
 	// this array is null temrinated!

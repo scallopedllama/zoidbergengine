@@ -14,6 +14,9 @@ level::level(levelAsset *metadata, OamState *o)
 
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
+	
+	// Load up the background
+	zbeAssets->loadBackground(metadata->bg0);
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
@@ -56,7 +59,6 @@ level::level(levelAsset *metadata, OamState *o)
 		//       collision actions to the collisionMatrix.
 		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
-
 
 }
 
