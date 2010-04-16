@@ -90,8 +90,8 @@ public:
 		{
 			// ansi escape sequence to set print co-ordinates
 			// /x1b[line;columnH
-			iprintf("\x1b[1;24HX: %d\n", (int) position.x);
-			iprintf("\x1b[2;24HY: %d\n", (int) position.y);
+			iprintf("\x1b[1;24HX: %5ld\n", (long int) position.x);
+			iprintf("\x1b[2;24HY: %5ld\n", (long int) position.y);
 		}
 		++numCalls;
 
