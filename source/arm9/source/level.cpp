@@ -18,6 +18,25 @@ level::level(levelAsset *metadata, OamState *o)
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
 	colMatrix = new collisionMatrix(1200, 1000, 70);
+	
+	// Parse the levelAssets metadata
+	// Load up all the objects
+	for (unsigned int i = 0; metadata->heroes[i] != NULL; i++)
+	{
+		// This is the objectAsset for this levelObjectAsset
+		objectAsset *obj = metadata->heroes[i]->obj;
+
+		// Make the new hero
+		object *newObj = (object*) new hero(oam, obj->animations, metadata->objects[1]->position, gravity);
+
+		// Add the new object to the list of objects
+		objects.push_back(newObj);
+
+		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
+		// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
+		//       collision actions to the collisionMatrix.
+		objectsGroups.push_back(colMatrix->addObject(newObj));
+	}
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
