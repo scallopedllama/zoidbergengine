@@ -112,7 +112,7 @@ bool verbose = false;
 // Function Prototypes
 int debug(char* fmt, ...);
 template <class T> void fwrite(T val, FILE *file);
-template <class T> void goWrite(T val, fpos_t *pos, FILE *file);
+template <class T> void goWrite(T val, FILE *file, fpos_t *pos);
 int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
@@ -275,11 +275,10 @@ int main(int argc, char **argv)
 		debug("GFX done\n");
 	}
 	// Now that the total number of gfx are known, go back and write that down
-	fsetpos(output, &totalGfxPos);
+	goWrite<uint32_t>(totalGfx, output, &totalGfxPos);
 	debug("%d GFX processed\n\n", int(totalGfx));
-	fwrite<uint32_t>(totalGfx, output);
-	fseek(output, 0, SEEK_END);
 	totalAssets += totalGfx;
+
 
 
 	// Total # pal. Do the same like total number assets
@@ -320,10 +319,8 @@ int main(int argc, char **argv)
 		debug("Palette Done\n");
 	}
 	// Now that the total number of palettes are known, go back and write that down
-	fsetpos(output, &totalPalPos);
+	goWrite<uint32_t>(totalPal, output, &totalPalPos);
 	debug("%d Palettes Processed\n\n", int(totalPal));
-	fwrite<uint32_t>(totalPal, output);
-	fseek(output, 0, SEEK_END);
 	totalAssets += totalPal;
 
 
@@ -397,20 +394,16 @@ int main(int argc, char **argv)
 			}
 
 			// Go back and write the number of frames in this animation
-			fsetpos(output, &totalFramesPos);
+			goWrite<uint16_t>(totalFrames, output, &totalFramesPos);
 			debug("\t\t%d Frames Processed\n", int(totalFrames));
-			fwrite<uint16_t>(totalFrames, output);
-			fseek(output, 0, SEEK_END);
 
 			// get the next animation
 			animationXML = animationXML->NextSiblingElement("animation");
 		}
 
 		// Go back and write the number of animations for this object
-		fsetpos(output, &totalAnimationsPos);
+		goWrite<uint32_t>(totalAnimations, output, &totalAnimationsPos);
 		debug("\t%d Animations Processed\n", int(totalAnimations));
-		fwrite<uint32_t>(totalAnimations, output);
-		fseek(output, 0, SEEK_END);
 
 		// get the next one
 		objectXML = objectXML->NextSiblingElement("object");
@@ -418,10 +411,8 @@ int main(int argc, char **argv)
 	}
 
 	// Finally, go back and write the number of objects
-	fsetpos(output, &totalObjPos);
+	goWrite<uint32_t>(totalObj, output, &totalObjPos);
 	debug("%d Objects processed\n\n", int(totalObj));
-	fwrite<uint32_t>(totalObj, output);
-	fseek(output, 0, SEEK_END);
 	totalAssets += totalObj;
 
 
@@ -481,10 +472,8 @@ int main(int argc, char **argv)
 			heroXML = heroXML->NextSiblingElement("hero");
 		}
 		//go write the total number of objects
-		fsetpos(output, &totalLvlHroPos);
+		goWrite<uint32_t>(totalLvlHro, output, &totalLvlHroPos);
 		debug("\t%d Level Heroes\n", int(totalLvlHro));
-		fwrite<uint32_t>(totalLvlHro, output);
-		fseek(output, 0, SEEK_END);
 
 
 
@@ -519,10 +508,8 @@ int main(int argc, char **argv)
 			objectXML = objectXML->NextSiblingElement("object");
 		}
 		//go write the total number of objects
-		fsetpos(output, &totalLvlObjPos);
+		goWrite<uint32_t>(totalLvlObj, output, &totalLvlObjPos);
 		debug("\t%d Level objects\n", int(totalLvlObj));
-		fwrite<uint32_t>(totalLvlObj, output);
-		fseek(output, 0, SEEK_END);
 
 
 
@@ -531,10 +518,8 @@ int main(int argc, char **argv)
 		debug("Level Done\n");
 	}
 	// Now that the total number of palettes are known, go back and write that down
-	fsetpos(output, &totalLvlPos);
+	goWrite<uint32_t>(totalLvl, output, &totalLvlPos);
 	debug("%d Levels Processed\n\n", int(totalLvl));
-	fwrite<uint32_t>(totalLvl, output);
-	fseek(output, 0, SEEK_END);
 	totalAssets += totalLvl;
 
 
@@ -542,10 +527,8 @@ int main(int argc, char **argv)
 
 
 	// Now that the total number of assets are known, go back and write that down
-	fsetpos(output, &totalAssetsPos);
+	goWrite<uint32_t>(totalAssets, output, &totalAssetsPos);
 	debug("%d Assets Processed\n\n", int(totalAssets));
-	fwrite<uint32_t>(totalAssets, output);
-	fseek(output, 0, SEEK_END);
 
 	// Close the output file and we're done!
 	fclose(output);
@@ -603,7 +586,7 @@ template <class T> void fwrite(T val, FILE *file)
  *  The file to which val should be written
  * @author Joe Balough
  */
-template <class T> void goWrite(T val, fpos_t *pos, FILE *file)
+template <class T> void goWrite(T val, FILE *file, fpos_t *pos)
 {
 	fsetpos(file, pos);
 	fwrite<T>(val, file);
