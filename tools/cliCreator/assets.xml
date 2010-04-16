@@ -51,13 +51,11 @@
 	<levels>
 		<level bg0="0">
 			<objects>
-				<object id="0" x="55" y="34" />
-				<object id="1" x="100" y="10" />
-				<object id="3" x="0" y="0" />
-				<object id="4" x="4" y="4" />
+				<object id="0" x="155" y="34" />
+				<object id="0" x="200" y="10" />
 			</objects>
 			<heroes>
-				<hero id="1" x="75" y="45" />
+				<hero id="1" x="32" y="32" />
 			</heroes>
 		</level>
 	</levels>
