@@ -148,7 +148,7 @@ struct objectAsset
 
 	// 2D array of pointers to frameAssets to represent all the animations
 	// Accessable like: animations[aniId][frameId]
-	// Note: null terminated!
+	// This array is null terminated!
 	frameAsset ***animations;
 
 	// The weight of this object
@@ -192,25 +192,31 @@ struct levelAsset : assetStatus
 	levelAsset() : assetStatus()
 	{}
 
-	// TODO: Every time this struct is updated, this clear() function needs to be
+	// NOTE: Every time this struct is updated, this clear() function needs to be
 	//       updated too.
 	// Clears out all the pointer vectors and resets loaded
 	void clear()
 	{
-		// Clear out vectors
+		// Clear out arrays
 		for (int i = 0; objects[i] != NULL; i++)
 		{
 			delete objects[i];
 		}
 		delete objects;
+		for (int i = 0; heroes[i] != NULL; i++)
+		{
+			delete heroes[i];
+		}
+		delete heroes;
 
 		// Reset loaded variable
 		mmLoaded = vmLoaded = false;
 	}
 
 	// all the objects in this level
-	// Note: this array is null temrinated!
+	// this array is null temrinated!
 	levelObjectAsset **objects;
+	levelObjectAsset **heroes;
 
 	// to add: level geometry, villians, etc.
 
