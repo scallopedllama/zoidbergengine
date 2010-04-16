@@ -380,6 +380,8 @@ int assets::loadBackground(backgroundAsset *background)
 			// not mapped, so map it
 			changer[gfxId] = tiles;
 			
+			iprintf(" %d > %d\n", gfxId, tiles);
+			
 			// Increment the number of unique tiles used
 			++tiles;
 		}
@@ -389,8 +391,8 @@ int assets::loadBackground(backgroundAsset *background)
 	}
 	
 	// Allocate enough space for all the tiles
-	//   4 bits per pixel so each tile needs 8 * 8 * 4 = 32 bits = 2 uint16
-	background->tiles = new uint16[tiles * 2];
+	//   4 bits per pixel so each tile needs 8 * 8 * 4 = 256 bits = 16 uint16
+	background->tiles = new uint16[tiles * 16];
 	
 	// Iterate through all the mapped items and load their tiles
 	uint32 tilesOffset = 0;
@@ -399,12 +401,13 @@ int assets::loadBackground(backgroundAsset *background)
 		// Make sure the gfx is loaded into main memory
 		loadGfx(gfxAssets[it->first]);
 		
-		// it into tiles
-		background->tiles[tilesOffset] = gfxAssets[it->first]->data[0];
-		background->tiles[tilesOffset + 1] = gfxAssets[it->first]->data[1];
+		// copy it into tiles
+		//memcpy(&background->tiles[tilesOffset], gfxAssets[it->first]->data, gfxAssets[it->first]->length * sizeof(uint8));
+		for (int i = 0; i < 16; i++)
+			background->tiles[tilesOffset + i] = gfxAssets[it->first]->data[i];
 		
 		// Increment the tilesOffset
-		tilesOffset += 2;
+		tilesOffset += 16;
 	}
 	// TODO: The code above doesn't look very good. Clean it up a bit
 	
@@ -416,7 +419,7 @@ int assets::loadBackground(backgroundAsset *background)
 	loadPalette(background->palette);
 	
 	// Copy the data into video memory
-	dmaCopy(background->tiles, bgGetGfxPtr(bgId), tiles * 2 * sizeof(uint16));
+	dmaCopy(background->tiles, bgGetGfxPtr(bgId), tiles * 16 * sizeof(uint16));
     dmaCopy(background->palette->data, BG_PALETTE, background->palette->length * sizeof(uint8));
     dmaCopy(background->map, bgGetMapPtr(bgId),  background->length * sizeof(uint16));
 	
