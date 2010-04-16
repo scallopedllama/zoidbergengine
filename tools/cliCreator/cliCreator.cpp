@@ -329,6 +329,145 @@ int main(int argc, char **argv)
 
 
 	/**
+	 *     BACKGROUNDS
+	 */
+	
+	
+	
+	// Total # backgrounds.
+	fpos_t totalBgPos;
+	uint32_t totalBg = 0;
+	fgetpos(output, &totalBgPos);
+	debug("Temp Total Backgrounds\n");
+	fwrite<uint32_t>(0, output);
+
+	// For all the palettes in the XML file
+	TiXmlElement *bgsXML = zbeXML->FirstChildElement("backgrounds");
+	TiXmlElement *bgXML = bgsXML->FirstChildElement("background");
+	while (bgXML)
+	{
+		// Increment total gfx counter
+		++totalBg;
+		
+		// Get the palette to use for this background
+		int pal = getIntAttr(bgXML, "palette");
+		debug("\tBackground using Palette %d\n", pal);
+		fwrite<uint32_t>(uint32_t(pal), output);
+		
+		// Vector of vectors to store all the ids
+		vector< vector<uint32_t> > tiles;
+		debug("\t");
+		
+		// Process each row
+		TiXmlElement *bgRowXML = bgXML->FirstChildElement("row");
+		int maxWidth = 0;
+		int h = 0;
+		while (bgRowXML)
+		{
+			++h;
+			
+			// Vector of ids
+			vector<uint32_t> rowTiles;
+			
+			// Process each tile
+			int w = 0;
+			TiXmlElement *bgTileXML = bgRowXML->FirstChildElement("tile");
+			while (bgTileXML)
+			{
+				++w;
+				
+				// Get tile id and add it to this row's vector
+				int id = getIntAttr(bgTileXML, "id");
+				debug("%d ", id);
+				rowTiles.push_back((uint32_t) id);
+				
+				// Get the next tile
+				bgTileXML = bgTileXML->NextSiblingElement("tile");
+			}
+			
+			// See if that set a new record for maxWidth
+			if (w > maxWidth) maxWidth = w;
+			
+			// Add this row of tiles to the vector of vectors
+			tiles.push_back(rowTiles);
+			debug("\n\t");
+			
+			// Get next row
+			bgRowXML = bgRowXML->NextSiblingElement("row");
+		}
+		
+		// Determine the size of the bg
+		debug("Got a %d x %d background\n", maxWidth, h);
+		
+		int minS = 1024;
+		uint8_t size = 3;
+		if (maxWidth >= h)
+		{
+			if (maxWidth <= 512) size = 2;
+			if (maxWidth <= 256) size = 1;
+			if (maxWidth <= 128) size = 0;
+		}
+		else
+		{
+			if (h <= 512) size = 2;
+			if (h <= 256) size = 1;
+			if (h <= 128) size = 0;
+		}
+		switch (size)
+		{
+			case 0:
+				minS = 128;
+				break;
+			case 1:
+				minS = 256;
+				break;
+			case 2:
+				minS = 512;
+				break;
+		}
+		debug("\tRounding to %d x %d (size %d)\n", minS, minS, int(size));
+		fwrite<uint8_t>(size, output);
+		
+		
+		// Write all those uint32_t ids
+		debug("\tWriting bg data:\n\t");
+		for (unsigned int i = 0; i < minS; i++)
+		{
+			for (unsigned int j = 0; j < minS; j++)
+			{
+				// Make sure to get a value within the range of the vectors
+				uint32_t toWrite = 0;
+				if ( i < tiles.size() && j < tiles[i].size() )
+				{
+					toWrite = tiles[i][j];				
+					// Only echo the defined values
+					debug("%x ", toWrite);
+				}
+				
+				// Write it to the file
+				fwrite<uint32_t>(toWrite, output);
+			}
+			if (i < tiles.size())
+				debug("\n\t");
+		}
+		
+		
+		// Get the next sibling
+		bgXML = bgXML->NextSiblingElement("background");
+		debug("Background Done\n");
+	}
+	// Now that the total number of backgrounds are known, go back and write that down
+	goWrite<uint32_t>(totalBg, output, &totalBgPos);
+	debug("%d Backgrounds Processed\n\n", int(totalBg));
+	totalAssets += totalBg;
+
+
+
+
+
+
+
+	/**
 	 *   OBJECTS
 	 */
 
