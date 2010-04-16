@@ -183,19 +183,23 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
+		
+		// The total number of bytes it takes to represent one level object in the
+		// assets file.
+		// NOTE: Keep this up to date!
+		const static int lvlObjSize = 4 + 2 + 2;
 
+		// number of level heroes
+		uint32 numLvlHeroes = load<uint32>(zbeData);
+		
+		// Seek past those heroes
+		fseek(zbeData, lvlObjSize * numLvlHeroes, SEEK_CUR);
+		
 		// number of level objects
 		uint32 numLvlObjs = load<uint32>(zbeData);
-
-		// for each level objects
-		// TODO: replace this with a bit of seeking magic to get rid of warnings and speed things up a bit
-		for (uint32 j = 0; j < numLvlObjs; j++)
-		{
-			// load relevant datas
-			load<uint32>(zbeData);
-			load<uint16>(zbeData);
-			load<uint16>(zbeData);
-		}
+		
+		// Seek past all the level objects
+		fseek(zbeData, lvlObjSize * numLvlObjs, SEEK_CUR);
 	}
 
 	closeFile();
@@ -227,7 +231,29 @@ levelAsset *assets::loadLevel(uint32 id)
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
-
+	
+	// number of level heroes
+	uint32 numLvlHeroes = load<uint32>(zbeData);
+	iprintf(" #heroes %d\n", numLvlHeroes);
+	
+	// Allocate enough space for them all
+	lvl->heroes = new levelObjectAsset*[numLvlHeroes + 1];
+	lvl->heroes[numLvlHeroes] = NULL;
+	
+	// Load up all the heroes
+	for (uint32 i = 0; i < numLvlHeroes; i++)
+	{
+		// load up the variables
+		uint32 objId = load<uint32>(zbeData);
+		uint16 x = load<uint16>(zbeData);
+		uint16 y = load<uint16>(zbeData);
+		iprintf("  #%d: obj%d at (%d, %d)\n", (int) i, (int) objId, (int) x, (int) y);
+		
+		// make a new levelObjectAsset and add it to the vector
+		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
+		lvl->heroes[i] = lvlObj;
+	}
+	
 	// number of level objects
 	uint32 numLvlObjs = load<uint32>(zbeData);
 	iprintf(" #objs %d\n", numLvlObjs);
@@ -237,17 +263,17 @@ levelAsset *assets::loadLevel(uint32 id)
 	lvl->objects[numLvlObjs] = NULL;
 
 	// for each level object
-	for (uint32 j = 0; j < numLvlObjs; j++)
+	for (uint32 i = 0; i < numLvlObjs; i++)
 	{
 		// load relevant datas
 		uint32 objId = load<uint32>(zbeData);
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
-		iprintf("  #%d: obj%d at (%d, %d)\n", (int) j, (int) objId, (int) x, (int) y);
+		iprintf("  #%d: obj%d at (%d, %d)\n", (int) i, (int) objId, (int) x, (int) y);
 
 		// Make a new levelObjectAsset and add it to the vector
 		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
-		lvl->objects[j] = lvlObj;
+		lvl->objects[i] = lvlObj;
 	}
 
 	//close the file
@@ -431,7 +457,7 @@ SpriteSize assets::getSpriteSize(uint8 width, uint8 height)
 	else if (height <= 32)
 		sheight = 32;
 	else if (height <= 64)
-		height = 64;
+		sheight = 64;
 
 	// Wow this is intense but it's the only way I can come up with to do this.
 	switch (swidth)
