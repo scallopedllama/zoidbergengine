@@ -36,9 +36,13 @@ do
 	./bin/numPrefix16 $img_bin $num_bytes_img $img_bin.zbe.tmp > /dev/null
 	./bin/numPrefix16 $pal_bin $num_bytes_pal $pal_bin.zbe > /dev/null
 
+	#top and left
+	./bin/numPrefix8 $img_bin.zbe.tmp 0 $img_bin.zbe.tmp1 > /dev/null
+	./bin/numPrefix8 $img_bin.zbe.tmp1 0 $img_bin.zbe.tmp2 > /dev/null
+
 	# prepend the height then width to the gfx bin
-	./bin/numPrefix8 $img_bin.zbe.tmp $height $img_bin.zbe.tmp1 > /dev/null
-	./bin/numPrefix8 $img_bin.zbe.tmp1 $width $img_bin.zbe > /dev/null
+	./bin/numPrefix8 $img_bin.zbe.tmp2 $height $img_bin.zbe.tmp3 > /dev/null
+	./bin/numPrefix8 $img_bin.zbe.tmp3 $width $img_bin.zbe > /dev/null
 
 	# clean up as much as possible
 	rm $img_bin.zbe.tmp* $img_bin $pal_bin

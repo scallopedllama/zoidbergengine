@@ -44,73 +44,16 @@
 #define ASSETS_H_INCLUDED
 
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <nds.h>
 #include <fat.h>
 #include <vector>
+#include "vector.h"
+#include "assettypes.h"
+#include "util.h" // die()
 
 using namespace std;
-
-/**
- * asset_status struct. Used in the assets class in vectors to keep track assets in
- * the datafile. Contains information like if it's loaded and what's its id.
- *
- * @author Joe Balough
- */
-struct assetStatus
-{
-	assetStatus()
-	{
-		loaded = false;
-	}
-
-	// Where the asset is located in the data file
-	fpos_t position;
-
-	// How many bytes long is it
-	uint16 length;
-
-	// Loaded from the file?
-	bool loaded;
-
-	/**
-	 * The following Variables are only for palettes
-	 */
-	// index
-	uint8 index;
-
-
-	/**
-	 * The following Variables are only for Sprites
-	 */
-	// for sprites; video memory offset
-	uint16 *offset;
-
-	// Its size (if applicable)
-	SpriteSize size;
-
-};
-
-
-/**
- * frame struct. Used in keeping track of animations. Has a gfx id, time it should be on screen
- * and a pointer to the gfx in main memory (or NULL if not loaded)
- * @author Joe Balough
- */
-struct frame
-{
-	uint32 gfxId;
-	uint32 *gfx;
-	uint8 time;
-};
-
-/**
- * animation struct. Used to represent an animation. Is just a wrapper for a vector of frames.
- * @author Joe Balough
- */
-struct animation
-{
-	vector<frame> frames;
-};
 
 
 /**
@@ -121,13 +64,13 @@ struct animation
 class assets {
 public:
 	/**
-	 * @param char *filename
+	 * @param string filename
 	 *   The zbe file to use for this game
-	 * @param OAMTable *oam
+	 * @param OamState *oam
 	 *   The oam table into which the graphics should be loaded
 	 * @author Joe Balough
 	 */
-	assets(char *filename, OamState *oam);
+	assets(char* filename, OamState *oam);
 
 	/**
 	 * parseZbe function
@@ -137,35 +80,51 @@ public:
 	 *
 	 * @author Joe Balough
 	 */
+	// TODO: update the docs for this too
 	void parseZbe();
 
 	/**
-	 * loadGfx function
+	 * getGfx function
 	 *
-	 * Loads the requested id of tiles into memory (if not already loaded) and sets tilesIndex
-	 * to the proper index to locate the tiles.
+	 * Returns a pointer to the location in video memory where the tiles for the passed gfxAsset
+	 * can be found. Will copy those tiles into video memory if needed.
 	 *
-	 * @param int id
-	 *   The unique identifier for the asset
-	 * @param u16 &tilesIndex
-	 *   Passed by reference. Will be set to the index of these tiles
+	 * @param gfxAsset *gfx
+	 *   the gfxAsset to load
+	 * @return uint16 pointer
+	 *   a pointer to the location in video memory into which the gfx were loaded
 	 * @author Joe Balough
 	 */
-	uint16 *loadGfx(uint32 id);
+	uint16 *getGfx(gfxAsset *gfx);
 
 	/**
-	 * loadPalette function
+	 * getPalette function
 	 *
-	 * Loads the requested id of palette into memory (if not already loaded) and sets palIndex
-	 * to the proper index to locate the palette.
+	 * Returns the index to the location in video memory where the palette data for the passed paletteAsset
+	 * can be found. Will copy that palette into video memory if needed.
 	 *
-	 * @param int id
-	 *   The unique identifier for the asset
-	 * @param u8 &palIndex
-	 *   Passed by reference. Will be set to the index of this palette
+	 * @param palAsset *pal
+	 *   A pointer to the palAsset of the palette to load
+	 * @return uint8
+	 *   The index of the loaded palette
 	 * @author Joe Balough
 	 */
-	uint8 loadPalette(u32 id);
+	uint8 getPalette(paletteAsset *pal);
+
+	/**
+	 * loadLevel function
+	 *
+	 * Used by the level class to get the metadata for a level. This function will free up any
+	 * memory used by the last loaded levelAsset object then parse the zbeData file to load up
+	 * the relevant vectors and return the levelAsset object.
+	 *
+	 * @param uint32 id
+	 *   id for the level to load
+	 * @return levelAsset*
+	 *   A pointer to the level's metadata to be used by the level class to load up objects and the like
+	 * @author Joe Balough
+	 */
+	levelAsset *loadLevel(uint32 id);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
@@ -175,25 +134,83 @@ public:
 	 */
 	inline SpriteSize getSpriteSize(uint32 id)
 	{
-		return gfxStatus[id].size;
+		return gfxAssets[id]->size;
 	}
 
 private:
 	/**
-	 * fread[32|16|8] functions
+	 * fread wrapper; load
 	 *
-	 * the fread[] functions here will read an integer of the specified size off of the
+	 * the load function reads a number of the specified type off of the
 	 * passed input FILE and return it.
 	 *
 	 * @param FILE *input
 	 *   The file from which to read the number
-	 * @return uint[32|16|8]
+	 * @return T
 	 *   The value read from the file
 	 * @author Joe Balough
 	 */
-	uint32 fread32(FILE *input);
-	uint16 fread16(FILE *input);
-	uint8 fread8(FILE *input);
+	template <class T> T load(FILE *input);
+
+
+	/**
+	 * loadGfx() function
+	 *
+	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
+	 * call to getGfx()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadGfx(gfxAsset *gfx);
+
+
+	/**
+	 * loadPalette() function
+	 *
+	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
+	 * call to getPalette()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadPalette(paletteAsset *gfx);
+
+
+	/**
+	 * openFile function
+	 *
+	 * Opens the zbeData file for reading. All functions parsing data from the file needs
+	 * to call this before attempting any reading and should call closeFile() before returning.
+	 *
+	 * @author Joe Balough
+	 */
+	inline void openFile()
+	{
+		// Try to open the file. If it fails, print something and die.
+		zbeData = fopen(zbeFile, "rb");
+		if (!zbeData)
+		{
+			iprintf("Error opening datafile %s: %s\n", zbeFile, strerror(errno));
+			die();
+		}
+	}
+
+	/**
+	 * closefile function
+	 *
+	 * Closes the zbeData file previously opened with openFile. Should be called before
+	 * returning on any function that parses data from the zbeData.
+	 *
+	 * @author Joe Balough
+	 */
+	inline void closeFile()
+	{
+		// Don't try to close it if it's not open. if it's open, close the file and set the pointer to NULL.
+		if(zbeData)
+		{
+			fclose(zbeData);
+			zbeData = NULL;
+		}
+	}
 
 	/**
 	 * getSpriteSize function
@@ -213,7 +230,10 @@ private:
 	// The zbe file
 	FILE *zbeData;
 
-	// A pointer to the local oamTable
+	// zbe Filename
+	char *zbeFile;
+
+	// A pointer to the oamState
 	OamState *oam;
 
 	/**
@@ -221,16 +241,16 @@ private:
 	 * id asset are loaded, their index if loaded, the position in the file, length, size, etc.
 	 * @see assetStatus
 	 */
-	 // Tiles' status
-	 vector<assetStatus> gfxStatus;
-	 // Palettes' status
-	 vector<assetStatus> palStatus;
+	// Tiles' status
+	vector<gfxAsset*> gfxAssets;
+	// Palettes' status
+	vector<paletteAsset*> paletteAssets;
 
-	/**
-	 * These are vectors used by objects.
-	 */
-	// A vector of animations
-	vector<animation> animations;
+	// All of the objectAssets defined in the datafile
+	vector<objectAsset*> objectAssets;
+
+	// Vector of levelAssets
+	vector<levelAsset*> levelAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

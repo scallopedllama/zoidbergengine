@@ -20,7 +20,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="./bin/zoidbergengine.nds" />
+				<Option parameters="--cflash-path=./tools/cliCreator ./bin/zoidbergengine.nds" />
 				<Option host_application="desmume" />
 				<Compiler>
 					<Add option="-g" />
@@ -60,36 +60,31 @@
 		<Unit filename="../source/arm7/Makefile" />
 		<Unit filename="../source/arm7/source/main.cpp" />
 		<Unit filename="../source/arm9/Makefile" />
-		<Unit filename="../source/arm9/include/ai.h" />
 		<Unit filename="../source/arm9/include/assets.h" />
+		<Unit filename="../source/arm9/include/assettypes.h" />
+		<Unit filename="../source/arm9/include/collisionmatrix.h" />
+		<Unit filename="../source/arm9/include/game.h" />
 		<Unit filename="../source/arm9/include/hero.h" />
 		<Unit filename="../source/arm9/include/level.h" />
 		<Unit filename="../source/arm9/include/object.h" />
 		<Unit filename="../source/arm9/include/physics.h" />
 		<Unit filename="../source/arm9/include/util.h" />
+		<Unit filename="../source/arm9/include/vars.h" />
 		<Unit filename="../source/arm9/include/vector.h" />
-		<Unit filename="../source/arm9/source/ai.cpp" />
 		<Unit filename="../source/arm9/source/assets.cpp" />
+		<Unit filename="../source/arm9/source/collisionmatrix.cpp" />
+		<Unit filename="../source/arm9/source/game.cpp" />
 		<Unit filename="../source/arm9/source/hero.cpp" />
 		<Unit filename="../source/arm9/source/level.cpp" />
 		<Unit filename="../source/arm9/source/main.cpp" />
 		<Unit filename="../source/arm9/source/object.cpp" />
 		<Unit filename="../source/arm9/source/physics.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
+		<Unit filename="../source/arm9/source/vars.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
 		<Unit filename="../tools/cliCreator/README" />
-		<Unit filename="../tools/cliCreator/bin/Makefile" />
-		<Unit filename="../tools/cliCreator/bin/numPrefix16.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/numPrefix32.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/numPrefix8.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../tools/cliCreator/bin/objParser.cpp" />
-		<Unit filename="../tools/cliCreator/cliCreator.sh" />
+		<Unit filename="../tools/cliCreator/assets.xml" />
+		<Unit filename="../tools/cliCreator/cliCreator.cpp" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />

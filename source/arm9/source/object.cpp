@@ -1,31 +1,23 @@
 #include "object.h"
 
 // object constructor
-object::object(OamState *Oam, 
-	   int PaletteId, 
-	   void ***Gfx, int NumAnim, int *NumFrames, uint16 *Frame,
-	   int X, int Y, int Priority, SpriteSize Size, SpriteColorFormat ColorFormat, bool IsSizeDouble, bool Hidden,
+object::object(OamState *Oam,
+	   frameAsset ***anim,
+	   vector2D<float> pos, vector2D<float> grav, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 {
 	// Set all the variables
 	oam = Oam;
-	paletteId = PaletteId;
+	animations = anim;
+
 	matrixId = MatrixId;
-	
-	frameMem = Frame;
-	gfxMem = Gfx;
-	
-	numAnimations = NumAnim;
-	numFrames = NumFrames;
-	
-	priority = Priority;
-	size = Size;
-	format = ColorFormat;
-	isSizeDouble = IsSizeDouble;
+
+	priority = 2;
+	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
-	
-	if (MatrixId > 0)
+
+	if (MatrixId >= 0)
 	{
 		isRotateScale = true;
 	}
@@ -33,17 +25,17 @@ object::object(OamState *Oam,
 	scale.y = ScaleY;
 	angle = Angle;
 	mosaic = Mosaic;
-	
+
 	hflip = vflip = false;
-	
-	position.x = float(X);
-	position.y = float(Y);
+
+	position = vector2D<float>(pos.x, pos.y);
+	gravity = vector2D<float>(grav.x, grav.y);
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
-	
+
 	// Objects default to being affected by gravity. This is changeable though.
 	falling = true;
-	
+
 	colHeight = scale.y*0.8f / 2;
 	colWidth  = scale.x*0.8f / 2;
 }
@@ -52,9 +44,7 @@ object::object(OamState *Oam,
 bool object::update(touchPosition *touch)
 {
 	// Update position
-	
-	// TODO: Add some kind of flag to turn off gravity if the object is up against
-	//       something and hasn't moved in a while
+
 	if (falling)
 	{
 		velocity.x += gravity.x;
@@ -66,7 +56,7 @@ bool object::update(touchPosition *touch)
 
 	position.x += velocity.x;
 	position.y += velocity.y;
-	
+
 	if (velocity.x != 0 || velocity.y != 0)
 		return true;
 	else return false;
@@ -75,13 +65,20 @@ bool object::update(touchPosition *touch)
 // Draw the object on screen
 void object::draw(int spriteId)
 {
+	// Load up the gfx
+	frame = animations[0][0]->gfx;
+	paletteAsset *pal = animations[0][0]->pal;
+
+	uint16 *frameMem = zbeAssets->getGfx(frame);
+	uint8 paletteId = zbeAssets->getPalette(pal);
+
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if
 	//       the object is hidden and if so, pass -1 for affineIndex.
 	// void oamSet(OamState *oam, int id, int x, int y, int priority, int palette_id, SpriteSize size, SpriteColorFormat format,
 	//			const void * gfxOffset, int affineIndex, bool sizeDouble, bool hide, bool hflip, bool vflip, bool mosaic);
-	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, size, format,
-		   frameMem, matrixId, isSizeDouble, hidden, hflip, vflip, mosaic);
+	oamSet(oam, spriteId, int (position.x - screenOffset.x), int (position.y - screenOffset.y), priority, paletteId, frame->size, format,
+		   frameMem, matrixId, true, hidden, hflip, vflip, mosaic);
 }
 
 // makes this sprite a RotateScale sprite

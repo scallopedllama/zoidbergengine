@@ -15,7 +15,7 @@ using namespace decapod;
 *       +-----------+  --- (x - h/2)
 *
 */
-
+/*
 bool decapod :: intersection( object sprite1,  object sprite2)
 {
 	// if its the same object then ignore 
@@ -53,12 +53,7 @@ bool decapod :: intersection( object sprite1,  object sprite2)
 }
 
 bool decapod :: smallProjectileCollide(const object sprite, const object bullet)
-{	/**
-	* @author Dan Tracy
-	* We assume the projectile is small enough to only consider the center point
-	* to be the bound in question.  ie. if the center point hits the bounding box
-	* of the sprite then it collided with it (return true)
-	*/
+{
 	int top, bottom, left, right;
 	int height = sprite.getColHeight();
 	int width  = sprite.getColWidth();
@@ -78,17 +73,7 @@ bool decapod :: smallProjectileCollide(const object sprite, const object bullet)
 }
 
 void decapod :: jump(object sprite)
-{	/**
-	* @author Dan Tracy
-	* @param object sprite 
-	* The sprite that wants to jump.
-	* @param level lvl
-	* The level object, will be used to see if the sprite lands.
-	*
-	* We want the sprite to jump so this will handle and modify the x and
-	* y coordinates then compensate for gravity in the Y direction.  The level
-	* is passed to see if the sprite hits the ground or not.
-	*/
+{
 	int xPos  = sprite.getXcoord();
 	int yPos  = sprite.getYcoord();
 	int yVelo = sprite.getVelocity().y;
@@ -98,7 +83,7 @@ void decapod :: jump(object sprite)
 	int gravity = 0;
 	sprite.setVelocity( vector2D<float>(x, (yVelo - gravity) ) );
 	sprite.setPosition( vector2D<float>(x,y) );	
-}
+}*/
 
 bool decapod :: collide(object *object1, object *object2) 
 {
@@ -108,43 +93,21 @@ bool decapod :: collide(object *object1, object *object2)
 	float top1, top2;
 	float bottom1, bottom2;
 	
-	//iprintf("obj1 height %d width %d\n",object1->height,object1->width);
-	//iprintf("obj2 height %d width %d\n",object2->height,object2->width);
+	// TODO: this does not take into account the image's topleft value.
+	
 	left1 = object1->position.x;
-	//iprintf("L1 %d ",(int)left1);
 	left2 = object2->position.x;
-	//iprintf("L2 %d \n",(int)left2);
-	right1 = left1 + 32;//object1->width;
-	//iprintf("R1 %d ",(int)right1);
-	right2 = left2 + 32;//object2->width;
-	//iprintf("R2 %d \n",(int)right2);
+	right1 = left1 + object1->frame->dimensions.x;
+	right2 = left2 + object2->frame->dimensions.x;
 	top1 = object1->position.y;
-	//iprintf("T1 %d ",(int)top1);
 	top2 = object2->position.y;
-	//iprintf("T2 %d \n",(int)top2);
-	bottom1 = top1 + 32;//object1->height;
-	//iprintf("L1 %d ",(int)bottom1);
-	bottom2 = top2 + 32;//object2->height;
-	//iprintf("L1 %d \n",(int)bottom2);
+	bottom1 = top1 + object1->frame->dimensions.y;
+	bottom2 = top2 + object2->frame->dimensions.y;
 	
-	//iprintf("B1 %d < %d T2\n",(int)bottom1,(int)top2);
 	if (bottom1 < top2) return(false);
-	
-	//iprintf("T1 %d > %d B2\n",(int)top1,(int)bottom2);
 	if (top1 > bottom2) return(false);
-	
-	//iprintf("R1 %d < %d L2\n",(int)right1,(int)left2);
 	if (right1 < left2) return(false);
-	
-	//iprintf("L1 %d > %d R2\n",(int)left1,(int)right2);
 	if (left1 > right2) return(false);
-	
-	
-	//iprintf("Collide!\n");
-	//for(float g; g<999999 ;g+=0.25){}
-	
-	int diffx;
-	int diffy;
 	
 	return(true);
 };

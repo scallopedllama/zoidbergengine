@@ -1,5 +1,2 @@
-bin/numPrefix32
-bin/numPrefix16
-bin/numPrefix8
-bin/objParser
-
+*.bin
+cliCreator

@@ -36,7 +36,8 @@
 #include <nds.h>
 #include <stdio.h>
 #include "vector.h"
-#include "util.h"
+#include "vars.h"
+#include "assettypes.h"
 
 /**
  * object class
@@ -66,31 +67,8 @@ public:
 	 * @param OamState *oam
 	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
 	 *
-	 * @param int paletteId
-	 *  The index for the palette that this object should use.
-	 * 
-	 * @param void ***gfx
-	 *  A 3D array representing the gfx for all of the frames of all the animations. Loaded by assets class.
-	 *  gfx[animationId][frameNo] is gfx for frameNo'th frame of animationId'th animation.
-	 * @param int numAnim
-	 *  The number of animations available in the gfx array
-	 * @param int *numFrames
-	 *  An array representing the number of frames in the i'th animation in gfx
-	 * @param uint16 *frame
-	 *  A pointer to the location in Video memory into which the frame's tiles should be copied.
-	 *
 	 * @param int X
 	 * @param int Y
-	 * @param int priority
-	 *  The z-index for this object. Must be 0-8 with 0 being the highest.
-	 * @param spriteColorFormat colorFormat
-	 *  The coloring format that the sprite should use
-	 * @param SpriteSize size
-	 *  The size of this sprite
-	 * @param bool isSizeDouble
-	 *  Defaults to true, whether the sprite should be clipped to fit in its square.
-	 * @param bool hidden
-	 *  Defaults to false, whether the sprite should be visible
 	 *
 	 * @param int matrixId
 	 *  Defaults to -1, the id for the matrix in the OAM that this sprite should use for affine transformations.
@@ -107,12 +85,13 @@ public:
 	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	object(OamState *oam,
-		   int paletteId,
-		   void ***gfx, int numAnim, int numFrames[], uint16 *frame,
-		   int X, int Y, int priority, SpriteSize size, SpriteColorFormat colorFormat, bool isSizeDouble = true, bool hidden = false,
-		   int matrixId = -1, int scaleX = 1 << 8, int scaleY = 1 << 8, int angle = 0,
-		   bool mosaic = false);
+	 // TODO: Update the documentation for this
+	object(OamState *Oam,
+	   frameAsset ***animations,
+	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
+	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
+	   bool Mosaic = false);
+
 
 	/**
 	 * Object update function
@@ -129,7 +108,7 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual bool update(touchPosition *touch);
-	
+
 	/**
 	 * Object draw function
 	 *
@@ -142,6 +121,7 @@ public:
 	 * @author Joe Balough
 	 */
 	virtual void draw(int spriteId);
+
 
 	/**
 	 * makeRotateScale function
@@ -160,6 +140,7 @@ public:
 	 */
 	void makeRotateScale(int matrixId, int angle = 0, int scaleX = -1, int scaleY = -1);
 
+
 	/**
 	 * removeRotateScale function
 	 *
@@ -171,6 +152,7 @@ public:
 	 * @author Joe Balough
 	 */
 	int removeRotateScale();
+
 
 	/**
 	 * rotate function
@@ -191,6 +173,7 @@ public:
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
+
 	/**
 	 * scale function
 	 *
@@ -210,6 +193,7 @@ public:
 		// do rotation
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
+
 
 	/**
 	 * rotateScale function
@@ -234,6 +218,7 @@ public:
 		oamRotateScale(oam, matrixId, angle, scale.x, scale.y);
 	}
 
+
 	/**
 	 * setPriority function
 	 *
@@ -248,6 +233,7 @@ public:
 	{
 		priority = priority;
 	}
+
 
 	/**
 	 * isHidden function
@@ -278,70 +264,11 @@ public:
 		return hidden;
 	}
 
-	// TODO: a lot of these getters are pointless. I think position, velocity, accel, and gravity
-	//       should just be public... why not!?
-	
-	/**
-	* getXcoord()
-	* getYcoord()
-	*
-	* Constant accessor function that returns the respective X and Y coordinates of the object.
-	*
-	* @return int
-	* returns the X or Y coordinate on the DS screen, for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const int getXcoord() const { return position.x; }
-	const int getYcoord() const { return position.y; }
-	void setPosition( vector2D<float> pos ){ position = pos; }
 
-	/**
-	* getColWidth
-	* getColHeight
-	*
-	* Constant accessor function that returns the respective width and height of the object.
-	*
-	* @return int
-	* returns the width or height of the object for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const int getColHeight() const { return colHeight; }
-	const int getColWidth()  const { return colWidth;  }
-
-	/**
-	* getAngle
-	*
-	* Constant accessor function that returns the angle of the object.
-	*
-	* @return int
-	* returns the angle of the object for use by the physics engine
-	*
-	* @see physics.h
-	* @author Dan Tracy
-	*/
-	const inline int getAngle() const { return angle; }
-	inline void setAngle(int angleInRadians) { angle = angleInRadians; }
-
-	const inline vector2D<float> getVelocity() const { return velocity; }
-	inline void setVelocity(vector2D<float> v)	{ velocity = v; }
-
-	const inline vector2D<float> getAcceleration() const { return acceleration; }
-	inline void setAcceleration(vector2D<float> accel) { acceleration = accel; }
-	inline void setGravity(vector2D<float> grav)
-	{ 
-		gravity.x = grav.x; 
-		gravity.y = grav.y;
-	}
-
-	
 	// Indicates whether or not the object is falling. If the object is falling, it will be
 	// moved by gravity in the update funciton. If not, gravity won't move it at all.
 	bool falling;
-	
+
 	// The width and height to which the sprite should be scaled using an affine transformation
 	vector2D<int> scale, dimensions;
 
@@ -349,46 +276,31 @@ public:
 	// note: gravity is added to the y acceleration.
 	vector2D<float> position, velocity, acceleration, gravity;
 
+	// The gfxStatus of the gfx currently being viewed
+	gfxAsset *frame;
+
 protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
 	OamState *oam;
 
+	// Pointer to this object's animations
+	frameAsset ***animations;
+
 	// The current id for the for the affine matrix, and the palette to use in the oam
 	int matrixId;
-	int paletteId;
-
-	// This pointer points to the space in VIDEO memory that was allocated for this object to use.
-	// Should only ever contain one frame of the animation
-	uint16 *frameMem;
-
-	// 3D array of pointers that point to the space in MAIN memory that contains an individual frame of
-	// an animation. Should be used to DMA copy the current frame into gfx memory with gfxMem[animId][frameNo]
-	void ***gfxMem;
-
-	// The number of animations available for this object
-	int numAnimations;
-
-	// An array representing the number of frames in the i'th animation
-	int *numFrames;
 
 	// The Z-index of this sprite. Can be 0 - 8 with 0 the highest.
 	int priority;
 
-	// The size of the gfx for this object
-	SpriteSize size;
-
 	// And its color format
 	SpriteColorFormat format;
-
-	// Whether or not this sprite's bounds are doubled (If true it won't ever be clipped to fit in a square)
-	bool isSizeDouble;
 
 	// Whether or not this sprite is using affine transformations
 	bool isRotateScale;
 
 	// These are only valid when isRotateScale == true
-	
+
 	// The angle to which the sprite should be rotated using an affine transformation
 	int angle;
 

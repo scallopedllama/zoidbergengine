@@ -42,19 +42,22 @@
 #define ZOIDBERG_NO_SPRITES -2
 #define ZOIDBERG_USE_EXT_PAL false
 
-// TODO: move the following to game when game is created.
-// On which screen should the main gameplay occur? Should probably always be &oamMain.
-#define ZOIDBERG_GAMEPLAY_OAM &oamMain
-
 #include <nds.h>
 #include <vector>
-#include <time.h>   // used in FPS calculation
-#include "object.h" // addSprite function needs this
-#include "hero.h"   // addSprite can add a hero to the mix
-#include "collisionmatrix.h"
+#include <time.h>  // used in FPS calculation
+
+// Level objects
+#include "object.h"
+#include "hero.h"
+
+// For Collision detection
 #include "physics.h"
+#include "collisionmatrix.h"
+
+// For zbeAssets
 #include "assets.h"
-#include "util.h"
+#include "assettypes.h"
+#include "vars.h"
 
 
 using namespace std;
@@ -79,11 +82,9 @@ public:
 	 * Initializes the local copy of the OAMTable and sets up the arrays that keep track of what
 	 * SpriteEntries and what matrices are available.
 	 *
-	 * @param char *filename
-	 *   Filename to use to initialize the assets object
 	 * @author Joe Balough
 	 */
-	level(char *filename);
+	level(levelAsset *metadata, OamState *oam);
 
 	/**
 	 * level deconstructor
@@ -107,40 +108,19 @@ public:
 	/**
 	 * update function
 	 *
-	 * Gets touchscreen information then iterates through the list of objects 
+	 * Gets touchscreen information then iterates through the list of objects
 	 * telling each one to update giving them the touchscreen update information.
-	 * Those functions return a boolean value indicating whether they've moved 
+	 * Those functions return a boolean value indicating whether they've moved
 	 * because of the update. If they have moved, run collision detection on
 	 * them.
 	 *
 	 * @author Joe Balough
 	 */
 	void update();
-	
-	/**
-	 * These are temporary functions. They will probably go away!
-	 */
-	/**
-	 * addSprite function
-	 *
-	 * This should be considered a temporary function to test out the object class. In the future, sprites will be loaded
-	 * using information from the assets class.
-	 *
-	 * addSprite adds an object to the level with the passed parameters. See the object class for more param details.
-	 *
-	 * @param bool mkeHero
-	 *  Whether to make a hero object or a regular object. true to make a hero, false to make an object.
-	 * @see object::object()
-	 * @author Joe Balough
-	 */	
-	void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
-	
+
 private:
 	// A pointer to the oam table that the level should put its obects on.
 	OamState *oam;
-
-	// A pointer to the assets class to use
-	assets *zbeAssets;
 
 	// A standard library vector containing all of the objects in this level
 	vector<object*> objects;
@@ -175,23 +155,23 @@ private:
 	 */
 	inline void freeMatrix(int index)
 	{
-		matrixAvail[index] =true;
+		matrixAvail[index] = true;
 	}
 
 	/*
-	 * Gravity vector to dynamically change the direction of the 
+	 * Gravity vector to dynamically change the direction of the
 	 * acceleration due to gravity
 	 */
 	vector2D<float> gravity;
-	
+
 	/**
 	 * Variables for collision detection
 	 */
-	
+
 	// An array of pointers to objGroups. Each index represents an object id which points
 	// to its objGroup.. probalby not best, but it'll work for now.
 	vector<objGroup*> objectsGroups;
-	
+
 	// A pointer to the collisionMatrix we're using
 	collisionMatrix *colMatrix;
 

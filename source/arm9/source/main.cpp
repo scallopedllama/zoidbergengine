@@ -12,8 +12,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "level.h"
-#include "assets.h"
+#include "game.h"
 
 // Backgrounds
 #include "starField.h"
@@ -30,7 +29,7 @@ void initVideo()
 {
 	powerOn(POWER_ALL_2D);
 	lcdMainOnBottom();
-	     
+
     vramSetMainBanks(VRAM_A_MAIN_SPRITE,
                      VRAM_B_MAIN_BG_0x06020000,
                      VRAM_C_SUB_BG_0x06200000,
@@ -48,10 +47,10 @@ void initVideo()
     //  Set the video mode on the sub screen.
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
                    DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
-	  
+
 	  oamInit(&oamMain, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
 	  oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
-	
+
 	consoleDemoInit();
 }
 
@@ -139,7 +138,7 @@ int main()
 {
 	initVideo();
 	//initBackgrounds();
-	
+
 	// Initialize maxmod using the memory based soundbank set up.
 	//mmInitDefaultMem((mm_addr)soundbank_bin);
 
@@ -150,24 +149,9 @@ int main()
 	//displayStarField();
 	//displayPlanet();
 
-	// make a level
-	level *lvl = new level((char*) "/assets.zbe");
-
-	// Drop in some assets
-	// void addSprite(bool mkeHero, u32 tilesId, u32 palId, int x, int y);
-	lvl->addSprite(true, 1, 0, 5, 10);
-	lvl->addSprite(false, 1, 1, 65, 50);
-	lvl->addSprite(false, 1, 1, 125, 50);
-	lvl->addSprite(false, 1, 1, 185, 50);
-	lvl->addSprite(false, 1, 1, 245, 50);
-	lvl->addSprite(false, 1, 1, 305, 50);
-	lvl->addSprite(false, 1, 1, 365, 50);
-	lvl->addSprite(false, 1, 1, 425, 50);
-	lvl->addSprite(false, 1, 1, 485, 50);
-	lvl->addSprite(false, 1, 1, 545, 50);
-	lvl->addSprite(false, 1, 1, 605, 50);
-	lvl->addSprite(false, 1, 1, 665, 50);
-	lvl->run();
+	// make a game
+	game g((char *) "/assets.zbe");
+	g.run();
 
 	return 0;
 }

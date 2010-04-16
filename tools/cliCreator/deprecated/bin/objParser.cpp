@@ -1,5 +1,5 @@
 /**
- * @file objParser.h
+ * @file objParser.cpp
  *
  * @brief A tool to parse an objects description xml file
  *

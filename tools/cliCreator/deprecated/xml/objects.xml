@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<objects>
+  <object>
+	<animations>
+	  <animation>
+	<frame id="0" time="10" />
+	<frame id="1" time="10" />
+	  </animation>
+	  <animation>
+	<frame id="0" time="10" />
+	<frame id="1" time="10"/>
+	  </animation>
+	</animations>
+  </object>
+  <object>
+	<animations>
+	  <animation>
+	<frame id="0" time="10" />
+	<frame id="1" time="10"/>
+	  </animation>
+	  <animation>
+		<frame id="0" time="10" />
+		<frame id="1" time="10"/>
+	  </animation>
+	</animations>
+  </object>
+</objects>
