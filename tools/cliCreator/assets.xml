@@ -49,7 +49,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level>
+		<level bg0="0">
 			<objects>
 				<object id="0" x="55" y="34" />
 				<object id="1" x="100" y="10" />

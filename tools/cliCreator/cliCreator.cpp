@@ -578,8 +578,9 @@ int main(int argc, char **argv)
 		++totalLvl;
 
 		// Get all the needed attributes
-
-
+		int bg0 = getIntAttr(levelXML, "bg0");
+		debug("\tLevel using background #%d for background 0\n", bg0);
+		fwrite<uint32_t>(uint32_t(bg0), output);
 
 
 		// Level Heroes
