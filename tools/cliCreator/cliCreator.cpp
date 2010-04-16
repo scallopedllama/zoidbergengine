@@ -90,6 +90,19 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"\t\t</object>\n"
 	"\t\t...\n"
 	"\t</objects>\n"
+	"\t<levels>\n"
+	"\t\t<level>\n"
+	"\t\t\t<heroes>\n"
+	"\t\t\t\t<hero id=\"id for corresponding object defined above\" x=\"\" y=\"\" />\n"
+	"\t\t\t\t...\n"
+	"\t\t\t</heroes>\n"
+	"\t\t\t<objects>\n"
+	"\t\t\t\t<object id=\"id for corresponding object defined above\" x=\"\" y=\"\" />\n"
+	"\t\t\t\t...\n"
+	"\t\t\t</objects>\n"
+	"\t\t</level>\n"
+	"\t\t...\n"
+	"\t</levels>\n"
 	"</zbe>\n";
 
 // Whether or not verbose debug output should be enabled
@@ -437,41 +450,6 @@ int main(int argc, char **argv)
 		// Get all the needed attributes
 
 
-		// Level Objects
-		//Total objects
-		fpos_t totalLvlObjPos;
-		uint32_t totalLvlObj = 0;
-		fgetpos(output, &totalLvlObjPos);
-		debug("\tTemp total level objects\n");
-		fwrite<uint32_t>(0, output);
-
-		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
-		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
-		while (objectXML)
-		{
-			++totalLvlObj;
-
-			// Get the relevant infos
-			int x = getIntAttr(objectXML, "x");
-			int y = getIntAttr(objectXML, "y");
-			int id = getIntAttr(objectXML, "id");
-
-			// Write them up
-			debug("\t\tObject %d at (%d, %d)\n", id, x, y);
-			fwrite<uint32_t>(uint32_t(id), output);
-			fwrite<uint16_t>(uint16_t(x), output);
-			fwrite<uint16_t>(uint16_t(y), output);
-
-			// Get the next object
-			objectXML = objectXML->NextSiblingElement("object");
-		}
-		//go write the total number of objects
-		fsetpos(output, &totalLvlObjPos);
-		debug("\t%d Level objects\n", int(totalLvlObj));
-		fwrite<uint32_t>(totalLvlObj, output);
-		fseek(output, 0, SEEK_END);
-
-
 
 
 		// Level Heroes
@@ -494,7 +472,7 @@ int main(int argc, char **argv)
 			int id = getIntAttr(heroXML, "id");
 
 			// Write them up
-			debug("\t\tHero %d at (%d, %d)\n", id, x, y);
+			debug("\t\tHero using object id %d at (%d, %d)\n", id, x, y);
 			fwrite<uint32_t>(uint32_t(id), output);
 			fwrite<uint16_t>(uint16_t(x), output);
 			fwrite<uint16_t>(uint16_t(y), output);
@@ -505,6 +483,44 @@ int main(int argc, char **argv)
 		//go write the total number of objects
 		fsetpos(output, &totalLvlHroPos);
 		debug("\t%d Level Heroes\n", int(totalLvlHro));
+		fwrite<uint32_t>(totalLvlHro, output);
+		fseek(output, 0, SEEK_END);
+
+
+
+
+
+		// Level Objects
+		//Total objects
+		fpos_t totalLvlObjPos;
+		uint32_t totalLvlObj = 0;
+		fgetpos(output, &totalLvlObjPos);
+		debug("\tTemp total level objects\n");
+		fwrite<uint32_t>(0, output);
+
+		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
+		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
+		while (objectXML)
+		{
+			++totalLvlObj;
+
+			// Get the relevant infos
+			int x = getIntAttr(objectXML, "x");
+			int y = getIntAttr(objectXML, "y");
+			int id = getIntAttr(objectXML, "id");
+
+			// Write them up
+			debug("\t\tObject using object id %d at (%d, %d)\n", id, x, y);
+			fwrite<uint32_t>(uint32_t(id), output);
+			fwrite<uint16_t>(uint16_t(x), output);
+			fwrite<uint16_t>(uint16_t(y), output);
+
+			// Get the next object
+			objectXML = objectXML->NextSiblingElement("object");
+		}
+		//go write the total number of objects
+		fsetpos(output, &totalLvlObjPos);
+		debug("\t%d Level objects\n", int(totalLvlObj));
 		fwrite<uint32_t>(totalLvlObj, output);
 		fseek(output, 0, SEEK_END);
 
