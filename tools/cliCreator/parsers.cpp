@@ -6,7 +6,7 @@ int parseGfx(TiXmlElement *zbeXML, FILE *output)
 	// Total # gfx. Do the same like total number assets
 	fpos_t totalGfxPos = tempVal<uint32_t>("Total GFX", output);
 	uint32_t totalGfx = 0;
-	
+
 	// For all the graphics in the XML file
 	TiXmlElement *graphicsXML = zbeXML->FirstChildElement("bin")->FirstChildElement("graphics");
 	TiXmlElement *gfxXML = graphicsXML->FirstChildElement("gfx");
@@ -83,7 +83,7 @@ int parseBins(TiXmlElement *zbeXML, string type, FILE *output)
 		binXML = binXML->NextSiblingElement(type.c_str());
 		debug("%s Done\n", type.c_str());
 	}
-	
+
 	// Now that the total number of bins are known, go back and write that down
 	goWrite<uint32_t>(totalBin, output, &totalBinPos);
 	debug("%d %s Processed\n\n", int(totalBin), type.c_str());
@@ -110,7 +110,7 @@ struct bgTile
 		hflip = Hflip;
 		vflip = Vflip;
 	}
-	
+
 	// Returns the 16 bit integer that represents this tile in the maps array
 	// For the curious:
 	// |    15 - 12     | 11 | 10 |                   9 - 0                |
@@ -119,23 +119,23 @@ struct bgTile
 	{
 		// Start with just the tileId in the first 10 bits
 		uint16_t ret = tileId;
-		
+
 		// Flip values
-		
+
 		// If hflip is enabled, bitwise OR with 1 shifted left 10
 		if (hflip)
 			ret |= (1 << 10);
-		
+
 		// If vflip is enabled, bitwise OR with 1 shifted left 11
 		if (vflip)
 			ret |= (1 << 11);
-		
+
 		// Finally, bitwise OR with the palette id shifted left 12
 		ret |= (palId << 12);
-		
+
 		return ret;
 	}
-	
+
 	// The id of the tile to use (should fit in first 10 bits)
 	uint16_t tileId;
 	// Palete id FOR THIS BACKGROUND to use (should fit in first 4 bits)
@@ -159,7 +159,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 	{
 		// Increment total bg counter
 		++totalBg;
-		
+
 		// Get the palette to use for this background
 		uint32_t pal = 0;
 		bool defPal = false;
@@ -181,14 +181,14 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		if (defPal) debug("Palette %d for default with ", pal);
 		debug("Tileset %d\n", tileset);
 		fwrite<uint32_t>(uint32_t(tileset), output);
-		
+
 		// Vector of vectors to store all the ids
 		vector< vector<bgTile> > tiles;
-		
+
 		// This map corresponds the zbe palette indices with the background palette indices.
 		// It's first-come-first-serve here
 		map<uint32_t, uint16_t> palConv;
-		
+
 		// Process each row
 		TiXmlElement *bgRowXML = bgXML->FirstChildElement("row");
 		debug("\tReading background map (tileId, paletteId, hflip, vflip):\n");
@@ -198,20 +198,20 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		{
 			++h;
 			debug("\t\t");
-			
+
 			// Vector of ids
 			vector<bgTile> rowTiles;
-			
+
 			// Process each tile
 			int w = 0;
 			TiXmlElement *bgTileXML = bgRowXML->FirstChildElement("tile");
 			while (bgTileXML)
 			{
 				++w;
-				
+
 				// Get attributes and fill in the bgTile
 				int tileId, palId = pal, hflip = 0, vflip = 0;
-				
+
 				// tileId is required
 				if (!getIntAttr(bgTileXML, "id", tileId))
 				{
@@ -230,44 +230,44 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 				}
 				// If this palette is not in the map, add it
 				if (palConv.find(palId) == palConv.end())
-					palConv[palId] = palConv.size();
-					
+					palConv[palId] = palConv.size() - 1;
+
 				// Now change the palId over to reference the appropriate bgPalette id
 				palId = palConv[palId];
-				
+
 				// hflip and vflip are optional, defaulting to false
 				getIntAttr(bgTileXML, "hflip", hflip);
 				getIntAttr(bgTileXML, "vflip", vflip);
-				
+
 				// debug printing made easy
 				debug("(%d %d %d %d) ", tileId, palId, hflip, vflip);
-				
+
 				// make a new bgTile and add it to the vector
 				bgTile newTile(tileId, palId, hflip == 1, vflip == 1);
 				rowTiles.push_back(newTile);
-				
+
 				// Get the next tile
 				bgTileXML = bgTileXML->NextSiblingElement("tile");
 			}
-			
+
 			// See if that set a new record for maxWidth
 			if (w > maxWidth) maxWidth = w;
-			
+
 			// Add this row of tiles to the vector of vectors
 			tiles.push_back(rowTiles);
 			debug("\n");
-			
+
 			// Get next row
 			bgRowXML = bgRowXML->NextSiblingElement("row");
 		}
-		
+
 		// Multiply the width and height by 8 (since all tiles are 8x8)
 		int adjW = maxWidth * 8;
 		int adjH = h * 8;
-		
+
 		// Determine the size of the bg
 		debug("\tGot a %d x %d background\n", adjW, adjH);
-		
+
 		unsigned int minS = 1024;
 		uint8_t size = 3;
 		if (adjW >= adjH)
@@ -296,28 +296,34 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		}
 		debug("\tRounding to %d x %d (size %d)\n", minS, minS, int(size));
 		fwrite<uint8_t>(size, output);
-		
-		
+
+
 		// Number of palettes used
 		fwrite<uint8_t>(uint8_t(palConv.size()), output);
 		debug("\t%d Palettes used\n", palConv.size());
-		
+
 		// Add the palette correspondence ids to the file
-		for ( map<uint32_t, uint16_t>::reverse_iterator it = palConv.rbegin() ; it != palConv.rend(); it++ )
+		for (uint16_t i = 0; i < palConv.size(); i++)
 		{
-			// Just need to write the zbe palette id
-			// it->first = zbeAsset palette index, it->second = background palette index
-			fwrite<uint32_t>(it->first, output);
-			
-			// echo that
-			debug("\t\tBackground Palette %d = zbe Assets Palette %d\n", it->second, it->first);
+			// Maps keep things sorted, so we have to actually find the one where it->second == i
+			for ( map<uint32_t, uint16_t>::iterator it = palConv.begin() ; it != palConv.end(); it++ )
+			{
+				if (it->second == i)
+				{
+					// Just need to write the zbe palette id
+					fwrite<uint32_t>(it->first, output);
+
+					// echo that
+					debug("\t\tzbe Assets Palette %d = Background Palette %d\n", it->second, it->first);
+				}
+			}
 		}
-		
+
 		// Write all those uint16_t datas
 		debug("\t");
 		fpos_t mapLenPos = tempVal<uint16_t>("Background Map Length", output);
 		uint32_t mapLen = 0;
-		
+
 		debug("\tWriting background map:\n");
 		for (unsigned int i = 0; i < minS / 8; i++)
 		{
@@ -328,7 +334,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 				uint16_t toWrite = 0;
 				if ( i < tiles.size() && j < tiles[i].size() )
 					toWrite = tiles[i][j].getTile();
-				
+
 				// Write it to the file
 				debug("%x\t", toWrite);
 				fwrite<uint16_t>(toWrite, output);
@@ -339,7 +345,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		}
 		goWrite<uint16_t>(uint16_t(mapLen), output, &mapLenPos);
 		debug("\tBackground map length: %d\n", mapLen);
-		
+
 		// Get the next sibling
 		bgXML = bgXML->NextSiblingElement("background");
 		debug("Background Done\n");
