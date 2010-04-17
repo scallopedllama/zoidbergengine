@@ -261,17 +261,6 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			bgRowXML = bgRowXML->NextSiblingElement("row");
 		}
 		
-		// Add the palette correspondence ids to the file
-		for ( map<uint32_t, uint16_t>::reverse_iterator it = palConv.rbegin() ; it != palConv.rend(); it++ )
-		{
-			// Just need to write the zbe palette id
-			// it->first = zbeAsset palette index, it->second = background palette index
-			fwrite<uint32_t>(it->first, output);
-			
-			// echo that
-			debug("\tBackground Palette %d = zbe Assets Palette %d\n", it->second, it->first);
-		}
-		
 		// Multiply the width and height by 8 (since all tiles are 8x8)
 		int adjW = maxWidth * 8;
 		int adjH = h * 8;
@@ -308,6 +297,21 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		debug("\tRounding to %d x %d (size %d)\n", minS, minS, int(size));
 		fwrite<uint8_t>(size, output);
 		
+		
+		// Number of palettes used
+		fwrite<uint8_t>(uint8_t(palConv.size()), output);
+		debug("\t%d Palettes used\n", palConv.size());
+		
+		// Add the palette correspondence ids to the file
+		for ( map<uint32_t, uint16_t>::reverse_iterator it = palConv.rbegin() ; it != palConv.rend(); it++ )
+		{
+			// Just need to write the zbe palette id
+			// it->first = zbeAsset palette index, it->second = background palette index
+			fwrite<uint32_t>(it->first, output);
+			
+			// echo that
+			debug("\t\tBackground Palette %d = zbe Assets Palette %d\n", it->second, it->first);
+		}
 		
 		// Write all those uint16_t datas
 		debug("\t");
