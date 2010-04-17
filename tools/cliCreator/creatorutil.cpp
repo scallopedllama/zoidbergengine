@@ -52,6 +52,24 @@ int getIntAttr(TiXmlElement *elem, string attr)
 	return toReturn;
 }
 
+// get int attribute (returning whether it got a value or not
+bool getIntAttr(TiXmlElement *elem, string attr, int &value)
+{
+	int val;
+	int ret = elem->QueryIntAttribute(attr.c_str(), &val);
+	if (ret == TIXML_WRONG_TYPE)
+	{
+		fprintf(stderr, "Error getting int value of attribute %s\n", attr.c_str());
+	}
+	else if (ret == TIXML_NO_ATTRIBUTE)
+	{
+		return false;
+	}
+	
+	// Made it this far? must have been set
+	value = val;
+	return true;
+}
 
 // Get string attribute
 string getStrAttr(TiXmlElement *elem, string attr)

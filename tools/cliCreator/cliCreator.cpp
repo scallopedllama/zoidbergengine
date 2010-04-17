@@ -230,7 +230,7 @@ int main(int argc, char **argv)
 	totalAssets += parseGfx(zbeXML, output);
 	
 	// Background tiles assets
-	totalAssets += parseBins(zbeXML->FirstChildElement("bin"), "backgroundTile", output);
+	totalAssets += parseBins(zbeXML->FirstChildElement("bin"), "tileset", output);
 	
 	// Palette Assets
 	totalAssets += parseBins(zbeXML->FirstChildElement("bin"), "palette", output);

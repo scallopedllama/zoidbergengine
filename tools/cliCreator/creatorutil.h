@@ -158,7 +158,6 @@ uint16_t appendData(FILE *output, string inFile);
  * TinyXML utilities
  */
  
- 
 /**
  * getIntAttr function
  *
@@ -174,6 +173,23 @@ uint16_t appendData(FILE *output, string inFile);
  * @author Joe Balough
  */
 int getIntAttr(TiXmlElement *elem, string attr);
+
+/**
+ * alternative getIntAttr
+ *
+ * Use this getIntAttr when you need to know wheter the attribute was set or not (i.e. it is optional).
+ *
+ * @param TiXmlElement *elem
+ *  The TiXmlElement from which the attribute should be queried
+ * @param string attr
+ *  The name of the attribute to get
+ * @param int &value
+ *  the integer into which the queried value should be put (untouched if not attribute not defined)
+ * @return bool
+ *  true if the attribute was defined, false otherwise
+ * @author Joe Balough
+ */
+ bool getIntAttr(TiXmlElement *elem, string attr, int &value);
 
 
 /**
