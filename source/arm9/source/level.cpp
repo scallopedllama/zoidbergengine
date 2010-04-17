@@ -14,14 +14,14 @@ level::level(levelAsset *metadata, OamState *o)
 
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-	
+
 	// Load up the background
-	zbeAssets->loadBackground(metadata->bg0);
+	//zbeAssets->loadBackground(metadata->bg0);
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
 	colMatrix = new collisionMatrix(1200, 1000, 70);
-	
+
 	// Parse the levelAssets metadata
 	// Load up all the objects
 	for (unsigned int i = 0; metadata->heroes[i] != NULL; i++)
