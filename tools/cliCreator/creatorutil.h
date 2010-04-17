@@ -50,7 +50,7 @@ extern bool verbose;
  *  Accepts parameters exactly as printf would.
  * @author Joe Balough
  */
-int debug(char* fmt, ...);
+int debug(const char* fmt, ...);
 
 
 
@@ -58,8 +58,8 @@ int debug(char* fmt, ...);
 /**
  *    file writing utilities
  */
- 
- 
+
+
 /**
  * fwrite wrapper function
  *
@@ -157,7 +157,7 @@ uint16_t appendData(FILE *output, string inFile);
 /**
  * TinyXML utilities
  */
- 
+
 /**
  * getIntAttr function
  *

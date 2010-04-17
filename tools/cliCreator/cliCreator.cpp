@@ -119,7 +119,7 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 
 
 // Function Prototypes
-void printUsage(char *pgm);
+void printUsage(const char *pgm);
 
 
 
@@ -228,10 +228,10 @@ int main(int argc, char **argv)
 
 	// Gfx Assets
 	totalAssets += parseGfx(zbeXML, output);
-	
+
 	// Background tiles assets
 	totalAssets += parseBins(zbeXML->FirstChildElement("bin"), "tileset", output);
-	
+
 	// Palette Assets
 	totalAssets += parseBins(zbeXML->FirstChildElement("bin"), "palette", output);
 
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
  *
  * @author Joe Balough
  */
-void printUsage(char *pgm)
+void printUsage(const char *pgm)
 {
 	fprintf(stderr, "Usage: %s -i input_filename.xml [-o output_filename.zbe] [-v]\n", pgm);
 	fprintf(stderr, "          -i is required, it is the filename of the XML file to parse\n");

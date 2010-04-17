@@ -65,7 +65,7 @@ bool getIntAttr(TiXmlElement *elem, string attr, int &value)
 	{
 		return false;
 	}
-	
+
 	// Made it this far? must have been set
 	value = val;
 	return true;
@@ -88,10 +88,10 @@ string getStrAttr(TiXmlElement *elem, string attr)
 /**
  *   Utility functions
  */
- 
+
 
 // printf wrapper
-int debug(char* fmt, ...)
+int debug(const char* fmt, ...)
 {
 	if(!verbose)
 		return 0; // Return that we wrote 0 characters
