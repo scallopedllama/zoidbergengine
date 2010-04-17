@@ -443,6 +443,7 @@ int assets::loadBackground(backgroundAsset *background)
 	// Make sure tiles data is loaded then copy it into video memory
 	gfxAsset *tileset = background->tileset;
 	loadGfx(tileset);
+	tileset->dumpData();die()
 	iprintf(" loaded %dB, copy tileset\n", tileset->length);
 	DC_FlushRange(tileset->data, tileset->length);
 	dmaCopy(tileset->data, bgGetGfxPtr(bgId), tileset->length);

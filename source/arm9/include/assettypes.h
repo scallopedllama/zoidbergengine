@@ -94,6 +94,15 @@ struct gfxAsset : public assetStatus
 	gfxAsset() : assetStatus()
 	{}
 
+	void dumpData()
+	{
+		if (!data) return;
+		for (uint16 i = 0; i < length; i++)
+		{
+			iprintf("%x", unsigned int (data[i]));
+		}
+	}
+
 	// for gfx; video memory offset
 	uint16 *offset;
 
@@ -121,13 +130,13 @@ struct backgroundAsset : public assetStatus
 		tileset = NULL;
 		size = BgSize_ER_1024x1024;
 	}
-	
+
 	~backgroundAsset()
 	{}
-	
+
 	// The tileset to use with this background
 	gfxAsset *tileset;
-	
+
 	// size of the background
 	BgSize size;
 };
