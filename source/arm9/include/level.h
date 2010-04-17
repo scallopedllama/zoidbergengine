@@ -40,7 +40,6 @@
 
 #define ZOIDBERG_NO_MATRICES -1
 #define ZOIDBERG_NO_SPRITES -2
-#define ZOIDBERG_USE_EXT_PAL false
 
 #include <nds.h>
 #include <vector>

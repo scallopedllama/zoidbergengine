@@ -390,7 +390,7 @@ int assets::loadBackground(backgroundAsset *background)
 	// Init the background
 	// TODO: un-hard-code this layer value here
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
-	int bgId = bgInit(3, BgType_ExRotation, background->size, 0,2);
+	int bgId = bgInit(0, BgType_Text4bpp, background->size, 0, 0);
 	
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
@@ -424,6 +424,7 @@ int assets::loadBackground(backgroundAsset *background)
 	// Make sure tiles data is loaded then copy it into video memory
 	iprintf(" load & copy tileset\n");
 	loadGfx(background->tileset);
+	DC_FlushRange(background->tileset->data, background->tileset->length);
 	dmaCopy(background->tileset->data, bgGetGfxPtr(bgId), background->tileset->length * sizeof(uint8));
 	// unload the tileset
 	freeGfx(background->tileset);
