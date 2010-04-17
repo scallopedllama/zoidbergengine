@@ -146,20 +146,20 @@ void assets::parseZbe()
 		// set its size
 		uint8 bgSize = load<uint8>(zbeData);
 		switch (bgSize)
-		{
+		{ //TODO: not sure what the deal with the exrot bgs are but they should be reenabled some time
 			case 0:
 				// To determine the skip bytes, divide the dimension by 8 to get number
 				// of tiles in one dimension. Then square that to get total number of tiles.
-				newAsset->size = BgSize_ER_128x128;
+				//newAsset->size = BgSize_T_128x128;
 				break;
 			case 1:
-				newAsset->size = BgSize_ER_256x256;
+				newAsset->size = BgSize_T_256x256;
 				break;
 			case 2:
-				newAsset->size = BgSize_ER_512x512;
+				newAsset->size = BgSize_T_512x512;
 				break;
 			default:
-				newAsset->size = BgSize_ER_1024x1024;
+				//newAsset->size = BgSize_T_1024x1024;
 				break;
 		}
 
@@ -393,7 +393,8 @@ int assets::loadBackground(backgroundAsset *background)
 	// Init the background
 	// TODO: un-hard-code this layer value here
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
-	int bgId = bgInit(3, BgType_Text4bpp, background->size, 0, 0);
+	int bgId = bgInit(0, BgType_Text4bpp, background->size, 0, 2);
+	bgSetPriority(bgId, 0);
 
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
@@ -424,6 +425,22 @@ int assets::loadBackground(backgroundAsset *background)
 	}
 	closeFile();
 
+	// Make sure tiles data is loaded then copy it into video memory
+	gfxAsset *tileset = background->tileset;
+	loadGfx(tileset);
+	iprintf(" ld %dB, cp tileset (%x)\n", tileset->length, (unsigned int) bgGetGfxPtr(bgId));
+	DC_FlushRange(tileset->data, tileset->length);
+	dmaCopy(tileset->data, bgGetGfxPtr(bgId), tileset->length);
+	// unload the tileset
+	freeGfx(background->tileset);
+
+	// Copy the map into video memory and free up the space it doesn't need anymore
+	iprintf(" cp %dB map (%x)\n", mapLength, (unsigned int) bgGetMapPtr(bgId));
+	DC_FlushRange(map, mapLength);
+    dmaCopy(map, bgGetMapPtr(bgId), mapLength * sizeof(uint8));
+	iprintf(" copied map\n");
+	free(map);
+
 	// Load, then copy all the palettes into memory
 	for (uint8 i = 0; i < numPalettes; i++)
 	{
@@ -434,27 +451,14 @@ int assets::loadBackground(backgroundAsset *background)
 		loadPalette(pal);
 
 		// Copy the palette into memory, remember to offset it from the last one
-		iprintf(" and copy (%x)\n", (unsigned int) BG_PALETTE + offset);
+		iprintf(" and copy %dB (%x)\n", pal->length, (unsigned int) BG_PALETTE + offset);
 		DC_FlushRange(pal->data, pal->length);
-		dmaCopy(pal->data, BG_PALETTE + offset, pal->length);
-		offset += pal->length;
+		dmaCopy(pal->data, BG_PALETTE + offset * 16, pal->length);
+		offset ++;
 	}
 
-	// Make sure tiles data is loaded then copy it into video memory
-	gfxAsset *tileset = background->tileset;
-	loadGfx(tileset);
-	tileset->dumpData();die()
-	iprintf(" loaded %dB, copy tileset\n", tileset->length);
-	DC_FlushRange(tileset->data, tileset->length);
-	dmaCopy(tileset->data, bgGetGfxPtr(bgId), tileset->length);
-	// unload the tileset
-	freeGfx(background->tileset);
-
-	// Copy the map into video memory and free up the space it doesn't need anymore
-	DC_FlushRange(map, mapLength);
-    dmaCopy(map, bgGetMapPtr(bgId), mapLength * sizeof(uint8));
-	iprintf(" copied map\n");
-	free(map);
+	// Show the background
+	bgShow(bgId);
 
 	return bgId;
 }

@@ -99,7 +99,7 @@ struct gfxAsset : public assetStatus
 		if (!data) return;
 		for (uint16 i = 0; i < length; i++)
 		{
-			iprintf("%x", unsigned int (data[i]));
+			iprintf("%x", (unsigned int) data[i]);
 		}
 	}
 

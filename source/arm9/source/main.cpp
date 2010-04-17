@@ -24,7 +24,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include <nds.h>
 #include <maxmod9.h>
 #include <fat.h>
@@ -40,16 +40,15 @@ void initVideo()
 	powerOn(POWER_ALL_2D);
 	lcdMainOnBottom();
 
-	vramSetMainBanks(VRAM_A_MAIN_SPRITE,
-				 VRAM_B_MAIN_BG_0x06020000,
+	vramSetMainBanks(VRAM_A_MAIN_BG,
+				 VRAM_B_MAIN_SPRITE,
 				 VRAM_C_SUB_BG_0x06200000,
 				 VRAM_D_SUB_SPRITE);
 
 
 	//  Set the video mode on the main screen.
 	videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-			 DISPLAY_BG2_ACTIVE | // Enable BG2 for display
-			 DISPLAY_BG3_ACTIVE | // Enable BG3 for display
+			 DISPLAY_BG0_ACTIVE | // Enable BG2 for display
 			 DISPLAY_SPR_ACTIVE | // Enable sprites for display
 			 DISPLAY_SPR_1D       // Enable 1D tiled sprites
 			 );
