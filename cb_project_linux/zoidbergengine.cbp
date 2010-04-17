@@ -85,6 +85,10 @@
 		<Unit filename="../tools/cliCreator/README" />
 		<Unit filename="../tools/cliCreator/assets.xml" />
 		<Unit filename="../tools/cliCreator/cliCreator.cpp" />
+		<Unit filename="../tools/cliCreator/creatorutil.cpp" />
+		<Unit filename="../tools/cliCreator/creatorutil.h" />
+		<Unit filename="../tools/cliCreator/parsers.cpp" />
+		<Unit filename="../tools/cliCreator/parsers.h" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />
