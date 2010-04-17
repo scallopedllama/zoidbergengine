@@ -124,14 +124,14 @@ struct bgTile
 		
 		// If hflip is enabled, bitwise OR with 1 shifted left 10
 		if (hflip)
-			ret |= 1 << 10;
+			ret |= (1 << 10);
 		
 		// If vflip is enabled, bitwise OR with 1 shifted left 11
 		if (vflip)
-			ret |= 1 << 11;
+			ret |= (1 << 11);
 		
 		// Finally, bitwise OR with the palette id shifted left 12
-		ret |= palId << 12;
+		ret |= (palId << 12);
 		
 		return ret;
 	}
@@ -177,20 +177,27 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			fprintf(stderr, "ERROR: background defined without a tileset.\n\tPlese add a tileset attribute to the definition for\n\tbackground #%d. See verbose help for more information\n", totalBg);
 			exit(EXIT_FAILURE);
 		}
-		debug("\tBackground using Palette %d for default with tileset %d\n", pal, tileset);
+		debug("\tBackground using ");
+		if (defPal) debug("Palette %d for default with ", pal);
+		debug("Tileset %d\n", tileset);
 		fwrite<uint32_t>(uint32_t(tileset), output);
 		
 		// Vector of vectors to store all the ids
 		vector< vector<bgTile> > tiles;
-		debug("\t");
+		
+		// This map corresponds the zbe palette indices with the background palette indices.
+		// It's first-come-first-serve here
+		map<uint32_t, uint16_t> palConv;
 		
 		// Process each row
 		TiXmlElement *bgRowXML = bgXML->FirstChildElement("row");
+		debug("\tReading background map (tileId, paletteId, hflip, vflip):\n");
 		int maxWidth = 0;
 		int h = 0;
 		while (bgRowXML)
 		{
 			++h;
+			debug("\t\t");
 			
 			// Vector of ids
 			vector<bgTile> rowTiles;
@@ -221,6 +228,13 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 						exit(EXIT_FAILURE);
 					}
 				}
+				// If this palette is not in the map, add it
+				if (palConv.find(palId) == palConv.end())
+					palConv[palId] = palConv.size();
+					
+				// Now change the palId over to reference the appropriate bgPalette id
+				palId = palConv[palId];
+				
 				// hflip and vflip are optional, defaulting to false
 				getIntAttr(bgTileXML, "hflip", hflip);
 				getIntAttr(bgTileXML, "vflip", vflip);
@@ -241,10 +255,21 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			
 			// Add this row of tiles to the vector of vectors
 			tiles.push_back(rowTiles);
-			debug("\n\t");
+			debug("\n");
 			
 			// Get next row
 			bgRowXML = bgRowXML->NextSiblingElement("row");
+		}
+		
+		// Add the palette correspondence ids to the file
+		for ( map<uint32_t, uint16_t>::reverse_iterator it = palConv.rbegin() ; it != palConv.rend(); it++ )
+		{
+			// Just need to write the zbe palette id
+			// it->first = zbeAsset palette index, it->second = background palette index
+			fwrite<uint32_t>(it->first, output);
+			
+			// echo that
+			debug("\tBackground Palette %d = zbe Assets Palette %d\n", it->second, it->first);
 		}
 		
 		// Multiply the width and height by 8 (since all tiles are 8x8)
@@ -252,7 +277,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		int adjH = h * 8;
 		
 		// Determine the size of the bg
-		debug("Got a %d x %d background\n", adjW, adjH);
+		debug("\tGot a %d x %d background\n", adjW, adjH);
 		
 		unsigned int minS = 1024;
 		uint8_t size = 3;
@@ -285,12 +310,14 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		
 		
 		// Write all those uint16_t datas
-		fpos_t mapLenPos = tempVal<uint16_t>("Map Length", output);
+		debug("\t");
+		fpos_t mapLenPos = tempVal<uint16_t>("Background Map Length", output);
 		uint32_t mapLen = 0;
 		
-		debug("\tWriting background map:\n\t");
+		debug("\tWriting background map:\n");
 		for (unsigned int i = 0; i < minS / 8; i++)
 		{
+			debug("\t\t");
 			for (unsigned int j = 0; j < minS / 8; j++)
 			{
 				// Make sure to get a value within the range of the vectors
@@ -299,12 +326,12 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 					toWrite = tiles[i][j].getTile();
 				
 				// Write it to the file
-				debug("%x ", toWrite);
+				debug("%x\t", toWrite);
 				fwrite<uint16_t>(toWrite, output);
 				// 16 bits = 2 bytes
 				mapLen += 2;
 			}
-			debug("\n\t");
+			debug("\n");
 		}
 		goWrite<uint16_t>(uint16_t(mapLen), output, &mapLenPos);
 		debug("\tBackground map length: %d\n", mapLen);

@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include <stdint.h>  // for the uint[]_t types
 #include "creatorutil.h"
+#include <map>
 #include <vector>
 #include <string>
 #include "lib/tinyxml/tinyxml.h"
