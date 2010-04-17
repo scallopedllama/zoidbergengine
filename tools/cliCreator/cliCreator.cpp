@@ -73,11 +73,24 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"\t\t\t<gfx bin=\"filename\" w=\"width\" h=\"height\" top=\"top-offset\" left=\"left-offset\" />\n"
 	"\t\t\t...\n"
 	"\t\t</graphics>\n"
+	"\t\t<backgroundTiles>\n"
+	"\t\t\t<tiles bin=\"filename\" />"
+	"\t\t\t...\n"
+	"\t\t</backgroundTiles>\n"
 	"\t\t<palettes>\n"
 	"\t\t\t<palette bin=\"filename\" />\n"
 	"\t\t\t...\n"
 	"\t\t</palettes>\n"
 	"\t</bin>\n"
+	"\t<backgrounds>\n"
+	"\t\t<background tiles=\"backgroundTiles id\" palette=\"Default Palette id\">\n"
+	"\t\t\t<row>\n"
+	"\t\t\t\t<tile pal=\"Default overriding palette id\" id=\"Tile id\" hflip=\"0\" vflip=\"1\" />\n"
+	"\t\t\t\t...\n"
+	"\t\t\t</row>\n"
+	"\t\t\t...\n"
+	"\t\t</background>\n"
+	"\t</backgrounds>\n"
 	"\t<objects>\n"
 	"\t\t<object weight=\"weight for collision resolution\">\n"
 	"\t\t\t<animations>\n"
@@ -91,7 +104,7 @@ string xmlDesc = "<?xml version=\"1.0\" ?>\n"
 	"\t\t...\n"
 	"\t</objects>\n"
 	"\t<levels>\n"
-	"\t\t<level>\n"
+	"\t\t<level bg0=\"Background id to use for farthest background\">\n"
 	"\t\t\t<heroes>\n"
 	"\t\t\t\t<hero id=\"id for corresponding object defined above\" x=\"\" y=\"\" />\n"
 	"\t\t\t\t...\n"
@@ -117,6 +130,7 @@ int getIntAttr(TiXmlElement *elem, string attr);
 string getStrAttr(TiXmlElement *elem, string attr);
 uint16_t appendData(FILE *output, string inFile);
 void printUsage(char *pgm);
+template <class T> fpos_t tempVal(char *description, FILE* output);
 
 
 
@@ -213,11 +227,8 @@ int main(int argc, char **argv)
 	// with, so write a 32 bit int 0 to the file and remember the position.
 	// When all parsing is done, we will return to that point in the file and
 	// write the actual value in.
-	fpos_t totalAssetsPos;
+	fpos_t totalAssetsPos = tempVal<uint32_t>("Total Assets", output);
 	uint32_t totalAssets = 0;
-	fgetpos(output, &totalAssetsPos);
-	debug("Temp Total Assets\n\n");
-	fwrite<uint32_t>(0, output);
 
 
 
@@ -227,13 +238,9 @@ int main(int argc, char **argv)
 	 */
 
 	// Total # gfx. Do the same like total number assets
-	fpos_t totalGfxPos;
+	fpos_t totalGfxPos = tempVal<uint32_t>("Total GFX", output);
 	uint32_t totalGfx = 0;
-	fgetpos(output, &totalGfxPos);
-	debug("Temp Total GFX\n");
-	fwrite<uint32_t>(0, output);
-
-
+	
 	// For all the graphics in the XML file
 	TiXmlElement *graphicsXML = zbeXML->FirstChildElement("bin")->FirstChildElement("graphics");
 	TiXmlElement *gfxXML = graphicsXML->FirstChildElement("gfx");
@@ -257,18 +264,14 @@ int main(int argc, char **argv)
 		fwrite<uint8_t>((uint8_t) l, output);
 		// The length is unknown right now, it'll be counted in the copy op and returned
 		// so we'll return here after that copy is done
-		fpos_t lenPos;
-		fgetpos(output, &lenPos);
-		debug("\tTemp Tiles length\n");
-		fwrite<uint16_t>(0, output);
+		debug("\t");
+		fpos_t lenPos = tempVal<uint16_t>("Tiles Length", output);
 		debug("\tAppending GFX's Tiles Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
 
 		// Now we have the length, so go back and write it down
-		fsetpos(output, &lenPos);
+		goWrite<uint16_t>(uint16_t(len), output, &lenPos);
 		debug("\tTiles' length: %d B\n", int(len));
-		fwrite<uint16_t>((uint16_t) len, output);
-		fseek(output, 0, SEEK_END);
 
 		// Get the next sibling
 		gfxXML = gfxXML->NextSiblingElement("gfx");
@@ -279,14 +282,14 @@ int main(int argc, char **argv)
 	debug("%d GFX processed\n\n", int(totalGfx));
 	totalAssets += totalGfx;
 
-
+	
+	// Total number of background tiles definitions
+	
+	
 
 	// Total # pal. Do the same like total number assets
-	fpos_t totalPalPos;
+	fpos_t totalPalPos = tempVal<uint32_t>("Total Palettes", output);
 	uint32_t totalPal = 0;
-	fgetpos(output, &totalPalPos);
-	debug("Temp Total Palettes\n");
-	fwrite<uint32_t>(0, output);
 
 	// For all the palettes in the XML file
 	TiXmlElement *palettesXML = zbeXML->FirstChildElement("bin")->FirstChildElement("palettes");
@@ -301,18 +304,14 @@ int main(int argc, char **argv)
 
 		// The length is unknown right now, it'll be counted in the copy op and returned
 		// so we'll return here after that copy is done
-		fpos_t lenPos;
-		fgetpos(output, &lenPos);
-		debug("\tTemp Palette Length\n");
-		fwrite<uint16_t>(0, output);
+		debug("\t");
+		fpos_t lenPos = tempVal<uint16_t>("Palette Length", output);
 		debug("\tAppending Palette Data from file %s\n", thisBin.c_str());
 		uint16_t len = appendData(output, thisBin);
 
 		// Now we have the length, so go back and write it down
-		fsetpos(output, &lenPos);
+		goWrite<uint16_t>(uint16_t(len), output, &lenPos);
 		debug("\tPalette's Length: %d B\n", len);
-		fwrite<uint16_t>((uint16_t) len, output);
-		fseek(output, 0, SEEK_END);
 
 		// Get the next sibling
 		palXML = palXML->NextSiblingElement("palette");
@@ -335,11 +334,8 @@ int main(int argc, char **argv)
 	
 	
 	// Total # backgrounds.
-	fpos_t totalBgPos;
+	fpos_t totalBgPos = tempVal<uint32_t>("Total Backgrounds", output);
 	uint32_t totalBg = 0;
-	fgetpos(output, &totalBgPos);
-	debug("Temp Total Backgrounds\n");
-	fwrite<uint32_t>(0, output);
 
 	// For all the palettes in the XML file
 	TiXmlElement *bgsXML = zbeXML->FirstChildElement("backgrounds");
@@ -403,7 +399,7 @@ int main(int argc, char **argv)
 		// Determine the size of the bg
 		debug("Got a %d x %d background\n", adjW, adjH);
 		
-		int minS = 1024;
+		unsigned int minS = 1024;
 		uint8_t size = 3;
 		if (adjW >= adjH)
 		{
@@ -474,11 +470,8 @@ int main(int argc, char **argv)
 	 */
 
 	// Total # objects.
-	fpos_t totalObjPos;
+	fpos_t totalObjPos = tempVal<uint32_t>("Total Objects", output);
 	uint32_t totalObj = 0;
-	fgetpos(output, &totalObjPos);
-	debug("Temp Total Objects\n");
-	fwrite<uint32_t>(0, output);
 
 	// For all the objects
 	TiXmlElement *objectsXML = zbeXML->FirstChildElement("objects");
@@ -494,10 +487,8 @@ int main(int argc, char **argv)
 
 		// Total # Animations
 		uint32_t totalAnimations = 0;
-		fpos_t totalAnimationsPos;
-		fgetpos(output, &totalAnimationsPos);
-		debug("\tTemp Total Animations\n");
-		fwrite<uint32_t>(0, output);
+		debug("\t");
+		fpos_t totalAnimationsPos = tempVal<uint32_t>("Total Animations", output);
 
 		// And all the animations
 		TiXmlElement *animationsXML = objectXML->FirstChildElement("animations");
@@ -508,10 +499,8 @@ int main(int argc, char **argv)
 
 			// Total # frames for this animation
 			uint16_t totalFrames = 0;
-			fpos_t totalFramesPos;
-			fgetpos(output, &totalFramesPos);
-			debug("\t\tTemp Total Frames\n");
-			fwrite<uint16_t>(0, output);
+			debug("\t\t");
+			fpos_t totalFramesPos = tempVal<uint16_t>("Total Frames", output);
 
 			// Start getting frames
 			TiXmlElement *frameXML = animationXML->FirstChildElement("frame");
@@ -565,11 +554,8 @@ int main(int argc, char **argv)
 
 
 	// Total # levels
-	fpos_t totalLvlPos;
+	fpos_t totalLvlPos = tempVal<uint32_t>("Total Levels", output);
 	uint32_t totalLvl = 0;
-	fgetpos(output, &totalLvlPos);
-	debug("Temp Total Levels\n");
-	fwrite<uint32_t>(0, output);
 
 	// For all the levels in the XML file
 	TiXmlElement *levelsXML = zbeXML->FirstChildElement("levels");
@@ -587,11 +573,9 @@ int main(int argc, char **argv)
 
 		// Level Heroes
 		//Total heroes
-		fpos_t totalLvlHroPos;
+		debug("\t");
+		fpos_t totalLvlHroPos = tempVal<uint32_t>("Level Heroes", output);
 		uint32_t totalLvlHro = 0;
-		fgetpos(output, &totalLvlHroPos);
-		debug("\tTemp total level heroes\n");
-		fwrite<uint32_t>(0, output);
 
 		TiXmlElement *heroesXML = levelXML->FirstChildElement("heroes");
 		TiXmlElement *heroXML = heroesXML->FirstChildElement("hero");
@@ -623,11 +607,9 @@ int main(int argc, char **argv)
 
 		// Level Objects
 		//Total objects
-		fpos_t totalLvlObjPos;
+		debug("\t");
+		fpos_t totalLvlObjPos = tempVal<uint32_t>("Level Objects", output);
 		uint32_t totalLvlObj = 0;
-		fgetpos(output, &totalLvlObjPos);
-		debug("\tTemp total level objects\n");
-		fwrite<uint32_t>(0, output);
 
 		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
 		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
@@ -735,6 +717,24 @@ template <class T> void goWrite(T val, FILE *file, fpos_t *pos)
 	fseek(file, 0, SEEK_END);
 }
 
+
+/**
+ * Drops a temporary T typed value into the output file then returns the fpos_t
+ * referring to that location.
+ * @param char *description
+ *  Only used in the debug printing statement. "total gfx" for example.
+ * @param FILE *output
+ *  The file into which the temp value should be written
+ * @author Joe Balough
+ */
+template <class T> fpos_t tempVal(char *description, FILE* output)
+{
+	fpos_t position;
+	fgetpos(output, &position);
+	debug("Temp %s\n", description);
+	fwrite<T>(0, output);
+	return position;
+}
 
 
 
