@@ -49,7 +49,6 @@
 #include <nds.h>
 #include <fat.h>
 #include <vector>
-#include <map>
 #include "vector.h"
 #include "assettypes.h"
 #include "util.h" // die()
@@ -180,6 +179,16 @@ private:
 
 
 	/**
+	 * freeGfx() function
+	 *
+	 * Frees the space allocated to hold the passed gfxAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freeGfx(gfxAsset *gfx);
+	
+
+	/**
 	 * loadPalette() function
 	 *
 	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
@@ -188,6 +197,16 @@ private:
 	 * @author Joe Balough
 	 */
 	void loadPalette(paletteAsset *gfx);
+
+
+	/**
+	 * freePalette() function
+	 *
+	 * Frees the space allocated to hold the passed paletteAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freePalette(paletteAsset *gfx);
 
 
 	/**
@@ -256,20 +275,14 @@ private:
 	 * id asset are loaded, their index if loaded, the position in the file, length, size, etc.
 	 * @see assetStatus
 	 */
-	// Tiles' status
 	vector<gfxAsset*> gfxAssets;
-	
-	// Palettes' status
 	vector<paletteAsset*> paletteAssets;
-
-	// All of the objectAssets defined in the datafile
-	vector<objectAsset*> objectAssets;
-
-	// Vector of levelAssets
-	vector<levelAsset*> levelAssets;
 	
-	// Vector of backgroundAssets
+	vector<gfxAsset*> tilesetAssets;
 	vector<backgroundAsset*> backgroundAssets;
+	
+	vector<objectAsset*> objectAssets;
+	vector<levelAsset*> levelAssets;
 };
 
 #endif // ASSETS_H_INCLUDED

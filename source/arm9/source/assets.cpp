@@ -70,6 +70,29 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
+	
+	// Get the number of background tilesets
+	uint32 numTilesets = load<uint32>(zbeData);
+	iprintf("#tilesets %d\n", numTilesets);
+	
+	// Load up all those tilesets
+	for (uint32 i = 0; i < numTilesets; i++)
+	{
+		// Make a new gfxAsset for the vector
+		gfxAsset *newAsset = new gfxAsset;
+		
+		// Load up the length
+		newAsset->length = load<uint16>(zbeData);
+		iprintf(" #%d: %dB\n", i, newAsset->length);
+		
+		// Save the position
+		fpos_t curPos;
+		fgetpos(zbeData, &curPos);
+		newAsset->position = curPos;
+		
+		// Seek past the data
+		fseek(zbeData, newAsset->length, SEEK_CUR);
+	}
 
 	// Get the number of palettes
 	uint32 numPals = load<uint32>(zbeData);
@@ -113,9 +136,9 @@ void assets::parseZbe()
 		// make a new backgroundAsset
 		backgroundAsset *newAsset = new backgroundAsset();
 		
-		// load up the reference to its palette
-		uint32 palId = load<uint32>(zbeData);
-		newAsset->palette = paletteAssets[palId];
+		// load up the reference to its tileset
+		uint32 tilesetId = load<uint32>(zbeData);
+		newAsset->tileset = tilesetAssets[tilesetId];
 		
 		// set its size
 		uint8 bgSize = load<uint8>(zbeData);
@@ -125,37 +148,40 @@ void assets::parseZbe()
 				// To determine the skip bytes, divide the dimension by 8 to get number
 				// of tiles in one dimension. Then square that to get total number of tiles.
 				newAsset->size = BgSize_ER_128x128;
-				newAsset->length = 256;
 				break;
 			case 1:
 				newAsset->size = BgSize_ER_256x256;
-				newAsset->length = 1024;
 				break;
 			case 2:
 				newAsset->size = BgSize_ER_512x512;
-				newAsset->length = 4096;
 				break;
 			default:
 				newAsset->size = BgSize_ER_1024x1024;
-				newAsset->length = 16384;
 				break;
 		}
-		
-		iprintf(" pal%d, size %d, %d B\n", (int) palId, (int) bgSize, (int) newAsset->length);
 		
 		// Save the position of all the tiles data
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
 		
-		// Seek past all those ids
-		// That 4 is there because each id is 4 bytes
-		fseek(zbeData, newAsset->length * 4, SEEK_CUR);
+		// Get number of palettes
+		uint8 numPalettes = load<uint8>(zbeData);
+		
+		iprintf(" size %d using %d palettes\n", (int) bgSize, (int) numPalettes);
+		
+		// Seek past all those palette ids
+		fseek(zbeData, numPalettes * sizeof(uint32), SEEK_CUR);
+		
+		// Get the size of the map data
+		uint16 mapLength = load<uint16>(zbeData);
+		
+		// Seek past all the map data
+		fseek(zbeData, mapLength * sizeof(uint8), SEEK_CUR);
 		
 		// Put this backgroundAsset on the vector
 		backgroundAssets.push_back(newAsset);
 	}
-	
 
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
@@ -349,6 +375,8 @@ int assets::loadBackground(backgroundAsset *background)
 	// Return if nothing to do
 	if (!background) return -1;
 	
+	iprintf("Loading background...\n");
+	
 	// Open the file
 	openFile();
 	
@@ -359,77 +387,67 @@ int assets::loadBackground(backgroundAsset *background)
 		die();
 	}
 	
-	// Allocate enough space for the map
-	background->map = new uint16[background->length];
-	
-	// Make a map to correspond between the ids in the file and the new ids for
-	// the tiles data
-	map<uint32, uint16> changer;
-	
-	// Go through all of the ids
-	uint16 tiles = 0;
-	for (unsigned int i = 0; i < background->length; i++)
-	{
-		// Get the gfxId for the next tile
-		uint32 gfxId = load<uint32>(zbeData);
-		
-		// See if it's already mapped
-		// find() will return the iterator for the end of the map if the passed key isn't mapped yet
-		if (changer.find(gfxId) == changer.end())
-		{
-			// not mapped, so map it
-			changer[gfxId] = tiles;
-			
-			iprintf(" %d > %d\n", gfxId, tiles);
-			
-			// Increment the number of unique tiles used
-			++tiles;
-		}
-		
-		// Set the tile id for this location in the map
-		background->map[i] = changer[gfxId];
-	}
-	
-	// Allocate enough space for all the tiles
-	//   4 bits per pixel so each tile needs 8 * 8 * 4 = 256 bits = 16 uint16
-	background->tiles = new uint16[tiles * 16];
-	
-	// Iterate through all the mapped items and load their tiles
-	uint32 tilesOffset = 0;
-	for ( map<uint32, uint16>::iterator it=changer.begin() ; it != changer.end(); it++ )
-	{
-		// Make sure the gfx is loaded into main memory
-		loadGfx(gfxAssets[it->first]);
-		
-		// copy it into tiles
-		//memcpy(&background->tiles[tilesOffset], gfxAssets[it->first]->data, gfxAssets[it->first]->length * sizeof(uint8));
-		for (int i = 0; i < 16; i++)
-			background->tiles[tilesOffset + i] = gfxAssets[it->first]->data[i];
-		
-		// Increment the tilesOffset
-		tilesOffset += 16;
-	}
-	// TODO: The code above doesn't look very good. Clean it up a bit
-	
+	// Init the background
 	// TODO: un-hard-code this layer value here
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
 	int bgId = bgInit(3, BgType_ExRotation, background->size, 0,2);
 	
-	// Make sure the palette is loaded into main memory
-	loadPalette(background->palette);
+	// Get number of palettes to load
+	uint8 numPalettes = load<uint8>(zbeData);
+	iprintf(" %d palettes\n", numPalettes);
 	
-	// Copy the data into video memory
-	dmaCopy(background->tiles, bgGetGfxPtr(bgId), tiles * 16 * sizeof(uint16));
-    dmaCopy(background->palette->data, BG_PALETTE, background->palette->length * sizeof(uint8));
-    dmaCopy(background->map, bgGetMapPtr(bgId),  background->length * sizeof(uint16));
+	// Load up all the palettes into a vector
+	uint16 offset = 0;
+	vector<uint32> paletteIds;
+	for (uint8 i = 0; i < numPalettes; i++)
+	{
+		// Get palette id
+		uint32 palId = load<uint32>(zbeData);
+		iprintf("  %d -> %d\n", i, palId);
+		
+		paletteIds.push_back(palId);
+	}
 	
-	// free up the memory used for those tiles and the map (since its in video memory now)
-	delete background->tiles;
-	delete background->map;
-	background->tiles = background->map = NULL;
+	// Get the length of the map data
+	uint16 mapLength = load<uint16>(zbeData);
+	iprintf(" Loading %dB map\n", mapLength);
 	
-	// All done, close the file and return
+	// Allocate some space for that data and load it up
+	uint16 *map = (uint16*) malloc(mapLength * sizeof(uint8));
+	if (fread(map, sizeof(uint8), mapLength, zbeData) < mapLength)
+	{
+		iprintf("Error reading background map from file: %s\n", strerror(errno));
+		die();
+	}
 	closeFile();
+	
+	// Make sure tiles data is loaded then copy it into video memory
+	iprintf(" load & copy tileset\n");
+	loadGfx(background->tileset);
+	dmaCopy(background->tileset->data, bgGetGfxPtr(bgId), background->tileset->length * sizeof(uint8));
+	// unload the tileset
+	freeGfx(background->tileset);
+	
+	// Copy the map into video memory and free up the space it doesn't need anymore
+    dmaCopy(map, bgGetMapPtr(bgId), mapLength * sizeof(uint8));
+	iprintf(" copied map\n");
+	free(map);
+	
+	// Load, then copy all the palettes into memory
+	for (uint8 i = 0; i < numPalettes; i++)
+	{
+		iprintf(" load pal %d ", paletteIds[i]);
+		
+		// Load up the palette
+		paletteAsset *pal = paletteAssets[paletteIds[i]];
+		loadPalette(pal);
+		
+		// Copy the palette into memory, remember to offset it from the last one
+		iprintf("and copy\n");
+		dmaCopy(pal->data, BG_PALETTE + offset, pal->length);
+		offset += pal->length;
+	}
+	
 	return bgId;
 }
 
@@ -464,6 +482,18 @@ void assets::loadGfx(gfxAsset *gfx)
 	// Everything is A-Okay! close the file and set the gfx to mmLoaded
 	closeFile();
 	gfx->mmLoaded = true;
+}
+
+
+// Free mm space used by gfxAsset
+void assets::freeGfx(gfxAsset *gfx)
+{
+	if(!gfx || !gfx->mmLoaded) return;
+	
+	// Free memory
+	delete gfx->data;
+	// Reset variable
+	gfx->mmLoaded = false;
 }
 
 
@@ -532,6 +562,18 @@ void assets::loadPalette(paletteAsset *pal)
 	closeFile();
 	pal->mmLoaded = true;
 }
+
+
+// Free mm space used for paletteAsset
+void assets::freePalette(paletteAsset *pal)
+{
+	if (!pal || !pal->mmLoaded) return;
+	
+	// Free and reset
+	delete pal->data;
+	pal->mmLoaded = false;
+}
+
 
 // Returns index of passed paletteAsset in video memory. DMA copies it if needed
 uint8 assets::getPalette(paletteAsset *pal)

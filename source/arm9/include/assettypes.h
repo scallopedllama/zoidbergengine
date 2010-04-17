@@ -118,33 +118,18 @@ struct backgroundAsset : public assetStatus
 {
 	backgroundAsset() : assetStatus()
 	{
-		palette = NULL;
-		map = tiles = NULL;
+		tileset = NULL;
 		size = BgSize_ER_1024x1024;
-		length = 16384;
 	}
 	
 	~backgroundAsset()
-	{
-		if (map)
-			delete map;
-		if (tiles)
-			delete tiles;
-	}
+	{}
 	
-	// Palette to use with this background
-	paletteAsset *palette;
+	// The tileset to use with this background
+	gfxAsset *tileset;
 	
 	// size of the background
 	BgSize size;
-	
-	// Pointers to dynamically allocated arrays of uint16s
-	// for the map data and the tiles data.
-	uint16 *map;
-	uint16 *tiles;
-	
-	// How many bytes the map data takes up in the file
-	uint32 length;
 };
 
 
