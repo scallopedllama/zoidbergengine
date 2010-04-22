@@ -194,6 +194,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		debug("\tReading background map (tileId, paletteId, hflip, vflip):\n");
 		unsigned int maxWidth = 0;
 		unsigned int h = 0;
+		uint8_t numPalettes = 0;
 		while (bgRowXML)
 		{
 			++h;
@@ -230,7 +231,11 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 				}
 				// If this palette is not in the map, add it
 				if (palConv.find(palId) == palConv.end())
-					palConv[palId] = palConv.size() - 1;
+				{
+					printf("adding palette %d to correspond to paletteasset %d\n", palId, numPalettes);
+					palConv[palId] = numPalettes;
+					++numPalettes;
+				}
 
 				// Now change the palId over to reference the appropriate bgPalette id
 				palId = palConv[palId];
@@ -271,7 +276,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 
 
 		// Number of palettes used
-		fwrite<uint8_t>(uint8_t(palConv.size()), output);
+		fwrite<uint8_t>(numPalettes, output);
 		debug("\t%d Palettes used\n", palConv.size());
 
 		// Add the palette correspondence ids to the file
