@@ -192,8 +192,8 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		// Process each row
 		TiXmlElement *bgRowXML = bgXML->FirstChildElement("row");
 		debug("\tReading background map (tileId, paletteId, hflip, vflip):\n");
-		int maxWidth = 0;
-		int h = 0;
+		unsigned int maxWidth = 0;
+		unsigned int h = 0;
 		while (bgRowXML)
 		{
 			++h;
@@ -203,7 +203,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			vector<bgTile> rowTiles;
 
 			// Process each tile
-			int w = 0;
+			unsigned int w = 0;
 			TiXmlElement *bgTileXML = bgRowXML->FirstChildElement("tile");
 			while (bgTileXML)
 			{
@@ -260,42 +260,14 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			// Get next row
 			bgRowXML = bgRowXML->NextSiblingElement("row");
 		}
-
-		// Multiply the width and height by 8 (since all tiles are 8x8)
-		int adjW = maxWidth * 8;
-		int adjH = h * 8;
+		// Take the maximum defined width to be the width of the map
+		// (We'll fill in the blanks below)
+		unsigned int w = maxWidth;
 
 		// Determine the size of the bg
-		debug("\tGot a %d x %d background\n", adjW, adjH);
-
-		unsigned int minS = 1024;
-		uint8_t size = 3;
-		if (adjW >= adjH)
-		{
-			if (adjW <= 512) size = 2;
-			if (adjW <= 256) size = 1;
-			if (adjW <= 128) size = 0;
-		}
-		else
-		{
-			if (adjH <= 512) size = 2;
-			if (adjH <= 256) size = 1;
-			if (adjH <= 128) size = 0;
-		}
-		switch (size)
-		{
-			case 0:
-				minS = 128;
-				break;
-			case 1:
-				minS = 256;
-				break;
-			case 2:
-				minS = 512;
-				break;
-		}
-		debug("\tRounding to %d x %d (size %d)\n", minS, minS, int(size));
-		fwrite<uint8_t>(size, output);
+		debug("\tGot a %d tile x %d tile background\n", w, h);
+		fwrite<uint32_t>(w, output);
+		fwrite<uint32_t>(h, output);
 
 
 		// Number of palettes used
@@ -325,10 +297,10 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 		uint32_t mapLen = 0;
 
 		debug("\tWriting background map:\n");
-		for (unsigned int i = 0; i < minS / 8; i++)
+		for (unsigned int i = 0; i < h; i++)
 		{
 			debug("\t\t");
-			for (unsigned int j = 0; j < minS / 8; j++)
+			for (unsigned int j = 0; j < w; j++)
 			{
 				// Make sure to get a value within the range of the vectors
 				uint16_t toWrite = 0;
