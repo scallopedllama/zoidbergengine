@@ -320,7 +320,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			}
 			debug("\n");
 		}
-		goWrite<uint16_t>(uint16_t(mapLen), output, &mapLenPos);
+		goWrite<uint32_t>(mapLen, output, &mapLenPos);
 		debug("\tBackground map length: %d\n", mapLen);
 
 		// Get the next sibling
