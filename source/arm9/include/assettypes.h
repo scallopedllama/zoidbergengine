@@ -128,7 +128,7 @@ struct backgroundAsset : public assetStatus
 	backgroundAsset() : assetStatus()
 	{
 		tileset = NULL;
-		size = BgSize_ER_1024x1024;
+		w = h = length = 0;
 	}
 
 	~backgroundAsset()
@@ -137,8 +137,11 @@ struct backgroundAsset : public assetStatus
 	// The tileset to use with this background
 	gfxAsset *tileset;
 
-	// size of the background
-	BgSize size;
+	// width and height in tiles of the background
+	uint32 w, h;
+	
+	// The number of bytes in the data section of the MAP data
+	uint32 length;
 };
 
 
