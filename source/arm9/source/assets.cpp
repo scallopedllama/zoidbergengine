@@ -440,8 +440,10 @@ int assets::loadBackground(backgroundAsset *background)
 	{
 		for (int x = 0; x < ZOIDBERG_BACKGROUND_TILE_WIDTH; x++)
 		{
-			// Copy this tile of the map                                                  Each tile is 2 bytes \/
-			dmaCopy(background->data + (y * background->h + x), mapPtr + (y * ZOIDBERG_BACKGROUND_TILE_HEIGHT + x), 2);
+			// TODO: move the 512 down there into a #define.
+			// TODO: MOVE ALL REFERENCES TO ASSET SIZES INTO #DEFINES SO THAT CHANGING THEM IS VERY EASY.
+			// Copy this tile of the map                                                      Each tile is 2 bytes \/
+			dmaCopy(background->data + ((x * background->w + y) * sizeof(uint16)), mapPtr + ((x * 512 + y) ), sizeof(uint16));
 		}
 	}
 	iprintf(" copied map\n");
