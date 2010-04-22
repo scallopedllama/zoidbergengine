@@ -43,6 +43,11 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+// 28 tiles = 224 px > 192 px screen height
+#define ZOIDBERG_BACKGROUND_TILE_HEIGHT 28
+	// 36 tiles = 288 px > 256 px screen width
+#define ZOIDBERG_BACKGROUND_TILE_WIDTH 36
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>

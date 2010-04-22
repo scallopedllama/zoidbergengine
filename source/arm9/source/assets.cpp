@@ -436,14 +436,12 @@ int assets::loadBackground(backgroundAsset *background)
 	
 	// Row Major Order
 	// We need to copy enough tiles to fill the height of the screen plus some buffer
-	// 28 tiles = 224 px > 192 px screen height
-	for (int y = 0; y < 28; y++)
+	for (int y = 0; y < ZOIDBERG_BACKGROUND_TILE_HEIGHT; y++)
 	{
-		// 36 tiles = 288 px > 256 px screen width
-		for (int x = 0; x < 36; x++)
+		for (int x = 0; x < ZOIDBERG_BACKGROUND_TILE_WIDTH; x++)
 		{
-			// Copy this tile of the map                                     Each tile is 2 bytes \/
-			dmaCopy(background->data + (y * background->h + x), mapPtr + (y * background->h + x), 2);
+			// Copy this tile of the map                                                  Each tile is 2 bytes \/
+			dmaCopy(background->data + (y * background->h + x), mapPtr + (y * ZOIDBERG_BACKGROUND_TILE_HEIGHT + x), 2);
 		}
 	}
 	iprintf(" copied map\n");
