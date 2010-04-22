@@ -15,11 +15,11 @@
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="0" tileset="0">
+		<background palette="1" tileset="0">
 			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3" palette="1" /><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3" palette="0" /><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
