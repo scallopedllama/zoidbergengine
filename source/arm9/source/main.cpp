@@ -41,7 +41,7 @@ void initVideo()
 	lcdMainOnBottom();
 
 	vramSetMainBanks(VRAM_A_MAIN_BG,
-				 VRAM_B_MAIN_SPRITE,
+				 VRAM_B_MAIN_SPRITE_0x06400000,
 				 VRAM_C_SUB_BG_0x06200000,
 				 VRAM_D_SUB_SPRITE);
 
