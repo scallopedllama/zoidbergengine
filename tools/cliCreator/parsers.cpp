@@ -232,7 +232,6 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 				// If this palette is not in the map, add it
 				if (palConv.find(palId) == palConv.end())
 				{
-					printf("adding palette %d to correspond to paletteasset %d\n", palId, numPalettes);
 					palConv[palId] = numPalettes;
 					++numPalettes;
 				}
@@ -298,7 +297,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 
 		// Write all those uint16_t datas
 		debug("\t");
-		fpos_t mapLenPos = tempVal<uint16_t>("Background Map Length", output);
+		fpos_t mapLenPos = tempVal<uint32_t>("Background Map Length", output);
 		uint32_t mapLen = 0;
 
 		debug("\tWriting background map:\n");
@@ -321,7 +320,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			debug("\n");
 		}
 		goWrite<uint32_t>(mapLen, output, &mapLenPos);
-		debug("\tBackground map length: %d\n", mapLen);
+		debug("\tBackground map length: %dB\n", mapLen);
 
 		// Get the next sibling
 		bgXML = bgXML->NextSiblingElement("background");
