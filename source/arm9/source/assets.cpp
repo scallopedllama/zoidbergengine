@@ -139,10 +139,6 @@ void assets::parseZbe()
 		// make a new backgroundAsset
 		backgroundAsset *newAsset = new backgroundAsset();
 
-		// load up the reference to its tileset
-		uint32 tilesetId = load<uint32>(zbeData);
-		newAsset->tileset = tilesetAssets[tilesetId];
-
 		// set its width and height
 		newAsset->w = load<uint32>(zbeData);
 		newAsset->h = load<uint32>(zbeData);
@@ -254,10 +250,10 @@ void assets::parseZbe()
 		levelAssets.push_back(newAsset);
 
 		// Skip over the backgrounds
-		load<uint32>(zbeData); // bg0
-		load<uint32>(zbeData); // bg1
-		load<uint32>(zbeData); // bg2
-		load<uint32>(zbeData); // bg3
+		// NOTE: keep this up to date!
+		//                        bg0     bg1     bg2     bg3     tileset
+		const static int bgSize = 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4;
+		fseek(zbeData, bgSize, SEEK_CUR);
 
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
@@ -308,14 +304,23 @@ levelAsset *assets::loadLevel(uint32 id)
 	iprintf("lvl %d requested\n", id);
 
 	// background -1 means it was not set
-	uint32 bg0id = load<uint32>(zbeData);
-	uint32 bg1id = load<uint32>(zbeData);
-	uint32 bg2id = load<uint32>(zbeData);
-	uint32 bg3id = load<uint32>(zbeData);
-	lvl->bg0 = (bg0id == uint32(-1)) ? NULL : backgroundAssets[bg0id];
-	lvl->bg1 = (bg1id == uint32(-1)) ? NULL : backgroundAssets[bg1id];
-	lvl->bg2 = (bg2id == uint32(-1)) ? NULL : backgroundAssets[bg2id];
-	lvl->bg3 = (bg3id == uint32(-1)) ? NULL : backgroundAssets[bg3id];
+	// Load up all the backgrounds
+	for (int i = 0; i < 4; i++)
+	{
+		// Get the id and distance
+		uint32 bgId = load<uint32>(zbeData);
+		uint8 dist = load<uint8>(zbeData);
+
+		// background -1 means it was not set, so make that bg's pointer to the backgroundAsset NULL in that case
+		lvl->bgs[i].background = (bgId == uint32(-1)) ? NULL : backgroundAssets[bgId];
+		lvl->bgs[i].distance = dist;
+
+		iprintf("  bg%d: bg%d at %d\n", i, bgId, dist);
+	}
+	// Set the tileset to use
+	uint32 tilesetId = load<uint32>(zbeData);
+	lvl->tileset = tilesetAssets[tilesetId];
+	iprintf(" using tileset %d for bgs\n", tilesetId);
 
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
@@ -370,7 +375,7 @@ levelAsset *assets::loadLevel(uint32 id)
 
 
 // loads up a background
-int assets::loadBackground(backgroundAsset *background, uint8 layer)
+int assets::loadBackground(backgroundAsset *background, gfxAsset *tileset, uint8 layer)
 {
 	// Return if nothing to do
 	if (!background) return -1;
@@ -424,14 +429,13 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	closeFile();
 
 	// Make sure tiles data is loaded
-	gfxAsset *tileset = background->tileset;
 	loadGfx(tileset);
 
 	// Init the background
 	// mapBases are 2KB, tileBases are 16KB, and they overlap.
 	// Map tiles occupy background->tileset->length B / 1024 (B / KB) / 2 (KB / offset) mapBases
 	//   that needs to be rounded up, though so see if it fits perfectly, if it doesn't add one
-	int tileSize = (background->tileset->length % 2048 == 0) ? background->tileset->length / 2048 : background->tileset->length / 2048 + 1;
+	int tileSize = (tileset->length % 2048 == 0) ? tileset->length / 2048 : tileset->length / 2048 + 1;
 
 	// Map data will ALWAYS occupy (512 px / 8 (px / tile)) * (256 px / 8 (px/tile)) * 2 (B / tile) / 1024 (B / KB) = 4 KB = 2 mapBases
 	int mapBase = tileSize + (layer * 2);
@@ -444,14 +448,14 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	iprintf(" Init'd, id %d, mb %d, ts %d\n", background->bgId, mapBase, tileSize);
 
 	// Copy tiles into video memory (If not already loaded)
-	if (!background->tileset->vmLoaded)
+	if (!tileset->vmLoaded)
 	{
 		iprintf("  ld %dB, cp tileset (%x)\n", tileset->length, (unsigned int) bgGetGfxPtr(background->bgId));
 		DC_FlushRange(tileset->data, tileset->length);
 		dmaCopy(tileset->data, bgGetGfxPtr(background->bgId), tileset->length);
-		background->tileset->vmLoaded = true;
+		tileset->vmLoaded = true;
 		// unload the tileset (doesn't need to stay in main memory
-		freeGfx(background->tileset);
+		freeGfx(tileset);
 	}
 	else
 		iprintf("  tileset already loaded\n");

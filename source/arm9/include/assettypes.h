@@ -127,7 +127,6 @@ struct backgroundAsset : public assetStatus
 {
 	backgroundAsset() : assetStatus()
 	{
-		tileset = NULL;
 		w = h = length = 0;
 		bgId = -1;
 	}
@@ -135,19 +134,26 @@ struct backgroundAsset : public assetStatus
 	~backgroundAsset()
 	{}
 
-	// The tileset to use with this background
-	gfxAsset *tileset;
-
 	// width and height in tiles of the background
 	uint32 w, h;
-	
+
 	// The number of bytes in the data section of the MAP data
 	uint32 length;
-	
+
 	// Id for this background
 	int bgId;
 };
 
+
+/**
+ * levelBackgroundAsset struct. Used to track the backgrounds for a level. Just has pointers to its backgroundAsset and its distance.
+ * @author Joe Balough
+ */
+struct levelBackgroundAsset
+{
+	backgroundAsset *background;
+	uint8 distance;
+};
 
 
 /**
@@ -254,8 +260,11 @@ struct levelAsset : assetStatus
 		mmLoaded = vmLoaded = false;
 	}
 
+	// The gfxAsset to use as this level's background tileset
+	gfxAsset *tileset;
+
 	// The background that this level uses
-	backgroundAsset *bg0, *bg1, *bg2, *bg3;
+	levelBackgroundAsset bgs[4];
 
 	// all the objects in this level
 	// this array is null temrinated!

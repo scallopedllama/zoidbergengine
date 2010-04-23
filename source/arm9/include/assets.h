@@ -140,7 +140,7 @@ public:
 	 *
 	 * Used by level class to tell this assets class to initialize the passed backgroundAsset
 	 * and get its data into video memory properly. This function tries to be smart about not wasting memory.
-	 * 
+	 *
 	 * @param backgroundAsset *background
 	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
 	 * @param uint8 layer
@@ -149,7 +149,7 @@ public:
 	 *  The background id of the initilized background
 	 * @author Joe Balough
 	 */
-	int loadBackground(backgroundAsset *background, uint8 layer);
+	int loadBackground(backgroundAsset *background, gfxAsset *tileset, uint8 layer);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
@@ -197,7 +197,7 @@ private:
 	 * @author Joe Balough
 	 */
 	void freeGfx(gfxAsset *gfx);
-	
+
 
 	/**
 	 * loadPalette() function
@@ -288,10 +288,10 @@ private:
 	 */
 	vector<gfxAsset*> gfxAssets;
 	vector<paletteAsset*> paletteAssets;
-	
+
 	vector<gfxAsset*> tilesetAssets;
 	vector<backgroundAsset*> backgroundAssets;
-	
+
 	vector<objectAsset*> objectAssets;
 	vector<levelAsset*> levelAssets;
 };

@@ -16,10 +16,8 @@ level::level(levelAsset *metadata, OamState *o)
 	gravity.y = 0.025;
 
 	// Load up the backgrounds
-	if (metadata->bg0) zbeAssets->loadBackground(metadata->bg0, 0);
-	if (metadata->bg1) zbeAssets->loadBackground(metadata->bg1, 1);
-	if (metadata->bg2) zbeAssets->loadBackground(metadata->bg2, 2);
-	if (metadata->bg3) zbeAssets->loadBackground(metadata->bg3, 3);
+	for (int i = 0; i < 4; i++)
+		if (metadata->bgs[i].background) zbeAssets->loadBackground(metadata->bgs[i].background, metadata->tileset, i);
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
