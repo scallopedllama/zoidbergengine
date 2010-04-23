@@ -32,6 +32,12 @@
 #define ZOIDBERG_USE_EXT_PAL false
 
 #include <nds.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <vector>
+
+using namespace std;
 
 /**
  * Global Utility Function; die
@@ -54,5 +60,29 @@ inline void die()
  * @author Joe Balough
  */
 void initVideo();
+
+
+/**
+ * pause funciton
+ *
+ * Stops everything and waits for the player to press any key before returning.
+ *
+ * @author Joe Balough
+ */
+void pause();
+
+/**
+ * menu function
+ *
+ * Displays a list of strings to the user as a menu and allows them to pick one option using
+ * the up/down and B/A keys. This funciton will stop everything else
+ *
+ * @param vector<string> list
+ *  A vector of strings to use as the list of options in the menu
+ * @return int
+ *  Returns the index of the string the user selected
+ * @author Joe Balough
+ */
+int menu(vector<string> list);
 
 #endif // UTIL_H_INCLUDED

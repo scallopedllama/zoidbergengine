@@ -25,6 +25,8 @@
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef ZBE_TESTING
+
 #include <nds.h>
 #include <maxmod9.h>
 #include <fat.h>
@@ -45,3 +47,5 @@ int main()
 
 	return 0;
 }
+
+#endif

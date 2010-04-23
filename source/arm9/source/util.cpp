@@ -31,3 +31,48 @@ void initVideo()
 
 	consoleDemoInit();
 }
+
+
+// Pause gameplay until player presses a key
+void pause()
+{
+	scanKeys();
+	while (!keysHeld())
+	{
+		scanKeys();
+	}
+}
+
+// display a list of strings for the user to choose from
+int menu(vector<string> list)
+{
+	int selected = 0;
+	bool done = false;
+	while (!done)
+	{
+		consoleClear();
+		for (unsigned int i = 0; i < list.size(); i++)
+		{
+			// Show a star if the user has this string selected
+			if (selected == i) iprintf(" * ");
+			else               iprintf("   ");
+			
+			// Show this message
+			iprintf("%s\n", list[i].c_str());
+		}
+		
+		// Update the keys
+		scanKeys();
+		
+		// See if the user has pressed any navigational keys
+		if (keysHeld() & KEY_UP)
+			selected = (selected - 1) % list.size();
+		else if (keysHeld() & KEY_DOWN)
+			selected = (selected + 1) % list.size();
+		else if (keysHeld() & KEY_A || keysHeld() & KEY_B)
+			done = true;
+	}
+	
+	return selected;
+}
+
