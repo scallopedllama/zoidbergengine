@@ -433,8 +433,9 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	//   that needs to be rounded up, though so see if it fits perfectly, if it doesn't add one
 	int tileSize = (background->tileset->length % 2048 == 0) ? background->tileset->length / 2048 : background->tileset->length / 2048 + 1;
 
-	// Map data will ALWAYS occupy 512 px * 256 px / 8 (px/tile) * 2 (B / tile) / 1024 (B / KB) = 32 KB = 16 mapBases
-	int mapBase = tileSize + (layer * 16);
+	// Map data will ALWAYS occupy (512 px / 8 (px / tile)) * (256 px / 8 (px/tile)) * 2 (B / tile) / 1024 (B / KB) = 4 KB = 2 mapBases
+	int mapBase = tileSize + (layer * 2);
+	if (mapBase > 30) { iprintf(" mb %d, ts %d\n", mapBase, tileSize); die(); }
 
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
 	background->bgId = bgInit(layer, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, mapBase, 0);
