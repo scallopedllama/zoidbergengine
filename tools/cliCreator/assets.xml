@@ -15,19 +15,19 @@
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="1" tileset="0">
+		<background palette="2" tileset="0">
 			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3" palette="0" /><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 		</background>
 	</backgrounds>
