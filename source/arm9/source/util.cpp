@@ -37,7 +37,7 @@ void initVideo()
 void pause()
 {
 	scanKeys();
-	while (!keysHeld())
+	while (!keysUp())
 	{
 		scanKeys();
 	}
@@ -47,30 +47,55 @@ void pause()
 int menu(vector<string> list)
 {
 	int selected = 0;
-	bool done = false;
-	while (!done)
+	
+	consoleClear();
+	for (unsigned int i = 0; i < list.size(); i++)
 	{
-		consoleClear();
-		for (unsigned int i = 0; i < list.size(); i++)
-		{
-			// Show a star if the user has this string selected
-			if (selected == i) iprintf(" * ");
-			else               iprintf("   ");
-			
-			// Show this message
-			iprintf("%s\n", list[i].c_str());
-		}
+		// Show a star if the user has this string selected
+		if (selected == i) iprintf(" * ");
+		else               iprintf("   ");
+		
+		// Show this message
+		iprintf("%s\n", list[i].c_str());
+	}
+	
+	// Wait until the user presses a button
+	while (true)
+	{
+		// to set cursor location: /x1b[line;columnH
 		
 		// Update the keys
 		scanKeys();
 		
-		// See if the user has pressed any navigational keys
-		if (keysHeld() & KEY_UP)
-			selected = (selected - 1) % list.size();
-		else if (keysHeld() & KEY_DOWN)
+		// See if the user has pressed any keys
+		if (keysUp() & KEY_UP)
+		{
+			// Erase old one
+			iprintf("\x1b[%d;1H ", selected);
+			
+			// Updated selected
+			--selected;
+			if(selected < 0) selected = list.size() - 1;
+			
+			// Update cursor
+			iprintf("\x1b[%d;1H*", selected);
+		}
+		else if (keysUp() & KEY_DOWN)
+		{
+			// Erase old one
+			iprintf("\x1b[%d;1H ", selected);
+			
+			// Updated selected
 			selected = (selected + 1) % list.size();
-		else if (keysHeld() & KEY_A || keysHeld() & KEY_B)
-			done = true;
+			
+			// Update cursor
+			iprintf("\x1b[%d;1H*", selected);
+		}
+		else if (keysUp() & KEY_A || keysUp() & KEY_B)
+		{
+			break;
+		}
+		
 	}
 	
 	return selected;

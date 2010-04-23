@@ -24,7 +24,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+#define ZBE_TESTING
 #ifndef ZBE_TESTING
 
 #include <nds.h>

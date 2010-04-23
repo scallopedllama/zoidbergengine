@@ -27,6 +27,7 @@
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define ZBE_TESTING
 #ifdef ZBE_TESTING
 
 #include <nds.h>
@@ -34,7 +35,12 @@
 #include <fat.h>
 #include <assert.h>
 #include <stdio.h>
+#include <string>
+#include <vector>
 #include "game.h"
+#include "util.h"
+
+using namespace std;
 
 int main()
 {
@@ -42,10 +48,28 @@ int main()
 
 	// Initialize libfat
 	fatInitDefault();
+	
+	vector<string> list;
+	list.push_back("First!");
+	list.push_back("Second!");
+	list.push_back("Third!");
+	list.push_back("4th!");
+	list.push_back("Fifth!");
+	
+	while (true)
+	{
+		int picked = menu(list);
+		
+		consoleClear();
+		iprintf("You picked option %d\n", picked);
+		iprintf("\nPress any key to continue\n");
+		
+		pause();
+	}
 
 	// make a game
-	game g((char *) "/assets.zbe");
-	g.run();
+	//game g((char *) "/assets.zbe");
+	//g.run();
 
 	return 0;
 }
