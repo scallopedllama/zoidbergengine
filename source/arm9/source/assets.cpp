@@ -466,8 +466,8 @@ int assets::loadBackground(backgroundAsset *background)
 		offset ++;
 	}
 
-	// Show the background
-	bgShow(bgId);die();
+	// Change the priority
+	bgSetPriority(bgId, 3);
 
 	return bgId;
 }
