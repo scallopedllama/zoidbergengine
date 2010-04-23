@@ -72,6 +72,23 @@
 			<row></row>
 			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
 		</background>
+		<background palette="2" tileset="0">
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
+		</background>
 	</backgrounds>
 	<objects>
 		<object weight="45">
@@ -91,7 +108,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level bg0="0" bg1="1" bg2="2">
+		<level bg0="0" bg1="1" bg2="2" bg3="3">
 			<objects>
 				<object id="0" x="155" y="34" />
 				<object id="0" x="200" y="10" />
