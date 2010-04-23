@@ -434,6 +434,17 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		debug("\tLevel using background #%d for background 0\n", bg0);
 		fwrite<uint32_t>(uint32_t(bg0), output);
 
+		int bg1 = getIntAttr(levelXML, "bg1");
+		debug("\tLevel using background #%d for background 1\n", bg1);
+		fwrite<uint32_t>(uint32_t(bg1), output);
+		
+		int bg2 = getIntAttr(levelXML, "bg2");
+		debug("\tLevel using background #%d for background 2\n", bg2);
+		fwrite<uint32_t>(uint32_t(bg2), output);
+		
+		int bg3 = getIntAttr(levelXML, "bg3");
+		debug("\tLevel using background #%d for background 3\n", bg3);
+		fwrite<uint32_t>(uint32_t(bg3), output);
 
 		// Level Heroes
 		//Total heroes
