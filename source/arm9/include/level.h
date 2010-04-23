@@ -45,6 +45,9 @@
 #include <vector>
 #include <time.h>  // used in FPS calculation
 
+// Backgrounds
+#include "background.h"
+
 // Level objects
 #include "object.h"
 #include "hero.h"
@@ -123,6 +126,12 @@ private:
 
 	// A standard library vector containing all of the objects in this level
 	vector<object*> objects;
+	
+	// A vector of pointers to backgrounds
+	vector<background*> backgrounds;
+	
+	// This keep track of the number of background palettes are being used
+	uint8 numBackgroundPalettes;
 
 	// An array of boolean variables indicating whether or not the index matrix is being used by a sprite
 	// used by the getMatrix and freeMatrix functions

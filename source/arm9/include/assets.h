@@ -97,6 +97,27 @@ public:
 	 */
 	uint16 *getGfx(gfxAsset *gfx);
 
+
+	/**
+	 * loadGfx() function
+	 *
+	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
+	 * call to getGfx()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadGfx(gfxAsset *gfx);
+
+
+	/**
+	 * freeGfx() function
+	 *
+	 * Frees the space allocated to hold the passed gfxAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freeGfx(gfxAsset *gfx);
+
 	/**
 	 * getPalette function
 	 *
@@ -110,6 +131,27 @@ public:
 	 * @author Joe Balough
 	 */
 	uint8 getPalette(paletteAsset *pal);
+
+
+	/**
+	 * loadPalette() function
+	 *
+	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
+	 * call to getPalette()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadPalette(paletteAsset *gfx);
+
+
+	/**
+	 * freePalette() function
+	 *
+	 * Frees the space allocated to hold the passed paletteAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freePalette(paletteAsset *gfx);
 
 	/**
 	 * loadLevel function
@@ -132,11 +174,11 @@ public:
 	 * Used by background class to tell this assets class to initialize the passed backgroundAsset
 	 * and get its data into main memory properly.
 	 *
-	 * @param backgroundAsset *background
-	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
+	 * @param levelBackgroundAsset *background
+	 *  The levelBackgroundAsset for the background to load. Obtained from a levelAsset
 	 * @author Joe Balough
 	 */
-	void loadBackground(backgroundAsset *background);
+	void loadBackground(levelBackgroundAsset *background);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
@@ -163,48 +205,6 @@ private:
 	 * @author Joe Balough
 	 */
 	template <class T> T load(FILE *input);
-
-
-	/**
-	 * loadGfx() function
-	 *
-	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
-	 * call to getGfx()
-	 *
-	 * @author Joe Balough
-	 */
-	void loadGfx(gfxAsset *gfx);
-
-
-	/**
-	 * freeGfx() function
-	 *
-	 * Frees the space allocated to hold the passed gfxAsset in main memory. Resets the loaded variable.
-	 *
-	 * @author Joe Balough
-	 */
-	void freeGfx(gfxAsset *gfx);
-
-
-	/**
-	 * loadPalette() function
-	 *
-	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
-	 * call to getPalette()
-	 *
-	 * @author Joe Balough
-	 */
-	void loadPalette(paletteAsset *gfx);
-
-
-	/**
-	 * freePalette() function
-	 *
-	 * Frees the space allocated to hold the passed paletteAsset in main memory. Resets the loaded variable.
-	 *
-	 * @author Joe Balough
-	 */
-	void freePalette(paletteAsset *gfx);
 
 
 	/**

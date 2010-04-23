@@ -376,16 +376,14 @@ levelAsset *assets::loadLevel(uint32 id)
 
 
 // loads up a background
-void assets::loadBackground(levelBackgroundAsset *background)
+void assets::loadBackground(levelBackgroundAsset *lvlBackground)
 {
-	NOTE FOR LATER:
-	just changed this to a levelBackgroundAsset so all these references below are screwed up. need to add the palettes vector to the levelBackgroundAsset
-
 	// Return if nothing to do
-	if (!background) return;
+	if (!lvlBackground) return;
 
 	iprintf("Loading background...\n");
-
+	backgroundAsset *background = lvlBackground->background;
+	
 	// Open the file
 	openFile();
 
@@ -401,16 +399,15 @@ void assets::loadBackground(levelBackgroundAsset *background)
 	iprintf(" %d palettes\n", numPalettes);
 
 	// Load up all the palettes into a vector
-	uint16 offset = 0;
-	vector<uint32> paletteIds;
 	for (uint8 i = 0; i < numPalettes; i++)
 	{
 		// Get palette id
 		uint32 palId = load<uint32>(zbeData);
 		iprintf("  %d -> %d\n", i, palId);
 
-		paletteIds.push_back(palId);
+		lvlBackground->palettes.push_back(paletteAssets[palId]);
 	}
+	
 
 	// If the background's map isn't loaded yet, load it
 	if (!background->mmLoaded)

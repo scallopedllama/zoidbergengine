@@ -5,6 +5,9 @@ level::level(levelAsset *metadata, OamState *o)
 {
 	// set the oam
 	oam = o;
+	
+	// No palettes loaded
+	numBackgroundPalettes = 0;
 
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
@@ -14,10 +17,27 @@ level::level(levelAsset *metadata, OamState *o)
 
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-
+	
 	// Load up the backgrounds
+	// Level dimensions are determined by the biggest background in the back layers
+	//vector2D<uint32> maxDimensions(0, 0);
 	for (int i = 0; i < 4; i++)
-		if (metadata->bgs[i].background) zbeAssets->loadBackground(metadata->bgs[i].background, metadata->tileset, i);
+	{
+		if (metadata->bgs[i].background) 
+		{
+			// Make the new background
+			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
+			numBackgroundPalettes += metadata->bgs[i].palettes.size();
+			
+			// If this is a layer behind the sprites, see if it's bigger than the current biggest
+			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
+			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
+				maxDimensions = thisDimensions;*/
+			
+			// Add it to the vector
+			backgrounds.push_back(newBackground);
+		}
+	}
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
@@ -204,5 +224,11 @@ void level::update()
 			if(spriteId > SPRITE_COUNT)
 				break;
 		}
+	}
+	
+	// Update the backgrounds
+	for (int i = 0; i < backgrounds.size(); i++)
+	{
+		backgrounds[i]->update();
 	}
 }

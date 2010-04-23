@@ -128,7 +128,6 @@ struct backgroundAsset : public assetStatus
 	backgroundAsset() : assetStatus()
 	{
 		w = h = length = 0;
-		bgId = -1;
 	}
 
 	~backgroundAsset()
@@ -149,6 +148,7 @@ struct backgroundAsset : public assetStatus
 struct levelBackgroundAsset
 {
 	backgroundAsset *background;
+	vector<paletteAsset*> palettes;
 	uint8 distance;
 	uint8 layer;
 };
