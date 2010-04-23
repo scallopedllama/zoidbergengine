@@ -29,6 +29,8 @@
 #ifndef UTIL_H_INCLUDED
 #define UTIL_H_INCLUDED
 
+#define ZOIDBERG_USE_EXT_PAL false
+
 #include <nds.h>
 
 /**
@@ -43,5 +45,14 @@ inline void die()
 {
 	while (true);
 }
+
+/**
+ * Video Initialization routine
+ *
+ * Configures the DS video hardware
+ *
+ * @author Joe Balough
+ */
+void initVideo();
 
 #endif // UTIL_H_INCLUDED
