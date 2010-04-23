@@ -80,6 +80,7 @@
 		<Unit filename="../source/arm9/Makefile" />
 		<Unit filename="../source/arm9/include/assets.h" />
 		<Unit filename="../source/arm9/include/assettypes.h" />
+		<Unit filename="../source/arm9/include/background.h" />
 		<Unit filename="../source/arm9/include/collisionmatrix.h" />
 		<Unit filename="../source/arm9/include/game.h" />
 		<Unit filename="../source/arm9/include/hero.h" />
@@ -90,6 +91,7 @@
 		<Unit filename="../source/arm9/include/vars.h" />
 		<Unit filename="../source/arm9/include/vector.h" />
 		<Unit filename="../source/arm9/source/assets.cpp" />
+		<Unit filename="../source/arm9/source/background.cpp" />
 		<Unit filename="../source/arm9/source/collisionmatrix.cpp" />
 		<Unit filename="../source/arm9/source/game.cpp" />
 		<Unit filename="../source/arm9/source/hero.cpp" />
