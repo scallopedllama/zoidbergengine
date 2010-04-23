@@ -70,6 +70,15 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
+	
+	
+	
+	
+	// pause if we're testing
+	pauseIfTesting();
+	
+	
+	
 
 	// Get the number of background tilesets
 	uint32 numTilesets = load<uint32>(zbeData);
@@ -96,6 +105,14 @@ void assets::parseZbe()
 		// Duh.. add it to the tilesetAssets vector
 		tilesetAssets.push_back(newAsset);
 	}
+	
+	
+	
+	// pause if we're testing
+	pauseIfTesting();
+	
+	
+	
 
 	// Get the number of palettes
 	uint32 numPals = load<uint32>(zbeData);
@@ -127,7 +144,15 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-
+	
+	
+	
+	
+	// pause if we're testing
+	pauseIfTesting();
+	
+	
+	
 
 	// Number of backrounds
 	uint32 numBackgrounds = load<uint32>(zbeData);
@@ -166,6 +191,17 @@ void assets::parseZbe()
 		// Put this backgroundAsset on the vector
 		backgroundAssets.push_back(newAsset);
 	}
+	
+	
+	
+	
+	
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
+
 
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
@@ -228,6 +264,14 @@ void assets::parseZbe()
 		objectAssets.push_back(newAsset);
 
 	} // all objects
+	
+	
+	
+	
+	// pause if we're testing
+	pauseIfTesting();
+	
+	
 
 
 	// Number of levels

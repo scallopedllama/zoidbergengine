@@ -25,7 +25,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #ifndef UTIL_H_INCLUDED
 #define UTIL_H_INCLUDED
 
@@ -84,5 +83,21 @@ void pause();
  * @author Joe Balough
  */
 int menu(vector<string> list);
+
+
+/**
+ * pauseIfTesting function
+ * Prints "\nPress any key to continue\n", pauses, then clears the screen if 
+ * ZBE_TESTING defined.
+ * @author Joe Balough
+ */
+inline void pauseIfTesting()
+{
+	#ifdef ZBE_TESTING
+	iprintf("\nPress any key to continue\n");
+	pause();
+	consoleClear();
+	#endif
+}
 
 #endif // UTIL_H_INCLUDED

@@ -97,4 +97,3 @@ int menu(vector<string> list)
 	consoleClear();
 	return selected;
 }
-

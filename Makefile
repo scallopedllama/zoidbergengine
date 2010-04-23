@@ -18,15 +18,21 @@ export CLICREATOR	:=	tools/cliCreator
 # main targets
 #---------------------------------------------------------------------------------
 all: $(TARGET).nds
+testing: $(TARGET)_testing.nds
 
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
+	
+$(TARGET)_testing.nds	:	clean $(TARGET).arm7 $(TARGET)_testing.arm9
+	ndstool	-c $(TARGET)_testing.nds -7 $(TARGET).arm7 -9 $(TARGET)_testing.arm9
+	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET)_testing.nds
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7	: $(SOURCES)/arm7/$(TARGET).elf
 $(TARGET).arm9	: $(SOURCES)/arm9/$(TARGET).elf
+$(TARGET)_testing.arm9	: $(SOURCES)/arm9/$(TARGET)_testing.elf
 
 #---------------------------------------------------------------------------------
 $(SOURCES)/arm7/$(TARGET).elf:
@@ -35,6 +41,9 @@ $(SOURCES)/arm7/$(TARGET).elf:
 #---------------------------------------------------------------------------------
 $(SOURCES)/arm9/$(TARGET).elf:
 	$(MAKE) -C $(SOURCES)/arm9
+	
+$(SOURCES)/arm9/$(TARGET)_testing.elf:
+	$(MAKE) OTHERCFLAGS=-D\ ZBE_TESTING TARGET=$(TARGET)_testing -C $(SOURCES)/arm9
 
 #---------------------------------------------------------------------------------
 assets:
