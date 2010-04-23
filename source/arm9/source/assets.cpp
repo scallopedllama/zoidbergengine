@@ -163,7 +163,7 @@ void assets::parseZbe()
 		// Get the size of the map data
 		newAsset->length = load<uint32>(zbeData);
 		iprintf(" %dB map data\n", newAsset->length);
-		
+
 		// Seek past all the map data
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 
@@ -252,7 +252,7 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
-		
+
 		// Skip over the backgrounds
 		load<uint32>(zbeData); // bg0
 		load<uint32>(zbeData); // bg1
@@ -378,7 +378,7 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	iprintf("Loading background...\n");
 
 	// TODO: make the backgroundAsset more like gfx since we need to keep the map data around
-	//       might as well make it remember the other stuff too? hmm maybe not. 
+	//       might as well make it remember the other stuff too? hmm maybe not.
 	// Open the file
 	openFile();
 
@@ -389,7 +389,7 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 		die();
 	}
 
-	
+
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
 	iprintf(" %d palettes\n", numPalettes);
@@ -420,7 +420,7 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 			iprintf("Error reading background map from file: %s\n", strerror(errno));
 			die();
 		}
-		
+
 		// Indicate that the background is mmLoaded
 		background->mmLoaded = true;
 	}
@@ -429,16 +429,16 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	// Make sure tiles data is loaded
 	gfxAsset *tileset = background->tileset;
 	loadGfx(tileset);
-	
+
 	// Init the background
 	// mapBases are 2KB, tileBases are 16KB, and they overlap.
 	// Map tiles occupy background->tileset->length B / 1024 (B / KB) / 2 (KB / offset) mapBases
 	//   that needs to be rounded up, though so see if it fits perfectly, if it doesn't add one
 	int tileSize = (background->tileset->length % 2048 == 0) ? background->tileset->length / 2048 : background->tileset->length / 2048 + 1;
-	
+
 	// Map data will ALWAYS occupy 512 px * 256 px / 8 (px/tile) * 2 (B / tile) / 1024 (B / KB) = 32 KB = 16 mapBases
 	int mapBase = tileSize + (layer * 16);
-	
+
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
 	background->bgId = bgInit(layer, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, mapBase, 0);
 	// Need to reverse the layer value to get the proper priority
@@ -461,8 +461,8 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	// Copy the visible part of the background into video memory
 	DC_FlushRange(background->data, background->length);
 	uint16 *mapPtr = bgGetMapPtr(background->bgId);
-	iprintf("  load map -> %x\n", mapPtr);
-	
+	iprintf("  load map -> %x\n", (int) mapPtr);
+
 	// Row Major Order
 	// We need to copy enough tiles to fill the height of the screen plus some buffer
 	for (uint32 y = 0; y < background->h; y++)
