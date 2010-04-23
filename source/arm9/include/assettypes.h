@@ -255,7 +255,7 @@ struct levelAsset : assetStatus
 	}
 
 	// The background that this level uses
-	backgroundAsset *bg0;
+	backgroundAsset *bg0, *bg1, *bg2, *bg3;
 
 	// all the objects in this level
 	// this array is null temrinated!
