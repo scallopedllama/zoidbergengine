@@ -43,10 +43,14 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
-// 28 tiles = 224 px > 192 px screen height
-#define ZOIDBERG_BACKGROUND_TILE_HEIGHT 28
-	// 36 tiles = 288 px > 256 px screen width
-#define ZOIDBERG_BACKGROUND_TILE_WIDTH 36
+// The width and height of the background being used and the bgSize to use for it
+// These dimensions should be greater than 256 x 192 (DS screen dimensions)
+// ...TILE_HEIGHT and ...TILE_WIDTH should be the ...SIZE dimensions / 8 px / tile.
+#define ZOIDBERG_BACKGROUND_TILE_WIDTH 64
+#define ZOIDBERG_BACKGROUND_TILE_HEIGHT 32
+#define ZOIDBERG_BACKGROUND_SIZE BgSize_T_512x256
+// This is probably going to be 2 for most every situation, but a define is more descriptive than a random 2 there
+#define ZOIDBERG_BACKGROUND_BYTES_PER_TILE 2
 
 #include <stdio.h>
 #include <string.h>

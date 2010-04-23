@@ -380,7 +380,7 @@ int assets::loadBackground(backgroundAsset *background)
 	// Init the background
 	// TODO: un-hard-code this layer value here
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
-	int bgId = bgInit(0, BgType_Text4bpp,  BgSize_T_512x256, 0, 2);
+	int bgId = bgInit(0, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, 0, 2);
 	bgSetPriority(bgId, 0);
 
 	// Get number of palettes to load
@@ -436,15 +436,17 @@ int assets::loadBackground(backgroundAsset *background)
 	
 	// Row Major Order
 	// We need to copy enough tiles to fill the height of the screen plus some buffer
-	for (int y = 0; y < ZOIDBERG_BACKGROUND_TILE_HEIGHT; y++)
+	for (uint32 y = 0; y < background->h; y++)
 	{
-		for (int x = 0; x < ZOIDBERG_BACKGROUND_TILE_WIDTH; x++)
+		for (uint32 x = 0; x < background->w; x++)
 		{
-			// TODO: move the 512 down there into a #define.
 			// TODO: MOVE ALL REFERENCES TO ASSET SIZES INTO #DEFINES SO THAT CHANGING THEM IS VERY EASY.
 			// Copy this tile of the map                                                      Each tile is 2 bytes \/
-			dmaCopy(background->data + ((x * background->w + y) * sizeof(uint16)), mapPtr + ((x * 512 + y) ), sizeof(uint16));
+			uint32 mapOffset = (y * background->w) + x;
+			uint32 bgOffset = (y * ZOIDBERG_BACKGROUND_TILE_WIDTH) / ZOIDBERG_BACKGROUND_BYTES_PER_TILE + x;
+			dmaCopy(background->data + mapOffset, mapPtr + bgOffset, sizeof(uint16));
 		}
+		iprintf("\n");
 	}
 	iprintf(" copied map\n");
 
@@ -465,7 +467,7 @@ int assets::loadBackground(backgroundAsset *background)
 	}
 
 	// Show the background
-	bgShow(bgId);
+	bgShow(bgId);die();
 
 	return bgId;
 }
