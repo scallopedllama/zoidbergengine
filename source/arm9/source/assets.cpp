@@ -312,10 +312,10 @@ levelAsset *assets::loadLevel(uint32 id)
 	uint32 bg1id = load<uint32>(zbeData);
 	uint32 bg2id = load<uint32>(zbeData);
 	uint32 bg3id = load<uint32>(zbeData);
-	lvl->bg0 = (bg0id == -1) ? NULL : backgroundAssets[bg0id];
-	lvl->bg1 = (bg1id == -1) ? NULL : backgroundAssets[bg1id];
-	lvl->bg2 = (bg2id == -1) ? NULL : backgroundAssets[bg2id];
-	lvl->bg3 = (bg3id == -1) ? NULL : backgroundAssets[bg3id];
+	lvl->bg0 = (bg0id == uint32(-1)) ? NULL : backgroundAssets[bg0id];
+	lvl->bg1 = (bg1id == uint32(-1)) ? NULL : backgroundAssets[bg1id];
+	lvl->bg2 = (bg2id == uint32(-1)) ? NULL : backgroundAssets[bg2id];
+	lvl->bg3 = (bg3id == uint32(-1)) ? NULL : backgroundAssets[bg3id];
 
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
@@ -377,8 +377,6 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 
 	iprintf("Loading background...\n");
 
-	// TODO: make the backgroundAsset more like gfx since we need to keep the map data around
-	//       might as well make it remember the other stuff too? hmm maybe not.
 	// Open the file
 	openFile();
 
@@ -388,7 +386,6 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 		iprintf("Seek error: %s\n", strerror(errno));
 		die();
 	}
-
 
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
