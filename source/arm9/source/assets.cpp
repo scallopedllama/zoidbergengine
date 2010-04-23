@@ -441,7 +441,8 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 	
 	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
 	background->bgId = bgInit(layer, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, mapBase, 0);
-	bgSetPriority(background->bgId, layer);
+	// Need to reverse the layer value to get the proper priority
+	bgSetPriority(background->bgId, 3 - layer);
 	iprintf(" Init'd, id %d, mb %d, ts %d\n", background->bgId, mapBase, tileSize);
 
 	// Copy tiles into video memory (If not already loaded)
@@ -458,9 +459,9 @@ int assets::loadBackground(backgroundAsset *background, uint8 layer)
 		iprintf("  tileset already loaded\n");
 
 	// Copy the visible part of the background into video memory
-	iprintf("  load map\n");
 	DC_FlushRange(background->data, background->length);
 	uint16 *mapPtr = bgGetMapPtr(background->bgId);
+	iprintf("  load map -> %x\n", mapPtr);
 	
 	// Row Major Order
 	// We need to copy enough tiles to fill the height of the screen plus some buffer
@@ -522,7 +523,7 @@ void assets::loadGfx(gfxAsset *gfx)
 		die();
 	}
 
-	iprintf("gfx mmLoaded -> %x\n", (unsigned int) gfx->data);
+	//iprintf("gfx mmLoaded -> %x\n", (unsigned int) gfx->data);
 
 	// Everything is A-Okay! close the file and set the gfx to mmLoaded
 	closeFile();
@@ -570,7 +571,7 @@ uint16 *assets::getGfx(gfxAsset *gfx)
 	DC_FlushRange(gfx->data, length);
 	dmaCopyHalfWordsAsynch(3, gfx->data, mem, length);
 
-	iprintf("gfx vmLoaded -> %x\n", (unsigned int) gfx->offset);
+	//iprintf("gfx vmLoaded -> %x\n", (unsigned int) gfx->offset);
 
 	return mem;
 }
@@ -601,7 +602,7 @@ void assets::loadPalette(paletteAsset *pal)
 		die();
 	}
 
-	iprintf("pal mmLoaded -> %x\n", (unsigned int) pal->data);
+	//iprintf("pal mmLoaded -> %x\n", (unsigned int) pal->data);
 
 	// All done, close the file and set mmLoaded
 	closeFile();
@@ -646,7 +647,7 @@ uint8 assets::getPalette(paletteAsset *pal)
 	// Update the paletteAsset's information
 	pal->vmLoaded = true;
 	pal->index = curIndex;
-	iprintf("pal vmLoaded -> %d\n", curIndex);
+	//iprintf("pal vmLoaded -> %d\n", curIndex);
 
 	// Update the index for the next call
 	curIndex++;
