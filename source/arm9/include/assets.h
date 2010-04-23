@@ -43,15 +43,6 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
-// The width and height of the background being used and the bgSize to use for it
-// These dimensions should be greater than 256 x 192 (DS screen dimensions)
-// ...TILE_HEIGHT and ...TILE_WIDTH should be the ...SIZE dimensions / 8 px / tile.
-#define ZOIDBERG_BACKGROUND_TILE_WIDTH 64
-#define ZOIDBERG_BACKGROUND_TILE_HEIGHT 32
-#define ZOIDBERG_BACKGROUND_SIZE BgSize_T_512x256
-// This is probably going to be 2 for most every situation, but a define is more descriptive than a random 2 there
-#define ZOIDBERG_BACKGROUND_BYTES_PER_TILE 2
-
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -138,18 +129,14 @@ public:
 	/**
 	 * loadBackground function
 	 *
-	 * Used by level class to tell this assets class to initialize the passed backgroundAsset
-	 * and get its data into video memory properly. This function tries to be smart about not wasting memory.
+	 * Used by background class to tell this assets class to initialize the passed backgroundAsset
+	 * and get its data into main memory properly.
 	 *
 	 * @param backgroundAsset *background
 	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
-	 * @param uint8 layer
-	 *  The layer into which this background should be put
-	 * @return int
-	 *  The background id of the initilized background
 	 * @author Joe Balough
 	 */
-	int loadBackground(backgroundAsset *background, gfxAsset *tileset, uint8 layer);
+	void loadBackground(backgroundAsset *background);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id

@@ -139,9 +139,6 @@ struct backgroundAsset : public assetStatus
 
 	// The number of bytes in the data section of the MAP data
 	uint32 length;
-
-	// Id for this background
-	int bgId;
 };
 
 
@@ -153,6 +150,7 @@ struct levelBackgroundAsset
 {
 	backgroundAsset *background;
 	uint8 distance;
+	uint8 layer;
 };
 
 
