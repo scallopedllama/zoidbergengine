@@ -16,7 +16,7 @@
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="2" tileset="0">
+		<background palette="2">
 			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
 			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
@@ -35,7 +35,7 @@
 			<row></row>
 			<row><tile id="3"/></row>
 		</background>
-		<background palette="2" tileset="0">
+		<background palette="2">
 			<row></row>
 			<row></row>
 			<row></row>
@@ -57,7 +57,7 @@
 			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" hflip="1" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
 			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
 		</background>
-		<background palette="2" tileset="0">
+		<background palette="2">
 			<row></row>
 			<row></row>
 			<row></row>
@@ -72,7 +72,7 @@
 			<row></row>
 			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
 		</background>
-		<background palette="2" tileset="0">
+		<background palette="2">
 			<row></row>
 			<row></row>
 			<row></row>
@@ -108,7 +108,13 @@
 		</object>
 	</objects>
 	<levels>
-		<level bg0="0" bg1="1" bg2="2" bg3="3">
+		<level>
+			<backgrounds tileset="0">
+				<background layer="0" id="0" distance="5" />
+				<background layer="1" id="1" distance="3" />
+				<background layer="2" id="2" />
+				<background layer="3" id="3" distance="2" />
+			</backgrounds>
 			<objects>
 				<object id="0" x="155" y="34" />
 				<object id="0" x="200" y="10" />

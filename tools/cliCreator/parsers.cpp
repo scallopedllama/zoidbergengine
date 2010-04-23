@@ -171,16 +171,6 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			pal = (uint32_t) palVal;
 			defPal = true;
 		}
-		int tileset;
-		if (!getIntAttr(bgXML, "tileset", tileset))
-		{
-			fprintf(stderr, "ERROR: background defined without a tileset.\n\tPlese add a tileset attribute to the definition for\n\tbackground #%d. See verbose help for more information\n", totalBg);
-			exit(EXIT_FAILURE);
-		}
-		debug("\tBackground using ");
-		if (defPal) debug("Palette %d for default with ", pal);
-		debug("Tileset %d\n", tileset);
-		fwrite<uint32_t>(uint32_t(tileset), output);
 
 		// Vector of vectors to store all the ids
 		vector< vector<bgTile> > tiles;
@@ -429,22 +419,81 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		// Increment total level counter
 		++totalLvl;
 
-		// Get all the needed attributes
-		int bg0 = getIntAttr(levelXML, "bg0");
-		debug("\tLevel using background #%d for background 0\n", bg0);
-		fwrite<uint32_t>(uint32_t(bg0), output);
+		// Add background information
+		TiXmlElement *backgroundsXML = levelXML->FirstChildElement("backgrounds");
 
-		int bg1 = getIntAttr(levelXML, "bg1");
-		debug("\tLevel using background #%d for background 1\n", bg1);
-		fwrite<uint32_t>(uint32_t(bg1), output);
-		
-		int bg2 = getIntAttr(levelXML, "bg2");
-		debug("\tLevel using background #%d for background 2\n", bg2);
-		fwrite<uint32_t>(uint32_t(bg2), output);
-		
-		int bg3 = getIntAttr(levelXML, "bg3");
-		debug("\tLevel using background #%d for background 3\n", bg3);
-		fwrite<uint32_t>(uint32_t(bg3), output);
+		// Backgrounds
+		TiXmlElement *backgroundXML = backgroundsXML->FirstChildElement("background");
+		map<int, uint32_t> bgIds;
+		map<int, uint8_t> bgDistances;
+		int numBackgrounds = 0;
+		while (backgroundXML)
+		{
+			int layer = numBackgrounds, id, distance = 1;
+
+			// ID is required
+			if (!getIntAttr(backgroundXML, "id", id))
+			{
+				fprintf(stderr, "ERROR: No background id specified for background %d in level %d. Ignoring background.\n", numBackgrounds + 1, totalLvl);
+
+				// Get next background and continue
+				++numBackgrounds;
+				backgroundXML = backgroundXML->NextSiblingElement("background");
+				continue;
+			}
+
+			// Layer isn't so don't overwrite layer if not set
+			getIntAttr(backgroundXML, "layer", layer);
+
+			// Same for distance
+			getIntAttr(backgroundXML, "distance", distance);
+
+			// Add this background to the vector
+			bgIds[layer] = id;
+			bgDistances[layer] = distance;
+			debug("\tLevel background %d using background %d at distance %d\n", layer, id, distance);
+
+			// Got another background
+			++numBackgrounds;
+
+			// Next background s.v.p.
+			backgroundXML = backgroundXML->NextSiblingElement("background");
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			// See if this layer was defined
+			if (bgIds.find(i) == bgIds.end())
+			{
+				// Not defined, Just write -1s
+				fwrite<uint32_t>(uint32_t(-1), output);
+				fwrite<uint8_t>(uint8_t(-1), output);
+
+				debug("\tBackground %d not defined\n", i);
+			}
+			else
+			{
+				// Write ID
+				fwrite<uint32_t>(bgIds[i], output);
+				// Write Distance
+				fwrite<uint8_t>(bgDistances[i], output);
+
+				debug("\tBackground %d using %d at distance %d\n", i, bgIds[i], bgDistances[i]);
+			}
+		}
+
+		// tileset Id
+		int tilesetId = -1;
+		if (!getIntAttr(backgroundsXML, "tileset", tilesetId))
+		{
+			fprintf(stderr, "ERROR: No tileset specified for Level %d.\n", totalLvl);
+			exit(EXIT_FAILURE);
+		}
+		fwrite<uint32_t>(uint32_t(tilesetId), output);
+
+
+
+
 
 		// Level Heroes
 		//Total heroes
