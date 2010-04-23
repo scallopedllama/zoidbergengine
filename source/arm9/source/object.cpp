@@ -13,7 +13,7 @@ object::object(OamState *Oam,
 
 	matrixId = MatrixId;
 
-	priority = 2;
+	priority = 1;
 	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
 
