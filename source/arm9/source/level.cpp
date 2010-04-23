@@ -227,8 +227,8 @@ void level::update()
 	}
 	
 	// Update the backgrounds
-	for (int i = 0; i < backgrounds.size(); i++)
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
-		backgrounds[i]->update();
+		//backgrounds[i]->update();
 	}
 }
