@@ -65,15 +65,12 @@
 			<row></row>
 			<row></row>
 			<row></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" hflip="1" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
 		</background>
 	</backgrounds>
 	<objects>
@@ -94,7 +91,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level bg0="0" bg1="1">
+		<level bg0="0" bg1="1" bg2="2">
 			<objects>
 				<object id="0" x="155" y="34" />
 				<object id="0" x="200" y="10" />
