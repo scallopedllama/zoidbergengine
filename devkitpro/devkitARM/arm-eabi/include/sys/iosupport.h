@@ -50,7 +50,12 @@ typedef struct {
 	int (*statvfs_r)(struct _reent *r, const char *path, struct statvfs *buf);
 	int (*ftruncate_r)(struct _reent *r, int fd, off_t len);
 	int (*fsync_r)(struct _reent *r, int fd);
+
 	void *deviceData;
+
+	int (*chmod_r)(struct _reent *r, const char *path, mode_t mode);
+	int (*fchmod_r)(struct _reent *r, int fd, mode_t mode);
+
 } devoptab_t;
 	
 extern const devoptab_t *devoptab_list[];

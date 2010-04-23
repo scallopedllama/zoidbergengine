@@ -6,8 +6,8 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
-1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
-Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+2010 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -23,11 +23,11 @@ developing GNU and promoting software freedom."
    This file documents the GNU debugger GDB.
 
    This is the Ninth Edition, of `Debugging with GDB: the GNU
-Source-Level Debugger' for GDB (GDB) Version 7.0.1.
+Source-Level Debugger' for GDB (GDB) Version 7.1.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
-1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
-Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+2010 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -48,9 +48,9 @@ Debugging with GDB
 
 This file describes GDB, the GNU symbolic debugger.
 
-   This is the Ninth Edition, for GDB (GDB) Version 7.0.1.
+   This is the Ninth Edition, for GDB (GDB) Version 7.1.
 
-   Copyright (C) 1988-2009 Free Software Foundation, Inc.
+   Copyright (C) 1988-2010 Free Software Foundation, Inc.
 
    This edition of the GDB manual is dedicated to the memory of Fred
 Fish.  Fred was a long-standing contributor to GDB and to Free software
@@ -105,6 +105,7 @@ in general.  We will miss him.
                                 GDB
 * Operating System Information:: Getting additional information from
                                  the operating system
+* Trace File Format::		GDB trace file format
 * Copying::			GNU General Public License says
                                 how you can copy and share GDB
 * GNU Free Documentation License::  The license for this documentation
@@ -431,6 +432,9 @@ Tensilica, Inc. contributed support for Xtensa processors.  Others who
 have worked on the Xtensa port of GDB in the past include Steve Tjiang,
 John Newlin, and Scott Foehner.
 
+   Michael Eager and staff of Xilinx, Inc., contributed support for the
+Xilinx MicroBlaze architecture.
+
 
 File: gdb.info,  Node: Sample Session,  Next: Invocation,  Prev: Summary,  Up: Top
 
@@ -477,7 +481,7 @@ Let us use GDB to try to see what is going on.
      There is absolutely no warranty for GDB; type "show warranty"
       for details.
 
-     GDB 7.0.1, Copyright 1999 Free Software Foundation, Inc...
+     GDB 7.1, Copyright 1999 Free Software Foundation, Inc...
      (gdb)
 
 GDB reads only enough symbol data to know where to find the rest when
@@ -784,8 +788,9 @@ them, so long as enough of the option is present to be unambiguous.
 
 `-command FILE'
 `-x FILE'
-     Execute GDB commands from file FILE.  *Note Command files: Command
-     Files.
+     Execute commands from file FILE.  The contents of this file is
+     evaluated exactly as the `source' command would.  *Note Command
+     files: Command Files.
 
 `-eval-command COMMAND'
 `-ex COMMAND'
@@ -1472,9 +1477,9 @@ child process.
 * Attach::                      Debugging an already-running process
 * Kill Process::                Killing the child process
 
-* Inferiors::                   Debugging multiple inferiors
+* Inferiors and Programs::      Debugging multiple inferiors and programs
 * Threads::                     Debugging programs with multiple threads
-* Processes::                   Debugging programs with multiple processes
+* Forks::                       Debugging forks
 * Checkpoint/Restart::          Setting a _bookmark_ to return to later
 
 
@@ -1945,7 +1950,7 @@ things; you can control whether or not you need to confirm by using the
 Messages/Warnings.).
 
 
-File: gdb.info,  Node: Kill Process,  Next: Inferiors,  Prev: Attach,  Up: Running
+File: gdb.info,  Node: Kill Process,  Next: Inferiors and Programs,  Prev: Attach,  Up: Running
 
 4.8 Killing the Child Process
 =============================
@@ -1970,27 +1975,27 @@ the symbol table again (while trying to preserve your current
 breakpoint settings).
 
 
-File: gdb.info,  Node: Inferiors,  Next: Threads,  Prev: Kill Process,  Up: Running
+File: gdb.info,  Node: Inferiors and Programs,  Next: Threads,  Prev: Kill Process,  Up: Running
 
-4.9 Debugging Multiple Inferiors
-================================
+4.9 Debugging Multiple Inferiors and Programs
+=============================================
 
-Some GDB targets are able to run multiple processes created from a
-single executable.  This can happen, for instance, with an embedded
-system reporting back several processes via the remote protocol.
+GDB lets you run and debug multiple programs in a single session.  In
+addition, GDB on some systems may let you run several programs
+simultaneously (otherwise you have to exit from one before starting
+another).  In the most general case, you can have multiple threads of
+execution in each of multiple processes, launched from multiple
+executables.
 
    GDB represents the state of each program execution with an object
 called an "inferior".  An inferior typically corresponds to a process,
 but is more general and applies also to targets that do not have
-processes.  Inferiors may be created before a process runs, and may (in
-future) be retained after a process exits.  Each run of an executable
-creates a new inferior, as does each attachment to an existing process.
-Inferiors have unique identifiers that are different from process ids,
-and may optionally be named as well.  Usually each inferior will also
-have its own distinct address space, although some embedded targets may
-have several inferiors running in different parts of a single space.
-
-   Each inferior may in turn have multiple threads running in it.
+processes.  Inferiors may be created before a process runs, and may be
+retained after a process exits.  Inferiors have unique identifiers that
+are different from process ids.  Usually each inferior will also have
+its own distinct address space, although some embedded targets may have
+several inferiors running in different parts of a single address space.
+Each inferior may in turn have multiple threads running in it.
 
    To find out what inferiors exist at any moment, use `info inferiors':
 
@@ -2003,15 +2008,18 @@ have several inferiors running in different parts of a single space.
 
        2. the target system's inferior identifier
 
+       3. the name of the executable the inferior is running.
+
+
      An asterisk `*' preceding the GDB inferior number indicates the
      current inferior.
 
      For example,
 
      (gdb) info inferiors
-       Num  Description
-     * 1    process 2307
-       2    process 3401
+       Num  Description       Executable
+       2    process 2307      hello
+     * 1    process 3401      goodbye
 
    To switch focus between inferiors, use the `inferior' command:
 
@@ -2020,9 +2028,48 @@ have several inferiors running in different parts of a single space.
      INFNO is the inferior number assigned by GDB, as shown in the
      first field of the `info inferiors' display.
 
-   To quit debugging one of the inferiors, you can either detach from it
-by using the `detach inferior' command (allowing it to run
-independently), or kill it using the `kill inferior' command:
+   You can get multiple executables into a debugging session via the
+`add-inferior' and `clone-inferior' commands.  On some systems GDB can
+add inferiors to the debug session automatically by following calls to
+`fork' and `exec'.  To remove inferiors from the debugging session use
+the `remove-inferior' command.
+
+`add-inferior [ -copies N ] [ -exec EXECUTABLE ]'
+     Adds N inferiors to be run using EXECUTABLE as the executable.  N
+     defaults to 1.  If no executable is specified, the inferiors
+     begins empty, with no program.  You can still assign or change the
+     program assigned to the inferior at any time by using the `file'
+     command with the executable name as its argument.
+
+`clone-inferior [ -copies N ] [ INFNO ]'
+     Adds N inferiors ready to execute the same program as inferior
+     INFNO.  N defaults to 1.  INFNO defaults to the number of the
+     current inferior.  This is a convenient command when you want to
+     run another instance of the inferior you are debugging.
+
+          (gdb) info inferiors
+            Num  Description       Executable
+          * 1    process 29964     helloworld
+          (gdb) clone-inferior
+          Added inferior 2.
+          1 inferiors added.
+          (gdb) info inferiors
+            Num  Description       Executable
+            2    <null>            helloworld
+          * 1    process 29964     helloworld
+
+     You can now simply switch focus to inferior 2 and run it.
+
+`remove-inferior INFNO'
+     Removes the inferior INFNO.  It is not possible to remove an
+     inferior that is running with this command.  For those, use the
+     `kill' or `detach' command first.
+
+
+   To quit debugging one of the running inferiors that is not the
+current inferior, you can either detach from it by using the
+`detach inferior' command (allowing it to run independently), or kill it
+using the `kill inferior' command:
 
 `detach inferior INFNO'
      Detach from the inferior identified by GDB inferior number INFNO,
@@ -2031,6 +2078,11 @@ independently), or kill it using the `kill inferior' command:
 `kill inferior INFNO'
      Kill the inferior identified by GDB inferior number INFNO, and
      remove it from the inferior list.
+
+   After the successful completion of a command such as `detach',
+`detach inferior', `kill' or `kill inferior', or after a normal process
+exit, the inferior is still valid and listed with `info inferiors',
+ready to be restarted.
 
    To be notified when inferiors are started or exit under GDB's
 control use `set print inferior-events':
@@ -2047,8 +2099,57 @@ control use `set print inferior-events':
      Show whether messages will be printed when GDB detects that
      inferiors have started, exited or have been detached.
 
+   Many commands will work the same with multiple programs as with a
+single program: e.g., `print myglobal' will simply display the value of
+`myglobal' in the current inferior.
+
+   Occasionaly, when debugging GDB itself, it may be useful to get more
+info about the relationship of inferiors, programs, address spaces in a
+debug session.  You can do that with the `maint info program-spaces'
+command.
+
+`maint info program-spaces'
+     Print a list of all program spaces currently being managed by GDB.
+
+     GDB displays for each program space (in this order):
+
+       1. the program space number assigned by GDB
+
+       2. the name of the executable loaded into the program space,
+          with e.g., the `file' command.
+
+
+     An asterisk `*' preceding the GDB program space number indicates
+     the current program space.
+
+     In addition, below each program space line, GDB prints extra
+     information that isn't suitable to display in tabular form.  For
+     example, the list of inferiors bound to the program space.
+
+          (gdb) maint info program-spaces
+            Id   Executable
+            2    goodbye
+                  Bound inferiors: ID 1 (process 21561)
+          * 1    hello
+
+     Here we can see that no inferior is running the program `hello',
+     while `process 21561' is running the program `goodbye'.  On some
+     targets, it is possible that multiple inferiors are bound to the
+     same program space.  The most common example is that of debugging
+     both the parent and child processes of a `vfork' call.  For
+     example,
+
+          (gdb) maint info program-spaces
+            Id   Executable
+          * 1    vfork-test
+                  Bound inferiors: ID 2 (process 18050), ID 1 (process 18045)
+
+     Here, both inferior 2 and inferior 1 are running in the same
+     program space as a result of inferior 1 having executed a `vfork'
+     call.
+
 
-File: gdb.info,  Node: Threads,  Next: Processes,  Prev: Inferiors,  Up: Running
+File: gdb.info,  Node: Threads,  Next: Forks,  Prev: Inferiors and Programs,  Up: Running
 
 4.10 Debugging Programs with Multiple Threads
 =============================================
@@ -2255,10 +2356,10 @@ watchpoints in programs with multiple threads.
      Display current libthread_db search path.
 
 
-File: gdb.info,  Node: Processes,  Next: Checkpoint/Restart,  Prev: Threads,  Up: Running
+File: gdb.info,  Node: Forks,  Next: Checkpoint/Restart,  Prev: Threads,  Up: Running
 
-4.11 Debugging Programs with Multiple Processes
-===============================================
+4.11 Debugging Forks
+====================
 
 On most systems, GDB has no special support for debugging programs
 which create additional processes using the `fork' function.  When a
@@ -2332,12 +2433,13 @@ use the command `set detach-on-fork'.
 control of all forked processes (including nested forks).  You can list
 the forked processes under the control of GDB by using the
 `info inferiors' command, and switch from one fork to another by using
-the `inferior' command (*note Debugging Multiple Inferiors: Inferiors.).
+the `inferior' command (*note Debugging Multiple Inferiors and
+Programs: Inferiors and Programs.).
 
    To quit debugging one of the forked processes, you can either detach
 from it by using the `detach inferior' command (allowing it to run
 independently), or kill it using the `kill inferior' command.  *Note
-Debugging Multiple Inferiors: Inferiors.
+Debugging Multiple Inferiors and Programs: Inferiors and Programs.
 
    If you ask to debug a child process and a `vfork' is followed by an
 `exec', GDB executes the new target up to the first breakpoint in the
@@ -2349,14 +2451,64 @@ cannot debug the child or parent until an `exec' call completes.
 
    If you issue a `run' command to GDB after an `exec' call executes,
 the new target restarts.  To restart the parent process, use the `file'
-command with the parent executable name as its argument.
+command with the parent executable name as its argument.  By default,
+after an `exec' call executes, GDB discards the symbols of the previous
+executable image.  You can change this behaviour with the
+`set follow-exec-mode' command.
+
+`set follow-exec-mode MODE'
+     Set debugger response to a program call of `exec'.  An `exec' call
+     replaces the program image of a process.
+
+     `follow-exec-mode' can be:
+
+    `new'
+          GDB creates a new inferior and rebinds the process to this
+          new inferior.  The program the process was running before the
+          `exec' call can be restarted afterwards by restarting the
+          original inferior.
+
+          For example:
+
+               (gdb) info inferiors
+               (gdb) info inferior
+                 Id   Description   Executable
+               * 1    <null>        prog1
+               (gdb) run
+               process 12020 is executing new program: prog2
+               Program exited normally.
+               (gdb) info inferiors
+                 Id   Description   Executable
+               * 2    <null>        prog2
+                 1    <null>        prog1
+
+    `same'
+          GDB keeps the process bound to the same inferior.  The new
+          executable image replaces the previous executable loaded in
+          the inferior.  Restarting the inferior after the `exec' call,
+          with e.g., the `run' command, restarts the executable the
+          process was running after the `exec' call.  This is the
+          default mode.
+
+          For example:
+
+               (gdb) info inferiors
+                 Id   Description   Executable
+               * 1    <null>        prog1
+               (gdb) run
+               process 12020 is executing new program: prog2
+               Program exited normally.
+               (gdb) info inferiors
+                 Id   Description   Executable
+               * 1    <null>        prog2
+
 
    You can use the `catch' command to make GDB stop whenever a `fork',
 `vfork', or `exec' call is made.  *Note Setting Catchpoints: Set
 Catchpoints.
 
 
-File: gdb.info,  Node: Checkpoint/Restart,  Prev: Processes,  Up: Running
+File: gdb.info,  Node: Checkpoint/Restart,  Prev: Forks,  Up: Running
 
 4.12 Setting a _Bookmark_ to Return to Later
 ============================================
@@ -4280,8 +4432,8 @@ on all threads, or on a particular thread.
      the breakpoint applies to _all_ threads of your program.
 
      You can use the `thread' qualifier on conditional breakpoints as
-     well; in this case, place `thread THREADNO' before the breakpoint
-     condition, like this:
+     well; in this case, place `thread THREADNO' before or after the
+     breakpoint condition, like this:
 
           (gdb) break frik.c:13 thread 28 if bartab > lim
 
@@ -4398,7 +4550,7 @@ execution, GDB provides the following commands.
      Like `nexti', `reverse-nexti' executes a single instruction in
      reverse, except that called functions are "un-executed" atomically.
      That is, if the previously executed instruction was a return from
-     another instruction, `reverse-nexti' will continue to execute in
+     another function, `reverse-nexti' will continue to execute in
      reverse until the call to that function (from the current stack
      frame) is reached.
 
@@ -4435,7 +4587,7 @@ the target reports back to GDB, GDB will report back to the user.  GDB
 assumes that the memory and registers that the target reports are in a
 consistant state, but GDB accepts whatever it is given.
 
-   (2) Unles the code is too heavily optimized.
+   (2) Unless the code is too heavily optimized.
 
 
 File: gdb.info,  Node: Process Record and Replay,  Next: Stack,  Prev: Reverse Execution,  Up: Top
@@ -4551,8 +4703,23 @@ GDB provides the following commands:
 `show record stop-at-limit'
      Show the current setting of `stop-at-limit'.
 
-`info record insn-number'
-     Show the current number of recorded instructions.
+`info record'
+     Show various statistics about the state of process record and its
+     in-memory execution log buffer, including:
+
+        * Whether in record mode or replay mode.
+
+        * Lowest recorded instruction number (counting from when the
+          current execution log started recording instructions).
+
+        * Highest recorded instruction number.
+
+        * Current instruction about to be replayed (if in replay mode).
+
+        * Number of instructions contained in the execution log.
+
+        * Maximum number of instructions that may be contained in the
+          execution log.
 
 `record delete'
      When record target runs in replay mode ("in the past"), delete the
@@ -5411,44 +5578,55 @@ variable `$_' (*note Convenience Variables: Convenience Vars.).
      memory range is the function surrounding the program counter of
      the selected frame.  A single argument to this command is a
      program counter value; GDB dumps the function surrounding this
-     value.  Two arguments specify a range of addresses (first
-     inclusive, second exclusive) to dump.
+     value.  When two arguments are given, they should be separated by
+     a comma, possibly surrounded by whitespace.  The arguments specify
+     a range of addresses (first inclusive, second exclusive) to dump.
+     In that case, the name of the function is also printed (since
+     there could be several functions in the given range).
+
+     The argument(s) can be any expression yielding a numeric value,
+     such as `0x32c4', `&main+10' or `$pc - 8'.
+
+     If the range of memory being disassembled contains current program
+     counter, the instruction at that location is shown with a `=>'
+     marker.
 
    The following example shows the disassembly of a range of addresses
 of HP PA-RISC 2.0 code:
 
-     (gdb) disas 0x32c4 0x32e4
+     (gdb) disas 0x32c4, 0x32e4
      Dump of assembler code from 0x32c4 to 0x32e4:
-     0x32c4 <main+204>:      addil 0,dp
-     0x32c8 <main+208>:      ldw 0x22c(sr0,r1),r26
-     0x32cc <main+212>:      ldil 0x3000,r31
-     0x32d0 <main+216>:      ble 0x3f8(sr4,r31)
-     0x32d4 <main+220>:      ldo 0(r31),rp
-     0x32d8 <main+224>:      addil -0x800,dp
-     0x32dc <main+228>:      ldo 0x588(r1),r26
-     0x32e0 <main+232>:      ldil 0x3000,r31
+        0x32c4 <main+204>:      addil 0,dp
+        0x32c8 <main+208>:      ldw 0x22c(sr0,r1),r26
+        0x32cc <main+212>:      ldil 0x3000,r31
+        0x32d0 <main+216>:      ble 0x3f8(sr4,r31)
+        0x32d4 <main+220>:      ldo 0(r31),rp
+        0x32d8 <main+224>:      addil -0x800,dp
+        0x32dc <main+228>:      ldo 0x588(r1),r26
+        0x32e0 <main+232>:      ldil 0x3000,r31
      End of assembler dump.
 
-   Here is an example showing mixed source+assembly for Intel x86:
+   Here is an example showing mixed source+assembly for Intel x86, when
+the program is stopped just after function prologue:
 
      (gdb) disas /m main
      Dump of assembler code for function main:
      5       {
-     0x08048330 <main+0>:    push   %ebp
-     0x08048331 <main+1>:    mov    %esp,%ebp
-     0x08048333 <main+3>:    sub    $0x8,%esp
-     0x08048336 <main+6>:    and    $0xfffffff0,%esp
-     0x08048339 <main+9>:    sub    $0x10,%esp
+        0x08048330 <+0>:    push   %ebp
+        0x08048331 <+1>:    mov    %esp,%ebp
+        0x08048333 <+3>:    sub    $0x8,%esp
+        0x08048336 <+6>:    and    $0xfffffff0,%esp
+        0x08048339 <+9>:    sub    $0x10,%esp
 
      6         printf ("Hello.\n");
-     0x0804833c <main+12>:   movl   $0x8048440,(%esp)
-     0x08048343 <main+19>:   call   0x8048284 <puts@plt>
+     => 0x0804833c <+12>:   movl   $0x8048440,(%esp)
+        0x08048343 <+19>:   call   0x8048284 <puts@plt>
 
      7         return 0;
      8       }
-     0x08048348 <main+24>:   mov    $0x0,%eax
-     0x0804834d <main+29>:   leave
-     0x0804834e <main+30>:   ret
+        0x08048348 <+24>:   mov    $0x0,%eax
+        0x0804834d <+29>:   leave
+        0x0804834e <+30>:   ret
 
      End of assembler dump.
 
@@ -6027,6 +6205,16 @@ instructions with `x/3i ADDR', you can inspect the next seven with just
 `x/7'.  If you use <RET> to repeat the `x' command, the repeat count N
 is used again; the other arguments default as for successive uses of
 `x'.
+
+   When examining machine instructions, the instruction at current
+program counter is shown with a `=>' marker. For example:
+
+     (gdb) x/5i $pc-6
+        0x804837f <main+11>: mov    %esp,%ebp
+        0x8048381 <main+13>: push   %ecx
+        0x8048382 <main+14>: sub    $0x4,%esp
+     => 0x8048385 <main+17>: movl   $0x8048460,(%esp)
+        0x804838c <main+24>: call   0x80482d4 <puts@plt>
 
    The addresses and contents printed by the `x' command are not saved
 in the value history because there is often too much of them and they
@@ -6661,8 +6849,10 @@ values likely to be useful.
      when the program being debugged terminates.
 
 `$_siginfo'
-     The variable `$_siginfo' is bound to extra signal information
-     inspection (*note extra signal information::).
+     The variable `$_siginfo' contains extra signal information (*note
+     extra signal information::).  Note that `$_siginfo' could be
+     empty, if the application has not yet received any signals.  For
+     example, it will be empty before you execute the `run' command.
 
    On HP-UX systems, if you refer to a function or variable name that
 begins with a dollar sign, GDB searches for a user or system name
@@ -7011,91 +7201,4 @@ checking.  The following commands control this behaviour.
 
 `show mem inaccessible-by-default'
      Show the current handling of accesses to unknown memory.
-
-
-File: gdb.info,  Node: Dump/Restore Files,  Next: Core File Generation,  Prev: Memory Region Attributes,  Up: Data
-
-10.16 Copy Between Memory and a File
-====================================
-
-You can use the commands `dump', `append', and `restore' to copy data
-between target memory and a file.  The `dump' and `append' commands
-write data to a file, and the `restore' command reads data from a file
-back into the inferior's memory.  Files may be in binary, Motorola
-S-record, Intel hex, or Tektronix Hex format; however, GDB can only
-append to binary files.
-
-`dump [FORMAT] memory FILENAME START_ADDR END_ADDR'
-`dump [FORMAT] value FILENAME EXPR'
-     Dump the contents of memory from START_ADDR to END_ADDR, or the
-     value of EXPR, to FILENAME in the given format.
-
-     The FORMAT parameter may be any one of:
-    `binary'
-          Raw binary form.
-
-    `ihex'
-          Intel hex format.
-
-    `srec'
-          Motorola S-record format.
-
-    `tekhex'
-          Tektronix Hex format.
-
-     GDB uses the same definitions of these formats as the GNU binary
-     utilities, like `objdump' and `objcopy'.  If FORMAT is omitted,
-     GDB dumps the data in raw binary form.
-
-`append [binary] memory FILENAME START_ADDR END_ADDR'
-`append [binary] value FILENAME EXPR'
-     Append the contents of memory from START_ADDR to END_ADDR, or the
-     value of EXPR, to the file FILENAME, in raw binary form.  (GDB can
-     only append data to files in raw binary form.)
-
-`restore FILENAME [binary] BIAS START END'
-     Restore the contents of file FILENAME into memory.  The `restore'
-     command can automatically recognize any known BFD file format,
-     except for raw binary.  To restore a raw binary file you must
-     specify the optional keyword `binary' after the filename.
-
-     If BIAS is non-zero, its value will be added to the addresses
-     contained in the file.  Binary files always start at address zero,
-     so they will be restored at address BIAS.  Other bfd files have a
-     built-in location; they will be restored at offset BIAS from that
-     location.
-
-     If START and/or END are non-zero, then only data between file
-     offset START and file offset END will be restored.  These offsets
-     are relative to the addresses in the file, before the BIAS
-     argument is applied.
-
-
-
-File: gdb.info,  Node: Core File Generation,  Next: Character Sets,  Prev: Dump/Restore Files,  Up: Data
-
-10.17 How to Produce a Core File from Your Program
-==================================================
-
-A "core file" or "core dump" is a file that records the memory image of
-a running process and its process status (register values etc.).  Its
-primary use is post-mortem debugging of a program that crashed while it
-ran outside a debugger.  A program that crashes automatically produces
-a core file, unless this feature is disabled by the user.  *Note
-Files::, for information on invoking GDB in the post-mortem debugging
-mode.
-
-   Occasionally, you may wish to produce a core file of the program you
-are debugging in order to preserve a snapshot of its state.  GDB has a
-special command for that.
-
-`generate-core-file [FILE]'
-`gcore [FILE]'
-     Produce a core dump of the inferior process.  The optional argument
-     FILE specifies the file name where to put the core dump.  If not
-     specified, the file name defaults to `core.PID', where PID is the
-     inferior process ID.
-
-     Note that this command is implemented only for some systems (as of
-     this writing, GNU/Linux, FreeBSD, Solaris, Unixware, and S390).
 
