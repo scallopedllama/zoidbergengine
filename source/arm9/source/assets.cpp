@@ -252,6 +252,12 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
+		
+		// Skip over the backgrounds
+		load<uint32>(zbeData); // bg0
+		load<uint32>(zbeData); // bg1
+		load<uint32>(zbeData); // bg2
+		load<uint32>(zbeData); // bg3
 
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
@@ -301,9 +307,15 @@ levelAsset *assets::loadLevel(uint32 id)
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
 
-	// background
+	// background -1 means it was not set
 	uint32 bg0id = load<uint32>(zbeData);
-	lvl->bg0 = backgroundAssets[bg0id];
+	uint32 bg1id = load<uint32>(zbeData);
+	uint32 bg2id = load<uint32>(zbeData);
+	uint32 bg3id = load<uint32>(zbeData);
+	lvl->bg0 = (bg0id == -1) ? NULL : backgroundAssets[bg0id];
+	lvl->bg1 = (bg1id == -1) ? NULL : backgroundAssets[bg1id];
+	lvl->bg2 = (bg2id == -1) ? NULL : backgroundAssets[bg2id];
+	lvl->bg3 = (bg3id == -1) ? NULL : backgroundAssets[bg3id];
 
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
