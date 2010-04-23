@@ -143,11 +143,13 @@ public:
 	 * 
 	 * @param backgroundAsset *background
 	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
+	 * @param uint8 layer
+	 *  The layer into which this background should be put
 	 * @return int
 	 *  The background id of the initilized background
 	 * @author Joe Balough
 	 */
-	int loadBackground(backgroundAsset *background);
+	int loadBackground(backgroundAsset *background, uint8 layer);
 
 	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id

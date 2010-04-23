@@ -129,6 +129,7 @@ struct backgroundAsset : public assetStatus
 	{
 		tileset = NULL;
 		w = h = length = 0;
+		bgId = -1;
 	}
 
 	~backgroundAsset()
@@ -142,6 +143,9 @@ struct backgroundAsset : public assetStatus
 	
 	// The number of bytes in the data section of the MAP data
 	uint32 length;
+	
+	// Id for this background
+	int bgId;
 };
 
 

@@ -358,7 +358,7 @@ levelAsset *assets::loadLevel(uint32 id)
 
 
 // loads up a background
-int assets::loadBackground(backgroundAsset *background)
+int assets::loadBackground(backgroundAsset *background, uint8 layer)
 {
 	// Return if nothing to do
 	if (!background) return -1;
@@ -377,12 +377,7 @@ int assets::loadBackground(backgroundAsset *background)
 		die();
 	}
 
-	// Init the background
-	// TODO: un-hard-code this layer value here
-	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
-	int bgId = bgInit(0, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, 0, 2);
-	bgSetPriority(bgId, 0);
-
+	
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
 	iprintf(" %d palettes\n", numPalettes);
@@ -417,22 +412,43 @@ int assets::loadBackground(backgroundAsset *background)
 		// Indicate that the background is mmLoaded
 		background->mmLoaded = true;
 	}
-	
 	closeFile();
 
-	// Make sure tiles data is loaded then copy it into video memory
+	// Make sure tiles data is loaded
 	gfxAsset *tileset = background->tileset;
 	loadGfx(tileset);
-	iprintf(" ld %dB, cp tileset (%x)\n", tileset->length, (unsigned int) bgGetGfxPtr(bgId));
-	DC_FlushRange(tileset->data, tileset->length);
-	dmaCopy(tileset->data, bgGetGfxPtr(bgId), tileset->length);
-	// unload the tileset
-	freeGfx(background->tileset);
+	
+	// Init the background
+	// mapBases are 2KB, tileBases are 16KB, and they overlap.
+	// Map tiles occupy background->tileset->length B / 1024 (B / KB) / 2 (KB / offset) mapBases
+	//   that needs to be rounded up, though so see if it fits perfectly, if it doesn't add one
+	int tileSize = (background->tileset->length % 2048 == 0) ? background->tileset->length / 2048 : background->tileset->length / 2048 + 1;
+	
+	// Map data will ALWAYS occupy 512 px * 256 px / 8 (px/tile) * 2 (B / tile) / 1024 (B / KB) = 32 KB = 16 mapBases
+	int mapBase = tileSize + (layer * 16);
+	
+	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
+	background->bgId = bgInit(layer, BgType_Text4bpp,  ZOIDBERG_BACKGROUND_SIZE, mapBase, 0);
+	bgSetPriority(background->bgId, layer);
+	iprintf(" Init'd, id %d, mb %d, ts %d\n", background->bgId, mapBase, tileSize);
+
+	// Copy tiles into video memory (If not already loaded)
+	if (!background->tileset->vmLoaded)
+	{
+		iprintf("  ld %dB, cp tileset (%x)\n", tileset->length, (unsigned int) bgGetGfxPtr(background->bgId));
+		DC_FlushRange(tileset->data, tileset->length);
+		dmaCopy(tileset->data, bgGetGfxPtr(background->bgId), tileset->length);
+		background->tileset->vmLoaded = true;
+		// unload the tileset (doesn't need to stay in main memory
+		freeGfx(background->tileset);
+	}
+	else
+		iprintf("  tileset already loaded\n");
 
 	// Copy the visible part of the background into video memory
 	iprintf("  load map\n");
 	DC_FlushRange(background->data, background->length);
-	uint16 *mapPtr = bgGetMapPtr(bgId);
+	uint16 *mapPtr = bgGetMapPtr(background->bgId);
 	
 	// Row Major Order
 	// We need to copy enough tiles to fill the height of the screen plus some buffer
@@ -446,7 +462,6 @@ int assets::loadBackground(backgroundAsset *background)
 			uint32 bgOffset = (y * ZOIDBERG_BACKGROUND_TILE_WIDTH) / ZOIDBERG_BACKGROUND_BYTES_PER_TILE + x;
 			dmaCopy(background->data + mapOffset, mapPtr + bgOffset, sizeof(uint16));
 		}
-		iprintf("\n");
 	}
 	iprintf(" copied map\n");
 
@@ -466,10 +481,7 @@ int assets::loadBackground(backgroundAsset *background)
 		offset ++;
 	}
 
-	// Change the priority
-	bgSetPriority(bgId, 3);
-
-	return bgId;
+	return background->bgId;
 }
 
 
