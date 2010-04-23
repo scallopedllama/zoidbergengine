@@ -41,17 +41,22 @@ void initVideo()
 	lcdMainOnBottom();
 
 	vramSetMainBanks(VRAM_A_MAIN_BG,
-				 VRAM_B_MAIN_SPRITE_0x06400000,
-				 VRAM_C_SUB_BG_0x06200000,
-				 VRAM_D_SUB_SPRITE);
+					VRAM_B_MAIN_SPRITE_0x06400000,
+					VRAM_C_SUB_BG_0x06200000,
+					VRAM_D_MAIN_BG_0x06020000
+					);
+	vramSetBankI(VRAM_I_SUB_SPRITE);
 
 
 	//  Set the video mode on the main screen.
 	videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-			 DISPLAY_BG0_ACTIVE | // Enable BG2 for display
-			 DISPLAY_SPR_ACTIVE | // Enable sprites for display
-			 DISPLAY_SPR_1D       // Enable 1D tiled sprites
-			 );
+			DISPLAY_BG0_ACTIVE | // Enable BG0 for display
+			//DISPLAY_BG1_ACTIVE | // Enable BG1 for display
+			//DISPLAY_BG2_ACTIVE | // Enable BG2 for display
+			//DISPLAY_BG3_ACTIVE | // Enable BG3 for display
+			DISPLAY_SPR_ACTIVE | // Enable sprites for display
+			DISPLAY_SPR_1D       // Enable 1D tiled sprites
+			);
 
 	//  Set the video mode on the sub screen.
 	videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
