@@ -49,27 +49,9 @@ int main()
 	// Initialize libfat
 	fatInitDefault();
 	
-	vector<string> list;
-	list.push_back("First!");
-	list.push_back("Second!");
-	list.push_back("Third!");
-	list.push_back("4th!");
-	list.push_back("Fifth!");
-	
-	while (true)
-	{
-		int picked = menu(list);
-		
-		consoleClear();
-		iprintf("You picked option %d\n", picked);
-		iprintf("\nPress any key to continue\n");
-		
-		pause();
-	}
-
 	// make a game
-	//game g((char *) "/assets.zbe");
-	//g.run();
+	game g((char *) "/assets.zbe");
+	g.run();
 
 	return 0;
 }

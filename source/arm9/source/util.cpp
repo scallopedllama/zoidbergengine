@@ -62,8 +62,6 @@ int menu(vector<string> list)
 	// Wait until the user presses a button
 	while (true)
 	{
-		// to set cursor location: /x1b[line;columnH
-		
 		// Update the keys
 		scanKeys();
 		
@@ -92,12 +90,11 @@ int menu(vector<string> list)
 			iprintf("\x1b[%d;1H*", selected);
 		}
 		else if (keysUp() & KEY_A || keysUp() & KEY_B)
-		{
 			break;
-		}
 		
 	}
 	
+	consoleClear();
 	return selected;
 }
 
