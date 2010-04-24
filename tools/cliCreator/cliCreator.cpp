@@ -214,9 +214,15 @@ int main(int argc, char **argv)
 	// Version Number
 	debug("zbe Version %d", int(ZBE_VERSION));
 	if (testing)
+	{
 		debug(" with testing flag");
+		fwrite<uint16_t>(uint16_t(1 << 15) | ZBE_VERSION, output);
+	}
+	else
+		fwrite<uint16_t>(uint16_t(ZBE_VERSION), output);
 	debug("\n\n");
-	fwrite<uint16_t>(uint16_t(1 << 15) | ZBE_VERSION, output);
+
+
 
 	// Total # assets. There is no way of knowing how may assets we will end up
 	// with, so write a 32 bit int 0 to the file and remember the position.
