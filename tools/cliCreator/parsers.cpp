@@ -419,6 +419,36 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		// Increment total level counter
 		++totalLvl;
 
+		// Add level name string
+		string lvlName = levelXML->FirstChildElement("name")->GetText();
+		debug("\tLevel \"%s\"\n", lvlName.c_str());
+		fwriteStr(lvlName, output);
+
+		// exp, debug, and timer values if making testing
+		if (testing)
+		{
+			// Testing explanation
+			string lvlExp = levelXML->FirstChildElement("exp")->GetText();
+			debug("\tTesting Explanation: \"%s\"\n", lvlExp.c_str());
+			fwriteStr(lvlExp, output);
+
+			// Debug info
+			string lvlDebug = levelXML->FirstChildElement("debug")->GetText();
+			debug("\tTesting Debug: \"%s\"\n", lvlDebug.c_str());
+			fwriteStr(lvlDebug, output);
+
+			// timer value
+			int timer;
+			if (!getIntAttr(levelXML, "timer", timer))
+			{
+				printf("\tWARNING: No timer value specified for level. Will run for %d minutes unless fixed\n", uint16_t(-1) / 60 / 60);
+				printf("\t         Add timer=\"-1\" to <level> tag if this is desired\n");
+				timer = uint16_t(-1);
+			}
+			debug("\tTest will run for %d blanks\n", timer);
+			fwrite<uint16_t>(uint16_t(timer), output);
+		}
+
 		// Add background information
 		TiXmlElement *backgroundsXML = levelXML->FirstChildElement("backgrounds");
 

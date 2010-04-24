@@ -148,11 +148,14 @@ int main(int argc, char **argv)
 	string inFilename = "";
 	string outFilename = "assets.zbe";
 	int c = 0;
-	while ((c = getopt (argc, argv, "vi:o:")) != -1)
+	while ((c = getopt (argc, argv, "vti:o:")) != -1)
 		switch (c)
 		{
 			case 'v':
 				verbose = true;
+				break;
+			case 't':
+				testing = true;
 				break;
 			case 'i':
 				inFilename = string(optarg);
@@ -209,8 +212,11 @@ int main(int argc, char **argv)
 	 */
 
 	// Version Number
-	debug("zbe Version %d\n\n", int(ZBE_VERSION));
-	fwrite<uint16_t>(ZBE_VERSION, output);
+	debug("zbe Version %d", int(ZBE_VERSION));
+	if (testing)
+		debug(" with testing flag");
+	debug("\n\n");
+	fwrite<uint16_t>(uint16_t(ZBE_VERSION | 1 << 16), output);
 
 	// Total # assets. There is no way of knowing how may assets we will end up
 	// with, so write a 32 bit int 0 to the file and remember the position.
@@ -279,10 +285,11 @@ int main(int argc, char **argv)
  */
 void printUsage(const char *pgm)
 {
-	fprintf(stderr, "Usage: %s -i input_filename.xml [-o output_filename.zbe] [-v]\n", pgm);
+	fprintf(stderr, "Usage: %s -i input_filename.xml [-o output_filename.zbe] [-v] [-t]\n", pgm);
 	fprintf(stderr, "          -i is required, it is the filename of the XML file to parse\n");
 	fprintf(stderr, "          -o is optional, it will overwrite (!) file 'assets.zbe' if omitted.\n");
 	fprintf(stderr, "          -v is optional, it enables verbose output.\n");
+	fprintf(stderr, "          -t is optional and likely undesired, it enables testing fields in the zbe file (NOT FOR GAMES).\n");
 
 	if (verbose)
 	{
