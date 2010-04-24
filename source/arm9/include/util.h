@@ -89,6 +89,32 @@ int menu(vector<string> list, string message = "");
 
 
 /**
+ * menu wrapper function, yesNoMenu
+ *
+ * Makes a menu of "Yes" and "No" and returns the response
+ *
+ * @param string message
+ *   The message to display with the menu
+ * @return bool
+ *   Whether the user answered yes or no
+ * @author Joe Balough
+ */
+inline bool yesNoMenu(string message)
+{
+	// Make the menu
+	vector<string> list;
+	list.push_back("Yes");
+	list.push_back("No");
+
+	// Run it, return true if the user picked the first option.
+	if (menu(list, message) == 0)
+		return true;
+	else
+		return false;
+}
+
+
+/**
  * pauseIfTesting function
  * Prints "\nPress any key to continue\n", pauses, then clears the screen if
  * ZBE_TESTING defined.
