@@ -18,15 +18,13 @@ export CLICREATOR	:=	tools/cliCreator
 # main targets
 #---------------------------------------------------------------------------------
 all: $(TARGET).nds
-testing: $(TARGET)_testing.nds
+testing:
+	$(MAKE) -f Maketesting
 
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET).nds
-
-$(TARGET)_testing.nds	:
-	$(MAKE) -f Maketesting
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7	: $(SOURCES)/arm7/$(TARGET).elf
