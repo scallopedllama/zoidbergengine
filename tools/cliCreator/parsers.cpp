@@ -420,7 +420,8 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		++totalLvl;
 
 		// Add level name string
-		string lvlName = levelXML->FirstChildElement("name")->GetText();
+		TiXmlElement *nameXML = levelXML->FirstChildElement("name");
+		string lvlName = (nameXML) ? nameXML->GetText() : "";
 		debug("\tLevel \"%s\"\n", lvlName.c_str());
 		fwriteStr(lvlName, output);
 
