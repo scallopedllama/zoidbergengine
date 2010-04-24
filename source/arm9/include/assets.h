@@ -43,6 +43,8 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#define ZBE_VERSION_SUPPORTED 1
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>

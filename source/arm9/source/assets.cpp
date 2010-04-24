@@ -20,6 +20,25 @@ void assets::parseZbe()
 
 	// Get the version number out of the zeg file
 	uint16 version = load<uint16>(zbeData);
+
+	// Check to see if it has the testing flag
+#ifndef ZBE_TESTING
+	if (version & 1 << 15)
+	{
+		iprintf("Error: Attempting to open a Testing ZBE file without testing enabled.\n");
+		die();
+	}
+
+	// Check to see if it's the supported version
+	if (version != ZBE_VERSION_SUPPORTED)
+#else
+	if (version != ZBE_VERSION_SUPPORTED | 1 << 15)
+#endif
+	{
+		iprintf("Error: Attempting to open a ZBE file with an unsupported version\n");
+		die();
+	}
+
 	iprintf("v %d\n", version);
 
 	// Get the total number of assets
@@ -70,15 +89,15 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-	
-	
-	
-	
+
+
+
+
 	// pause if we're testing
 	pauseIfTesting();
-	
-	
-	
+
+
+
 
 	// Get the number of background tilesets
 	uint32 numTilesets = load<uint32>(zbeData);
@@ -105,14 +124,14 @@ void assets::parseZbe()
 		// Duh.. add it to the tilesetAssets vector
 		tilesetAssets.push_back(newAsset);
 	}
-	
-	
-	
+
+
+
 	// pause if we're testing
 	pauseIfTesting();
-	
-	
-	
+
+
+
 
 	// Get the number of palettes
 	uint32 numPals = load<uint32>(zbeData);
@@ -144,15 +163,15 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-	
-	
-	
-	
+
+
+
+
 	// pause if we're testing
 	pauseIfTesting();
-	
-	
-	
+
+
+
 
 	// Number of backrounds
 	uint32 numBackgrounds = load<uint32>(zbeData);
@@ -191,11 +210,11 @@ void assets::parseZbe()
 		// Put this backgroundAsset on the vector
 		backgroundAssets.push_back(newAsset);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	// pause if we're testing
 	pauseIfTesting();
 
@@ -264,14 +283,14 @@ void assets::parseZbe()
 		objectAssets.push_back(newAsset);
 
 	} // all objects
-	
-	
-	
-	
+
+
+
+
 	// pause if we're testing
 	pauseIfTesting();
-	
-	
+
+
 
 
 	// Number of levels
@@ -427,7 +446,7 @@ void assets::loadBackground(levelBackgroundAsset *lvlBackground)
 
 	iprintf("Loading background...\n");
 	backgroundAsset *background = lvlBackground->background;
-	
+
 	// Open the file
 	openFile();
 
@@ -451,7 +470,7 @@ void assets::loadBackground(levelBackgroundAsset *lvlBackground)
 
 		lvlBackground->palettes.push_back(paletteAssets[palId]);
 	}
-	
+
 
 	// If the background's map isn't loaded yet, load it
 	if (!background->mmLoaded)
