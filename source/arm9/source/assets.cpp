@@ -306,11 +306,14 @@ void assets::parseZbe()
 
 		// Get the level name's length and allocate space for the string
 		uint32 nameLen = load<uint32>(zbeData);
-		newAsset->name = new char[nameLen + 1];
-		// Load up the name string
-		for (unsigned int c = 0; c < nameLen; c++)
-			newAsset->name[c] = (char) load<uint8>(zbeData);
-		newAsset->name[nameLen] = '\0';
+		if (nameLen > 0)
+		{
+			newAsset->name = new char[nameLen + 1];
+			// Load up the name string
+			for (unsigned int c = 0; c < nameLen; c++)
+				newAsset->name[c] = (char) load<uint8>(zbeData);
+			newAsset->name[nameLen] = '\0';
+		}
 
 		// Set the location variable
 		fpos_t curPos;
@@ -361,7 +364,28 @@ void assets::parseZbe()
 }
 
 
-// TODO: properly delete all the stuff dynamically allocated in the parse function!
+// Deconstructor
+assets::~assets()
+{
+	for (unsigned int i = 0; i < gfxAssets.size(); i++)
+	{
+		// Free the video memory it may be using
+		if (gfxAssets[i]->vmLoaded)
+			oamFreeGfx(oam, gfxAssets[i]->offset);
+
+		delete gfxAssets[i];
+	}
+	for (unsigned int i = 0; i < tilesetAssets.size(); i++)
+		delete tilesetAssets[i];
+	for (unsigned int i = 0; i < paletteAssets.size(); i++)
+		delete paletteAssets[i];
+	for (unsigned int i = 0; i < backgroundAssets.size(); i++)
+		delete backgroundAssets[i];
+	for (unsigned int i = 0; i < objectAssets.size(); i++)
+		delete objectAssets[i];
+	for (unsigned int i = 0; i < levelAssets.size(); i++)
+		delete levelAssets[i];
+}
 
 
 // Load and return a level's metadata
@@ -390,17 +414,23 @@ levelAsset *assets::loadLevel(uint32 id)
 #ifdef ZBE_TESTING
 	// Test explanation message
 	uint32 expLen = load<uint32>(zbeData);
-	lvl->expMessage = new char[expLen + 1];
-	for (unsigned int i = 0; i < expLen; i++)
-		lvl->expMessage[i] = (char) load<uint8>(zbeData);
-	lvl->expMessage[expLen] = '\0';
+	if (expLen > 0)
+	{
+		lvl->expMessage = new char[expLen + 1];
+		for (unsigned int i = 0; i < expLen; i++)
+			lvl->expMessage[i] = (char) load<uint8>(zbeData);
+		lvl->expMessage[expLen] = '\0';
+	}
 
 	// Debug explanation message
 	uint32 dbgLen = load<uint32>(zbeData);
-	lvl->debugMessage = new char[dbgLen + 1];
-	for (unsigned int i = 0; i < dbgLen; i++)
-		lvl->debugMessage[i] = (char) load<uint8>(zbeData);
-	lvl->debugMessage[dbgLen] = '\0';
+	if (dbgLen > 0)
+	{
+		lvl->debugMessage = new char[dbgLen + 1];
+		for (unsigned int i = 0; i < dbgLen; i++)
+			lvl->debugMessage[i] = (char) load<uint8>(zbeData);
+		lvl->debugMessage[dbgLen] = '\0';
+	}
 
 	// Timer value
 	lvl->timer = load<uint16>(zbeData);

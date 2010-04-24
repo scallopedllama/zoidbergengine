@@ -67,6 +67,10 @@ using namespace std;
 class assets {
 public:
 	/**
+	 * assets class constructor
+	 *
+	 * Opens the file and runs the parse routine
+	 *
 	 * @param string filename
 	 *   The zbe file to use for this game
 	 * @param OamState *oam
@@ -74,6 +78,15 @@ public:
 	 * @author Joe Balough
 	 */
 	assets(char* filename, OamState *oam);
+
+	/**
+	 * assets class deconstructor
+	 *
+	 * Deletes everything that was allocated on heap
+	 *
+	 * @author Joe Balough
+	 */
+	 ~assets();
 
 	/**
 	 * parseZbe function
@@ -319,11 +332,9 @@ private:
 	 * @see assetStatus
 	 */
 	vector<gfxAsset*> gfxAssets;
-	vector<paletteAsset*> paletteAssets;
-
 	vector<gfxAsset*> tilesetAssets;
+	vector<paletteAsset*> paletteAssets;
 	vector<backgroundAsset*> backgroundAssets;
-
 	vector<objectAsset*> objectAssets;
 	vector<levelAsset*> levelAssets;
 };
