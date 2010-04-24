@@ -254,9 +254,41 @@ struct levelAsset : assetStatus
 		}
 		delete heroes;
 
+		if (name)
+		{
+			delete name;
+			name = NULL;
+		}
+
+#ifdef ZBE_TESTING
+		if(expMessage)
+		{
+			delete expMessage;
+			expMessage = NULL;
+		}
+		if (debugMessage)
+		{
+			delete debugMessage;
+			debugMessage = NULL;
+		}
+#endif
+
 		// Reset loaded variable
 		mmLoaded = vmLoaded = false;
 	}
+
+	// The name of this level
+	char *name;
+
+	// TESTING ONLY
+#ifdef ZBE_TESTING
+	// test explanation and debug information
+	char *expMessage;
+	char *debugMessage;
+
+	// Number of scren blanks to run level
+	uint16 timer;
+#endif
 
 	// The gfxAsset to use as this level's background tileset
 	gfxAsset *tileset;
