@@ -311,6 +311,13 @@ void runGraphicalTest(game *tests, uint32 testNo)
  */
 void graphicalTestMenu()
 {
+	// Tell user what's happening
+	//       --------------------------------
+	iprintf("Now opening the zbe testing file\n\n");
+	iprintf("Parsing information will be\npresented so that you can\nconfirm it was all parsed and\nloaded correctly.\n\nPress any button to continue.\n");
+	pause();
+	consoleClear();
+
 	// Initialize the testing game
 	game g((char *) "/testing.zbe");
 
@@ -349,6 +356,13 @@ void graphicalTestMenu()
  */
 void runGraphicalTests()
 {
+	// Tell user what's happening
+	//       --------------------------------
+	iprintf("Now opening the zbe testing file\n\n");
+	iprintf("Parsing information will be\npresented so that you can\nconfirm it was all parsed and\nloaded correctly.\n\nPress any button to continue.\n");
+	pause();
+	consoleClear();
+
 	// Initialize the testing game
 	game g((char *) "/testing.zbe");
 
