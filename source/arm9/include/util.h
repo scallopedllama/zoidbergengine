@@ -82,12 +82,12 @@ void pause();
  *  Returns the index of the string the user selected
  * @author Joe Balough
  */
-int menu(vector<string> list);
+int menu(vector<string> list, string message = "");
 
 
 /**
  * pauseIfTesting function
- * Prints "\nPress any key to continue\n", pauses, then clears the screen if 
+ * Prints "\nPress any key to continue\n", pauses, then clears the screen if
  * ZBE_TESTING defined.
  * @author Joe Balough
  */
