@@ -1,11 +1,12 @@
 #include "level.h"
 
 // level constructor
-level::level(levelAsset *metadata, OamState *o)
+level::level(levelAsset *m, OamState *o)
 {
-	// set the oam
+	// set the oam and metadata
 	oam = o;
-	
+	metadata = m;
+
 	// No palettes loaded
 	numBackgroundPalettes = 0;
 
@@ -17,23 +18,23 @@ level::level(levelAsset *metadata, OamState *o)
 
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-	
+
 	// Load up the backgrounds
 	// Level dimensions are determined by the biggest background in the back layers
 	//vector2D<uint32> maxDimensions(0, 0);
 	for (int i = 0; i < 4; i++)
 	{
-		if (metadata->bgs[i].background) 
+		if (metadata->bgs[i].background)
 		{
 			// Make the new background
 			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
 			numBackgroundPalettes += metadata->bgs[i].palettes.size();
-			
+
 			// If this is a layer behind the sprites, see if it's bigger than the current biggest
 			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
 			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
 				maxDimensions = thisDimensions;*/
-			
+
 			// Add it to the vector
 			backgrounds.push_back(newBackground);
 		}
@@ -86,11 +87,17 @@ level::level(levelAsset *metadata, OamState *o)
 // level destructor
 level::~level()
 {
-	for(unsigned int i = 0; i < objects.size(); i++)
+	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
+
 	delete colMatrix;
+
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
+	{
+		delete backgrounds[i];
+	}
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -116,9 +123,20 @@ void level::run()
 	uint32 frame = 0;
 	time_t startTime = time(NULL);
 
-	// start running the main loop
+	// Run forever if not testing
+#ifndef ZBE_TESTING
 	while(true)
 	{
+#else
+	// run for timer blanks if testing
+	for (int i = 0; i < metadata->timer; i++)
+	{
+		// Print the explanation message and pause
+		consoleClear();
+		iprintf("%s\n\nPress any Button to Continue.", metadata->expMessage);
+		pause();
+		consoleClear();
+#endif
 		update();
 
 		// Update frame rate
@@ -225,7 +243,7 @@ void level::update()
 				break;
 		}
 	}
-	
+
 	// Update the backgrounds
 	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
