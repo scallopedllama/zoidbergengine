@@ -131,6 +131,25 @@ public:
 		return zbeAssets->numLevels();
 	}
 
+
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return zbeAssets->getDebugMessage(l);
+	}
+#endif
+
 private:
 
 };

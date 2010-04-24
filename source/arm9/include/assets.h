@@ -218,6 +218,24 @@ public:
 		return string(levelAssets[id]->name);
 	}
 
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return string(levelAssets[l]->debugMessage);
+	}
+#endif
+
 private:
 	/**
 	 * fread wrapper; load

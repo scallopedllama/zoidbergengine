@@ -298,6 +298,10 @@ void runGraphicalTest(game *tests, uint32 testNo)
 	{
 		++testsRun;
 		++testsFailed;
+
+		string dbgMsg = tests->getDebugMessage(testNo);
+		iprintf("%s\n\nPress any button to Continue\n", dbgMsg.c_str());
+		pause();
 	}
 }
 
@@ -377,7 +381,7 @@ void runGraphicalTests()
 
 	// Report the number failed and pause
 	iprintf("%d out of %d graphical\ntests failed.\n\n", testsFailed, testsRun);
-	iprintf("Press any key to continue.\n");
+	iprintf("Press any button to continue.\n");
 	pause();
 }
 
