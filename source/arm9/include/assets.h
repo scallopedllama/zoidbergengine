@@ -337,6 +337,10 @@ private:
 	vector<backgroundAsset*> backgroundAssets;
 	vector<objectAsset*> objectAssets;
 	vector<levelAsset*> levelAssets;
+
+
+	// A pointer to the levelAsset that was last loaded
+	levelAsset *lastLevel;
 };
 
 #endif // ASSETS_H_INCLUDED

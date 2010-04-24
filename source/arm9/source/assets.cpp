@@ -5,6 +5,7 @@ assets::assets(char* input, OamState *table)
 	// Set variables
 	oam = table;
 	zbeFile = input;
+	lastLevel = NULL;
 
 	// Parse the file
 	parseZbe();
@@ -395,13 +396,20 @@ levelAsset *assets::loadLevel(uint32 id)
 	openFile();
 
 	// keep track of the last one opened
-	static levelAsset *lvl = NULL;
+	levelAsset *lvl = lastLevel;
 
 	// Clear out the last one if this isn't the first time
 	if (lvl)
 	{
 		lvl->clear();
 		lvl = NULL;
+	}
+
+	// Bounds checking
+	if (id >= levelAssets.size())
+	{
+		iprintf("ERROR: Level id is out of bounds.\n       Requested %d, max %d", id, levelAssets.size() - 1);
+		die();
 	}
 
 	// Update last
