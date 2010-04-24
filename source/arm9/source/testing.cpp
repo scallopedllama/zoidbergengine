@@ -35,9 +35,19 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string>
+#include <sstream>
 #include <vector>
 #include "game.h"
 #include "util.h"
+
+/**
+ *    GLOBAL VARIABLES
+ */
+// Total number of tests run
+uint16 testsRun = 0;
+// Total number of failed tests run
+uint16 testsFailed = 0;
+
 
 using namespace std;
 
@@ -57,11 +67,15 @@ public:
 
 	/**
 	 * A method to run the functional test
+	 * should print whether the test was successful and pause before returning
+	 * @return bool
+	 *   Whether or not the test was successful
 	 */
-	virtual void run()
+	virtual bool run()
 	{
 		iprintf("Whoops! You defined your\nfunctionalTest wrong.\n");
 		pause();
+		return false;
 	}
 
 	/**
@@ -107,10 +121,11 @@ public:
 	 *
 	 * @ author Joe Balough
 	 */
-	virtual void run()
+	virtual bool run()
 	{
 		iprintf("Gonna test the collisionMatrix now\n");
 		pause();
+		return true;
 	}
 
 private:
@@ -150,7 +165,10 @@ void getFunctionalTests(vector<functionalTest*> &tests)
 
 
 /**
- * functionalTestMenu(); shows a menu to the user listing all of the functional tests that can be run.
+ * functionalTestMenu();
+ *
+ * shows a menu to the user listing all of the functional tests that can be run.
+ *
  * @author Joe Balough
  */
 void functionalTestMenu()
@@ -172,10 +190,21 @@ void functionalTestMenu()
 	while (choice != list.size() - 1)
 	{
 		// Run the chosen test
-		tests[choice]->run();
+		if (tests[choice]->run())
+			++testsRun;
+		else
+		{
+			++testsRun;
+			++testsFailed;
+		}
+
+		// Report on overall numer of tests run
+		stringstream message;
+		message << testsFailed << " out of " << testsRun << " Tests Failed\n\n";
 
 		// Let the user pick a different test
-		choice = menu(list, "Please select a \nfunctional test to run:\n");
+		message << "Please select a \nfunctional test to run:\n";
+		choice = menu(list, message.str());
 	}
 
 	// Delete all the functional tests made for that vector
@@ -186,8 +215,36 @@ void functionalTestMenu()
 }
 
 
+/**
+ * runFunctionalTests function
+ *
+ * Runs all defined functional tests. After running all tests, it reports how many failed
+ *
+ * @author Joe Balough
+ */
 void runFunctionalTests()
-{}
+{
+	// Get the list of functional tests
+	vector<functionalTest*> tests;
+	getFunctionalTests(tests);
+
+	// Run every test
+	for (unsigned int i = 0; i < tests.size(); i++)
+	{
+		if (tests[i]->run())
+			++testsRun;
+		else
+		{
+			++testsRun;
+			++testsFailed;
+		}
+	}
+
+	// Print results and pause
+	iprintf("%d out of %d functional\ntests failed.\n\n", testsFailed, testsRun);
+	iprintf("Press any key to continue.\n");
+	pause();
+}
 
 
 void runGraphicalTests()
