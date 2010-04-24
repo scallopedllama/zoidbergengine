@@ -94,6 +94,7 @@ protected:
 	string name;
 };
 
+
 /**
  * collisionMatrixTest
  *
@@ -138,9 +139,15 @@ private:
 
 
 
+
+
+
+
 /**
- *     RUN TEST FUNCTIONS
+ *     FUNCTIONAL TEST FUNCTIONS
  */
+
+
 
 /**
  * getFunctionalTests() function
@@ -247,12 +254,134 @@ void runFunctionalTests()
 }
 
 
-void runGraphicalTests()
-{}
 
 
+
+
+
+
+
+
+
+
+
+
+/**
+ *           GRAPHICAL TEST FUNCTIONS
+ */
+
+
+
+
+/**
+ * Function runGraphicalTest
+ *
+ * Runs a single graphical test.
+ * A graphical test is just a level of the game which is run for a certain number of screen blanks.
+ * After that time period is up, it returns here where the user is asked if the test ran as it should have
+ *
+ * @param game *tests
+ *   A pointer to the game object used for tests
+ * @param uint32 testNo
+ *   The test number (level number) to run
+ * @author Joe Balough
+ */
+void runGraphicalTest(game *tests, uint32 testNo)
+{
+	// Run the test
+	tests->runLevel(testNo);
+
+	// Ask the user if it ran as described
+	if (yesNoMenu("Did that test run correctly?\n"))
+		++testsRun;
+	else
+	{
+		++testsRun;
+		++testsFailed;
+	}
+}
+
+
+/**
+ * graphicalTestMenu function
+ *
+ * Displays a list of graphical tests and allows the user to run any one of them.
+ *
+ * @author Joe Balough
+ */
 void graphicalTestMenu()
-{}
+{
+	// Initialize the testing game
+	game g((char *) "/testing.zbe");
+
+	// Get list of level names (test names)
+	vector<string> list;
+	g.getLevelNames(list);
+
+	// Add Quit option to that list
+	list.push_back("Return to Main");
+
+	// Run the tests until the user selects the last option in the list
+	unsigned int choice = menu(list, "Please select a \ngraphical test to run:\n");
+	while (choice != list.size() - 1)
+	{
+		// Run the chosen test
+		runGraphicalTest(&g, choice);
+
+		// Report on overall numer of tests run
+		stringstream message;
+		message << testsFailed << " out of " << testsRun << " Tests Failed\n\n";
+
+		// Let the user pick a different test
+		message << "Please select a \nfunctional test to run:\n";
+		choice = menu(list, message.str());
+	}
+
+}
+
+
+/**
+ * runGraphicalTests function
+ *
+ * Runs all graphical tests in a row. Afterwards, it reports how many tests failed.
+ *
+ * @author Joe Balough
+ */
+void runGraphicalTests()
+{
+	// Initialize the testing game
+	game g((char *) "/testing.zbe");
+
+	// Get the number of tests there are
+	uint32 numTests = g.numLevels();
+
+	// Run all the tests
+	for (uint32 i = 0; i < numTests; i++)
+	{
+		runGraphicalTest(&g, i);
+	}
+
+	// Report the number failed and pause
+	iprintf("%d out of %d graphical\ntests failed.\n\n", testsFailed, testsRun);
+	iprintf("Press any key to continue.\n");
+	pause();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -296,10 +425,6 @@ int main()
 
 
 	}
-
-	// make a game
-	game g((char *) "/assets.zbe");
-	g.run();
 
 	return 0;
 }

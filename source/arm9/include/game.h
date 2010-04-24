@@ -35,6 +35,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 // for zbeAssets
 #include "assets.h"
@@ -82,6 +83,18 @@ public:
 	 * @author Joe Balough
 	 */
 	void run();
+
+
+	uint32 runLevel(uint32 levelId)
+	{}
+
+
+	void getLevelNames(vector<string> &tests)
+	{}
+
+
+	uint32 numLevels()
+	{}
 
 private:
 
