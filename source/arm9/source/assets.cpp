@@ -25,17 +25,17 @@ void assets::parseZbe()
 #ifndef ZBE_TESTING
 	if (version & 1 << 15)
 	{
-		iprintf("Error: Attempting to open a Testing ZBE file without testing enabled.\n");
+		iprintf("Error: Attempting to open a\nTesting ZBE file without\ntesting enabled.\n");
 		die();
 	}
 
 	// Check to see if it's the supported version
 	if (version != ZBE_VERSION_SUPPORTED)
 #else
-	if (version != ZBE_VERSION_SUPPORTED | 1 << 15)
+	if (version != (ZBE_VERSION_SUPPORTED | 1 << 15))
 #endif
 	{
-		iprintf("Error: Attempting to open a ZBE file with an unsupported version\n");
+		iprintf("Error: Attempting to open a\nZBE file with an unsupported\nversion\n");
 		die();
 	}
 
@@ -304,6 +304,14 @@ void assets::parseZbe()
 		levelAsset *newAsset = new levelAsset;
 		newAsset->objects = NULL;
 
+		// Get the level name's length and allocate space for the string
+		uint32 nameLen = load<uint32>(zbeData);
+		newAsset->name = new char[nameLen + 1];
+		// Load up the name string
+		for (unsigned int c = 0; c < nameLen; c++)
+			newAsset->name[c] = (char) load<uint8>(zbeData);
+		newAsset->name[nameLen] = '\0';
+
 		// Set the location variable
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
@@ -311,6 +319,19 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
+
+#ifdef ZBE_TESTING
+		// Skip over the test explanation message
+		uint32 expLen = load<uint32>(zbeData);
+		fseek(zbeData, expLen * sizeof(uint8), SEEK_CUR);
+
+		// Skip over the debug explanation
+		uint32 dbgLen = load<uint32>(zbeData);
+		fseek(zbeData, dbgLen * sizeof(uint8), SEEK_CUR);
+
+		// Skip the timer
+		load<uint16>(zbeData);
+#endif
 
 		// Skip over the backgrounds
 		// NOTE: keep this up to date!
@@ -365,6 +386,25 @@ levelAsset *assets::loadLevel(uint32 id)
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
+
+#ifdef ZBE_TESTING
+	// Test explanation message
+	uint32 expLen = load<uint32>(zbeData);
+	lvl->expMessage = new char[expLen + 1];
+	for (unsigned int i = 0; i < expLen; i++)
+		lvl->expMessage[i] = (char) load<uint8>(zbeData);
+	lvl->expMessage[expLen] = '\0';
+
+	// Debug explanation message
+	uint32 dbgLen = load<uint32>(zbeData);
+	lvl->debugMessage = new char[dbgLen + 1];
+	for (unsigned int i = 0; i < dbgLen; i++)
+		lvl->debugMessage[i] = (char) load<uint8>(zbeData);
+	lvl->debugMessage[dbgLen] = '\0';
+
+	// Timer value
+	lvl->timer = load<uint16>(zbeData);
+#endif
 
 	// background -1 means it was not set
 	// Load up all the backgrounds

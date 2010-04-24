@@ -47,6 +47,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <errno.h>
 #include <nds.h>
 #include <fat.h>
@@ -191,6 +192,30 @@ public:
 	inline SpriteSize getSpriteSize(uint32 id)
 	{
 		return gfxAssets[id]->size;
+	}
+
+	/**
+	 * Get the number of levels in the assets file
+	 * @return uint32
+	 *   number of levels in assets file
+	 * @author Joe Balough
+	 */
+	inline uint32 numLevels()
+	{
+		return uint32(levelAssets.size());
+	}
+
+	/**
+	 * Get the name of a level
+	 * @param uint32
+	 *   Id of level whose name should be retrieved
+	 * @return string
+	 *   string containing level's name, copied out of levelAsset
+	 * @author Joe Balough
+	 */
+	inline string getLevelName(uint32 id)
+	{
+		return string(levelAssets[id]->name);
 	}
 
 private:
