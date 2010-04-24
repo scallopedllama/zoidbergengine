@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<zbe>
+	<bin>
+		<graphics>
+			<gfx bin="gfx/01-orangeShuttle.img.bin" w="44" h="55" top="3" left="8"/>
+			<gfx bin="gfx/02-moon.img.bin" w="32" h="32" top="0" left="0"/>
+		</graphics>
+		<tilesets>
+			<tileset bin="gfx/03-bgTiles.img.bin" />
+			<tileset bin="gfx/04-bigBgTiles.img.bin" />
+		</tilesets>
+		<palettes>
+			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
+			<palette bin="gfx/02-moon.pal.bin"/>
+			<palette bin="gfx/03-bgTiles.pal.bin"/>
+		</palettes>
+	</bin>
+	<backgrounds>
+	</backgrounds>
+	<objects>
+		<object weight="45">
+			<animations>
+				<animation>
+					<frame id="0" pal="0" time="10" />
+				</animation>
+			</animations>
+		</object>
+		<object weight="10">
+			<animations>
+				<animation>
+					<frame id="1" pal="1" time="10" />
+				</animation>
+			</animations>
+		</object>
+	</objects>
+	<levels>
+		<level timer="180">
+			<name>First</name>
+			<exp>This is simply to test the graphical testing framework, you should see nothing for 3 seconds.</exp>
+			<debug>You must be tripping</debug>
+			<backgrounds tileset="0">
+			</backgrounds>
+			<objects>
+			</objects>
+			<heroes>
+			</heroes>
+		</level>
+	</levels>
+</zbe>
