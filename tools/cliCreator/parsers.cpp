@@ -428,13 +428,31 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		if (testing)
 		{
 			// Testing explanation
-			string lvlExp = levelXML->FirstChildElement("exp")->GetText();
-			debug("\tTesting Explanation: \"%s\"\n", lvlExp.c_str());
+			string lvlExp;
+			TiXmlElement *expXML = levelXML->FirstChildElement("exp");
+			TiXmlElement *lineXML = expXML->FirstChildElement("line");
+			while (lineXML)
+			{
+				lvlExp += lineXML->GetText();
+				lvlExp += "\n";
+
+				lineXML = lineXML->NextSiblingElement("line");
+			}
+			debug("\tTesting Explanation:\n%s", lvlExp.c_str());
 			fwriteStr(lvlExp, output);
 
 			// Debug info
-			string lvlDebug = levelXML->FirstChildElement("debug")->GetText();
-			debug("\tTesting Debug: \"%s\"\n", lvlDebug.c_str());
+			string lvlDebug;
+			TiXmlElement *dbgXML = levelXML->FirstChildElement("debug");
+			lineXML = dbgXML->FirstChildElement("line");
+			while (lineXML)
+			{
+				lvlDebug += lineXML->GetText();
+				lvlDebug += "\n";
+
+				lineXML = lineXML->NextSiblingElement("line");
+			}
+			debug("\tTesting Debug:\n%s", lvlDebug.c_str());
 			fwriteStr(lvlDebug, output);
 
 			// timer value
