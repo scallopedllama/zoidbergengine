@@ -216,7 +216,7 @@ int main(int argc, char **argv)
 	if (testing)
 		debug(" with testing flag");
 	debug("\n\n");
-	fwrite<uint16_t>(uint16_t(ZBE_VERSION | 1 << 16), output);
+	fwrite<uint16_t>(uint16_t(1 << 15) | ZBE_VERSION, output);
 
 	// Total # assets. There is no way of knowing how may assets we will end up
 	// with, so write a 32 bit int 0 to the file and remember the position.
