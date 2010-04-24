@@ -78,6 +78,9 @@ void pause();
  *
  * @param vector<string> list
  *  A vector of strings to use as the list of options in the menu
+ * @param string message
+ *  An optional string to put above the menu list. NOTE: This string cannot be wrapped, add newlines to
+ *  span multiple lines.
  * @return int
  *  Returns the index of the string the user selected
  * @author Joe Balough
