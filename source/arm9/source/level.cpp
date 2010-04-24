@@ -126,17 +126,17 @@ void level::run()
 	// Run forever if not testing
 #ifndef ZBE_TESTING
 	while(true)
-	{
 #else
+	// Print the explanation message and pause
+	consoleClear();
+	iprintf("%s\n\nPress any Button to Continue.", metadata->expMessage);
+	pause();
+	consoleClear();
+
 	// run for timer blanks if testing
 	for (int i = 0; i < metadata->timer; i++)
-	{
-		// Print the explanation message and pause
-		consoleClear();
-		iprintf("%s\n\nPress any Button to Continue.", metadata->expMessage);
-		pause();
-		consoleClear();
 #endif
+	{
 		update();
 
 		// Update frame rate
