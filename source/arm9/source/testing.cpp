@@ -152,11 +152,11 @@ private:
 /**
  * getFunctionalTests() function
  *
- * returns a vector of functionalTests that can be run.
+ * Sets up a vector of functionalTests that can be run.
  * If you add a new functional test, make sure to add it to the vector here.
  *
- * @param vector<functionalTest> &tests
- *   A vector of a list of functionalTests to add the functionalTests to.
+ * @param vector<functionalTest*> &tests
+ *   A vector of a list of pointers to functionalTests to fill.
  *   Passed by reference to avoid excessive copies
  * @author Joe Balough
  */
@@ -168,6 +168,28 @@ void getFunctionalTests(vector<functionalTest*> &tests)
 
 	// TODO: ADD YOUR CUSTOM FUNCTIONAL TESTS HERE
 
+}
+
+/**
+ * clearFunctionalTests() function
+ *
+ * Clears a vector full of functionalTests. Run this on the vector obtained with
+ * getFunctionalTests() before returning to avoid memory leaks.
+ *
+ * @see getFunctionalTests
+ * @param vector<functionalTest*> &test
+ *   A vector of a list of pointers to functionalTests to clear.
+ *   Passed by reference to avoid excessive copies
+ * @param author Joe Balough
+ */
+void clearFunctionalTests(vector<functionalTest*> &tests)
+{
+	// Delete every one
+	for (unsigned int i = 0; i < tests.size(); i++)
+		delete tests[i];
+
+	// Clear the vector
+	tests.clear();
 }
 
 
@@ -215,10 +237,7 @@ void functionalTestMenu()
 	}
 
 	// Delete all the functional tests made for that vector
-	for (unsigned int i = 0; i < tests.size(); i++)
-	{
-		delete tests[i];
-	}
+	clearFunctionalTests(tests);
 }
 
 
@@ -246,6 +265,9 @@ void runFunctionalTests()
 			++testsFailed;
 		}
 	}
+
+	// Delete all the functional tests made for that vector
+	clearFunctionalTests(tests);
 
 	// Print results and pause
 	iprintf("%d out of %d functional\ntests failed.\n\n", testsFailed, testsRun);
@@ -431,7 +453,11 @@ int main()
 		{
 			case 0:
 				runFunctionalTests();
+				consoleClear();
 				runGraphicalTests();
+				consoleClear();
+				iprintf("All tests complete.\n%d out of %d tests failed.\n", testsFailed, testsRun);
+				pause();
 				break;
 			case 1:
 				functionalTestMenu();
