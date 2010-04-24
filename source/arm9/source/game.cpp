@@ -3,7 +3,14 @@
 // Constructor
 game::game(char* filename)
 {
-	// Open the zbe datafile
+	// Delete the zbe assets if they exist
+	if (zbeAssets)
+	{
+		delete zbeAssets;
+		zbeAssets = NULL;
+	}
+
+	// Create the assets
 	zbeAssets = new assets(filename, ZOIDBERG_GAMEPLAY_OAM);
 }
 
