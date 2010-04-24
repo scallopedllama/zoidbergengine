@@ -35,6 +35,7 @@
 
 using namespace std;
 
+// TODO: Add refCount values to gfx and palette assets and use that to remove them from video memory when out of video memory
 
 /**
  * asset_status struct. This is just a base class and isn't used anywhere else.
@@ -182,7 +183,7 @@ struct objectAsset
 	{
 		for (int i = 0; animations[i] != NULL ; i++)
 		{
-			for(int j = 0; animations[i][j] != NULL; j++)
+			for (int j = 0; animations[i][j] != NULL; j++)
 			{
 				delete animations[i][j];
 			}
