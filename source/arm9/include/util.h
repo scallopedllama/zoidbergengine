@@ -123,7 +123,7 @@ inline bool yesNoMenu(string message)
 inline void pauseIfTesting()
 {
 	#ifdef ZBE_TESTING
-	iprintf("\nPress any key to continue\n");
+	iprintf("\nPress any button to continue\n");
 	pause();
 	consoleClear();
 	#endif
