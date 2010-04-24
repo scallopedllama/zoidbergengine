@@ -74,7 +74,7 @@ public:
 	virtual bool run()
 	{
 		iprintf("Whoops! You defined your\nfunctionalTest wrong.\n");
-		pause();
+		pauseIfTesting();
 		return false;
 	}
 
@@ -124,8 +124,9 @@ public:
 	 */
 	virtual bool run()
 	{
-		iprintf("Gonna test the collisionMatrix now\n");
-		pause();
+		iprintf("collisionMatrix functional Test\n");
+		iprintf("Not implemented yet... :(\n");
+		pauseIfTesting();
 		return true;
 	}
 
@@ -229,7 +230,7 @@ void functionalTestMenu()
 
 		// Report on overall numer of tests run
 		stringstream message;
-		message << testsFailed << " out of " << testsRun << " Tests Failed\n\n";
+		message << testsRun - testsFailed << " out of " << testsRun << " Tests Passed\n\n";
 
 		// Let the user pick a different test
 		message << "Please select a \nfunctional test to run:\n";
@@ -254,6 +255,10 @@ void runFunctionalTests()
 	vector<functionalTest*> tests;
 	getFunctionalTests(tests);
 
+	uint16 oldTestsFailed = testsFailed;
+	uint16 oldTestsRun = testsRun;
+	testsRun = testsFailed = 0;
+
 	// Run every test
 	for (unsigned int i = 0; i < tests.size(); i++)
 	{
@@ -270,9 +275,11 @@ void runFunctionalTests()
 	clearFunctionalTests(tests);
 
 	// Print results and pause
-	iprintf("%d out of %d functional\ntests failed.\n\n", testsFailed, testsRun);
-	iprintf("Press any key to continue.\n");
-	pause();
+	iprintf("%d out of %d functional\ntests passed.\n\n", testsRun - testsFailed, testsRun);
+	pauseIfTesting();
+
+	testsRun += oldTestsRun;
+	testsFailed += oldTestsFailed;
 }
 
 
@@ -322,8 +329,8 @@ void runGraphicalTest(game *tests, uint32 testNo)
 		++testsFailed;
 
 		string dbgMsg = tests->getDebugMessage(testNo);
-		iprintf("%s\n\nPress any button to Continue\n", dbgMsg.c_str());
-		pause();
+		iprintf("%s\n\n", dbgMsg.c_str());
+		pauseIfTesting();
 	}
 }
 
@@ -333,23 +340,15 @@ void runGraphicalTest(game *tests, uint32 testNo)
  *
  * Displays a list of graphical tests and allows the user to run any one of them.
  *
+ * @param game *g
+ *   A pointer to the testing game object
  * @author Joe Balough
  */
-void graphicalTestMenu()
+void graphicalTestMenu(game *g)
 {
-	// Tell user what's happening
-	//       --------------------------------
-	iprintf("Now opening the zbe testing file\n\n");
-	iprintf("Parsing information will be\npresented so that you can\nconfirm it was all parsed and\nloaded correctly.\n\nPress any button to continue.\n");
-	pause();
-	consoleClear();
-
-	// Initialize the testing game
-	game g((char *) "/testing.zbe");
-
 	// Get list of level names (test names)
 	vector<string> list;
-	g.getLevelNames(list);
+	g->getLevelNames(list);
 
 	// Add Quit option to that list
 	list.push_back("Return to Main");
@@ -359,11 +358,11 @@ void graphicalTestMenu()
 	while (choice != list.size() - 1)
 	{
 		// Run the chosen test
-		runGraphicalTest(&g, choice);
+		runGraphicalTest(g, choice);
 
 		// Report on overall numer of tests run
 		stringstream message;
-		message << testsFailed << " out of " << testsRun << " Tests Failed\n\n";
+		message << testsRun - testsFailed << " out of " << testsRun << " Tests Passed\n\n";
 
 		// Let the user pick a different test
 		message << "Please select a \nfunctional test to run:\n";
@@ -378,33 +377,31 @@ void graphicalTestMenu()
  *
  * Runs all graphical tests in a row. Afterwards, it reports how many tests failed.
  *
+ * @param game *g
+ *   A pointer to the testing game object
  * @author Joe Balough
  */
-void runGraphicalTests()
+void runGraphicalTests(game *g)
 {
-	// Tell user what's happening
-	//       --------------------------------
-	iprintf("Now opening the zbe testing file\n\n");
-	iprintf("Parsing information will be\npresented so that you can\nconfirm it was all parsed and\nloaded correctly.\n\nPress any button to continue.\n");
-	pause();
-	consoleClear();
-
-	// Initialize the testing game
-	game g((char *) "/testing.zbe");
+	uint16 oldTestsFailed = testsFailed;
+	uint16 oldTestsRun = testsRun;
+	testsRun = testsFailed = 0;
 
 	// Get the number of tests there are
-	uint32 numTests = g.numLevels();
+	uint32 numTests = g->numLevels();
 
 	// Run all the tests
 	for (uint32 i = 0; i < numTests; i++)
 	{
-		runGraphicalTest(&g, i);
+		runGraphicalTest(g, i);
 	}
 
 	// Report the number failed and pause
-	iprintf("%d out of %d graphical\ntests failed.\n\n", testsFailed, testsRun);
-	iprintf("Press any button to continue.\n");
-	pause();
+	iprintf("%d out of %d graphical\ntests passed.\n\n", testsRun - testsFailed, testsRun);
+	pauseIfTesting();
+
+	testsRun += oldTestsRun;
+	testsFailed += oldTestsFailed;
 }
 
 
@@ -436,8 +433,18 @@ int main()
 	// Initialize libfat
 	fatInitDefault();
 
+	// Tell user what's happening
+	//       --------------------------------
+	iprintf("ZOIDBERG ENGINE TESTING BUILD\n\n");
+	iprintf("Now opening the zbe testing file\n\n");
+	iprintf("Parsing information will be\npresented so that you can\nconfirm it was all parsed and\nloaded correctly.\n\n");
+	pauseIfTesting();
+
+	// Initialize the testing game
+	game g((char *) "/testing.zbe");
+
 	// Print some debug information for the user
-	string msg = "ZOIDBERG ENGINE TESTING BUILD\n\nPlease select a test to run:\n";
+	string msg = "Game data parsing successful.\n\nPlease select a test to run:\n";
 
 	// Build a menu and run it
 	vector<string> list;
@@ -454,16 +461,16 @@ int main()
 			case 0:
 				runFunctionalTests();
 				consoleClear();
-				runGraphicalTests();
+				runGraphicalTests(&g);
 				consoleClear();
-				iprintf("All tests complete.\n%d out of %d tests failed.\n", testsFailed, testsRun);
-				pause();
+				iprintf("All tests complete.\n%d out of %d tests passed.\n", testsRun - testsFailed, testsRun);
+				pauseIfTesting();
 				break;
 			case 1:
 				functionalTestMenu();
 				break;
 			case 2:
-				graphicalTestMenu();
+				graphicalTestMenu(&g);
 				break;
 		}
 

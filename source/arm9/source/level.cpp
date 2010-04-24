@@ -129,9 +129,8 @@ void level::run()
 #else
 	// Print the explanation message and pause
 	consoleClear();
-	iprintf("%s\n\nPress any Button to Continue.", metadata->expMessage);
-	pause();
-	consoleClear();
+	iprintf("%s\n\n", metadata->expMessage);
+	pauseIfTesting();
 
 	// run for timer blanks if testing
 	for (int i = 0; i < metadata->timer; i++)
@@ -232,8 +231,8 @@ void level::update()
 	{
 		// TODO: make width and height actually valid variables with proper values and enable them here
 		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
-		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
-			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
+		if     (screenPos.x >= 0 && screenPos.x /**+ objects[i].dimensions.x**/  <= SCREEN_WIDTH  &&
+			screenPos.y >= 0 && screenPos.y /**+ objects[i].dimensions.y**/ <= SCREEN_HEIGHT)
 		{
 			objects[i]->draw(spriteId);
 			++spriteId;
