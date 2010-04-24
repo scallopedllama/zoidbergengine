@@ -21,11 +21,10 @@ all: $(TARGET).nds
 
 #---------------------------------------------------------------------------------
 
-$(TARGET).nds	:	clean $(TARGET).arm7 $(TARGET).arm9
+$(TARGET).nds	: $(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7 -9 $(TARGET).arm9
 	mv -f $(TARGET).nds $(TARGET)_testing.nds
 	dlditool $(TOPDIR)/tools/mpcf.dldi $(TARGET)_testing.nds
-	$(MAKE) -f Maketesting clean
 
 #---------------------------------------------------------------------------------
 $(TARGET).arm7	: $(SOURCES)/arm7/$(TARGET).elf
