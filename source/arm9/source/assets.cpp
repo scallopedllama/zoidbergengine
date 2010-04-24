@@ -40,7 +40,13 @@ void assets::parseZbe()
 		die();
 	}
 
-	iprintf("v %d\n", version);
+	// Clear the testing flag and print the version
+	iprintf("v %d", (version & 0x7FFF) );
+#ifdef ZBE_TESTING
+	iprintf(" with testing flag\n");
+#else
+	iprintf("\n");
+#endif
 
 	// Get the total number of assets
 	uint32 numAssets = load<uint32>(zbeData);
