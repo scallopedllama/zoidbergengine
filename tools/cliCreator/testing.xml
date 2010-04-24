@@ -36,7 +36,7 @@
 	<levels>
 		<level timer="180">
 			<name>First</name>
-			<exp>This is simply to test the graphical testing framework, you should see nothing for 3 seconds.</exp>
+			<exp>This is simply to test the\ngraphical testing framework,\nyou should see a blank\nscreen for three seconds.</exp>
 			<debug>You must be tripping</debug>
 			<backgrounds tileset="0">
 			</backgrounds>
