@@ -5,7 +5,7 @@ level::level(levelAsset *metadata, OamState *o)
 {
 	// set the oam
 	oam = o;
-	
+
 	// No palettes loaded
 	numBackgroundPalettes = 0;
 
@@ -17,23 +17,23 @@ level::level(levelAsset *metadata, OamState *o)
 
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
-	
+
 	// Load up the backgrounds
 	// Level dimensions are determined by the biggest background in the back layers
 	//vector2D<uint32> maxDimensions(0, 0);
 	for (int i = 0; i < 4; i++)
 	{
-		if (metadata->bgs[i].background) 
+		if (metadata->bgs[i].background)
 		{
 			// Make the new background
 			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
 			numBackgroundPalettes += metadata->bgs[i].palettes.size();
-			
+
 			// If this is a layer behind the sprites, see if it's bigger than the current biggest
 			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
 			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
 				maxDimensions = thisDimensions;*/
-			
+
 			// Add it to the vector
 			backgrounds.push_back(newBackground);
 		}
@@ -225,10 +225,10 @@ void level::update()
 				break;
 		}
 	}
-	
+
 	// Update the backgrounds
 	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
-		//backgrounds[i]->update();
+		backgrounds[i]->update();
 	}
 }
