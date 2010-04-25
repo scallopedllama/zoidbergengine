@@ -78,7 +78,7 @@ public:
 	void update();
 
 private:
-	
+
 	/**
 	 * copyTile function
 	 *
@@ -92,8 +92,8 @@ private:
 	 * @author Joe Balough
 	 */
 	void copyTile(uint32 x, uint32 y, uint32 mx, uint32 my);
-	
-	
+
+
 	// Contains the map data and such for the background being used
 	backgroundAsset *bg;
 
@@ -105,9 +105,13 @@ private:
 
 	// The id of the background we got from bgInit
 	int backgroundId;
-	
+
 	// The place in video memory into which map tiles should be copied
 	uint16 *mapPtr;
+
+	// Keep track of last values
+	vector2D<float> lastScroll;
+	vector2D<float> lastScreenOffset;
 };
 
 #endif

@@ -79,77 +79,69 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 // Updates the scroll position of this background
 void background::update()
 {
-	// The last position of the screen in the level
-	static vector2D<float> lastLevelPosition(0.0, 0.0);
+	// Find out how much things have moved
+	vector2D<float> displacement = vector2D<float>(screenOffset.x - lastScreenOffset.x, screenOffset.y - lastScreenOffset.y);
+	// Figure out where the background will be scrolled for this frame
+	vector2D<float> thisScroll = vector2D<float>(lastScroll.x + displacement.x, lastScroll.y + displacement.y);
 
-	// The last position of the viewport in the Background
-	static vector2D<float> lastBgPosition(0.0, 0.0);
+	// scroll the background
+	bgScroll(backgroundId, thisScroll.x, thisScroll.y);
 
-	// Scroll the screen to to screenOffset / distance if layer < 3
-	vector2D<float> thisPosition(0.0, 0.0);
-	if (layer < 3)
-		thisPosition = vector2D<float>(screenOffset.x / float(distance) / 8.0, screenOffset.y / float(distance) / 8.0);
-	//                         screenOffset * distance if layer == 3
-	if (layer == 3)
-		thisPosition = vector2D<float>(screenOffset.x * float(distance) / 8.0, screenOffset.y / float(distance) / 8.0);
-/*
-	consoleClear();
-	printf("l %d, so(%f, %f)\n", layer, screenOffset.x, screenOffset.y);
-	printf("tp (%f, %f)\n", thisPosition.x, thisPosition.y);
-*/
-	// Clamp the screen Position to the extremes of the screen
-	if (thisPosition.x > float(bg->w * 8) - float(SCREEN_WIDTH))  thisPosition.x = float(bg->w * 8) - float(SCREEN_WIDTH);
-	if (thisPosition.y > float(bg->h * 8) - float(SCREEN_HEIGHT)) thisPosition.y = float(bg->h * 8) - float(SCREEN_HEIGHT);
-	if (thisPosition.x < 0.0) thisPosition.x = 0.0;
-	if (thisPosition.y < 0.0) thisPosition.y = 0.0;
+	//The number of columns to replace in those dimensions
+	int repRows = int(displacement.y) / 8;
+	int repCols = int(displacement.x) / 8;
 
-	// Displacement vector
-	vector2D<float> displacement(thisPosition.x - lastLevelPosition.x, thisPosition.y - lastLevelPosition.y);
+	// Return if not replacing anything
+	if (repRows == 0 && repCols == 0)
+		return;
 
-	// Where the viewport should now be in the background
-	vector2D<float> thisBgPosition(lastBgPosition.x + displacement.x, lastBgPosition.y + displacement.y);
+	// where to begin the replacement in the vm background map
+	vector2D<int> vmBgMapRep((thisScroll.x - 128) / 8, (thisScroll.y - 32) / 8);
+	// Make sure they're not negative
+	if (vmBgMapRep.x < 0) vmBgMapRep.x += (ZBE_BACKGROUND_TILE_WIDTH * 8);
+	if (vmBgMapRep.y < 0) vmBgMapRep.y += (ZBE_BACKGROUND_TILE_HEIGHT * 8);
 
-/*
-	printf("llp (%f, %f),\nlbp (%f, %f)\n", lastLevelPosition.x, lastLevelPosition.y, lastBgPosition.x, lastBgPosition.y);
-	printf("tp (%f, %f),\nd(%f, %f),\ntbp (%f, %f)\n", thisPosition.x, thisPosition.y, displacement.x, displacement.y, thisBgPosition.x, thisBgPosition.y);
-*/
-	// How many rows and columns need to be replaced
-	int repRows = abs(int(displacement.y));
-	int repCols = abs(int(displacement.x));
+	// where to copy the replacement tiles from in mm background map
+	vector2D<int> mmBgMaprep;
+	// Scrolling left
+	if (displacement.x < 0) mmBgMaprep.x = (screenOffset.x - 128) / 8;
+	// Scrolling right
+	else                    mmBgMaprep.x = (screenOffset.x + SCREEN_WIDTH + 128) / 8;
+	// Scrolling Up
+	if (displacement.y < 0) mmBgMaprep.y = (screenOffset.y - 32) / 8;
+	// Scrolling right
+	else                    mmBgMaprep.y = (screenOffset.y + SCREEN_HEIGHT + 32) / 8;
 
-	// Find the x and y of row and column to replace by subtracting half the difference of the screen
-	// dimension and the background dimension then modding the result by the background dimension (to keep it in bounds)
-	//int repX = (int(thisBgPosition.x) - ( (int(ZBE_BACKGROUND_TILE_WIDTH) - (int(SCREEN_WIDTH) / 8)) / 2) ) % int(ZBE_BACKGROUND_TILE_WIDTH);
-	//int repY = (int(thisBgPosition.y) - ( (int(ZBE_BACKGROUND_TILE_HEIGHT) - (int(SCREEN_HEIGHT) / 8)) / 2) ) % int(ZBE_BACKGROUND_TILE_HEIGHT);
-	int repX = int(thisBgPosition.x) - 128;
-	int repY = int(thisBgPosition.y) - 32;
-	repX /= 8;
-	repY /= 8;
-	if (repX < 0) repX += ZBE_BACKGROUND_TILE_WIDTH;
-	if (repY < 0) repY += ZBE_BACKGROUND_TILE_HEIGHT;
-/*
-	iprintf("Rep %d cols at %d\n", repCols, repX);
-	iprintf("Rep %d rows at %d\n", repRows, repY);
-*/
-	// Replace those rows and columns
-	for (int y = 0; y < repRows; y++)
+	// Now we just need to copy the tiles
+	// replace repRows rows
+	for (int r = 0; r < repRows; r++)
 	{
-		for (int x = 0; x < ZBE_BACKGROUND_TILE_WIDTH; x++)
+		// Every column tile for this row
+		for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
 		{
-			copyTile(x, y, x, repY + y);
-		}
-	}
-	for (int x = repX; x < repX + repCols; x++)
-	{
-		for (int y = 0; y < ZBE_BACKGROUND_TILE_HEIGHT; y++)
-		{
-			copyTile(x, y, repX + x, y);
+			// Copy it up
+			int screenMapTileX = (vmBgMapRep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
+			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
+			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
+			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
+			copytile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
 		}
 	}
 
-	// Finally, move the background and reset the lastPosition variable
-	bgScroll(backgroundId, thisPosition.x, thisPosition.y);
-	lastLevelPosition = thisPosition;
+	// replace repCols columns
+	for (int c = 0; c < repcols; c++)
+	{
+		// Every row tile for this column
+		for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+		{
+			// Copy it up
+			int screenMapTileX = (vmBgMapRep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
+			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
+			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
+			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
+			copytile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
+		}
+	}
 }
 
 
