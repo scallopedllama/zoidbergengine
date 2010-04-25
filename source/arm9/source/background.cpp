@@ -124,12 +124,12 @@ void background::update()
 			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
 			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
 			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			copytile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
+			copyTile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
 		}
 	}
 
 	// replace repCols columns
-	for (int c = 0; c < repcols; c++)
+	for (int c = 0; c < repCols; c++)
 	{
 		// Every row tile for this column
 		for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
@@ -139,7 +139,7 @@ void background::update()
 			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
 			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
 			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			copytile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
+			copyTile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
 		}
 	}
 }
