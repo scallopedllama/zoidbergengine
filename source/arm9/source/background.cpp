@@ -3,6 +3,7 @@
 // loads up a background
 background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 paletteOffset)
 {
+	lastScreenOffset = screenOffset;
 	distance = metadata->distance;
 	layer = metadata->layer;
 
