@@ -321,6 +321,7 @@ void assets::parseZbe()
 				newAsset->name[c] = (char) load<uint8>(zbeData);
 			newAsset->name[nameLen] = '\0';
 		}
+		iprintf(" %d: %s\n", i, newAsset->name);
 
 		// Set the location variable
 		fpos_t curPos;
@@ -338,9 +339,11 @@ void assets::parseZbe()
 		// Skip over the debug explanation
 		uint32 dbgLen = load<uint32>(zbeData);
 		fseek(zbeData, dbgLen * sizeof(uint8), SEEK_CUR);
+		iprintf(" exp %d chars, dbg %d chars\n", (int) expLen, (int) dbgLen);
 
 		// Skip the timer
-		load<uint16>(zbeData);
+		uint16 timer = load<uint16>(zbeData);
+		iprintf(" %d timer", (int) timer);
 #endif
 
 		// Skip over the backgrounds
@@ -348,23 +351,27 @@ void assets::parseZbe()
 		//                        bg0     bg1     bg2     bg3     tileset
 		const static int bgSize = 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4;
 		fseek(zbeData, bgSize, SEEK_CUR);
+		iprintf(" bgs\n");
 
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
 		// NOTE: Keep this up to date!
-		const static int lvlObjSize = 4 + 4 + 2 + 2;
+		//                            object Id  X   Y
+		const static int lvlObjSize = 4 +        2 + 2;
 
 		// number of level heroes
 		uint32 numLvlHeroes = load<uint32>(zbeData);
 
 		// Seek past those heroes
 		fseek(zbeData, lvlObjSize * numLvlHeroes, SEEK_CUR);
+		iprintf(" %d heroes", numLvlHeroes);
 
 		// number of level objects
 		uint32 numLvlObjs = load<uint32>(zbeData);
 
 		// Seek past all the level objects
 		fseek(zbeData, lvlObjSize * numLvlObjs, SEEK_CUR);
+		iprintf(" %d objs\n", numLvlObjs);
 	}
 
 	closeFile();
