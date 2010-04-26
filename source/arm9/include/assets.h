@@ -43,8 +43,11 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#define ZBE_VERSION_SUPPORTED 1
+
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <errno.h>
 #include <nds.h>
 #include <fat.h>
@@ -64,6 +67,10 @@ using namespace std;
 class assets {
 public:
 	/**
+	 * assets class constructor
+	 *
+	 * Opens the file and runs the parse routine
+	 *
 	 * @param string filename
 	 *   The zbe file to use for this game
 	 * @param OamState *oam
@@ -71,6 +78,15 @@ public:
 	 * @author Joe Balough
 	 */
 	assets(char* filename, OamState *oam);
+
+	/**
+	 * assets class deconstructor
+	 *
+	 * Deletes everything that was allocated on heap
+	 *
+	 * @author Joe Balough
+	 */
+	 ~assets();
 
 	/**
 	 * parseZbe function
@@ -191,6 +207,48 @@ public:
 		return gfxAssets[id]->size;
 	}
 
+	/**
+	 * Get the number of levels in the assets file
+	 * @return uint32
+	 *   number of levels in assets file
+	 * @author Joe Balough
+	 */
+	inline uint32 numLevels()
+	{
+		return uint32(levelAssets.size());
+	}
+
+	/**
+	 * Get the name of a level
+	 * @param uint32
+	 *   Id of level whose name should be retrieved
+	 * @return string
+	 *   string containing level's name, copied out of levelAsset
+	 * @author Joe Balough
+	 */
+	inline string getLevelName(uint32 id)
+	{
+		return string(levelAssets[id]->name);
+	}
+
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return string(levelAssets[l]->debugMessage);
+	}
+#endif
+
 private:
 	/**
 	 * fread wrapper; load
@@ -274,13 +332,15 @@ private:
 	 * @see assetStatus
 	 */
 	vector<gfxAsset*> gfxAssets;
-	vector<paletteAsset*> paletteAssets;
-
 	vector<gfxAsset*> tilesetAssets;
+	vector<paletteAsset*> paletteAssets;
 	vector<backgroundAsset*> backgroundAssets;
-
 	vector<objectAsset*> objectAssets;
 	vector<levelAsset*> levelAssets;
+
+
+	// A pointer to the levelAsset that was last loaded
+	levelAsset *lastLevel;
 };
 
 #endif // ASSETS_H_INCLUDED

@@ -4,7 +4,7 @@
 void initVideo()
 {
 	powerOn(POWER_ALL_2D);
-	lcdMainOnBottom();
+	lcdMainOnTop();
 
 	vramSetMainBanks(VRAM_A_MAIN_BG,
 					VRAM_B_MAIN_SPRITE_0x06400000,
@@ -30,4 +30,79 @@ void initVideo()
 	oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
 
 	consoleDemoInit();
+}
+
+
+// Pause gameplay until player presses a key
+void pause()
+{
+	scanKeys();
+	while (!keysUp())
+	{
+		scanKeys();
+	}
+}
+
+// display a list of strings for the user to choose from
+int menu(vector<string> list, string message)
+{
+	int selected = 0;
+	consoleClear();
+
+	// Print the mesasge
+	iprintf("%s\n", message.c_str());
+
+	// Count the number of newlines in the message
+	unsigned int lineOffset = 1;
+	for (unsigned int i = 0; i < message.length(); i++)
+		if (message[i] == '\n')
+			++lineOffset;
+
+	for (unsigned int i = 0; i < list.size(); i++)
+	{
+		// Show a star if the user has this string selected
+		if (i == 0) iprintf(" * ");
+		else        iprintf("   ");
+
+		// Show this option
+		iprintf("%s\n", list[i].c_str());
+	}
+
+	// Wait until the user presses a button
+	while (true)
+	{
+		// Update the keys
+		scanKeys();
+
+		// See if the user has pressed any keys
+		if (keysUp() & KEY_UP)
+		{
+			// Erase old one
+			iprintf("\x1b[%d;1H ", selected + lineOffset);
+
+			// Updated selected
+			--selected;
+			if(selected < 0) selected = list.size() - 1;
+
+			// Update cursor
+			iprintf("\x1b[%d;1H*", selected + lineOffset);
+		}
+		else if (keysUp() & KEY_DOWN)
+		{
+			// Erase old one
+			iprintf("\x1b[%d;1H ", selected + lineOffset);
+
+			// Updated selected
+			selected = (selected + 1) % list.size();
+
+			// Update cursor
+			iprintf("\x1b[%d;1H*", selected + lineOffset);
+		}
+		else if (keysUp() & KEY_A || keysUp() & KEY_B)
+			break;
+
+	}
+
+	consoleClear();
+	return selected;
 }

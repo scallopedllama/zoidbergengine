@@ -50,19 +50,19 @@
 					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 				</MakeCommands>
 			</Target>
-			<Target title="DeSmuMe wine">
+			<Target title="DeSmuMe testing">
 				<Option output="../source/arm9/bin/zoidbergengine.arm9.elf" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option parameters="./emu/desmume/DeSmuME_dev.exe --cflash-path=./tools/cliCreator ./bin/zoidbergengine.nds" />
-				<Option host_application="wine" />
+				<Option parameters="--cflash-path=./tools/cliCreator ./bin/zoidbergengine_testing.nds" />
+				<Option host_application="desmume" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 				<MakeCommands>
-					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .." />
+					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. testing" />
 					<CompileFile command="" />
 					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
@@ -109,6 +109,7 @@
 		<Unit filename="../tools/cliCreator/creatorutil.h" />
 		<Unit filename="../tools/cliCreator/parsers.cpp" />
 		<Unit filename="../tools/cliCreator/parsers.h" />
+		<Unit filename="../tools/cliCreator/testing.xml" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />

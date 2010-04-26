@@ -35,6 +35,7 @@
 
 using namespace std;
 
+// TODO: Add refCount values to gfx and palette assets and use that to remove them from video memory when out of video memory
 
 /**
  * asset_status struct. This is just a base class and isn't used anywhere else.
@@ -182,7 +183,7 @@ struct objectAsset
 	{
 		for (int i = 0; animations[i] != NULL ; i++)
 		{
-			for(int j = 0; animations[i][j] != NULL; j++)
+			for (int j = 0; animations[i][j] != NULL; j++)
 			{
 				delete animations[i][j];
 			}
@@ -254,9 +255,41 @@ struct levelAsset : assetStatus
 		}
 		delete heroes;
 
+		if (name)
+		{
+			delete name;
+			name = NULL;
+		}
+
+#ifdef ZBE_TESTING
+		if(expMessage)
+		{
+			delete expMessage;
+			expMessage = NULL;
+		}
+		if (debugMessage)
+		{
+			delete debugMessage;
+			debugMessage = NULL;
+		}
+#endif
+
 		// Reset loaded variable
 		mmLoaded = vmLoaded = false;
 	}
+
+	// The name of this level
+	char *name;
+
+	// TESTING ONLY
+#ifdef ZBE_TESTING
+	// test explanation and debug information
+	char *expMessage;
+	char *debugMessage;
+
+	// Number of scren blanks to run level
+	uint16 timer;
+#endif
 
 	// The gfxAsset to use as this level's background tileset
 	gfxAsset *tileset;

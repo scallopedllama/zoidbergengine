@@ -1,10 +1,11 @@
 #include "level.h"
 
 // level constructor
-level::level(levelAsset *metadata, OamState *o)
+level::level(levelAsset *m, OamState *o)
 {
-	// set the oam
+	// set the oam and metadata
 	oam = o;
+	metadata = m;
 
 	// No palettes loaded
 	numBackgroundPalettes = 0;
@@ -86,11 +87,17 @@ level::level(levelAsset *metadata, OamState *o)
 // level destructor
 level::~level()
 {
-	for(unsigned int i = 0; i < objects.size(); i++)
+	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
+
 	delete colMatrix;
+
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
+	{
+		delete backgrounds[i];
+	}
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -116,8 +123,18 @@ void level::run()
 	uint32 frame = 0;
 	time_t startTime = time(NULL);
 
-	// start running the main loop
+	// Run forever if not testing
+#ifndef ZBE_TESTING
 	while(true)
+#else
+	// Print the explanation message and pause
+	consoleClear();
+	iprintf("%s\n\n", metadata->expMessage);
+	pauseIfTesting();
+
+	// run for timer blanks if testing
+	for (int i = 0; i < metadata->timer; i++)
+#endif
 	{
 		update();
 
@@ -214,8 +231,8 @@ void level::update()
 	{
 		// TODO: make width and height actually valid variables with proper values and enable them here
 		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
-		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
-			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
+		if     (screenPos.x >= 0 && screenPos.x /**+ objects[i].dimensions.x**/  <= SCREEN_WIDTH  &&
+			screenPos.y >= 0 && screenPos.y /**+ objects[i].dimensions.y**/ <= SCREEN_HEIGHT)
 		{
 			objects[i]->draw(spriteId);
 			++spriteId;
