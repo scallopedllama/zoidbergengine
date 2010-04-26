@@ -7,7 +7,6 @@
 		</graphics>
 		<tilesets>
 			<tileset bin="gfx/03-bgTiles.img.bin" />
-			<tileset bin="gfx/04-bigBgTiles.img.bin" />
 		</tilesets>
 		<palettes>
 			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
