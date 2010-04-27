@@ -7,7 +7,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1996, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009 Free Software
+2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009, 2010 Free Software
 Foundation, Inc.  Contributed by Cygnus Solutions.  Written by John
 Gilmore.  Second Edition by Stan Shebs.
 
@@ -21,7 +21,7 @@ Free Documentation License".
    This file documents the internals of the GNU debugger GDB.
 
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1996, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009 Free Software
+2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009, 2010 Free Software
 Foundation, Inc.  Contributed by Cygnus Solutions.  Written by John
 Gilmore.  Second Edition by Stan Shebs.
 
@@ -861,12 +861,6 @@ GDB's application code:
      respectively, except that they set up the debug registers to watch
      instruction execution, and each hardware-assisted breakpoint
      always requires exactly one debug register.
-
-`i386_stopped_by_hwbp (void)'
-     This function returns non-zero if the inferior has some watchpoint
-     or hardware breakpoint that triggered.  It works like
-     `i386_stopped_data_address', except that it doesn't record the
-     address whose watchpoint triggered.
 
 `i386_cleanup_dregs (void)'
      This function clears all the reference counts, addresses, and
@@ -6160,16 +6154,37 @@ performed:
    * Update the copyright year in the startup message
 
      Update the copyright year in:
-        * file `top.c', function `print_gdb_version'
+        *   file `top.c', function `print_gdb_version'
 
-        * file `gdbserver/server.c', function `gdbserver_version'
+        *   file `gdbserver/server.c', function `gdbserver_version'
 
-        * file `gdbserver/gdbreplay.c', function `gdbreplay_version'
+        *   file `gdbserver/gdbreplay.c', function `gdbreplay_version'
 
-   * Add the new year in the copyright notices of all source and
-     documentation files.  This can be done semi-automatically by
-     running the `copyright.sh' script.  This script requires Emacs 22
-     or later to be installed.
+   * Run the `copyright.sh' script to add the new year in the copyright
+     notices of most source files.  This script requires Emacs 22 or
+     later to be installed.
+
+   * The new year also needs to be added manually in all other files
+     that are not already taken care of by the `copyright.sh' script:
+        *   `*.s'
+
+        *   `*.f'
+
+        *   `*.f90'
+
+        *   `*.igen'
+
+        *   `*.ac'
+
+        *   `*.texi'
+
+        *   `*.texinfo'
+
+        *   `*.tex'
+
+        *   `*.defs'
+
+        *   `*.1'
 
 
 
@@ -6895,25 +6910,113 @@ give a result of "UNRESOLVED", like this:
 
      UNRESOLVED: gdb.base/example.exp: This test script does not work on a remote host.
 
-   Sometimes it is convenient to get a transcript of the commands which
-the testsuite sends to GDB.  For example, if GDB crashes during
-testing, a transcript can be used to more easily reconstruct the
-failure when running GDB under GDB.
+21.2 Testsuite Parameters
+=========================
 
-   You can instruct the GDB testsuite to write transcripts by setting
-the DejaGNU variable `TRANSCRIPT' (to any value) before invoking
-`runtest' or `make check'.  The transcripts will be written into
-DejaGNU's output directory.  One transcript will be made for each
-invocation of GDB; they will be named `transcript.N', where N is an
-integer.  The first line of the transcript file will show how GDB was
-invoked; each subsequent line is a command sent as input to GDB.
+Several variables exist to modify the behavior of the testsuite.
+
+   * `TRANSCRIPT'
+
+     Sometimes it is convenient to get a transcript of the commands
+     which the testsuite sends to GDB.  For example, if GDB crashes
+     during testing, a transcript can be used to more easily
+     reconstruct the failure when running GDB under GDB.
+
+     You can instruct the GDB testsuite to write transcripts by setting
+     the DejaGNU variable `TRANSCRIPT' (to any value) before invoking
+     `runtest' or `make check'.  The transcripts will be written into
+     DejaGNU's output directory.  One transcript will be made for each
+     invocation of GDB; they will be named `transcript.N', where N is
+     an integer.  The first line of the transcript file will show how
+     GDB was invoked; each subsequent line is a command sent as input
+     to GDB.
+
+          make check RUNTESTFLAGS=TRANSCRIPT=y
+
+     Note that the transcript is not always complete.  In particular,
+     tests of completion can yield partial command lines.
+
+   * `GDB'
+
+     Sometimes one wishes to test a different GDB than the one in the
+     build directory.  For example, one may wish to run the testsuite on
+     `/usr/bin/gdb'.
+
+          make check RUNTESTFLAGS=GDB=/usr/bin/gdb
+
+   * `GDBSERVER'
+
+     When testing a different GDB, it is often useful to also test a
+     different gdbserver.
+
+          make check RUNTESTFLAGS="GDB=/usr/bin/gdb GDBSERVER=/usr/bin/gdbserver"
+
+   * `INTERNAL_GDBFLAGS'
+
+     When running the testsuite normally one doesn't want whatever is in
+     `~/.gdbinit' to interfere with the tests, therefore the test
+     harness passes `-nx' to GDB.  One also doesn't want any windowed
+     version of GDB, e.g., `gdbtui', to run.  This is achieved via
+     `INTERNAL_GDBFLAGS'.
+
+          set INTERNAL_GDBFLAGS "-nw -nx"
+
+     This is all well and good, except when testing an installed GDB
+     that has been configured with `--with-system-gdbinit'.  Here one
+     does not want `~/.gdbinit' loaded but one may want the system
+     `.gdbinit' file loaded.  This can be achieved by pointing `$HOME'
+     at a directory without a `.gdbinit' and by overriding
+     `INTERNAL_GDBFLAGS' and removing `-nx'.
+
+          cd testsuite
+          HOME=`pwd` runtest \
+            GDB=/usr/bin/gdb \
+            GDBSERVER=/usr/bin/gdbserver \
+            INTERNAL_GDBFLAGS=-nw
+
+
+   There are two ways to run the testsuite and pass additional
+parameters to DejaGnu.  The first is with `make check' and specifying
+the makefile variable `RUNTESTFLAGS'.
 
      make check RUNTESTFLAGS=TRANSCRIPT=y
 
-   Note that the transcript is not always complete.  In particular,
-tests of completion can yield partial command lines.
+   The second is to cd to the `testsuite' directory and invoke the
+DejaGnu `runtest' command directly.
 
-21.2 Testsuite Organization
+     cd testsuite
+     make site.exp
+     runtest TRANSCRIPT=y
+
+21.3 Testsuite Configuration
+============================
+
+It is possible to adjust the behavior of the testsuite by defining the
+global variables listed below, either in a `site.exp' file, or in a
+board file.
+
+   * `gdb_test_timeout'
+
+     Defining this variable changes the default timeout duration used
+     during communication with GDB.  More specifically, the global
+     variable used during testing is `timeout', but this variable gets
+     reset to `gdb_test_timeout' at the beginning of each testcase,
+     making sure that any local change to `timeout' in a testcase does
+     not affect subsequent testcases.
+
+     This global variable comes in handy when the debugger is slower
+     than normal due to the testing environment, triggering unexpected
+     `TIMEOUT' test failures.  Examples include when testing on a
+     remote machine, or against a system where communications are slow.
+
+     If not specifically defined, this variable gets automatically
+     defined to the same value as `timeout' during the testsuite
+     initialization.  The default value of the timeout is defined in
+     the file `gdb/testsuite/config/unix.exp' that is part of the GDB
+     test suite(1).
+
+
+21.4 Testsuite Organization
 ===========================
 
 The testsuite is entirely contained in `gdb/testsuite'.  While the
@@ -6965,7 +7068,7 @@ intelligibility.
      instance, `gdb.disasm' exercises various disassemblers, while
      `gdb.stabs' tests pathways through the stabs symbol reader.
 
-21.3 Writing Tests
+21.5 Writing Tests
 ==================
 
 In many areas, the GDB tests are already quite comprehensive; you
@@ -6992,6 +7095,11 @@ styles, it's worth having a mix of styles in the testsuite; for
 instance, some GDB bugs involving the display of source lines would
 never manifest themselves if the programs used GNU coding style
 uniformly.
+
+   ---------- Footnotes ----------
+
+   (1) If you are using a board file, it could override the test-suite
+default; search the board file for "timeout".
 
 
 File: gdbint.info,  Node: Hints,  Next: GDB Observers,  Prev: Testsuite,  Up: Top

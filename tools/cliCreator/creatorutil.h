@@ -40,6 +40,10 @@ using namespace std;
 // Whether or not verbose debug output should be enabled
 extern bool verbose;
 
+// Whether or not generating a testing zbe file
+extern bool testing;
+
+
 /**
  * debug Function
  *
@@ -50,7 +54,7 @@ extern bool verbose;
  *  Accepts parameters exactly as printf would.
  * @author Joe Balough
  */
-int debug(char* fmt, ...);
+int debug(const char* fmt, ...);
 
 
 
@@ -58,8 +62,8 @@ int debug(char* fmt, ...);
 /**
  *    file writing utilities
  */
- 
- 
+
+
 /**
  * fwrite wrapper function
  *
@@ -82,7 +86,6 @@ template <class T> void fwrite(T val, FILE *file)
 		fprintf(stderr, "error writing value %d to file\n", (int) val);
 	}
 }
-
 
 
 /**
@@ -109,6 +112,21 @@ template <class T> void goWrite(T val, FILE *file, fpos_t *pos)
 	fseek(file, 0, SEEK_END);
 }
 
+
+
+/**
+ * fwrite wrapper function: writeString
+ *
+ * This function will take a string and write it to the output file at the current location
+ * in the format recognized by zbe (uint32 length, then uint8 characters)
+ *
+ * @param string str
+ *   The string to write to file
+ * @param FILE *file
+ *   File pointer to write to
+ * @author Joe Balough
+ */
+void fwriteStr(string str, FILE *file);
 
 
 /**
@@ -157,7 +175,7 @@ uint16_t appendData(FILE *output, string inFile);
 /**
  * TinyXML utilities
  */
- 
+
 /**
  * getIntAttr function
  *

@@ -5,6 +5,7 @@ assets::assets(char* input, OamState *table)
 	// Set variables
 	oam = table;
 	zbeFile = input;
+	lastLevel = NULL;
 
 	// Parse the file
 	parseZbe();
@@ -20,7 +21,32 @@ void assets::parseZbe()
 
 	// Get the version number out of the zeg file
 	uint16 version = load<uint16>(zbeData);
-	iprintf("v %d\n", version);
+
+	// Check to see if it has the testing flag
+#ifndef ZBE_TESTING
+	if (version & 1 << 15)
+	{
+		iprintf("Error: Attempting to open a\nTesting ZBE file without\ntesting enabled.\n");
+		die();
+	}
+
+	// Check to see if it's the supported version
+	if (version != ZBE_VERSION_SUPPORTED)
+#else
+	if (version != (ZBE_VERSION_SUPPORTED | 1 << 15))
+#endif
+	{
+		iprintf("Error: Attempting to open a\nZBE file with an unsupported\nversion\n");
+		die();
+	}
+
+	// Clear the testing flag and print the version
+	iprintf("v %d", (version & 0x7FFF) );
+#ifdef ZBE_TESTING
+	iprintf(" with testing flag\n");
+#else
+	iprintf("\n");
+#endif
 
 	// Get the total number of assets
 	uint32 numAssets = load<uint32>(zbeData);
@@ -70,29 +96,49 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-	
+
+
+
+
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
+
 	// Get the number of background tilesets
 	uint32 numTilesets = load<uint32>(zbeData);
 	iprintf("#tilesets %d\n", numTilesets);
-	
+
 	// Load up all those tilesets
 	for (uint32 i = 0; i < numTilesets; i++)
 	{
 		// Make a new gfxAsset for the vector
 		gfxAsset *newAsset = new gfxAsset;
-		
+
 		// Load up the length
 		newAsset->length = load<uint16>(zbeData);
 		iprintf(" #%d: %dB\n", i, newAsset->length);
-		
+
 		// Save the position
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
-		
+
 		// Seek past the data
 		fseek(zbeData, newAsset->length, SEEK_CUR);
+
+		// Duh.. add it to the tilesetAssets vector
+		tilesetAssets.push_back(newAsset);
 	}
+
+
+
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
 
 	// Get the number of palettes
 	uint32 numPals = load<uint32>(zbeData);
@@ -124,64 +170,64 @@ void assets::parseZbe()
 		// Seek past this object
 		fseek(zbeData, newAsset->length, SEEK_CUR);
 	}
-	
-	
+
+
+
+
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
+
 	// Number of backrounds
 	uint32 numBackgrounds = load<uint32>(zbeData);
 	iprintf("#bgs %d\n", numBackgrounds);
-	
+
 	// Get all the backgrounds
 	for (unsigned int i = 0; i < numBackgrounds; i++)
 	{
 		// make a new backgroundAsset
 		backgroundAsset *newAsset = new backgroundAsset();
-		
-		// load up the reference to its tileset
-		uint32 tilesetId = load<uint32>(zbeData);
-		newAsset->tileset = tilesetAssets[tilesetId];
-		
-		// set its size
-		uint8 bgSize = load<uint8>(zbeData);
-		switch (bgSize)
-		{
-			case 0:
-				// To determine the skip bytes, divide the dimension by 8 to get number
-				// of tiles in one dimension. Then square that to get total number of tiles.
-				newAsset->size = BgSize_ER_128x128;
-				break;
-			case 1:
-				newAsset->size = BgSize_ER_256x256;
-				break;
-			case 2:
-				newAsset->size = BgSize_ER_512x512;
-				break;
-			default:
-				newAsset->size = BgSize_ER_1024x1024;
-				break;
-		}
-		
+
+		// set its width and height
+		newAsset->w = load<uint32>(zbeData);
+		newAsset->h = load<uint32>(zbeData);
+
 		// Save the position of all the tiles data
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
 		newAsset->position = curPos;
-		
+
 		// Get number of palettes
 		uint8 numPalettes = load<uint8>(zbeData);
-		
-		iprintf(" size %d using %d palettes\n", (int) bgSize, (int) numPalettes);
-		
+
+		iprintf(" %d x %d using %d palettes\n", (int) newAsset->w, (int) newAsset->h, (int) numPalettes);
+
 		// Seek past all those palette ids
 		fseek(zbeData, numPalettes * sizeof(uint32), SEEK_CUR);
-		
+
 		// Get the size of the map data
-		uint16 mapLength = load<uint16>(zbeData);
-		
+		newAsset->length = load<uint32>(zbeData);
+		iprintf(" %dB map data\n", newAsset->length);
+
 		// Seek past all the map data
-		fseek(zbeData, mapLength * sizeof(uint8), SEEK_CUR);
-		
+		fseek(zbeData, newAsset->length, SEEK_CUR);
+
 		// Put this backgroundAsset on the vector
 		backgroundAssets.push_back(newAsset);
 	}
+
+
+
+
+
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
+
 
 	// Number of objects
 	uint32 numObjects = load<uint32>(zbeData);
@@ -246,6 +292,14 @@ void assets::parseZbe()
 	} // all objects
 
 
+
+
+	// pause if we're testing
+	pauseIfTesting();
+
+
+
+
 	// Number of levels
 	uint32 numLvls = load<uint32>(zbeData);
 	iprintf("#lvls %d\n", numLvls);
@@ -257,6 +311,18 @@ void assets::parseZbe()
 		levelAsset *newAsset = new levelAsset;
 		newAsset->objects = NULL;
 
+		// Get the level name's length and allocate space for the string
+		uint32 nameLen = load<uint32>(zbeData);
+		if (nameLen > 0)
+		{
+			newAsset->name = new char[nameLen + 1];
+			// Load up the name string
+			for (unsigned int c = 0; c < nameLen; c++)
+				newAsset->name[c] = (char) load<uint8>(zbeData);
+			newAsset->name[nameLen] = '\0';
+		}
+		iprintf(" %d: %s\n", i, newAsset->name);
+
 		// Set the location variable
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
@@ -264,30 +330,76 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
-		
+
+#ifdef ZBE_TESTING
+		// Skip over the test explanation message
+		uint32 expLen = load<uint32>(zbeData);
+		fseek(zbeData, expLen * sizeof(uint8), SEEK_CUR);
+
+		// Skip over the debug explanation
+		uint32 dbgLen = load<uint32>(zbeData);
+		fseek(zbeData, dbgLen * sizeof(uint8), SEEK_CUR);
+		iprintf(" exp %d chars, dbg %d chars\n", (int) expLen, (int) dbgLen);
+
+		// Skip the timer
+		uint16 timer = load<uint16>(zbeData);
+		iprintf(" %d timer", (int) timer);
+#endif
+
+		// Skip over the backgrounds
+		// NOTE: keep this up to date!
+		//                        bg0     bg1     bg2     bg3     tileset
+		const static int bgSize = 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4;
+		fseek(zbeData, bgSize, SEEK_CUR);
+		iprintf(" bgs\n");
+
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
 		// NOTE: Keep this up to date!
-		const static int lvlObjSize = 4 + 4 + 2 + 2;
+		//                            object Id  X   Y
+		const static int lvlObjSize = 4 +        2 + 2;
 
 		// number of level heroes
 		uint32 numLvlHeroes = load<uint32>(zbeData);
-		
+
 		// Seek past those heroes
 		fseek(zbeData, lvlObjSize * numLvlHeroes, SEEK_CUR);
-		
+		iprintf(" %d heroes", numLvlHeroes);
+
 		// number of level objects
 		uint32 numLvlObjs = load<uint32>(zbeData);
-		
+
 		// Seek past all the level objects
 		fseek(zbeData, lvlObjSize * numLvlObjs, SEEK_CUR);
+		iprintf(" %d objs\n", numLvlObjs);
 	}
 
 	closeFile();
 }
 
 
-// TODO: properly delete all the stuff dynamically allocated in the parse function!
+// Deconstructor
+assets::~assets()
+{
+	for (unsigned int i = 0; i < gfxAssets.size(); i++)
+	{
+		// Free the video memory it may be using
+		if (gfxAssets[i]->vmLoaded)
+			oamFreeGfx(oam, gfxAssets[i]->offset);
+
+		delete gfxAssets[i];
+	}
+	for (unsigned int i = 0; i < tilesetAssets.size(); i++)
+		delete tilesetAssets[i];
+	for (unsigned int i = 0; i < paletteAssets.size(); i++)
+		delete paletteAssets[i];
+	for (unsigned int i = 0; i < backgroundAssets.size(); i++)
+		delete backgroundAssets[i];
+	for (unsigned int i = 0; i < objectAssets.size(); i++)
+		delete objectAssets[i];
+	for (unsigned int i = 0; i < levelAssets.size(); i++)
+		delete levelAssets[i];
+}
 
 
 // Load and return a level's metadata
@@ -297,7 +409,7 @@ levelAsset *assets::loadLevel(uint32 id)
 	openFile();
 
 	// keep track of the last one opened
-	static levelAsset *lvl = NULL;
+	levelAsset *lvl = lastLevel;
 
 	// Clear out the last one if this isn't the first time
 	if (lvl)
@@ -306,25 +418,73 @@ levelAsset *assets::loadLevel(uint32 id)
 		lvl = NULL;
 	}
 
+	// Bounds checking
+	if (id >= levelAssets.size())
+	{
+		iprintf("ERROR: Level id is out of bounds.\n       Requested %d, max %d", id, levelAssets.size() - 1);
+		die();
+	}
+
 	// Update last
 	lvl = levelAssets[id];
 
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
-	
-	// background
-	uint32 bg0id = load<uint32>(zbeData);
-	lvl->bg0 = backgroundAssets[bg0id];
-	
+
+#ifdef ZBE_TESTING
+	// Test explanation message
+	uint32 expLen = load<uint32>(zbeData);
+	if (expLen > 0)
+	{
+		lvl->expMessage = new char[expLen + 1];
+		for (unsigned int i = 0; i < expLen; i++)
+			lvl->expMessage[i] = (char) load<uint8>(zbeData);
+		lvl->expMessage[expLen] = '\0';
+	}
+
+	// Debug explanation message
+	uint32 dbgLen = load<uint32>(zbeData);
+	if (dbgLen > 0)
+	{
+		lvl->debugMessage = new char[dbgLen + 1];
+		for (unsigned int i = 0; i < dbgLen; i++)
+			lvl->debugMessage[i] = (char) load<uint8>(zbeData);
+		lvl->debugMessage[dbgLen] = '\0';
+	}
+
+	// Timer value
+	lvl->timer = load<uint16>(zbeData);
+#endif
+
+	// background -1 means it was not set
+	// Load up all the backgrounds
+	for (int i = 0; i < 4; i++)
+	{
+		// Get the id and distance
+		uint32 bgId = load<uint32>(zbeData);
+		uint8 dist = load<uint8>(zbeData);
+
+		// background -1 means it was not set, so make that bg's pointer to the backgroundAsset NULL in that case
+		lvl->bgs[i].background = (bgId == uint32(-1)) ? NULL : backgroundAssets[bgId];
+		lvl->bgs[i].distance = dist;
+		lvl->bgs[i].layer = i;
+
+		iprintf("  bg%d: bg%d at %d\n", i, bgId, dist);
+	}
+	// Set the tileset to use
+	uint32 tilesetId = load<uint32>(zbeData);
+	lvl->tileset = tilesetAssets[tilesetId];
+	iprintf(" using tileset %d for bgs\n", tilesetId);
+
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
 	iprintf(" #heroes %d\n", numLvlHeroes);
-	
+
 	// Allocate enough space for them all
 	lvl->heroes = new levelObjectAsset*[numLvlHeroes + 1];
 	lvl->heroes[numLvlHeroes] = NULL;
-	
+
 	// Load up all the heroes
 	for (uint32 i = 0; i < numLvlHeroes; i++)
 	{
@@ -333,12 +493,12 @@ levelAsset *assets::loadLevel(uint32 id)
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
 		iprintf("  #%d: obj%d at (%d, %d)\n", (int) i, (int) objId, (int) x, (int) y);
-		
+
 		// make a new levelObjectAsset and add it to the vector
 		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
 		lvl->heroes[i] = lvlObj;
 	}
-	
+
 	// number of level objects
 	uint32 numLvlObjs = load<uint32>(zbeData);
 	iprintf(" #objs %d\n", numLvlObjs);
@@ -370,86 +530,58 @@ levelAsset *assets::loadLevel(uint32 id)
 
 
 // loads up a background
-int assets::loadBackground(backgroundAsset *background)
+void assets::loadBackground(levelBackgroundAsset *lvlBackground)
 {
 	// Return if nothing to do
-	if (!background) return -1;
-	
+	if (!lvlBackground) return;
+
 	iprintf("Loading background...\n");
-	
+	backgroundAsset *background = lvlBackground->background;
+
 	// Open the file
 	openFile();
-	
+
 	// Seek to the proper place in the file
 	if (fsetpos(zbeData, &(background->position)))
 	{
 		iprintf("Seek error: %s\n", strerror(errno));
 		die();
 	}
-	
-	// Init the background
-	// TODO: un-hard-code this layer value here
-	// bgId = bgInit(layer, bgType, bgSize, mapBase, tileBase)
-	int bgId = bgInit(0, BgType_Text4bpp, background->size, 0, 0);
-	
+
 	// Get number of palettes to load
 	uint8 numPalettes = load<uint8>(zbeData);
 	iprintf(" %d palettes\n", numPalettes);
-	
+
 	// Load up all the palettes into a vector
-	uint16 offset = 0;
-	vector<uint32> paletteIds;
 	for (uint8 i = 0; i < numPalettes; i++)
 	{
 		// Get palette id
 		uint32 palId = load<uint32>(zbeData);
 		iprintf("  %d -> %d\n", i, palId);
-		
-		paletteIds.push_back(palId);
+
+		lvlBackground->palettes.push_back(paletteAssets[palId]);
 	}
-	
-	// Get the length of the map data
-	uint16 mapLength = load<uint16>(zbeData);
-	iprintf(" Loading %dB map\n", mapLength);
-	
-	// Allocate some space for that data and load it up
-	uint16 *map = (uint16*) malloc(mapLength * sizeof(uint8));
-	if (fread(map, sizeof(uint8), mapLength, zbeData) < mapLength)
+
+
+	// If the background's map isn't loaded yet, load it
+	if (!background->mmLoaded)
 	{
-		iprintf("Error reading background map from file: %s\n", strerror(errno));
-		die();
+		// Get the length of the map data
+		background->length = load<uint32>(zbeData);
+		iprintf(" Loading %dB map\n", background->length);
+
+		// Allocate some space for that data and load it up
+		background->data = (uint16*) malloc(background->length * sizeof(uint8));
+		if (fread(background->data, sizeof(uint8), background->length, zbeData) < background->length)
+		{
+			iprintf("Error reading background map from file: %s\n", strerror(errno));
+			die();
+		}
+
+		// Indicate that the background is mmLoaded
+		background->mmLoaded = true;
 	}
 	closeFile();
-	
-	// Make sure tiles data is loaded then copy it into video memory
-	iprintf(" load & copy tileset\n");
-	loadGfx(background->tileset);
-	DC_FlushRange(background->tileset->data, background->tileset->length);
-	dmaCopy(background->tileset->data, bgGetGfxPtr(bgId), background->tileset->length * sizeof(uint8));
-	// unload the tileset
-	freeGfx(background->tileset);
-	
-	// Copy the map into video memory and free up the space it doesn't need anymore
-    dmaCopy(map, bgGetMapPtr(bgId), mapLength * sizeof(uint8));
-	iprintf(" copied map\n");
-	free(map);
-	
-	// Load, then copy all the palettes into memory
-	for (uint8 i = 0; i < numPalettes; i++)
-	{
-		iprintf(" load pal %d ", paletteIds[i]);
-		
-		// Load up the palette
-		paletteAsset *pal = paletteAssets[paletteIds[i]];
-		loadPalette(pal);
-		
-		// Copy the palette into memory, remember to offset it from the last one
-		iprintf("and copy\n");
-		dmaCopy(pal->data, BG_PALETTE + offset, pal->length);
-		offset += pal->length;
-	}
-	
-	return bgId;
 }
 
 
@@ -478,7 +610,7 @@ void assets::loadGfx(gfxAsset *gfx)
 		die();
 	}
 
-	iprintf("gfx mmLoaded -> %x\n", (unsigned int) gfx->data);
+	//iprintf("gfx mmLoaded -> %x\n", (unsigned int) gfx->data);
 
 	// Everything is A-Okay! close the file and set the gfx to mmLoaded
 	closeFile();
@@ -490,7 +622,7 @@ void assets::loadGfx(gfxAsset *gfx)
 void assets::freeGfx(gfxAsset *gfx)
 {
 	if(!gfx || !gfx->mmLoaded) return;
-	
+
 	// Free memory
 	delete gfx->data;
 	// Reset variable
@@ -526,7 +658,7 @@ uint16 *assets::getGfx(gfxAsset *gfx)
 	DC_FlushRange(gfx->data, length);
 	dmaCopyHalfWordsAsynch(3, gfx->data, mem, length);
 
-	iprintf("gfx vmLoaded -> %x\n", (unsigned int) gfx->offset);
+	//iprintf("gfx vmLoaded -> %x\n", (unsigned int) gfx->offset);
 
 	return mem;
 }
@@ -557,7 +689,7 @@ void assets::loadPalette(paletteAsset *pal)
 		die();
 	}
 
-	iprintf("pal mmLoaded -> %x\n", (unsigned int) pal->data);
+	//iprintf("pal mmLoaded -> %x\n", (unsigned int) pal->data);
 
 	// All done, close the file and set mmLoaded
 	closeFile();
@@ -569,7 +701,7 @@ void assets::loadPalette(paletteAsset *pal)
 void assets::freePalette(paletteAsset *pal)
 {
 	if (!pal || !pal->mmLoaded) return;
-	
+
 	// Free and reset
 	delete pal->data;
 	pal->mmLoaded = false;
@@ -602,7 +734,7 @@ uint8 assets::getPalette(paletteAsset *pal)
 	// Update the paletteAsset's information
 	pal->vmLoaded = true;
 	pal->index = curIndex;
-	iprintf("pal vmLoaded -> %d\n", curIndex);
+	//iprintf("pal vmLoaded -> %d\n", curIndex);
 
 	// Update the index for the next call
 	curIndex++;

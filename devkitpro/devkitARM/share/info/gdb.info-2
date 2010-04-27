@@ -6,8 +6,8 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
-1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
-Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+2010 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -23,11 +23,11 @@ developing GNU and promoting software freedom."
    This file documents the GNU debugger GDB.
 
    This is the Ninth Edition, of `Debugging with GDB: the GNU
-Source-Level Debugger' for GDB (GDB) Version 7.0.1.
+Source-Level Debugger' for GDB (GDB) Version 7.1.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
-1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
-Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+2010 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -39,6 +39,93 @@ with the Back-Cover Texts as in (a) below.
    (a) The FSF's Back-Cover Text is: "You are free to copy and modify
 this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom."
+
+
+File: gdb.info,  Node: Dump/Restore Files,  Next: Core File Generation,  Prev: Memory Region Attributes,  Up: Data
+
+10.16 Copy Between Memory and a File
+====================================
+
+You can use the commands `dump', `append', and `restore' to copy data
+between target memory and a file.  The `dump' and `append' commands
+write data to a file, and the `restore' command reads data from a file
+back into the inferior's memory.  Files may be in binary, Motorola
+S-record, Intel hex, or Tektronix Hex format; however, GDB can only
+append to binary files.
+
+`dump [FORMAT] memory FILENAME START_ADDR END_ADDR'
+`dump [FORMAT] value FILENAME EXPR'
+     Dump the contents of memory from START_ADDR to END_ADDR, or the
+     value of EXPR, to FILENAME in the given format.
+
+     The FORMAT parameter may be any one of:
+    `binary'
+          Raw binary form.
+
+    `ihex'
+          Intel hex format.
+
+    `srec'
+          Motorola S-record format.
+
+    `tekhex'
+          Tektronix Hex format.
+
+     GDB uses the same definitions of these formats as the GNU binary
+     utilities, like `objdump' and `objcopy'.  If FORMAT is omitted,
+     GDB dumps the data in raw binary form.
+
+`append [binary] memory FILENAME START_ADDR END_ADDR'
+`append [binary] value FILENAME EXPR'
+     Append the contents of memory from START_ADDR to END_ADDR, or the
+     value of EXPR, to the file FILENAME, in raw binary form.  (GDB can
+     only append data to files in raw binary form.)
+
+`restore FILENAME [binary] BIAS START END'
+     Restore the contents of file FILENAME into memory.  The `restore'
+     command can automatically recognize any known BFD file format,
+     except for raw binary.  To restore a raw binary file you must
+     specify the optional keyword `binary' after the filename.
+
+     If BIAS is non-zero, its value will be added to the addresses
+     contained in the file.  Binary files always start at address zero,
+     so they will be restored at address BIAS.  Other bfd files have a
+     built-in location; they will be restored at offset BIAS from that
+     location.
+
+     If START and/or END are non-zero, then only data between file
+     offset START and file offset END will be restored.  These offsets
+     are relative to the addresses in the file, before the BIAS
+     argument is applied.
+
+
+
+File: gdb.info,  Node: Core File Generation,  Next: Character Sets,  Prev: Dump/Restore Files,  Up: Data
+
+10.17 How to Produce a Core File from Your Program
+==================================================
+
+A "core file" or "core dump" is a file that records the memory image of
+a running process and its process status (register values etc.).  Its
+primary use is post-mortem debugging of a program that crashed while it
+ran outside a debugger.  A program that crashes automatically produces
+a core file, unless this feature is disabled by the user.  *Note
+Files::, for information on invoking GDB in the post-mortem debugging
+mode.
+
+   Occasionally, you may wish to produce a core file of the program you
+are debugging in order to preserve a snapshot of its state.  GDB has a
+special command for that.
+
+`generate-core-file [FILE]'
+`gcore [FILE]'
+     Produce a core dump of the inferior process.  The optional argument
+     FILE specifies the file name where to put the core dump.  If not
+     specified, the file name defaults to `core.PID', where PID is the
+     inferior process ID.
+
+     Note that this command is implemented only for some systems (as of
+     this writing, GNU/Linux, FreeBSD, Solaris, Unixware, and S390).
 
 
 File: gdb.info,  Node: Character Sets,  Next: Caching Remote Data,  Prev: Core File Generation,  Up: Data
@@ -696,6 +783,10 @@ remote stub; however, none of the stubs distributed with GDB support
 tracepoints as of this writing.  The format of the remote packets used
 to implement tracepoints are described in *Note Tracepoint Packets::.
 
+   It is also possible to get trace data from a file, in a manner
+reminiscent of corefiles; you specify the filename, and use `tfind' to
+search through the file.  *Note Trace Files::, for more details.
+
    This chapter describes the tracepoint commands and features.
 
 * Menu:
@@ -703,6 +794,7 @@ to implement tracepoints are described in *Note Tracepoint Packets::.
 * Set Tracepoints::
 * Analyze Collected Data::
 * Tracepoint Variables::
+* Trace Files::
 
 
 File: gdb.info,  Node: Set Tracepoints,  Next: Analyze Collected Data,  Up: Tracepoints
@@ -729,6 +821,10 @@ expressions and ignore counts on tracepoints have no effect, and
 tracepoints cannot run GDB commands when they are hit.  Tracepoints may
 not be thread-specific either.
 
+   Some targets may support "fast tracepoints", which are inserted in a
+different way (such as with a jump instead of a trap), that is faster
+but possibly restricted in where they may be installed.
+
    This section describes commands to set tracepoints and associated
 conditions and actions.
 
@@ -738,6 +834,7 @@ conditions and actions.
 * Enable and Disable Tracepoints::
 * Tracepoint Passcounts::
 * Tracepoint Conditions::
+* Trace State Variables::
 * Tracepoint Actions::
 * Listing Tracepoints::
 * Starting and Stopping Trace Experiments::
@@ -780,6 +877,17 @@ File: gdb.info,  Node: Create and Delete Tracepoints,  Next: Enable and Disable 
      value is nonzero--that is, if COND evaluates as true.  *Note
      Tracepoint Conditions: Tracepoint Conditions, for more information
      on tracepoint conditions.
+
+`ftrace LOCATION [ if COND ]'
+     The `ftrace' command sets a fast tracepoint.  For targets that
+     support them, fast tracepoints will use a more efficient but
+     possibly less general technique to trigger data collection, such
+     as a jump instruction instead of a trap, or some sort of hardware
+     support.  It may not be possible to create a fast tracepoint at
+     the desired location, in which case the command will exit with an
+     explanatory message.
+
+     GDB handles arguments to `ftrace' exactly as for `trace'.
 
      The convenience variable `$tpnum' records the tracepoint number of
      the most recently set tracepoint.
@@ -852,7 +960,7 @@ File: gdb.info,  Node: Tracepoint Passcounts,  Next: Tracepoint Conditions,  Pre
 
 
 
-File: gdb.info,  Node: Tracepoint Conditions,  Next: Tracepoint Actions,  Prev: Tracepoint Passcounts,  Up: Set Tracepoints
+File: gdb.info,  Node: Tracepoint Conditions,  Next: Trace State Variables,  Prev: Tracepoint Passcounts,  Up: Set Tracepoints
 
 13.1.4 Tracepoint Conditions
 ----------------------------
@@ -887,9 +995,55 @@ search through.
      (gdb) trace normal_operation if errcode > 0
 
 
-File: gdb.info,  Node: Tracepoint Actions,  Next: Listing Tracepoints,  Prev: Tracepoint Conditions,  Up: Set Tracepoints
+File: gdb.info,  Node: Trace State Variables,  Next: Tracepoint Actions,  Prev: Tracepoint Conditions,  Up: Set Tracepoints
 
-13.1.5 Tracepoint Action Lists
+13.1.5 Trace State Variables
+----------------------------
+
+A "trace state variable" is a special type of variable that is created
+and managed by target-side code.  The syntax is the same as that for
+GDB's convenience variables (a string prefixed with "$"), but they are
+stored on the target.  They must be created explicitly, using a
+`tvariable' command.  They are always 64-bit signed integers.
+
+   Trace state variables are remembered by GDB, and downloaded to the
+target along with tracepoint information when the trace experiment
+starts.  There are no intrinsic limits on the number of trace state
+variables, beyond memory limitations of the target.
+
+   Although trace state variables are managed by the target, you can use
+them in print commands and expressions as if they were convenience
+variables; GDB will get the current value from the target while the
+trace experiment is running.  Trace state variables share the same
+namespace as other "$" variables, which means that you cannot have
+trace state variables with names like `$23' or `$pc', nor can you have
+a trace state variable and a convenience variable with the same name.
+
+`tvariable $NAME [ = EXPRESSION ]'
+     The `tvariable' command creates a new trace state variable named
+     `$NAME', and optionally gives it an initial value of EXPRESSION.
+     EXPRESSION is evaluated when this command is entered; the result
+     will be converted to an integer if possible, otherwise GDB will
+     report an error. A subsequent `tvariable' command specifying the
+     same name does not create a variable, but instead assigns the
+     supplied initial value to the existing variable of that name,
+     overwriting any previous initial value. The default initial value
+     is 0.
+
+`info tvariables'
+     List all the trace state variables along with their initial values.
+     Their current values may also be displayed, if the trace
+     experiment is currently running.
+
+`delete tvariable [ $NAME ... ]'
+     Delete the given trace state variables, or all of them if no
+     arguments are specified.
+
+
+
+File: gdb.info,  Node: Tracepoint Actions,  Next: Listing Tracepoints,  Prev: Trace State Variables,  Up: Set Tracepoints
+
+13.1.6 Tracepoint Action Lists
 ------------------------------
 
 `actions [NUM]'
@@ -953,6 +1107,14 @@ File: gdb.info,  Node: Tracepoint Actions,  Next: Listing Tracepoints,  Prev: Tr
      The command `info scope' (*note info scope: Symbols.) is
      particularly useful for figuring out what data to collect.
 
+`teval EXPR1, EXPR2, ...'
+     Evaluate the given expressions when the tracepoint is hit.  This
+     command accepts a comma-separated list of expressions.  The results
+     are discarded, so this is mainly useful for assigning values to
+     trace state variables (*note Trace State Variables::) without
+     adding those values to the trace buffer, as would be the case if
+     the `collect' action were used.
+
 `while-stepping N'
      Perform N single-step traces after the tracepoint, collecting new
      data at each step.  The `while-stepping' command is followed by
@@ -966,10 +1128,24 @@ File: gdb.info,  Node: Tracepoint Actions,  Next: Listing Tracepoints,  Prev: Tr
 
      You may abbreviate `while-stepping' as `ws' or `stepping'.
 
+`set default-collect EXPR1, EXPR2, ...'
+     This variable is a list of expressions to collect at each
+     tracepoint hit.  It is effectively an additional `collect' action
+     prepended to every tracepoint action list.  The expressions are
+     parsed individually for each tracepoint, so for instance a
+     variable named `xyz' may be interpreted as a global for one
+     tracepoint, and a local for another, as appropriate to the
+     tracepoint's location.
+
+`show default-collect'
+     Show the list of expressions that are collected by default at each
+     tracepoint hit.
+
+
 
 File: gdb.info,  Node: Listing Tracepoints,  Next: Starting and Stopping Trace Experiments,  Prev: Tracepoint Actions,  Up: Set Tracepoints
 
-13.1.6 Listing Tracepoints
+13.1.7 Listing Tracepoints
 --------------------------
 
 `info tracepoints [NUM]'
@@ -1007,7 +1183,7 @@ File: gdb.info,  Node: Listing Tracepoints,  Next: Starting and Stopping Trace E
 
 File: gdb.info,  Node: Starting and Stopping Trace Experiments,  Prev: Listing Tracepoints,  Up: Set Tracepoints
 
-13.1.7 Starting and Stopping Trace Experiments
+13.1.8 Starting and Stopping Trace Experiments
 ----------------------------------------------
 
 `tstart'
@@ -1041,6 +1217,42 @@ File: gdb.info,  Node: Starting and Stopping Trace Experiments,  Prev: Listing T
      (gdb) tstart
      	[time passes ...]
      (gdb) tstop
+
+   You can choose to continue running the trace experiment even if GDB
+disconnects from the target, voluntarily or involuntarily.  For
+commands such as `detach', the debugger will ask what you want to do
+with the trace.  But for unexpected terminations (GDB crash, network
+outage), it would be unfortunate to lose hard-won trace data, so the
+variable `disconnected-tracing' lets you decide whether the trace should
+continue running without GDB.
+
+`set disconnected-tracing on'
+`set disconnected-tracing off'
+     Choose whether a tracing run should continue to run if GDB has
+     disconnected from the target.  Note that `detach' or `quit' will
+     ask you directly what to do about a running trace no matter what
+     this variable's setting, so the variable is mainly useful for
+     handling unexpected situations, such as loss of the network.
+
+`show disconnected-tracing'
+     Show the current choice for disconnected tracing.
+
+
+   When you reconnect to the target, the trace experiment may or may not
+still be running; it might have filled the trace buffer in the
+meantime, or stopped for one of the other reasons.  If it is running,
+it will continue after reconnection.
+
+   Upon reconnection, the target will upload information about the
+tracepoints in effect.  GDB will then compare that information to the
+set of tracepoints currently defined, and attempt to match them up,
+allowing for the possibility that the numbers may have changed due to
+creation and deletion in the meantime.  If one of the target's
+tracepoints does not match any in GDB, the debugger will create a new
+tracepoint, so that you have a number with which to specify that
+tracepoint.  This matching-up process is necessarily heuristic, and it
+may result in useless tracepoints being created; you may simply delete
+them if they are of no use.
 
 
 File: gdb.info,  Node: Analyze Collected Data,  Next: Tracepoint Variables,  Prev: Set Tracepoints,  Up: Tracepoints
@@ -1112,10 +1324,11 @@ no argument N is given, the next snapshot is selected.
 
 `tfind outside ADDR1, ADDR2'
      Find the next snapshot whose PC is outside the given range of
-     addresses.
+     addresses (exclusive).
 
 `tfind range ADDR1, ADDR2'
-     Find the next snapshot whose PC is between ADDR1 and ADDR2.
+     Find the next snapshot whose PC is between ADDR1 and ADDR2
+     (inclusive).
 
 `tfind line [FILE:]N'
      Find the next snapshot associated with the source line N.  If the
@@ -1246,7 +1459,7 @@ in a later debugging session.  To read the saved tracepoint
 definitions, use the `source' command (*note Command Files::).
 
 
-File: gdb.info,  Node: Tracepoint Variables,  Prev: Analyze Collected Data,  Up: Tracepoints
+File: gdb.info,  Node: Tracepoint Variables,  Next: Trace Files,  Prev: Analyze Collected Data,  Up: Tracepoints
 
 13.3 Convenience Variables for Tracepoints
 ==========================================
@@ -1272,7 +1485,8 @@ File: gdb.info,  Node: Tracepoint Variables,  Prev: Analyze Collected Data,  Up:
 
    Here's a simple example of using these convenience variables for
 stepping through all the trace snapshots and printing some of their
-data.
+data.  Note that these are not the same as trace state variables, which
+are managed by the target.
 
      (gdb) tfind start
 
@@ -1281,6 +1495,37 @@ data.
      > printf ", line %d (tracepoint #%d)\n", $trace_line, $tracepoint
      > tfind
      > end
+
+
+File: gdb.info,  Node: Trace Files,  Prev: Tracepoint Variables,  Up: Tracepoints
+
+13.4 Using Trace Files
+======================
+
+In some situations, the target running a trace experiment may no longer
+be available; perhaps it crashed, or the hardware was needed for a
+different activity.  To handle these cases, you can arrange to dump the
+trace data into a file, and later use that file as a source of trace
+data, via the `target tfile' command.
+
+`tsave [ -r ] FILENAME'
+     Save the trace data to FILENAME.  By default, this command assumes
+     that FILENAME refers to the host filesystem, so if necessary GDB
+     will copy raw trace data up from the target and then save it.  If
+     the target supports it, you can also supply the optional argument
+     `-r' ("remote") to direct the target to save the data directly
+     into FILENAME in its own filesystem, which may be more efficient
+     if the trace buffer is very large.  (Note, however, that `target
+     tfile' can only read from files accessible to the host.)
+
+`target tfile FILENAME'
+     Use the file named FILENAME as a source of trace data.  Commands
+     that examine data work as they do with a live target, but it is not
+     possible to run any new trace experiments.  `tstatus' will report
+     the state of the trace run at the moment the data was saved, as
+     well as the current trace frame you are examining.  FILENAME must
+     be on a filesystem accessible to the host.
+
 
 
 File: gdb.info,  Node: Overlays,  Next: Languages,  Prev: Tracepoints,  Up: Top
@@ -3672,6 +3917,30 @@ and the GNU Ada compiler.
      the confusion by qualifying the problematic names with package
      `Standard' explicitly.
 
+   Older versions of the compiler sometimes generate erroneous debugging
+information, resulting in the debugger incorrectly printing the value
+of affected entities.  In some cases, the debugger is able to work
+around an issue automatically. In other cases, the debugger is able to
+work around the issue, but the work-around has to be specifically
+enabled.
+
+`set ada trust-PAD-over-XVS on'
+     Configure GDB to strictly follow the GNAT encoding when computing
+     the value of Ada entities, particularly when `PAD' and `PAD___XVS'
+     types are involved (see `ada/exp_dbug.ads' in the GCC sources for
+     a complete description of the encoding used by the GNAT compiler).
+     This is the default.
+
+`set ada trust-PAD-over-XVS off'
+     This is related to the encoding using by the GNAT compiler.  If
+     GDB sometimes prints the wrong value for certain entities,
+     changing `ada trust-PAD-over-XVS' to `off' activates a work-around
+     which may fix the issue.  It is always safe to set `ada
+     trust-PAD-over-XVS' to `off', but this incurs a slight performance
+     penalty, so it is recommended to leave this setting to `on' unless
+     necessary.
+
+
 
 File: gdb.info,  Node: Unsupported Languages,  Prev: Supported Languages,  Up: Languages
 
@@ -3885,7 +4154,7 @@ looks up the value of `x' in the scope of the file `foo.c'.
      a backslash.
 
 `info variables'
-     Print the names and data types of all variables that are declared
+     Print the names and data types of all variables that are defined
      outside of functions (i.e. excluding local variables).
 
 `info variables REGEXP'
@@ -4468,8 +4737,8 @@ files are useful.
      still does the two-stage strategy, since the debug info is actually
      in stabs format.
 
-`symbol-file FILENAME [ -readnow ]'
-`file FILENAME [ -readnow ]'
+`symbol-file [ -readnow ] FILENAME'
+`file [ -readnow ] FILENAME'
      You can override the GDB two-stage strategy for reading symbol
      tables by using the `-readnow' option with any of the commands that
      load symbol table information, if you want to be sure GDB has the
@@ -4868,13 +5137,14 @@ information files, in the indicated order:
    You can set the global debugging info directory's name, and view the
 name GDB is currently using.
 
-`set debug-file-directory DIRECTORY'
-     Set the directory which GDB searches for separate debugging
-     information files to DIRECTORY.
+`set debug-file-directory DIRECTORIES'
+     Set the directories which GDB searches for separate debugging
+     information files to DIRECTORY.  Multiple directory components can
+     be set concatenating them by a directory separator.
 
 `show debug-file-directory'
-     Show the directory GDB searches for separate debugging information
-     files.
+     Show the directories GDB searches for separate debugging
+     information files.
 
 
    A debug link is a special section of the executable file named
@@ -5734,6 +6004,12 @@ available commands.
      Disable or enable specific debugging messages associated with the
      remote protocol (*note Remote Protocol::).
 
+`monitor set libthread-db-search-path [PATH]'
+     When this command is issued, PATH is a colon-separated list of
+     directories to search for `libthread_db' (*note set
+     libthread-db-search-path: Threads.).  If you omit PATH,
+     `libthread-db-search-path' will be reset to an empty list.
+
 `monitor exit'
      Tell gdbserver to exit immediately.  This command should be
      followed by `disconnect' to close the debugging session.
@@ -5831,6 +6107,29 @@ system.
      it is not set, the target will use a default filename (e.g. the
      last program run).
 
+`set remote interrupt-sequence'
+     Allow the user to select one of `Ctrl-C', a `BREAK' or `BREAK-g'
+     as the sequence to the remote target in order to interrupt the
+     execution.  `Ctrl-C' is a default.  Some system prefers `BREAK'
+     which is high level of serial line for some certain time.  Linux
+     kernel prefers `BREAK-g', a.k.a Magic SysRq g.  It is `BREAK'
+     signal followed by character `g'.
+
+`show interrupt-sequence'
+     Show which of `Ctrl-C', `BREAK' or `BREAK-g' is sent by GDB to
+     interrupt the remote program.  `BREAK-g' is BREAK signal followed
+     by `g' and also known as Magic SysRq g.
+
+`set remote interrupt-on-connect'
+     Specify whether interrupt-sequence is sent to remote target when
+     GDB connects to it.  This is mostly needed when you debug Linux
+     kernel.  Linux kernel expects `BREAK' followed by `g' which is
+     known as Magic SysRq g in order to connect GDB.
+
+`show interrupt-on-connect'
+     Show whether interrupt-sequence is sent to remote target when GDB
+     connects to it.
+
 `set tcp auto-retry on'
      Enable auto-retry for remote TCP connections.  This is useful if
      the remote debugging agent is launched in parallel with GDB; there
@@ -5896,6 +6195,7 @@ Command Name         Remote Packet           Related Features
 `write-spu-object'   `qXfer:spu:write'       `info spu'
 `read-siginfo-object'`qXfer:siginfo:read'    `print $_siginfo'
 `write-siginfo-object'`qXfer:siginfo:write'   `set $_siginfo'
+`threads'            `qXfer:threads:read'    `info threads'
 `get-thread-local-   `qGetTLSAddr'           Displaying
 storage-address'                             `__thread'
                                              variables
@@ -7051,6 +7351,7 @@ to send an arbitrary command to the simulator.
 * ARM::                         ARM RDI
 * M32R/D::                      Renesas M32R/D
 * M68K::                        Motorola M68K
+* MicroBlaze::			Xilinx MicroBlaze
 * MIPS Embedded::               MIPS Embedded
 * OpenRISC 1000::               OpenRisc 1000
 * PA::                          HP PA Embedded
@@ -7248,7 +7549,7 @@ File: gdb.info,  Node: M32R/D,  Next: M68K,  Prev: ARM,  Up: Embedded Processors
      Instructs the remote to set breakpoints by DBT.
 
 
-File: gdb.info,  Node: M68K,  Next: MIPS Embedded,  Prev: M32R/D,  Up: Embedded Processors
+File: gdb.info,  Node: M68K,  Next: MicroBlaze,  Prev: M32R/D,  Up: Embedded Processors
 
 21.3.3 M68k
 -----------
@@ -7259,431 +7560,4 @@ command for the following ROM monitor.
 `target dbug DEV'
      dBUG ROM monitor for Motorola ColdFire.
 
-
-
-File: gdb.info,  Node: MIPS Embedded,  Next: OpenRISC 1000,  Prev: M68K,  Up: Embedded Processors
-
-21.3.4 MIPS Embedded
---------------------
-
-GDB can use the MIPS remote debugging protocol to talk to a MIPS board
-attached to a serial line.  This is available when you configure GDB
-with `--target=mips-idt-ecoff'.
-
-   Use these GDB commands to specify the connection to your target
-board:
-
-`target mips PORT'
-     To run a program on the board, start up `gdb' with the name of
-     your program as the argument.  To connect to the board, use the
-     command `target mips PORT', where PORT is the name of the serial
-     port connected to the board.  If the program has not already been
-     downloaded to the board, you may use the `load' command to
-     download it.  You can then use all the usual GDB commands.
-
-     For example, this sequence connects to the target board through a
-     serial port, and loads and runs a program called PROG through the
-     debugger:
-
-          host$ gdb PROG
-          GDB is free software and ...
-          (gdb) target mips /dev/ttyb
-          (gdb) load PROG
-          (gdb) run
-
-`target mips HOSTNAME:PORTNUMBER'
-     On some GDB host configurations, you can specify a TCP connection
-     (for instance, to a serial line managed by a terminal
-     concentrator) instead of a serial port, using the syntax
-     `HOSTNAME:PORTNUMBER'.
-
-`target pmon PORT'
-     PMON ROM monitor.
-
-`target ddb PORT'
-     NEC's DDB variant of PMON for Vr4300.
-
-`target lsi PORT'
-     LSI variant of PMON.
-
-`target r3900 DEV'
-     Densan DVE-R3900 ROM monitor for Toshiba R3900 Mips.
-
-`target array DEV'
-     Array Tech LSI33K RAID controller board.
-
-
-GDB also supports these special commands for MIPS targets:
-
-`set mipsfpu double'
-`set mipsfpu single'
-`set mipsfpu none'
-`set mipsfpu auto'
-`show mipsfpu'
-     If your target board does not support the MIPS floating point
-     coprocessor, you should use the command `set mipsfpu none' (if you
-     need this, you may wish to put the command in your GDB init file).
-     This tells GDB how to find the return value of functions which
-     return floating point values.  It also allows GDB to avoid saving
-     the floating point registers when calling functions on the board.
-     If you are using a floating point coprocessor with only single
-     precision floating point support, as on the R4650 processor, use
-     the command `set mipsfpu single'.  The default double precision
-     floating point coprocessor may be selected using `set mipsfpu
-     double'.
-
-     In previous versions the only choices were double precision or no
-     floating point, so `set mipsfpu on' will select double precision
-     and `set mipsfpu off' will select no floating point.
-
-     As usual, you can inquire about the `mipsfpu' variable with `show
-     mipsfpu'.
-
-`set timeout SECONDS'
-`set retransmit-timeout SECONDS'
-`show timeout'
-`show retransmit-timeout'
-     You can control the timeout used while waiting for a packet, in
-     the MIPS remote protocol, with the `set timeout SECONDS' command.
-     The default is 5 seconds.  Similarly, you can control the timeout
-     used while waiting for an acknowledgment of a packet with the `set
-     retransmit-timeout SECONDS' command.  The default is 3 seconds.
-     You can inspect both values with `show timeout' and `show
-     retransmit-timeout'.  (These commands are _only_ available when
-     GDB is configured for `--target=mips-idt-ecoff'.)
-
-     The timeout set by `set timeout' does not apply when GDB is
-     waiting for your program to stop.  In that case, GDB waits forever
-     because it has no way of knowing how long the program is going to
-     run before stopping.
-
-`set syn-garbage-limit NUM'
-     Limit the maximum number of characters GDB should ignore when it
-     tries to synchronize with the remote target.  The default is 10
-     characters.  Setting the limit to -1 means there's no limit.
-
-`show syn-garbage-limit'
-     Show the current limit on the number of characters to ignore when
-     trying to synchronize with the remote system.
-
-`set monitor-prompt PROMPT'
-     Tell GDB to expect the specified PROMPT string from the remote
-     monitor.  The default depends on the target:
-    pmon target
-          `PMON'
-
-    ddb target
-          `NEC010'
-
-    lsi target
-          `PMON>'
-
-`show monitor-prompt'
-     Show the current strings GDB expects as the prompt from the remote
-     monitor.
-
-`set monitor-warnings'
-     Enable or disable monitor warnings about hardware breakpoints.
-     This has effect only for the `lsi' target.  When on, GDB will
-     display warning messages whose codes are returned by the `lsi'
-     PMON monitor for breakpoint commands.
-
-`show monitor-warnings'
-     Show the current setting of printing monitor warnings.
-
-`pmon COMMAND'
-     This command allows sending an arbitrary COMMAND string to the
-     monitor.  The monitor must be in debug mode for this to work.
-
-
-File: gdb.info,  Node: OpenRISC 1000,  Next: PA,  Prev: MIPS Embedded,  Up: Embedded Processors
-
-21.3.5 OpenRISC 1000
---------------------
-
-See OR1k Architecture document (`www.opencores.org') for more
-information about platform and commands.
-
-`target jtag jtag://HOST:PORT'
-     Connects to remote JTAG server.  JTAG remote server can be either
-     an or1ksim or JTAG server, connected via parallel port to the
-     board.
-
-     Example: `target jtag jtag://localhost:9999'
-
-`or1ksim COMMAND'
-     If connected to `or1ksim' OpenRISC 1000 Architectural Simulator,
-     proprietary commands can be executed.
-
-`info or1k spr'
-     Displays spr groups.
-
-`info or1k spr GROUP'
-`info or1k spr GROUPNO'
-     Displays register names in selected group.
-
-`info or1k spr GROUP REGISTER'
-`info or1k spr REGISTER'
-`info or1k spr GROUPNO REGISTERNO'
-`info or1k spr REGISTERNO'
-     Shows information about specified spr register.
-
-`spr GROUP REGISTER VALUE'
-`spr REGISTER VALUE'
-`spr GROUPNO REGISTERNO VALUE'
-`spr REGISTERNO VALUE'
-     Writes VALUE to specified spr register.
-
-   Some implementations of OpenRISC 1000 Architecture also have
-hardware trace.  It is very similar to GDB trace, except it does not
-interfere with normal program execution and is thus much faster.
-Hardware breakpoints/watchpoint triggers can be set using:
-`$LEA/$LDATA'
-     Load effective address/data
-
-`$SEA/$SDATA'
-     Store effective address/data
-
-`$AEA/$ADATA'
-     Access effective address ($SEA or $LEA) or data ($SDATA/$LDATA)
-
-`$FETCH'
-     Fetch data
-
-   When triggered, it can capture low level data, like: `PC', `LSEA',
-`LDATA', `SDATA', `READSPR', `WRITESPR', `INSTR'.
-
-   `htrace' commands: 
-`hwatch CONDITIONAL'
-     Set hardware watchpoint on combination of Load/Store Effective
-     Address(es) or Data.  For example:
-
-     `hwatch ($LEA == my_var) && ($LDATA < 50) || ($SEA == my_var) &&
-     ($SDATA >= 50)'
-
-     `hwatch ($LEA == my_var) && ($LDATA < 50) || ($SEA == my_var) &&
-     ($SDATA >= 50)'
-
-`htrace info'
-     Display information about current HW trace configuration.
-
-`htrace trigger CONDITIONAL'
-     Set starting criteria for HW trace.
-
-`htrace qualifier CONDITIONAL'
-     Set acquisition qualifier for HW trace.
-
-`htrace stop CONDITIONAL'
-     Set HW trace stopping criteria.
-
-`htrace record [DATA]*'
-     Selects the data to be recorded, when qualifier is met and HW
-     trace was triggered.
-
-`htrace enable'
-`htrace disable'
-     Enables/disables the HW trace.
-
-`htrace rewind [FILENAME]'
-     Clears currently recorded trace data.
-
-     If filename is specified, new trace file is made and any newly
-     collected data will be written there.
-
-`htrace print [START [LEN]]'
-     Prints trace buffer, using current record configuration.
-
-`htrace mode continuous'
-     Set continuous trace mode.
-
-`htrace mode suspend'
-     Set suspend trace mode.
-
-
-
-File: gdb.info,  Node: PowerPC Embedded,  Next: Sparclet,  Prev: PA,  Up: Embedded Processors
-
-21.3.6 PowerPC Embedded
------------------------
-
-GDB provides the following PowerPC-specific commands:
-
-`set powerpc soft-float'
-`show powerpc soft-float'
-     Force GDB to use (or not use) a software floating point calling
-     convention.  By default, GDB selects the calling convention based
-     on the selected architecture and the provided executable file.
-
-`set powerpc vector-abi'
-`show powerpc vector-abi'
-     Force GDB to use the specified calling convention for vector
-     arguments and return values.  The valid options are `auto';
-     `generic', to avoid vector registers even if they are present;
-     `altivec', to use AltiVec registers; and `spe' to use SPE
-     registers.  By default, GDB selects the calling convention based
-     on the selected architecture and the provided executable file.
-
-`target dink32 DEV'
-     DINK32 ROM monitor.
-
-`target ppcbug DEV'
-
-`target ppcbug1 DEV'
-     PPCBUG ROM monitor for PowerPC.
-
-`target sds DEV'
-     SDS monitor, running on a PowerPC board (such as Motorola's ADS).
-
-   The following commands specific to the SDS protocol are supported by
-GDB:
-
-`set sdstimeout NSEC'
-     Set the timeout for SDS protocol reads to be NSEC seconds.  The
-     default is 2 seconds.
-
-`show sdstimeout'
-     Show the current value of the SDS timeout.
-
-`sds COMMAND'
-     Send the specified COMMAND string to the SDS monitor.
-
-
-File: gdb.info,  Node: PA,  Next: PowerPC Embedded,  Prev: OpenRISC 1000,  Up: Embedded Processors
-
-21.3.7 HP PA Embedded
----------------------
-
-`target op50n DEV'
-     OP50N monitor, running on an OKI HPPA board.
-
-`target w89k DEV'
-     W89K monitor, running on a Winbond HPPA board.
-
-
-
-File: gdb.info,  Node: Sparclet,  Next: Sparclite,  Prev: PowerPC Embedded,  Up: Embedded Processors
-
-21.3.8 Tsqware Sparclet
------------------------
-
-GDB enables developers to debug tasks running on Sparclet targets from
-a Unix host.  GDB uses code that runs on both the Unix host and on the
-Sparclet target.  The program `gdb' is installed and executed on the
-Unix host.
-
-`remotetimeout ARGS'
-     GDB supports the option `remotetimeout'.  This option is set by
-     the user, and  ARGS represents the number of seconds GDB waits for
-     responses.
-
-   When compiling for debugging, include the options `-g' to get debug
-information and `-Ttext' to relocate the program to where you wish to
-load it on the target.  You may also want to add the options `-n' or
-`-N' in order to reduce the size of the sections.  Example:
-
-     sparclet-aout-gcc prog.c -Ttext 0x12010000 -g -o prog -N
-
-   You can use `objdump' to verify that the addresses are what you
-intended:
-
-     sparclet-aout-objdump --headers --syms prog
-
-   Once you have set your Unix execution search path to find GDB, you
-are ready to run GDB.  From your Unix host, run `gdb' (or
-`sparclet-aout-gdb', depending on your installation).
-
-   GDB comes up showing the prompt:
-
-     (gdbslet)
-
-* Menu:
-
-* Sparclet File::                Setting the file to debug
-* Sparclet Connection::          Connecting to Sparclet
-* Sparclet Download::            Sparclet download
-* Sparclet Execution::           Running and debugging
-
-
-File: gdb.info,  Node: Sparclet File,  Next: Sparclet Connection,  Up: Sparclet
-
-21.3.8.1 Setting File to Debug
-..............................
-
-The GDB command `file' lets you choose with program to debug.
-
-     (gdbslet) file prog
-
-   GDB then attempts to read the symbol table of `prog'.  GDB locates
-the file by searching the directories listed in the command search path.
-If the file was compiled with debug information (option `-g'), source
-files will be searched as well.  GDB locates the source files by
-searching the directories listed in the directory search path (*note
-Your Program's Environment: Environment.).  If it fails to find a file,
-it displays a message such as:
-
-     prog: No such file or directory.
-
-   When this happens, add the appropriate directories to the search
-paths with the GDB commands `path' and `dir', and execute the `target'
-command again.
-
-
-File: gdb.info,  Node: Sparclet Connection,  Next: Sparclet Download,  Prev: Sparclet File,  Up: Sparclet
-
-21.3.8.2 Connecting to Sparclet
-...............................
-
-The GDB command `target' lets you connect to a Sparclet target.  To
-connect to a target on serial port "`ttya'", type:
-
-     (gdbslet) target sparclet /dev/ttya
-     Remote target sparclet connected to /dev/ttya
-     main () at ../prog.c:3
-
-   GDB displays messages like these:
-
-     Connected to ttya.
-
-
-File: gdb.info,  Node: Sparclet Download,  Next: Sparclet Execution,  Prev: Sparclet Connection,  Up: Sparclet
-
-21.3.8.3 Sparclet Download
-..........................
-
-Once connected to the Sparclet target, you can use the GDB `load'
-command to download the file from the host to the target.  The file
-name and load offset should be given as arguments to the `load' command.
-Since the file format is aout, the program must be loaded to the
-starting address.  You can use `objdump' to find out what this value
-is.  The load offset is an offset which is added to the VMA (virtual
-memory address) of each of the file's sections.  For instance, if the
-program `prog' was linked to text address 0x1201000, with data at
-0x12010160 and bss at 0x12010170, in GDB, type:
-
-     (gdbslet) load prog 0x12010000
-     Loading section .text, size 0xdb0 vma 0x12010000
-
-   If the code is loaded at a different address then what the program
-was linked to, you may need to use the `section' and `add-symbol-file'
-commands to tell GDB where to map the symbol table.
-
-
-File: gdb.info,  Node: Sparclet Execution,  Prev: Sparclet Download,  Up: Sparclet
-
-21.3.8.4 Running and Debugging
-..............................
-
-You can now begin debugging the task using GDB's execution control
-commands, `b', `step', `run', etc.  See the GDB manual for the list of
-commands.
-
-     (gdbslet) b main
-     Breakpoint 1 at 0x12010000: file prog.c, line 3.
-     (gdbslet) run
-     Starting program: prog
-     Breakpoint 1, main (argc=1, argv=0xeffff21c) at prog.c:3
-     3        char *symarg = 0;
-     (gdbslet) step
-     4        char *execarg = "hello!";
-     (gdbslet)
 

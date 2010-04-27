@@ -1,10 +1,24 @@
 #include "creatorutil.h"
 bool verbose = false;
+bool testing = false;
 
 
 /**
  *    file writing utilities
  */
+
+// Write string to end of file
+void fwriteStr(string str, FILE *file)
+{
+	// Write length
+	fwrite<uint32_t>(uint32_t(str.length()), file);
+	// Write characters
+	for (unsigned int i = 0; i < str.length(); i++)
+	{
+		// Write character
+		fwrite<uint8_t>(uint8_t(str[i]), file);
+	}
+}
 
 
 // open filename for binary reading and append its contents to the end of output
@@ -65,7 +79,7 @@ bool getIntAttr(TiXmlElement *elem, string attr, int &value)
 	{
 		return false;
 	}
-	
+
 	// Made it this far? must have been set
 	value = val;
 	return true;
@@ -88,10 +102,10 @@ string getStrAttr(TiXmlElement *elem, string attr)
 /**
  *   Utility functions
  */
- 
+
 
 // printf wrapper
-int debug(char* fmt, ...)
+int debug(const char* fmt, ...)
 {
 	if(!verbose)
 		return 0; // Return that we wrote 0 characters

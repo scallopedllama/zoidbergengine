@@ -35,6 +35,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 // for zbeAssets
 #include "assets.h"
@@ -82,6 +83,72 @@ public:
 	 * @author Joe Balough
 	 */
 	void run();
+
+
+	/**
+	 * runLevel function
+	 *
+	 * Initializes and runs the level with the passed levelId.
+	 * Used by the testing framework
+	 *
+	 * @param uint32 levelId
+	 *   id of the level to run
+	 * @author Joe Balough
+	 */
+	void runLevel(uint32 levelId);
+
+
+	/**
+	 * getLevelNames function
+	 *
+	 * Creates a vector of strings containing the name of every level in the game.
+	 *
+	 * @param vector<string> &tests
+	 *   vector of strings passed by reference, This is filled with the level names.
+	 * @author Joe Balough
+	 */
+	void getLevelNames(vector<string> &tests)
+	{
+		// Add every level's name to the vector
+		for (unsigned int i = 0; i < zbeAssets->numLevels(); i++)
+		{
+			tests.push_back(zbeAssets->getLevelName(i));
+		}
+	}
+
+
+	/**
+	 * numLevels function
+	 *
+	 * Returns the number of levels in the game
+	 *
+	 * @return uint32
+	 *   number of leves in the game
+	 * @author Joe Balough
+	 */
+	inline uint32 numLevels()
+	{
+		return zbeAssets->numLevels();
+	}
+
+
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return zbeAssets->getDebugMessage(l);
+	}
+#endif
 
 private:
 

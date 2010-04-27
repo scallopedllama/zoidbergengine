@@ -35,6 +35,7 @@
 
 using namespace std;
 
+// TODO: Add refCount values to gfx and palette assets and use that to remove them from video memory when out of video memory
 
 /**
  * asset_status struct. This is just a base class and isn't used anywhere else.
@@ -94,6 +95,15 @@ struct gfxAsset : public assetStatus
 	gfxAsset() : assetStatus()
 	{}
 
+	void dumpData()
+	{
+		if (!data) return;
+		for (uint16 i = 0; i < length; i++)
+		{
+			iprintf("%x", (unsigned int) data[i]);
+		}
+	}
+
 	// for gfx; video memory offset
 	uint16 *offset;
 
@@ -118,20 +128,31 @@ struct backgroundAsset : public assetStatus
 {
 	backgroundAsset() : assetStatus()
 	{
-		tileset = NULL;
-		size = BgSize_ER_1024x1024;
+		w = h = length = 0;
 	}
-	
+
 	~backgroundAsset()
 	{}
-	
-	// The tileset to use with this background
-	gfxAsset *tileset;
-	
-	// size of the background
-	BgSize size;
+
+	// width and height in tiles of the background
+	uint32 w, h;
+
+	// The number of bytes in the data section of the MAP data
+	uint32 length;
 };
 
+
+/**
+ * levelBackgroundAsset struct. Used to track the backgrounds for a level. Just has pointers to its backgroundAsset and its distance.
+ * @author Joe Balough
+ */
+struct levelBackgroundAsset
+{
+	backgroundAsset *background;
+	vector<paletteAsset*> palettes;
+	uint8 distance;
+	uint8 layer;
+};
 
 
 /**
@@ -162,7 +183,7 @@ struct objectAsset
 	{
 		for (int i = 0; animations[i] != NULL ; i++)
 		{
-			for(int j = 0; animations[i][j] != NULL; j++)
+			for (int j = 0; animations[i][j] != NULL; j++)
 			{
 				delete animations[i][j];
 			}
@@ -234,12 +255,47 @@ struct levelAsset : assetStatus
 		}
 		delete heroes;
 
+		if (name)
+		{
+			delete name;
+			name = NULL;
+		}
+
+#ifdef ZBE_TESTING
+		if(expMessage)
+		{
+			delete expMessage;
+			expMessage = NULL;
+		}
+		if (debugMessage)
+		{
+			delete debugMessage;
+			debugMessage = NULL;
+		}
+#endif
+
 		// Reset loaded variable
 		mmLoaded = vmLoaded = false;
 	}
 
+	// The name of this level
+	char *name;
+
+	// TESTING ONLY
+#ifdef ZBE_TESTING
+	// test explanation and debug information
+	char *expMessage;
+	char *debugMessage;
+
+	// Number of scren blanks to run level
+	uint16 timer;
+#endif
+
+	// The gfxAsset to use as this level's background tileset
+	gfxAsset *tileset;
+
 	// The background that this level uses
-	backgroundAsset *bg0;
+	levelBackgroundAsset bgs[4];
 
 	// all the objects in this level
 	// this array is null temrinated!

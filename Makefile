@@ -18,6 +18,8 @@ export CLICREATOR	:=	tools/cliCreator
 # main targets
 #---------------------------------------------------------------------------------
 all: $(TARGET).nds
+testing:
+	$(MAKE) -f Maketesting
 
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	$(TARGET).arm7 $(TARGET).arm9
@@ -44,4 +46,4 @@ assets:
 clean:
 	$(MAKE) -C $(SOURCES)/arm9 clean
 	$(MAKE) -C $(SOURCES)/arm7 clean
-	rm -f $(TARGET).nds $(TARGET).arm7 $(TARGET).arm9
+	rm -f $(TARGET).nds $(TARGET)_testing.nds $(TARGET).arm7 $(TARGET).arm9

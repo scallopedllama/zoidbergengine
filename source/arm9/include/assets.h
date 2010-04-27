@@ -43,8 +43,11 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#define ZBE_VERSION_SUPPORTED 1
+
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <errno.h>
 #include <nds.h>
 #include <fat.h>
@@ -64,6 +67,10 @@ using namespace std;
 class assets {
 public:
 	/**
+	 * assets class constructor
+	 *
+	 * Opens the file and runs the parse routine
+	 *
 	 * @param string filename
 	 *   The zbe file to use for this game
 	 * @param OamState *oam
@@ -71,6 +78,15 @@ public:
 	 * @author Joe Balough
 	 */
 	assets(char* filename, OamState *oam);
+
+	/**
+	 * assets class deconstructor
+	 *
+	 * Deletes everything that was allocated on heap
+	 *
+	 * @author Joe Balough
+	 */
+	 ~assets();
 
 	/**
 	 * parseZbe function
@@ -97,75 +113,6 @@ public:
 	 */
 	uint16 *getGfx(gfxAsset *gfx);
 
-	/**
-	 * getPalette function
-	 *
-	 * Returns the index to the location in video memory where the palette data for the passed paletteAsset
-	 * can be found. Will copy that palette into video memory if needed.
-	 *
-	 * @param palAsset *pal
-	 *   A pointer to the palAsset of the palette to load
-	 * @return uint8
-	 *   The index of the loaded palette
-	 * @author Joe Balough
-	 */
-	uint8 getPalette(paletteAsset *pal);
-
-	/**
-	 * loadLevel function
-	 *
-	 * Used by the level class to get the metadata for a level. This function will free up any
-	 * memory used by the last loaded levelAsset object then parse the zbeData file to load up
-	 * the relevant vectors and return the levelAsset object.
-	 *
-	 * @param uint32 id
-	 *   id for the level to load
-	 * @return levelAsset*
-	 *   A pointer to the level's metadata to be used by the level class to load up objects and the like
-	 * @author Joe Balough
-	 */
-	levelAsset *loadLevel(uint32 id);
-
-	/**
-	 * loadBackground function
-	 *
-	 * Used by level class to tell this assets class to initialize the passed backgroundAsset
-	 * and get its data into video memory properly. This function tries to be smart about not wasting memory.
-	 * 
-	 * @param backgroundAsset *background
-	 *  The backgroundAsset for the background to load. Obtained from a levelAsset
-	 * @return int
-	 *  The background id of the initilized background
-	 * @author Joe Balough
-	 */
-	int loadBackground(backgroundAsset *background);
-
-	/**
-	 * Retrieve the SpriteSize for the gfx with the specified id
-	 * @param uint32 id
-	 *  Id for the gfx whose size is desired
-	 * @author Joe Baough
-	 */
-	inline SpriteSize getSpriteSize(uint32 id)
-	{
-		return gfxAssets[id]->size;
-	}
-
-private:
-	/**
-	 * fread wrapper; load
-	 *
-	 * the load function reads a number of the specified type off of the
-	 * passed input FILE and return it.
-	 *
-	 * @param FILE *input
-	 *   The file from which to read the number
-	 * @return T
-	 *   The value read from the file
-	 * @author Joe Balough
-	 */
-	template <class T> T load(FILE *input);
-
 
 	/**
 	 * loadGfx() function
@@ -186,7 +133,21 @@ private:
 	 * @author Joe Balough
 	 */
 	void freeGfx(gfxAsset *gfx);
-	
+
+	/**
+	 * getPalette function
+	 *
+	 * Returns the index to the location in video memory where the palette data for the passed paletteAsset
+	 * can be found. Will copy that palette into video memory if needed.
+	 *
+	 * @param palAsset *pal
+	 *   A pointer to the palAsset of the palette to load
+	 * @return uint8
+	 *   The index of the loaded palette
+	 * @author Joe Balough
+	 */
+	uint8 getPalette(paletteAsset *pal);
+
 
 	/**
 	 * loadPalette() function
@@ -207,6 +168,101 @@ private:
 	 * @author Joe Balough
 	 */
 	void freePalette(paletteAsset *gfx);
+
+	/**
+	 * loadLevel function
+	 *
+	 * Used by the level class to get the metadata for a level. This function will free up any
+	 * memory used by the last loaded levelAsset object then parse the zbeData file to load up
+	 * the relevant vectors and return the levelAsset object.
+	 *
+	 * @param uint32 id
+	 *   id for the level to load
+	 * @return levelAsset*
+	 *   A pointer to the level's metadata to be used by the level class to load up objects and the like
+	 * @author Joe Balough
+	 */
+	levelAsset *loadLevel(uint32 id);
+
+	/**
+	 * loadBackground function
+	 *
+	 * Used by background class to tell this assets class to initialize the passed backgroundAsset
+	 * and get its data into main memory properly.
+	 *
+	 * @param levelBackgroundAsset *background
+	 *  The levelBackgroundAsset for the background to load. Obtained from a levelAsset
+	 * @author Joe Balough
+	 */
+	void loadBackground(levelBackgroundAsset *background);
+
+	/**
+	 * Retrieve the SpriteSize for the gfx with the specified id
+	 * @param uint32 id
+	 *  Id for the gfx whose size is desired
+	 * @author Joe Baough
+	 */
+	inline SpriteSize getSpriteSize(uint32 id)
+	{
+		return gfxAssets[id]->size;
+	}
+
+	/**
+	 * Get the number of levels in the assets file
+	 * @return uint32
+	 *   number of levels in assets file
+	 * @author Joe Balough
+	 */
+	inline uint32 numLevels()
+	{
+		return uint32(levelAssets.size());
+	}
+
+	/**
+	 * Get the name of a level
+	 * @param uint32
+	 *   Id of level whose name should be retrieved
+	 * @return string
+	 *   string containing level's name, copied out of levelAsset
+	 * @author Joe Balough
+	 */
+	inline string getLevelName(uint32 id)
+	{
+		return string(levelAssets[id]->name);
+	}
+
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return string(levelAssets[l]->debugMessage);
+	}
+#endif
+
+private:
+	/**
+	 * fread wrapper; load
+	 *
+	 * the load function reads a number of the specified type off of the
+	 * passed input FILE and return it.
+	 *
+	 * @param FILE *input
+	 *   The file from which to read the number
+	 * @return T
+	 *   The value read from the file
+	 * @author Joe Balough
+	 */
+	template <class T> T load(FILE *input);
 
 
 	/**
@@ -276,13 +332,15 @@ private:
 	 * @see assetStatus
 	 */
 	vector<gfxAsset*> gfxAssets;
-	vector<paletteAsset*> paletteAssets;
-	
 	vector<gfxAsset*> tilesetAssets;
+	vector<paletteAsset*> paletteAssets;
 	vector<backgroundAsset*> backgroundAssets;
-	
 	vector<objectAsset*> objectAssets;
 	vector<levelAsset*> levelAssets;
+
+
+	// A pointer to the levelAsset that was last loaded
+	levelAsset *lastLevel;
 };
 
 #endif // ASSETS_H_INCLUDED
