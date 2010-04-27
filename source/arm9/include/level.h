@@ -16,7 +16,7 @@
  * @author Joe Balough
  */
 
-/**
+/*
  *  Copyright (c) 2010 zoidberg engine
  *
  *  This file is part of the zoidberg engine.
@@ -38,8 +38,8 @@
 #ifndef LEVEL_H_INCLUDED
 #define LEVEL_H_INCLUDED
 
-#define ZOIDBERG_NO_MATRICES -1
-#define ZOIDBERG_NO_SPRITES -2
+#define ZBE_NO_MATRICES -1
+#define ZBE_NO_SPRITES -2
 
 #include <nds.h>
 #include <vector>
@@ -145,11 +145,11 @@ private:
 	 * getMatrix function
 	 *
 	 * Tries to get a matrixId for an object to use. Returns the id of a SpriteRotation matrix to use or
-	 * ZOIDBERG_NO_MATRICES if all the rotateScale sprites are being used.
+	 * ZBE_NO_MATRICES if all the rotateScale sprites are being used.
 	 * It does this by scanning through the matrixAvail[] array looking for one set to true.
 	 *
 	 * @return int
-	 *   The matrixId corresponding to the SpriteRotation matrix available for use or ZOIDBERG_NO_MATRICES
+	 *   The matrixId corresponding to the SpriteRotation matrix available for use or ZBE_NO_MATRICES
 	 *   if they're all taken
 	 * @author Joe Balough
 	 */

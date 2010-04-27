@@ -10,7 +10,7 @@
  * @author Dan Tracy
  */
 
-/**
+/*
  *  Copyright (c) 2010 zoidberg engine
  *
  *  This file is part of the zoidberg engine.
@@ -35,7 +35,7 @@
 #include <nds.h>
 #include "object.h"
 
-// TODO: comment up this file. 
+// TODO: comment up this file.
 
 // TODO: all these functions should take POINTERS to objects.
 
@@ -43,9 +43,9 @@
 
 namespace decapod
 {
-	
+
 	//bool intersection(object sprite1, object sprite2);
-	
+
 	/**
 	* @author Dan Tracy
 	* We assume the projectile is small enough to only consider the center point
@@ -53,10 +53,10 @@ namespace decapod
 	* of the sprite then it collided with it (return true)
 	*/
 	//bool smallProjectileCollide(const object sprite, const object bullet);
-	
+
 	/**
 	* @author Dan Tracy
-	* @param object sprite 
+	* @param object sprite
 	* The sprite that wants to jump.
 	* @param level lvl
 	* The level object, will be used to see if the sprite lands.

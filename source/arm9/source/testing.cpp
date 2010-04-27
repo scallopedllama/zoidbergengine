@@ -124,8 +124,166 @@ public:
 	 */
 	virtual bool run()
 	{
-		iprintf("collisionMatrix functional Test\n");
-		iprintf("Not implemented yet... :(\n");
+		//       --------------------------------
+		iprintf("collisionMatrix functional Test\n\n");
+
+		iprintf("Making 10 x 10 px @ 5px / group\n");
+		iprintf("       collisionMatrix.\n");
+		collisionMatrix mat(10, 10, 5);
+
+		iprintf("Making some objects\n");
+		vector2D<float> objPos[5];
+		objPos[0] = vector2D<float>(2.5, 2.5);  //   _________
+		objPos[1] = vector2D<float>(7.5, 2.5);  //  |0&4 |1   |
+		objPos[2] = vector2D<float>(2.5, 7.5);  //  |____|____|
+		objPos[3] = vector2D<float>(7.5, 7.5);  //  |2   |3   |
+		objPos[4] = vector2D<float>(2.5, 2.5);  //  |____|____|
+
+		object *objects[5];
+		for (int i = 0; i < 5; i++)
+		{
+			objects[i] = new object(objPos[i]);
+			if (!objects[i])
+			{
+				//       --------------------------------
+				iprintf("\nFailed to create new object.\n");
+				iprintf("new returned NULL\n");
+				iprintf("Out of memory?\n");
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+
+		//       --------------------------------
+		iprintf("\n   Testing cM construction\n\n");
+
+
+		iprintf("testing cM::addObject()\n");
+		objGroup *objGroups[5];
+		for (int i = 0; i < 5; i ++)
+		{
+			objGroups[i] = mat.addObject(objects[i]);
+
+			if (!objGroups[i])
+			{
+				iprintf("\nFailed to add object to matrix\n");
+				iprintf("cM::addObject() returned NULL\n");
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+		// Make sure that object[0] and object[4] are in the same group
+		if (objGroups[0] != objGroups[4])
+		{
+			//       --------------------------------
+			iprintf("obj0 and obj5 not in same group\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+
+		// See if they're all appropriately sized
+		if (objGroups[0]->objects.size() != 2)
+		{
+			iprintf("objGroup 0 has %d objects\n", objGroups[0]->objects.size());
+			iprintf("should be 2\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+		// don't do group 0 or group 4
+		for (int i = 1; i < 4; i++)
+		{
+			if (objGroups[i]->objects.size() != 1)
+			{
+				iprintf("objGroup %d has %d objects\n", i, objGroups[i]->objects.size());
+				iprintf("should be 1\n");
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+
+		iprintf("testing cM::getObjGroup()\n");
+		for (int i = 0; i < 5; i++)
+		{
+			// Get the object group for each of those objects, see if they're the same as addObject returned
+			if (mat.getObjGroup(objPos[i]) != objGroups[i])
+			{
+				iprintf("\nGot a different objGroup for\n");
+				iprintf("object %d.\n", i);
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+
+
+
+		iprintf("\n        Moving object,\n  tesing cM object reinsertion\n\n");
+
+
+
+		iprintf("moving first object\n");
+		objPos[0] = vector2D<float>(7.5, 7.5);
+		objects[0]->position = objPos[0];
+
+		// Remove that object from its old collision matrix and re-insert into the collisionMatrix
+		iprintf("testing oJ::remove()\n");
+		objGroups[0]->remove(objects[0]);
+		iprintf("testing cM::addObject()\n");
+		objGroups[0] = mat.addObject(objects[0]);
+
+
+
+		// Check its new group
+
+		// Make sure that object[0] and object[3] are in the same group
+		if (objGroups[0] != objGroups[3])
+		{
+			//       --------------------------------
+			iprintf("obj0 and obj3 not in same group\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+		// See if they're all appropriately sized
+		if (objGroups[0]->objects.size() != 2)
+		{
+			iprintf("objGroup 0 has %d objects\n", objGroups[0]->objects.size());
+			iprintf("should be 2\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+		for (int i = 1; i < 5; i++)
+		{
+			// skip the 3rd group
+			if ( i == 3 ) continue;
+
+			if (objGroups[i]->objects.size() != 1)
+			{
+				iprintf("objGroup %d has %d objects\n", i, objGroups[i]->objects.size());
+				iprintf("should be 1\n");
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+		iprintf("\n        Cleaning up\n");
+		for (int i = 0; i < 5; i++)
+			delete objects[i];
+		iprintf("\n       Test successful.\n");
+
 		pauseIfTesting();
 		return true;
 	}
