@@ -60,12 +60,12 @@ public:
 	 */
 	hero(OamState *Oam,
 		frameAsset ***animations,
-		vector2D<float> position, vector2D<float> gravity, bool hidden = false,
+		vector2D<float> position, vector2D<float> gravity, uint8 weight, bool hidden = false,
 		int matrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 		bool Mosaic = false)
 	: object(Oam,
 		 animations,
-		 position, gravity, hidden,
+		 position, gravity, weight, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
 	{}

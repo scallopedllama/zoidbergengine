@@ -53,7 +53,7 @@ level::level(levelAsset *m, OamState *o)
 		objectAsset *obj = metadata->heroes[i]->obj;
 
 		// Make the new hero
-		object *newObj = (object*) new hero(oam, obj->animations, metadata->objects[1]->position, gravity);
+		object *newObj = (object*) new hero(oam, obj->animations, metadata->heroes[i]->position, gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
@@ -72,7 +72,7 @@ level::level(levelAsset *m, OamState *o)
 		objectAsset *obj = metadata->objects[i]->obj;
 
 		// Make the new object
-		object *newObj = new object(oam, obj->animations, metadata->objects[1]->position, gravity);
+		object *newObj = new object(oam, obj->animations, metadata->objects[i]->position, gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
