@@ -11,7 +11,7 @@
  * @author Joe Balough
  */
 
-/**
+/*
  *  Copyright (c) 2010 zoidberg engine
  *
  *  This file is part of the zoidberg engine.

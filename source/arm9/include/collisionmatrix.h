@@ -6,17 +6,17 @@
  * This file contains the collisionMatrix and objGroup classes that are used by the
  * zoidberg engine to perform fast collision detection. It is used by breaking the level
  * world down into large-ish blocks (at least as big as the biggest object), that keep
- * track of a vector of object pointers. 
+ * track of a vector of object pointers.
  *
  * While running the level, each object will update and if that object has moved,
  * it will remove itself from its objGroup and re-adds itself to the collisionMatrix
- * which will put it in its proper objGroup. 
- * 
+ * which will put it in its proper objGroup.
+ *
  * When it comes time to check for collisions, the object will check for collisions
  * between itself and the objects in the objGroups above, to the the left, and to the
  * upper left of its own objGroup. Because each group represents a square of the screen
  * at least as large as the largest object and each object's position is its top-left
- * pixel, no object outside these four objGroups could possibly be interacting with 
+ * pixel, no object outside these four objGroups could possibly be interacting with
  * the object in question. This will cut the number of collision detections down from
  * hundreds or thousands to maybe tens per moving object. Much better.
  *
@@ -24,7 +24,7 @@
  * @author Joe Balough
  */
 
-/**
+/*
  *  Copyright (c) 2010 zoidberg engine
  *
  *  This file is part of the zoidberg engine.
@@ -60,22 +60,22 @@ using namespace std;
 
 /**
  * objGroup class
- * 
+ *
  * The objGroup class is used to simply keep a vector of pointers to objects that
  * are in a discrete region of the level. Used for good performance with collision
  * detection.
- * 
+ *
  * @author Joe Balough
  */
 struct objGroup
 {
 	vector<object*> objects;
-	
+
 	/**
 	 * remove function
-	 * 
+	 *
 	 * Removes passed object from the vector.
-	 * 
+	 *
 	 * @param object *remove
 	 *   A pointer to the object to remove from the vector
 	 * @return bool
@@ -92,7 +92,7 @@ struct objGroup
  * The collisionMatrix class is used to manage all of the objGroups. It will create
  * and delete them and provides many useful utility functions for adding objects to
  * groups and the like.
- * 
+ *
  * @author Joe Balough
  */
 class collisionMatrix
@@ -112,7 +112,7 @@ public:
 	 * @author Joe Balough
 	 */
 	collisionMatrix(int levelWidth, int levelHeight, int blockSqSize);
-	
+
 	/**
 	 * collisionMatrix deconstructor
 	 *
@@ -121,7 +121,7 @@ public:
 	 * @author Joe Balough
 	 */
 	~collisionMatrix();
-	
+
 	/**
 	 * getObjGroup function
 	 *
@@ -134,12 +134,12 @@ public:
 	 * @author Joe Balough
 	 */
 	objGroup *getObjGroup(vector2D<float> position);
-	
+
 	/**
 	 * addObject function
-	 * 
+	 *
 	 * Takes an object and puts it into the correct objGroup
-	 * 
+	 *
 	 * @param object *add
 	 *   A pointer to the object to add to the matrix
 	 * @return
@@ -148,7 +148,7 @@ public:
 	 * @author Joe Balough
 	 */
 	objGroup* addObject(object *add);
-	
+
 	/**
 	 * getCollisionCandidates function
 	 *
@@ -165,7 +165,7 @@ public:
 	 * @author Joe Balough
 	 */
 	vector<object*> getCollisionCandidates(vector2D<float> position);
-	
+
 private:
 	/**
 	 * convertCoords function
@@ -179,14 +179,14 @@ private:
 	 * @author Joe Balough
 	 */
 	vector2D<int> convertCoords(vector2D<float> position);
-	
+
 	// A dynamically allocated 2D array of objGroups. Can be referenced like
 	// groups[x][y]
 	objGroup** groups;
-	
+
 	// The bounds for the group array
 	int groupsWidth, groupsHeight;
-	
+
 	// The width and height of each block into which the level's objects are
 	// broken to be put into objGroups.
 	int blockSqSize;
