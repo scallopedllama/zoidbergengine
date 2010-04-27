@@ -99,6 +99,7 @@
 		<Unit filename="../source/arm9/source/main.cpp" />
 		<Unit filename="../source/arm9/source/object.cpp" />
 		<Unit filename="../source/arm9/source/physics.cpp" />
+		<Unit filename="../source/arm9/source/testing.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
 		<Unit filename="../source/arm9/source/vars.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
