@@ -4,7 +4,7 @@
 game::game(char* filename)
 {
 	// Create the assets
-	zbeAssets = new assets(filename, ZOIDBERG_GAMEPLAY_OAM);
+	zbeAssets = new assets(filename, ZBE_GAMEPLAY_OAM);
 }
 
 
@@ -23,7 +23,7 @@ void game::run()
 	levelAsset *firstLvlAsset = zbeAssets->loadLevel(0);
 
 	// Make that level
-	level first(firstLvlAsset, ZOIDBERG_GAMEPLAY_OAM);
+	level first(firstLvlAsset, ZBE_GAMEPLAY_OAM);
 
 	// Run it
 	first.run();
@@ -37,7 +37,7 @@ void game::runLevel(uint32 levelId)
 	levelAsset *thisLvlAsset = zbeAssets->loadLevel(levelId);
 
 	// Make it
-	level thisLevel(thisLvlAsset, ZOIDBERG_GAMEPLAY_OAM);
+	level thisLevel(thisLvlAsset, ZBE_GAMEPLAY_OAM);
 
 	//Run
 	thisLevel.run();

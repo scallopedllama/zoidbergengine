@@ -29,7 +29,7 @@
 #define GAME_H_INCLUDED
 
 // On which screen should the main gameplay occur? Should probably always be &oamMain.
-#define ZOIDBERG_GAMEPLAY_OAM &oamMain
+#define ZBE_GAMEPLAY_OAM &oamMain
 
 
 #include <nds.h>

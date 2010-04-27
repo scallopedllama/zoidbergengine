@@ -105,7 +105,7 @@ level::~level()
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
-// returns the matrix id or ZOIDBERG_NO_MATRICES if they're all taken
+// returns the matrix id or ZBE_NO_MATRICES if they're all taken
 int level::getMatrix()
 {
 	for (unsigned int i = 0; i < MATRIX_COUNT; i++)
@@ -117,7 +117,7 @@ int level::getMatrix()
 		}
 	}
 	// must be all taken
-	return ZOIDBERG_NO_MATRICES;
+	return ZBE_NO_MATRICES;
 }
 
 // The 'main game loop' for this level

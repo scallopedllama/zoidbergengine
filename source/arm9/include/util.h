@@ -28,7 +28,7 @@
 #ifndef UTIL_H_INCLUDED
 #define UTIL_H_INCLUDED
 
-#define ZOIDBERG_USE_EXT_PAL false
+#define ZBE_USE_EXT_PAL false
 
 #include <nds.h>
 #include <stdio.h>

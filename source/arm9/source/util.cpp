@@ -26,8 +26,8 @@ void initVideo()
 	videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
 			   DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
 
-	oamInit(&oamMain, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
-	oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
+	oamInit(&oamMain, SpriteMapping_1D_32, ZBE_USE_EXT_PAL);
+	oamInit(&oamSub, SpriteMapping_1D_32, ZBE_USE_EXT_PAL);
 
 	consoleDemoInit();
 }
