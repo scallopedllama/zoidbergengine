@@ -99,6 +99,9 @@ level::~level()
 	{
 		delete backgrounds[i];
 	}
+
+	// Clear out the OAM
+	oamClear(oam, 0, 0);
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -184,18 +187,19 @@ void level::update()
 		unsigned int i = moved[m];
 
 		// Pull this object out of its old objGroup and reinsert it.
-		objectsGroups[i]->remove(objects[i]);
+		if (!objectsGroups[i]->remove(objects[i]))
+			iprintf("W: lvl upd: rm obj fail\n");
 		objectsGroups[i] = colMatrix->addObject(objects[i]);
 
-		/**
+		/*
 		 *  BEGIN TEMPORARY STUFF
 		 */
 		// iprintf("object[%d] x: %d y: %d\n", i, (int)objects[i]->position.x, (int)objects[i]->position.y);
-		if(objects[i]->position.y > 1000.0)
+		if(objects[i]->position.y > 200.0)
 		{
 			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
-			objects[i]->position.y = 120.0;
+			objects[i]->position.y = 200.0;
 		}
 		if(objects[i]->position.y < 0.0)
 		{
@@ -207,7 +211,7 @@ void level::update()
 			objects[i]->position.x = 0.0;
 			objects[i]->velocity.x = 0.0;
 		}
-		/**
+		/*
 		 *   END TEMPORARY STUFF
 		 */
 
@@ -230,19 +234,26 @@ void level::update()
 	int spriteId = 0;
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		// TODO: make width and height actually valid variables with proper values and enable them here
-		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
-		if     (screenPos.x >= 0 && screenPos.x /**+ objects[i].dimensions.x**/  <= SCREEN_WIDTH  &&
-			screenPos.y >= 0 && screenPos.y /**+ objects[i].dimensions.y**/ <= SCREEN_HEIGHT)
+		// Get this object's position on screen
+		gfxAsset *animFrame = objects[i]->frame;
+		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x + animFrame->topleft.x, objects[i]->position.y - screenOffset.y + animFrame->topleft.y);		// If the screenPos plus the object's dimensions are in the screen, give it a sprite and tell it to draw
+
+		// If the object is within the bounds of the screen, give it a sprite Id and tell it to draw.
+		if (screenPos.x >= int(animFrame->dimensions.x) * -1 && screenPos.x <= SCREEN_WIDTH  &&
+			screenPos.y >= int(animFrame->dimensions.y) * -1 && screenPos.y <= SCREEN_HEIGHT)
 		{
 			objects[i]->draw(spriteId);
 			++spriteId;
 
 			// We can only show so many sprites. For now, just don't show the overflow.
-			if(spriteId > SPRITE_COUNT)
+			if(spriteId >= SPRITE_COUNT)
 				break;
 		}
 	}
+
+	// Clear out all the sprite entires that aren't being used anymore
+	oamClear(oam, spriteId, SPRITE_COUNT - spriteId);
+
 
 	// Update the backgrounds
 	for (unsigned int i = 0; i < backgrounds.size(); i++)

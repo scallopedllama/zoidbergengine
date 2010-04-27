@@ -282,7 +282,7 @@ public:
 	bool falling;
 
 	// The width and height to which the sprite should be scaled using an affine transformation
-	vector2D<int> scale, dimensions;
+	vector2D<int> scale;
 
 	// obvious variables
 	// note: gravity is added to the y acceleration.
