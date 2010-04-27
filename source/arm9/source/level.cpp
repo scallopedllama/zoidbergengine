@@ -22,14 +22,13 @@ level::level(levelAsset *m, OamState *o)
 	// Load up the backgrounds
 	// Level dimensions are determined by the biggest background in the back layers
 	//vector2D<uint32> maxDimensions(0, 0);
-	/*
 	for (int i = 0; i < 4; i++)
 	{
 		if (metadata->bgs[i].background)
 		{
 			// Make the new background
 			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
-			numBackgroundPalettes += metadata->bgs[i].palettes.size();*/
+			numBackgroundPalettes += metadata->bgs[i].palettes.size();
 
 			// If this is a layer behind the sprites, see if it's bigger than the current biggest
 			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
@@ -37,9 +36,9 @@ level::level(levelAsset *m, OamState *o)
 				maxDimensions = thisDimensions;*/
 
 			// Add it to the vector
-			/*backgrounds.push_back(newBackground);
+			backgrounds.push_back(newBackground);
 		}
-	}*/
+	}
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
