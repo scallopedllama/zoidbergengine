@@ -70,6 +70,11 @@ public:
 	 */
 	background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 paletteOffset);
 
+	~background()
+	{
+		bgHide(backgroundId);
+	}
+
 	/**
 	 * Update function, scrolls background to proper location, updating map if needed
 	 *
