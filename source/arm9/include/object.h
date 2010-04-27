@@ -66,9 +66,18 @@ public:
 	 *
 	 * @param OamState *oam
 	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
+	 * @param frameAsset ***animations
+	 *  A 2D array of pointers to frameAssets that define the animations for this object.
 	 *
-	 * @param int X
-	 * @param int Y
+	 * @param vector2D<float> postion
+	 *  Where on screen this object is to be drawn
+	 * @param vector2D<float> gravity
+	 *  The gravity vector for this object
+	 * @param uint8 weight
+	 *  The weight of the object, heavier objects push lighter objects with the default collision resolution
+	 *
+	 * @param bool hidden
+	 *  Whether to show or hide this object
 	 *
 	 * @param int matrixId
 	 *  Defaults to -1, the id for the matrix in the OAM that this sprite should use for affine transformations.
@@ -85,13 +94,26 @@ public:
 	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	 // TODO: Update the documentation for this
 	object(OamState *Oam,
 	   frameAsset ***animations,
 	   vector2D<float> position, vector2D<float> gravity, uint8 weight, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
 
+
+#ifdef ZBE_TESTING
+	/**
+	 * Super basic object constructor
+	 *
+	 * Only available in the testing build. Used by the collisionMatrix functional test.
+	 * Doesn't set any variables. Do not use this for anything other than a functional test.
+	 *
+	 * @author Joe Balough
+	 */
+	object()
+	{
+	}
+#endif
 
 	/**
 	 * Object update function
