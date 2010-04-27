@@ -279,6 +279,105 @@ public:
 			}
 		}
 
+
+
+		//       --------------------------------
+		iprintf("Test cM::getCollisionCandidates\n");
+		vector<object*> quadCands[4];
+		quadCands[0] = mat.getCollisionCandidates(vector2D<float>(2.5, 2.5));
+		quadCands[1] = mat.getCollisionCandidates(vector2D<float>(7.5, 2.5));
+		quadCands[2] = mat.getCollisionCandidates(vector2D<float>(2.5, 7.5));
+		quadCands[3] = mat.getCollisionCandidates(vector2D<float>(7.5, 7.5));
+		for (int i = 0; i < 4; i++)
+		{
+			if (quadCands[i].empty())
+			{
+				iprintf("\ngetCollisionCandidates\n");
+				iprintf("returned an empty vector.\n");
+				iprintf("Test failed.\n");
+				pauseIfTesting();
+				return false;
+			}
+		}
+
+		// top Left
+
+		bool present[5] = {false, false, false, false, false};
+		for (unsigned int i = 0; i < quadCands[0].size(); i++)
+		{
+			if (quadCands[0][i] == objects[i])
+				present[i] = true;
+		}
+		if (present[0] != false && present[1] != false && present[2] != false && present[3] != false && present[4] != true)
+		{
+			iprintf("\ngetCollisionCandidates\n");
+			iprintf("returned the wrong data.\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+
+		// Top right
+
+		for (int i = 0; i < 5; i++) present[i] = false;
+
+		for (unsigned int i = 0; i < quadCands[1].size(); i++)
+		{
+			if (quadCands[1][i] == objects[i])
+				present[i] = true;
+		}
+		if (present[0] != false && present[1] != true && present[2] != false && present[3] != false && present[4] != true)
+		{
+			iprintf("\ngetCollisionCandidates\n");
+			iprintf("returned the wrong data.\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+
+		// bottom Left
+
+		for (int i = 0; i < 5; i++) present[i] = false;
+
+		for (unsigned int i = 0; i < quadCands[2].size(); i++)
+		{
+			if (quadCands[2][i] == objects[i])
+				present[i] = true;
+		}
+		if (present[0] != false && present[1] != true && present[2] != true && present[3] != false && present[4] != true)
+		{
+			iprintf("\ngetCollisionCandidates\n");
+			iprintf("returned the wrong data.\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+
+
+		// Bottom right
+
+		for (int i = 0; i < 5; i++) present[i] = false;
+
+		for (unsigned int i = 0; i < quadCands[3].size(); i++)
+		{
+			if (quadCands[3][i] == objects[i])
+				present[i] = true;
+		}
+		if (present[0] != true && present[1] != true && present[2] != true && present[3] != true && present[4] != true)
+		{
+			iprintf("\ngetCollisionCandidates\n");
+			iprintf("returned the wrong data.\n");
+			iprintf("Test failed.\n");
+			pauseIfTesting();
+			return false;
+		}
+
+
+
+
 		iprintf("\n        Cleaning up\n");
 		for (int i = 0; i < 5; i++)
 			delete objects[i];
