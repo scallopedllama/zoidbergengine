@@ -108,10 +108,13 @@ public:
 	 * Only available in the testing build. Used by the collisionMatrix functional test.
 	 * Doesn't set any variables. Do not use this for anything other than a functional test.
 	 *
+	 * @param vector2D<float> Position
+	 *   The position of this object
 	 * @author Joe Balough
 	 */
-	object()
+	object(vector2D<float> Position)
 	{
+		position = Position;
 	}
 #endif
 
