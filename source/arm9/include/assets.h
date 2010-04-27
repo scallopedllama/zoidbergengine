@@ -43,8 +43,11 @@
 #ifndef ASSETS_H_INCLUDED
 #define ASSETS_H_INCLUDED
 
+#define ZBE_VERSION_SUPPORTED 1
+
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <errno.h>
 #include <nds.h>
 #include <fat.h>
@@ -64,6 +67,10 @@ using namespace std;
 class assets {
 public:
 	/**
+	 * assets class constructor
+	 *
+	 * Opens the file and runs the parse routine
+	 *
 	 * @param string filename
 	 *   The zbe file to use for this game
 	 * @param OamState *oam
@@ -71,6 +78,15 @@ public:
 	 * @author Joe Balough
 	 */
 	assets(char* filename, OamState *oam);
+
+	/**
+	 * assets class deconstructor
+	 *
+	 * Deletes everything that was allocated on heap
+	 *
+	 * @author Joe Balough
+	 */
+	 ~assets();
 
 	/**
 	 * parseZbe function
@@ -97,6 +113,27 @@ public:
 	 */
 	uint16 *getGfx(gfxAsset *gfx);
 
+
+	/**
+	 * loadGfx() function
+	 *
+	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
+	 * call to getGfx()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadGfx(gfxAsset *gfx);
+
+
+	/**
+	 * freeGfx() function
+	 *
+	 * Frees the space allocated to hold the passed gfxAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freeGfx(gfxAsset *gfx);
+
 	/**
 	 * getPalette function
 	 *
@@ -110,6 +147,27 @@ public:
 	 * @author Joe Balough
 	 */
 	uint8 getPalette(paletteAsset *pal);
+
+
+	/**
+	 * loadPalette() function
+	 *
+	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
+	 * call to getPalette()
+	 *
+	 * @author Joe Balough
+	 */
+	void loadPalette(paletteAsset *gfx);
+
+
+	/**
+	 * freePalette() function
+	 *
+	 * Frees the space allocated to hold the passed paletteAsset in main memory. Resets the loaded variable.
+	 *
+	 * @author Joe Balough
+	 */
+	void freePalette(paletteAsset *gfx);
 
 	/**
 	 * loadLevel function
@@ -127,6 +185,18 @@ public:
 	levelAsset *loadLevel(uint32 id);
 
 	/**
+	 * loadBackground function
+	 *
+	 * Used by background class to tell this assets class to initialize the passed backgroundAsset
+	 * and get its data into main memory properly.
+	 *
+	 * @param levelBackgroundAsset *background
+	 *  The levelBackgroundAsset for the background to load. Obtained from a levelAsset
+	 * @author Joe Balough
+	 */
+	void loadBackground(levelBackgroundAsset *background);
+
+	/**
 	 * Retrieve the SpriteSize for the gfx with the specified id
 	 * @param uint32 id
 	 *  Id for the gfx whose size is desired
@@ -136,6 +206,48 @@ public:
 	{
 		return gfxAssets[id]->size;
 	}
+
+	/**
+	 * Get the number of levels in the assets file
+	 * @return uint32
+	 *   number of levels in assets file
+	 * @author Joe Balough
+	 */
+	inline uint32 numLevels()
+	{
+		return uint32(levelAssets.size());
+	}
+
+	/**
+	 * Get the name of a level
+	 * @param uint32
+	 *   Id of level whose name should be retrieved
+	 * @return string
+	 *   string containing level's name, copied out of levelAsset
+	 * @author Joe Balough
+	 */
+	inline string getLevelName(uint32 id)
+	{
+		return string(levelAssets[id]->name);
+	}
+
+#ifdef ZBE_TESTING
+	/**
+	 * getDebugMessage function
+	 *
+	 * Returns the debugMessage for a level
+	 *
+	 * @param uint32
+	 *   id for level
+	 * @return string
+	 *   level's debug message
+	 * @author Joe Balough
+	 */
+	inline string getDebugMessage(uint32 l)
+	{
+		return string(levelAssets[l]->debugMessage);
+	}
+#endif
 
 private:
 	/**
@@ -151,28 +263,6 @@ private:
 	 * @author Joe Balough
 	 */
 	template <class T> T load(FILE *input);
-
-
-	/**
-	 * loadGfx() function
-	 *
-	 * Loads the passed gfxAsset into main memory. will be copied into video memory at the first
-	 * call to getGfx()
-	 *
-	 * @author Joe Balough
-	 */
-	void loadGfx(gfxAsset *gfx);
-
-
-	/**
-	 * loadPalette() function
-	 *
-	 * Loads the passed paletteAsset into main memory. will be copied into video memory at the first
-	 * call to getPalette()
-	 *
-	 * @author Joe Balough
-	 */
-	void loadPalette(paletteAsset *gfx);
 
 
 	/**
@@ -241,16 +331,16 @@ private:
 	 * id asset are loaded, their index if loaded, the position in the file, length, size, etc.
 	 * @see assetStatus
 	 */
-	// Tiles' status
 	vector<gfxAsset*> gfxAssets;
-	// Palettes' status
+	vector<gfxAsset*> tilesetAssets;
 	vector<paletteAsset*> paletteAssets;
-
-	// All of the objectAssets defined in the datafile
+	vector<backgroundAsset*> backgroundAssets;
 	vector<objectAsset*> objectAssets;
-
-	// Vector of levelAssets
 	vector<levelAsset*> levelAssets;
+
+
+	// A pointer to the levelAsset that was last loaded
+	levelAsset *lastLevel;
 };
 
 #endif // ASSETS_H_INCLUDED

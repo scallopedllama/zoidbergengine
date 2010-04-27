@@ -88,7 +88,7 @@ public:
 	 // TODO: Update the documentation for this
 	object(OamState *Oam,
 	   frameAsset ***animations,
-	   vector2D<float> position, vector2D<float> gravity, bool Hidden = false,
+	   vector2D<float> position, vector2D<float> gravity, uint8 weight, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 	   bool Mosaic = false);
 
@@ -265,6 +265,18 @@ public:
 	}
 
 
+	/**
+	 * Returns the weight of this object
+	 *
+	 * @return uint8
+	 *   the weight of the object
+	 * @author Joe Balough
+	 */
+	inline uint8 getWeight()
+	{
+		return weight;
+	}
+
 	// Indicates whether or not the object is falling. If the object is falling, it will be
 	// moved by gravity in the update funciton. If not, gravity won't move it at all.
 	bool falling;
@@ -298,6 +310,9 @@ protected:
 
 	// Whether or not this sprite is using affine transformations
 	bool isRotateScale;
+
+	// The weight of the object
+	uint8 weight;
 
 	// These are only valid when isRotateScale == true
 

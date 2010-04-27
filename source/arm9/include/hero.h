@@ -60,12 +60,12 @@ public:
 	 */
 	hero(OamState *Oam,
 		frameAsset ***animations,
-		vector2D<float> position, vector2D<float> gravity, bool hidden = false,
+		vector2D<float> position, vector2D<float> gravity, uint8 weight, bool hidden = false,
 		int matrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 		bool Mosaic = false)
 	: object(Oam,
 		 animations,
-		 position, gravity, hidden,
+		 position, gravity, weight, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
 	{}
@@ -90,8 +90,8 @@ public:
 		{
 			// ansi escape sequence to set print co-ordinates
 			// /x1b[line;columnH
-			iprintf("\x1b[1;24HX: %ld\n", (long int) position.x);
-			iprintf("\x1b[2;24HY: %ld\n", (long int) position.y);
+			iprintf("\x1b[1;24HX: %5ld\n", (long int) position.x);
+			iprintf("\x1b[2;24HY: %5ld\n", (long int) position.y);
 		}
 		++numCalls;
 

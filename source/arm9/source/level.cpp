@@ -1,10 +1,14 @@
 #include "level.h"
 
 // level constructor
-level::level(levelAsset *metadata, OamState *o)
+level::level(levelAsset *m, OamState *o)
 {
-	// set the oam
+	// set the oam and metadata
 	oam = o;
+	metadata = m;
+
+	// No palettes loaded
+	numBackgroundPalettes = 0;
 
 	// indicate that all matrices and sprites are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
@@ -15,10 +19,32 @@ level::level(levelAsset *metadata, OamState *o)
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
 
+	// Load up the backgrounds
+	// Level dimensions are determined by the biggest background in the back layers
+	//vector2D<uint32> maxDimensions(0, 0);
+	/*
+	for (int i = 0; i < 4; i++)
+	{
+		if (metadata->bgs[i].background)
+		{
+			// Make the new background
+			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
+			numBackgroundPalettes += metadata->bgs[i].palettes.size();*/
+
+			// If this is a layer behind the sprites, see if it's bigger than the current biggest
+			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
+			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
+				maxDimensions = thisDimensions;*/
+
+			// Add it to the vector
+			/*backgrounds.push_back(newBackground);
+		}
+	}*/
+
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
 	colMatrix = new collisionMatrix(1200, 1000, 70);
-	
+
 	// Parse the levelAssets metadata
 	// Load up all the objects
 	for (unsigned int i = 0; metadata->heroes[i] != NULL; i++)
@@ -27,7 +53,7 @@ level::level(levelAsset *metadata, OamState *o)
 		objectAsset *obj = metadata->heroes[i]->obj;
 
 		// Make the new hero
-		object *newObj = (object*) new hero(oam, obj->animations, metadata->objects[1]->position, gravity);
+		object *newObj = (object*) new hero(oam, obj->animations, metadata->heroes[i]->position, gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
@@ -46,7 +72,7 @@ level::level(levelAsset *metadata, OamState *o)
 		objectAsset *obj = metadata->objects[i]->obj;
 
 		// Make the new object
-		object *newObj = new object(oam, obj->animations, metadata->objects[1]->position, gravity);
+		object *newObj = new object(oam, obj->animations, metadata->objects[i]->position, gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
@@ -57,17 +83,22 @@ level::level(levelAsset *metadata, OamState *o)
 		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
-
 }
 
 // level destructor
 level::~level()
 {
-	for(unsigned int i = 0; i < objects.size(); i++)
+	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
+
 	delete colMatrix;
+
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
+	{
+		delete backgrounds[i];
+	}
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -93,8 +124,18 @@ void level::run()
 	uint32 frame = 0;
 	time_t startTime = time(NULL);
 
-	// start running the main loop
+	// Run forever if not testing
+#ifndef ZBE_TESTING
 	while(true)
+#else
+	// Print the explanation message and pause
+	consoleClear();
+	iprintf("%s\n\n", metadata->expMessage);
+	pauseIfTesting();
+
+	// run for timer blanks if testing
+	for (int i = 0; i < metadata->timer; i++)
+#endif
 	{
 		update();
 
@@ -191,8 +232,8 @@ void level::update()
 	{
 		// TODO: make width and height actually valid variables with proper values and enable them here
 		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x, objects[i]->position.y - screenOffset.y);
-		if     (screenPos.x >= 0 && screenPos.x /**+ width**/  <= SCREEN_WIDTH  &&
-			screenPos.y >= 0 && screenPos.y /**+ height**/ <= SCREEN_HEIGHT)
+		if     (screenPos.x >= 0 && screenPos.x /**+ objects[i].dimensions.x**/  <= SCREEN_WIDTH  &&
+			screenPos.y >= 0 && screenPos.y /**+ objects[i].dimensions.y**/ <= SCREEN_HEIGHT)
 		{
 			objects[i]->draw(spriteId);
 			++spriteId;
@@ -201,5 +242,11 @@ void level::update()
 			if(spriteId > SPRITE_COUNT)
 				break;
 		}
+	}
+
+	// Update the backgrounds
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
+	{
+		backgrounds[i]->update();
 	}
 }

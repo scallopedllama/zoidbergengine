@@ -5,11 +5,90 @@
 			<gfx bin="gfx/01-orangeShuttle.img.bin" w="44" h="55" top="3" left="8"/>
 			<gfx bin="gfx/02-moon.img.bin" w="32" h="32" top="0" left="0"/>
 		</graphics>
+		<tilesets>
+			<tileset bin="gfx/03-bgTiles.img.bin" />
+		</tilesets>
 		<palettes>
 			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
 			<palette bin="gfx/02-moon.pal.bin"/>
+			<palette bin="gfx/03-bgTiles.pal.bin"/>
 		</palettes>
 	</bin>
+	<backgrounds>
+		<background palette="2">
+			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="3"/></row>
+		</background>
+		<background palette="2">
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="1"/></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" hflip="1" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
+		</background>
+		<background palette="2">
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
+		</background>
+		<background palette="2">
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row></row>
+			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
+		</background>
+	</backgrounds>
 	<objects>
 		<object weight="45">
 			<animations>
@@ -29,12 +108,18 @@
 	</objects>
 	<levels>
 		<level>
+			<backgrounds tileset="0">
+				<background layer="0" id="0" distance="5" />
+				<background layer="1" id="1" distance="3" />
+				<background layer="2" id="2" />
+				<background layer="3" id="3" distance="2" />
+			</backgrounds>
 			<objects>
-				<object id="0" x="55" y="34" />
-				<object id="1" x="100" y="10" />
+				<object id="0" x="155" y="34" />
+				<object id="0" x="200" y="10" />
 			</objects>
 			<heroes>
-				<hero id="1" x="75" y="45" />
+				<hero id="1" x="32" y="32" />
 			</heroes>
 		</level>
 	</levels>

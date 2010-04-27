@@ -22,6 +22,8 @@ must not be misrepresented as being the original software.
 distribution.
 */
 
+// Force TinyXML to use the standard library
+#define TIXML_USE_STL
 
 #ifndef TINYXML_INCLUDED
 #define TINYXML_INCLUDED

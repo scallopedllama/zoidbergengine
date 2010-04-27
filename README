@@ -21,8 +21,6 @@ In this directory:
                        files. This references C:\devkitpro
   cb_project_linux/ A working code::block project and its files for
                        development in Linux, references ./devkitpro
-  cb_project_win/   A working code::blocks project and its files for
-                       development in Windows
   docs/				Numerous documents associated with the zoidberg
 						engine including the logo
   tools/			Contains other tools useful to building zbe games

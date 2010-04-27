@@ -1,153 +1,44 @@
-/*
- *  main.cpp
+/**
+ * @file main.cpp
  *
- *  Created by Jaeden Amero on 11/12/07.
- *  Copyright 2007. All rights reserved.
+ * @brief Initializes the video stuff and runs the game
  *
+ * @author Joe Balough
  */
+
+/**
+ *  Copyright (c) 2010 zoidberg engine
+ *
+ *  This file is part of the zoidberg engine.
+ *
+ *  The zoidberg engine is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The zoidberg engine is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with the zoidberg engine.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef ZBE_TESTING
 
 #include <nds.h>
 #include <maxmod9.h>
 #include <fat.h>
 #include <assert.h>
 #include <stdio.h>
-
 #include "game.h"
-
-// Backgrounds
-#include "starField.h"
-#include "planet.h"
-#include "splash.h"
-// Sounds
-#include "soundbank.h"
-#include "soundbank_bin.h"
-
-// Select a low priority DMA channel to perform our background copying.
-static const int DMA_CHANNEL = 3;
-
-void initVideo()
-{
-	powerOn(POWER_ALL_2D);
-	lcdMainOnBottom();
-
-    vramSetMainBanks(VRAM_A_MAIN_SPRITE,
-                     VRAM_B_MAIN_BG_0x06020000,
-                     VRAM_C_SUB_BG_0x06200000,
-                     VRAM_D_SUB_SPRITE);
-
-
-    //  Set the video mode on the main screen.
-    videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG2_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG3_ACTIVE | // Enable BG3 for display
-                 DISPLAY_SPR_ACTIVE | // Enable sprites for display
-                 DISPLAY_SPR_1D       // Enable 1D tiled sprites
-                 );
-
-    //  Set the video mode on the sub screen.
-    videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                   DISPLAY_BG1_ACTIVE); // Enable BG1 for display of console output
-
-	  oamInit(&oamMain, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
-	  oamInit(&oamSub, SpriteMapping_1D_32, ZOIDBERG_USE_EXT_PAL);
-
-	consoleDemoInit();
-}
-
-void initBackgrounds()
-{
-    /*  Set up affine background 3 on main as a 16-bit color background. */
-    REG_BG3CNT = BG_BMP16_256x256 |
-                 BG_BMP_BASE(0) | // The starting place in memory
-                 BG_PRIORITY(3); // A low priority
-
-    /*  Set the affine transformation matrix for the main screen background 3
-     *  to be the identity matrix.
-     */
-    REG_BG3PA = 1 << 8;
-    REG_BG3PB = 0;
-    REG_BG3PC = 0;
-    REG_BG3PD = 1 << 8;
-
-    /*  Place main screen background 3 at the origin (upper left of the
-     *  screen).
-     */
-    REG_BG3X = 0;
-    REG_BG3Y = 0;
-
-    /*  Set up affine background 2 on main as a 16-bit color background. */
-    REG_BG2CNT = BG_BMP16_128x128 |
-                 BG_BMP_BASE(8) | // The starting place in memory
-                 BG_PRIORITY(2);  // A higher priority
-
-    /*  Set the affine transformation matrix for the main screen background 3
-     *  to be the identity matrix.
-     */
-    REG_BG2PA = 1 << 8;
-    REG_BG2PB = 0;
-    REG_BG2PC = 0;
-    REG_BG2PD = 1 << 8;
-
-    /*  Place main screen background 2 in an interesting place. */
-    REG_BG2X = -(SCREEN_WIDTH / 2 - 32) << 8;
-    REG_BG2Y = -32 << 8;
-
-    /*  Set up affine background 3 on the sub screen as a 16-bit color
-     *  background.
-     */
-    REG_BG3CNT_SUB = BG_BMP16_256x256 |
-                     BG_BMP_BASE(0) | // The starting place in memory
-                     BG_PRIORITY(3); // A low priority
-
-    /*  Set the affine transformation matrix for the sub screen background 3
-     *  to be the identity matrix.
-     */
-    REG_BG3PA_SUB = 1 << 8;
-    REG_BG3PB_SUB = 0;
-    REG_BG3PC_SUB = 0;
-    REG_BG3PD_SUB = 1 << 8;
-
-    /*
-     *  Place main screen background 3 at the origin (upper left of the screen)
-     */
-    REG_BG3X_SUB = 0;
-    REG_BG3Y_SUB = 0;
-}
-
-void displayStarField()
-{
-    dmaCopyHalfWords(DMA_CHANNEL,
-                     starFieldBitmap, /* This variable is generated for us by
-                                       * grit. */
-                     (uint16 *)BG_BMP_RAM(0), /* Our address for main
-                                               * background 3 */
-                     starFieldBitmapLen);
-}
-
-void displayPlanet()
-{
-    dmaCopyHalfWords(DMA_CHANNEL,
-                     planetBitmap, /* This variable is generated for us by
-                                    * grit. */
-                     (uint16 *)BG_BMP_RAM(8), /* Our address for main
-                                               * background 2 */
-                     planetBitmapLen);
-}
 
 int main()
 {
 	initVideo();
-	//initBackgrounds();
-
-	// Initialize maxmod using the memory based soundbank set up.
-	//mmInitDefaultMem((mm_addr)soundbank_bin);
 
 	// Initialize libfat
 	fatInitDefault();
-
-	// Display the backgrounds
-	//displayStarField();
-	//displayPlanet();
 
 	// make a game
 	game g((char *) "/assets.zbe");
@@ -155,3 +46,5 @@ int main()
 
 	return 0;
 }
+
+#endif

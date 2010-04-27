@@ -50,6 +50,24 @@
 					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
 				</MakeCommands>
 			</Target>
+			<Target title="DeSmuMe testing">
+				<Option output="../source/arm9/bin/zoidbergengine.arm9.elf" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option parameters="--cflash-path=./tools/cliCreator ./bin/zoidbergengine_testing.nds" />
+				<Option host_application="desmume" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<MakeCommands>
+					<Build command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. testing" />
+					<CompileFile command="" />
+					<Clean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+					<DistClean command="export DEVKITPRO=$PWD/../devkitpro; export DEVKITARM=$DEVKITPRO/devkitARM; make -C .. clean" />
+				</MakeCommands>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -62,6 +80,7 @@
 		<Unit filename="../source/arm9/Makefile" />
 		<Unit filename="../source/arm9/include/assets.h" />
 		<Unit filename="../source/arm9/include/assettypes.h" />
+		<Unit filename="../source/arm9/include/background.h" />
 		<Unit filename="../source/arm9/include/collisionmatrix.h" />
 		<Unit filename="../source/arm9/include/game.h" />
 		<Unit filename="../source/arm9/include/hero.h" />
@@ -72,6 +91,7 @@
 		<Unit filename="../source/arm9/include/vars.h" />
 		<Unit filename="../source/arm9/include/vector.h" />
 		<Unit filename="../source/arm9/source/assets.cpp" />
+		<Unit filename="../source/arm9/source/background.cpp" />
 		<Unit filename="../source/arm9/source/collisionmatrix.cpp" />
 		<Unit filename="../source/arm9/source/game.cpp" />
 		<Unit filename="../source/arm9/source/hero.cpp" />
@@ -79,12 +99,18 @@
 		<Unit filename="../source/arm9/source/main.cpp" />
 		<Unit filename="../source/arm9/source/object.cpp" />
 		<Unit filename="../source/arm9/source/physics.cpp" />
+		<Unit filename="../source/arm9/source/testing.cpp" />
 		<Unit filename="../source/arm9/source/util.cpp" />
 		<Unit filename="../source/arm9/source/vars.cpp" />
 		<Unit filename="../tools/cliCreator/Makefile" />
 		<Unit filename="../tools/cliCreator/README" />
 		<Unit filename="../tools/cliCreator/assets.xml" />
 		<Unit filename="../tools/cliCreator/cliCreator.cpp" />
+		<Unit filename="../tools/cliCreator/creatorutil.cpp" />
+		<Unit filename="../tools/cliCreator/creatorutil.h" />
+		<Unit filename="../tools/cliCreator/parsers.cpp" />
+		<Unit filename="../tools/cliCreator/parsers.h" />
+		<Unit filename="../tools/cliCreator/testing.xml" />
 		<Extensions>
 			<code_completion>
 				<search_path add="../devkitpro/libnds/include" />

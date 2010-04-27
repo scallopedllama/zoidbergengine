@@ -3,17 +3,18 @@
 // object constructor
 object::object(OamState *Oam,
 	   frameAsset ***anim,
-	   vector2D<float> pos, vector2D<float> grav, bool Hidden,
+	   vector2D<float> pos, vector2D<float> grav, uint8 Weight, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
 	   bool Mosaic)
 {
 	// Set all the variables
 	oam = Oam;
 	animations = anim;
+	weight = Weight;
 
 	matrixId = MatrixId;
 
-	priority = 2;
+	priority = 1;
 	format = SpriteColorFormat_16Color;
 	hidden = Hidden;
 

@@ -7,7 +7,7 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1996, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009 Free Software
+2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009, 2010 Free Software
 Foundation, Inc.  Contributed by Cygnus Solutions.  Written by John
 Gilmore.  Second Edition by Stan Shebs.
 
@@ -21,7 +21,7 @@ Free Documentation License".
    This file documents the internals of the GNU debugger GDB.
 
    Copyright (C) 1990, 1991, 1992, 1993, 1994, 1996, 1998, 1999, 2000,
-2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009 Free Software
+2001, 2002, 2003, 2004, 2005, 2006, 2008, 2009, 2010 Free Software
 Foundation, Inc.  Contributed by Cygnus Solutions.  Written by John
 Gilmore.  Second Edition by Stan Shebs.
 
@@ -136,7 +136,9 @@ emitted.
      haven't been loaded yet.
 
  -- Function: void solib_unloaded (struct so_list *SOLIB)
-     The shared library specified by SOLIB has been unloaded.
+     The shared library specified by SOLIB has been unloaded.  Note
+     that when GDB calls this observer, the library's symbols have not
+     been unloaded yet, and thus are still available.
 
  -- Function: void new_objfile (struct objfile *OBJFILE)
      The symbol file specified by OBJFILE has been loaded.  Called with
@@ -198,12 +200,17 @@ emitted.
      The thread's ptid has changed.  The OLD_PTID parameter specifies
      the old value, and NEW_PTID specifies the new value.
 
- -- Function: void new_inferior (int PID)
+ -- Function: void inferior_appeared (int PID)
      GDB has attached to a new inferior identified by PID.
 
  -- Function: void inferior_exit (int PID)
      Either GDB detached from the inferior, or the inferior exited.
      The argument PID identifies the inferior.
+
+ -- Function: void memory_changed (CORE_ADDR ADDR, int LEN, const
+          bfd_byte *DATA)
+     Bytes from DATA to DATA + LEN have been written to the current
+     inferior at ADDR.
 
  -- Function: void test_notification (int SOMEARG)
      This observer is used for internal testing.  Do not use.  See
@@ -663,7 +670,7 @@ Index
                                                               (line  13)
 * _initialize_language:                  Language Support.    (line  79)
 * a.out format:                          Symbol Handling.     (line 213)
-* about_to_proceed:                      GDB Observers.       (line 131)
+* about_to_proceed:                      GDB Observers.       (line 133)
 * abstract interpretation of function prologues: Algorithms.  (line  48)
 * add_cmd:                               User Interface.      (line  21)
 * add_com:                               User Interface.      (line  21)
@@ -694,7 +701,7 @@ Index
                                                               (line  13)
 * architecture representation:           How an Architecture is Represented.
                                                               (line   6)
-* architecture_changed:                  GDB Observers.       (line 158)
+* architecture_changed:                  GDB Observers.       (line 160)
 * Array Containers:                      Support Libraries.   (line 131)
 * assumptions about targets:             Coding.              (line 514)
 * ATTR_NORETURN:                         Host Definition.     (line 126)
@@ -711,9 +718,9 @@ Index
                                                               (line  88)
 * breakpoint address adjusted:           Defining Other Architecture Features.
                                                               (line 145)
-* breakpoint_created:                    GDB Observers.       (line 134)
-* breakpoint_deleted:                    GDB Observers.       (line 138)
-* breakpoint_modified:                   GDB Observers.       (line 142)
+* breakpoint_created:                    GDB Observers.       (line 136)
+* breakpoint_deleted:                    GDB Observers.       (line 140)
+* breakpoint_modified:                   GDB Observers.       (line 144)
 * breakpoints:                           Algorithms.          (line 151)
 * bug-gdb mailing list:                  Getting Started.     (line  72)
 * build script:                          Debugging GDB.       (line  94)
@@ -724,7 +731,7 @@ Index
 * CANNOT_STEP_HW_WATCHPOINTS:            Algorithms.          (line 408)
 * CC_HAS_LONG_LONG:                      Host Definition.     (line 105)
 * CFI (call frame information):          Algorithms.          (line  14)
-* checkpoints:                           Algorithms.          (line 610)
+* checkpoints:                           Algorithms.          (line 604)
 * cleanups:                              Coding.              (line  12)
 * CLI:                                   User Interface.      (line  12)
 * code pointers, word-addressed:         Pointers and Addresses.
@@ -1063,7 +1070,7 @@ Index
 * HAVE_STEPPABLE_WATCHPOINT:             Algorithms.          (line 386)
 * host:                                  Overall Structure.   (line  50)
 * host, adding:                          Host Definition.     (line  13)
-* i386_cleanup_dregs:                    Algorithms.          (line 586)
+* i386_cleanup_dregs:                    Algorithms.          (line 580)
 * I386_DR_LOW_GET_STATUS:                Algorithms.          (line 493)
 * I386_DR_LOW_RESET_ADDR:                Algorithms.          (line 489)
 * I386_DR_LOW_SET_ADDR:                  Algorithms.          (line 486)
@@ -1073,14 +1080,14 @@ Index
 * i386_region_ok_for_watchpoint:         Algorithms.          (line 518)
 * i386_remove_hw_breakpoint:             Algorithms.          (line 568)
 * i386_remove_watchpoint:                Algorithms.          (line 540)
-* i386_stopped_by_hwbp:                  Algorithms.          (line 580)
 * i386_stopped_by_watchpoint:            Algorithms.          (line 532)
 * i386_stopped_data_address:             Algorithms.          (line 525)
 * I386_USE_GENERIC_WATCHPOINTS:          Algorithms.          (line 465)
 * in_dynsym_resolve_code:                Defining Other Architecture Features.
                                                               (line 263)
+* inferior_appeared:                     GDB Observers.       (line 169)
 * inferior_created:                      GDB Observers.       (line  92)
-* inferior_exit:                         GDB Observers.       (line 170)
+* inferior_exit:                         GDB Observers.       (line 172)
 * inner_than:                            Functions and Variable to Analyze Frames.
                                                               (line  30)
 * innermost frame:                       Frame Handling Terminology.
@@ -1114,6 +1121,7 @@ Index
 * making a new release of gdb:           Releasing GDB.       (line   6)
 * memory representation:                 Register and Memory Data.
                                                               (line   6)
+* memory_changed:                        GDB Observers.       (line 177)
 * minimal symbol table:                  Symbol Handling.     (line 111)
 * minsymtabs:                            Symbol Handling.     (line 111)
 * multi-arch data:                       Coding.              (line 100)
@@ -1123,18 +1131,17 @@ Index
 * nesting level in ui_out functions:     User Interface.      (line 143)
 * new year procedure:                    Start of New Year Procedure.
                                                               (line   6)
-* new_inferior:                          GDB Observers.       (line 167)
-* new_objfile:                           GDB Observers.       (line 107)
-* new_thread:                            GDB Observers.       (line 112)
+* new_objfile:                           GDB Observers.       (line 109)
+* new_thread:                            GDB Observers.       (line 114)
 * NEXT frame:                            Frame Handling Terminology.
                                                               (line  11)
 * NORETURN:                              Host Definition.     (line 119)
 * normal_stop:                           GDB Observers.       (line  76)
 * normal_stop observer:                  GDB Observers.       (line  48)
 * notification about inferior execution stop: GDB Observers.  (line  48)
-* notifications about changes in internals: Algorithms.       (line 640)
+* notifications about changes in internals: Algorithms.       (line 634)
 * object file formats:                   Symbol Handling.     (line 210)
-* observer pattern interface:            Algorithms.          (line 640)
+* observer pattern interface:            Algorithms.          (line 634)
 * observers implementation rationale:    GDB Observers.       (line   9)
 * obstacks:                              Support Libraries.   (line  69)
 * op_print_tab:                          Language Support.    (line  91)
@@ -1227,7 +1234,7 @@ Index
 * representations, register and memory:  Register and Memory Data.
                                                               (line   6)
 * requirements for GDB:                  Requirements.        (line   6)
-* restart:                               Algorithms.          (line 610)
+* restart:                               Algorithms.          (line 604)
 * running the test suite:                Testsuite.           (line  19)
 * secondary symbol file:                 Symbol Handling.     (line  47)
 * sentinel frame <1>:                    Frame Handling Terminology.
@@ -1332,23 +1339,24 @@ Index
 * target_remove_breakpoint:              Algorithms.          (line 211)
 * target_remove_hw_breakpoint:           Algorithms.          (line 234)
 * target_remove_watchpoint:              Algorithms.          (line 347)
-* target_resumed:                        GDB Observers.       (line 127)
+* target_resumed:                        GDB Observers.       (line 129)
 * target_stopped_data_address:           Algorithms.          (line 364)
 * target_watchpoint_addr_within_range:   Algorithms.          (line 378)
 * targets:                               Existing Targets.    (line   6)
 * TCP remote support:                    Host Definition.     (line  57)
 * terminal device:                       Host Definition.     (line  97)
 * test suite:                            Testsuite.           (line   6)
-* test suite organization:               Testsuite.           (line 107)
-* test_notification:                     GDB Observers.       (line 174)
+* test suite organization:               Testsuite.           (line 195)
+* test_notification:                     GDB Observers.       (line 181)
+* Testsuite Configuration:               Testsuite.           (line 167)
 * THIS frame:                            Frame Handling Terminology.
                                                               (line   9)
-* thread_exit:                           GDB Observers.       (line 115)
-* thread_ptid_changed:                   GDB Observers.       (line 163)
-* thread_stop_requested:                 GDB Observers.       (line 120)
-* tracepoint_created:                    GDB Observers.       (line 146)
-* tracepoint_deleted:                    GDB Observers.       (line 150)
-* tracepoint_modified:                   GDB Observers.       (line 154)
+* thread_exit:                           GDB Observers.       (line 117)
+* thread_ptid_changed:                   GDB Observers.       (line 165)
+* thread_stop_requested:                 GDB Observers.       (line 122)
+* tracepoint_created:                    GDB Observers.       (line 148)
+* tracepoint_deleted:                    GDB Observers.       (line 152)
+* tracepoint_modified:                   GDB Observers.       (line 156)
 * tuple output functions:                User Interface.      (line 131)
 * type codes:                            Symbol Handling.     (line 186)
 * types:                                 Coding.              (line 405)
@@ -1405,7 +1413,7 @@ Index
 * wrap_here:                             Coding.              (line 191)
 * write_pc:                              Register Architecture Functions & Variables.
                                                               (line  13)
-* writing tests:                         Testsuite.           (line 159)
+* writing tests:                         Testsuite.           (line 247)
 * x86 debug registers:                   Algorithms.          (line 453)
 * XCOFF format:                          Symbol Handling.     (line 251)
 
