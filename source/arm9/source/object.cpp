@@ -11,6 +11,7 @@ object::object(OamState *Oam,
 	oam = Oam;
 	animations = anim;
 	weight = Weight;
+	frame = anim[0][0]->gfx;
 
 	matrixId = MatrixId;
 

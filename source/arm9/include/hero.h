@@ -68,7 +68,11 @@ public:
 		 position, gravity, weight, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,
 		 Mosaic)
-	{}
+	{
+		// Give screen offset a default value
+		screenOffset.x = position.x + frame->topleft.x + (frame->dimensions.x / 2) - (SCREEN_WIDTH  / 2);
+		screenOffset.y = position.y + frame->topleft.y + (frame->dimensions.y / 2) - (SCREEN_HEIGHT / 2);
+	}
 
 	/**
 	 * Implementation of update function
