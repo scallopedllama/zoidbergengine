@@ -7,6 +7,7 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	distance = metadata->distance;
 	layer = metadata->layer;
 	lastScroll = vector2D<float>(128.0, 32.0);
+	replaceable = vector2D<float>(0.0, 0.0);
 
 	// Load up the backgroundAsset to get the map data
 	zbeAssets->loadBackground(metadata);
@@ -85,12 +86,24 @@ void background::update()
 	vector2D<float> thisScroll = vector2D<float>(lastScroll.x + displacement.x, lastScroll.y + displacement.y);
 
 	// scroll the background
-	//bgScroll(backgroundId, (int) thisScroll.x / 8, (int) thisScroll.y / 8);
 	bgSetScroll(backgroundId, (int) thisScroll.x, (int) thisScroll.y);
+
+	// Add the amount of background left over from past updates that is replacable
+	displacement = vector2D<float>(displacement.x + replaceable.x, displacement.y + replaceable.y);
 
 	//The number of columns to replace in those dimensions
 	int repRows = abs(int(displacement.y)) / 8;
 	int repCols = abs(int(displacement.x)) / 8;
+
+	// Update replaceable
+	if (displacement.x < 0)
+		replaceable = vector2D<float>(displacement.x + repCols * 8, displacement.y);
+	if (displacement.x >= 0)
+		replaceable = vector2D<float>(displacement.x - repCols * 8, displacement.y);
+	if (displacement.y < 0)
+		replaceable = vector2D<float>(displacement.x, displacement.y + repRows * 8);
+	if (displacement.y >= 0)
+		replaceable = vector2D<float>(displacement.x, displacement.y + repRows * 8);
 
 	// Return if not replacing anything
 	if (repRows == 0 && repCols == 0)
@@ -118,8 +131,8 @@ void background::update()
 	iprintf("ls (%d, %d), ts (%d, %d) \n", (int) lastScroll.x, (int) lastScroll.y, (int) thisScroll.x, (int) thisScroll.y);
 	iprintf("Scrolled to %d, %d       \n", (int) displacement.x, (int) displacement.y);
 	iprintf("Replacing %d cols at %d  \n", repCols, vmBgMapRep.x);
-	iprintf("Replacing %d rows at %d  \n\n", repRows, vmBgMapRep.y);//pause();
-/*
+	iprintf("Replacing %d rows at %d  \n\n", repRows, vmBgMapRep.y);pause();
+
 	// Now we just need to copy the tiles
 	// replace repRows rows
 	for (int r = 0; r < repRows; r++)
@@ -149,7 +162,7 @@ void background::update()
 			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
 			copyTile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
 		}
-	}*/
+	}
 
 	lastScreenOffset = screenOffset;
 	lastScroll = thisScroll;

@@ -117,6 +117,7 @@ private:
 	// Keep track of last values
 	vector2D<float> lastScroll;
 	vector2D<float> lastScreenOffset;
+	vector2D<float> replaceable;
 };
 
 #endif
