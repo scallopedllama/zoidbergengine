@@ -38,8 +38,8 @@ object::object(OamState *Oam,
 	// Objects default to being affected by gravity. This is changeable though.
 	falling = true;
 
-	colHeight = scale.y*0.8f / 2;
-	colWidth  = scale.x*0.8f / 2;
+	colHeight = scale.y * 0.8f / 2;
+	colWidth  = scale.x * 0.8f / 2;
 }
 
 // object update function, applies physics to the object

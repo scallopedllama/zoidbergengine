@@ -121,6 +121,7 @@ public:
 	void update();
 
 private:
+
 	// A pointer to the oam table that the level should put its obects on.
 	OamState *oam;
 

@@ -29,11 +29,18 @@ bool hero::update(touchPosition *touch)
 	// pass back to the object update function
 	bool moved = object::update(touch);
 
-	// Update the screenOffset to keep the hero center
-	screenOffset.x = position.x + frame->topleft.x + (frame->dimensions.x / 2) - (SCREEN_WIDTH  / 2);
-	screenOffset.y = position.y + frame->topleft.y + (frame->dimensions.y / 2) - (SCREEN_HEIGHT / 2);
+	updateScreenOffset();
 
 	// don't forget to indicate whether or not it moved
 	return moved;
 }
 
+// Update the screenOffset variable
+void hero::updateScreenOffset()
+{
+	// TODO: Clamp to level dimensions
+
+	// Update the screenOffset to keep the hero center
+	screenOffset.x = position.x + frame->topleft.x + (frame->dimensions.x / 2) - (SCREEN_WIDTH  / 2);
+	screenOffset.y = position.y + frame->topleft.y + (frame->dimensions.y / 2) - (SCREEN_HEIGHT / 2);
+}

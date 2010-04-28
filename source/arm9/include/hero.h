@@ -70,8 +70,7 @@ public:
 		 Mosaic)
 	{
 		// Give screen offset a default value
-		screenOffset.x = position.x + frame->topleft.x + (frame->dimensions.x / 2) - (SCREEN_WIDTH  / 2);
-		screenOffset.y = position.y + frame->topleft.y + (frame->dimensions.y / 2) - (SCREEN_HEIGHT / 2);
+		updateScreenOffset();
 	}
 
 	/**
@@ -86,6 +85,16 @@ public:
 	virtual bool update(touchPosition *touch);
 
 
+	/**
+	 * Implementation of draw function
+	 * This just calls the object's draw function but every 100 frames, it will write the hero's X and Y coordinates in
+	 * the top-right of the sub screen.
+	 *
+	 * @see object::draw()
+	 * @param int spriteId
+	 *  The spriteId to use with the oamSet function call
+	 * @author Joe Balough
+	 */
 	virtual void draw(int spriteId)
 	{
 		// Write the hero's x and y in the top right of the screen
@@ -104,6 +113,13 @@ public:
 	}
 
 private:
+
+	/**
+	 * Updates the screenOffset variable based on the current frame of the current running animation
+	 *
+	 * @author Joe Balough
+	 */
+	void updateScreenOffset();
 };
 
 

@@ -88,6 +88,7 @@
 			<row></row>
 			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
 		</background>
+		<background palette="2" xml="bigBg.xml"/>
 	</backgrounds>
 	<objects>
 		<object weight="45">
@@ -109,10 +110,7 @@
 	<levels>
 		<level>
 			<backgrounds tileset="0">
-				<background layer="0" id="0" distance="5" />
-				<background layer="1" id="1" distance="3" />
-				<background layer="2" id="2" />
-				<background layer="3" id="3" distance="2" />
+				<background layer="0" id="4" distance="1" />
 			</backgrounds>
 			<objects>
 				<object id="0" x="155" y="34" />

@@ -19,27 +19,6 @@ level::level(levelAsset *m, OamState *o)
 	// gravity default value CAN BE CHANGED
 	gravity.y = 0.025;
 
-	// Load up the backgrounds
-	// Level dimensions are determined by the biggest background in the back layers
-	//vector2D<uint32> maxDimensions(0, 0);
-	for (int i = 0; i < 4; i++)
-	{
-		if (metadata->bgs[i].background)
-		{
-			// Make the new background
-			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
-			numBackgroundPalettes += metadata->bgs[i].palettes.size();
-
-			// If this is a layer behind the sprites, see if it's bigger than the current biggest
-			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
-			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
-				maxDimensions = thisDimensions;*/
-
-			// Add it to the vector
-			backgrounds.push_back(newBackground);
-		}
-	}
-
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
 	colMatrix = new collisionMatrix(1200, 1000, 70);
@@ -82,6 +61,27 @@ level::level(levelAsset *m, OamState *o)
 		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
+
+	// Load up the backgrounds
+	// Level dimensions are determined by the biggest background in the back layers
+	//vector2D<uint32> maxDimensions(0, 0);
+	for (int i = 0; i < 4; i++)
+	{
+		if (metadata->bgs[i].background)
+		{
+			// Make the new background
+			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
+			numBackgroundPalettes += metadata->bgs[i].palettes.size();
+
+			// If this is a layer behind the sprites, see if it's bigger than the current biggest
+			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
+			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
+				maxDimensions = thisDimensions;*/
+
+			// Add it to the vector
+			backgrounds.push_back(newBackground);
+		}
+	}
 }
 
 // level destructor
@@ -259,4 +259,6 @@ void level::update()
 	{
 		backgrounds[i]->update();
 	}
+	// API Call: Update the backgrounds
+	bgUpdate();
 }

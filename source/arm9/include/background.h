@@ -96,7 +96,7 @@ private:
 	 *  The coordinates of the MAP tile to copy
 	 * @author Joe Balough
 	 */
-	void copyTile(uint32 x, uint32 y, uint32 mx, uint32 my);
+	void copyTile(int x, int y, int mx, int my);
 
 
 	// Contains the map data and such for the background being used
