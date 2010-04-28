@@ -86,7 +86,7 @@ void background::update()
 
 	// scroll the background
 	//bgScroll(backgroundId, (int) thisScroll.x / 8, (int) thisScroll.y / 8);
-	bgScroll(backgroundId, (int) displacement.x, (int) displacement.y);
+	bgSetScroll(backgroundId, (int) thisScroll.x, (int) thisScroll.y);
 
 	//The number of columns to replace in those dimensions
 	int repRows = abs(int(displacement.y)) / 8;
