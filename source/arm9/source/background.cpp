@@ -105,21 +105,20 @@ void background::update()
 	//	return;
 
 	// where to begin the replacement in the vm background map
-	vector2D<int> vmBgMapRep((thisScroll.x - 128) / 8, (thisScroll.y - 32) / 8);
-	//if (repCols > 0) vmBgMapRep.x -= 1;
-	//if (repRows > 0) vmBgMapRep.y -= 1;
+	vector2D<float> vmBgMapRep((thisScroll.x - 128) / 8, (thisScroll.y - 32) / 8);
 
 	// where to copy the replacement tiles from in mm background map
-	vector2D<int> mmBgMapRepTL((screenOffset.x - 128) / 8, (screenOffset.y - 32) / 8);
-	vector2D<int> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH + 128) / 8, (screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+	vector2D<float> mmBgMapRepTL((screenOffset.x - 128) / 8, (screenOffset.y - 32) / 8);
+	vector2D<float> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH + 128) / 8, (screenOffset.y + SCREEN_HEIGHT + 32) / 8);
 
 	//       --------------------------------
 	consoleClear();
 	printf("sO: (%f, %f)\n", screenOffset.x, screenOffset.y);
-	iprintf("bg's lvl map coords:\n");
-	iprintf("(%d, %d) to (%d, %d)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
-	iprintf("rep %d, %d at (%d, %d)\n", repRows, repCols, vmBgMapRep.x, vmBgMapRep.y);
-	iprintf("bg %d x %d\n", bg->w, bg->h);
+	printf("los: %f, %f\n", leftOverScroll.x, leftOverScroll.y);
+	printf("bg's lvl map coords:\n");
+	printf("  (%f, %f) to \n  (%f, %f)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
+	printf("rep %d, %d at\n  (%f, %f)\n", repRows, repCols, vmBgMapRep.x, vmBgMapRep.y);
+	printf("bg %d x %d\n", bg->w, bg->h);
 
 	if (repRows == 0 && repCols == 0)
 		return;
@@ -158,7 +157,7 @@ void background::update()
 	}
 
 	lastScreenOffset = screenOffset;
-	lastScroll = thisScroll;pause();
+	lastScroll = thisScroll;//pause();
 }
 
 
