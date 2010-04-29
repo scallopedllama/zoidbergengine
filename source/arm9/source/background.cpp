@@ -120,8 +120,14 @@ void background::update()
 	printf("rep %d, %d at\n  (%f, %f)\n", repRows, repCols, vmBgMapRep.x, vmBgMapRep.y);
 	printf("bg %d x %d\n", bg->w, bg->h);
 
+	lastScreenOffset = screenOffset;
+	lastScroll = thisScroll;//pause();
+
 	if (repRows == 0 && repCols == 0)
 		return;
+	
+	// Note for later:
+	//  I think i may have an issue with where tiles come from in main memory. not where they go in video memory.
 
 	// Now we just need to copy the tiles
 	// replace repRows rows
@@ -155,9 +161,6 @@ void background::update()
 		if (displacement.x > 0) c++;
 		else c--;
 	}
-
-	lastScreenOffset = screenOffset;
-	lastScroll = thisScroll;//pause();
 }
 
 
