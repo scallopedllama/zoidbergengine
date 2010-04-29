@@ -257,8 +257,8 @@ void level::update()
 	// Update the backgrounds
 	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
-		backgrounds[i]->update();
+		//backgrounds[i]->update();
 	}
 	// API Call: Update the backgrounds
-	bgUpdate();
+	//bgUpdate();
 }
