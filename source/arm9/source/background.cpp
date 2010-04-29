@@ -7,7 +7,7 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	distance = metadata->distance;
 	layer = metadata->layer;
 	lastScroll = vector2D<float>(128.0, 32.0);
-	replaceable = vector2D<float>(0.0, 0.0);
+	leftOverScroll = vector2D<float>(0.0, 0.0);
 
 	// Load up the backgroundAsset to get the map data
 	zbeAssets->loadBackground(metadata);
@@ -89,98 +89,91 @@ void background::update()
 	bgSetScroll(backgroundId, (int) thisScroll.x, (int) thisScroll.y);
 
 	// Add the amount of background left over from past updates that is replacable
-	displacement = vector2D<float>(displacement.x + replaceable.x, displacement.y + replaceable.y);
+	vector2D<float> toReplace = vector2D<float>(displacement.x + leftOverScroll.x, displacement.y + leftOverScroll.y);
 
 	//The number of columns to replace in those dimensions
-	int repRows = abs(int(displacement.y)) / 8;
-	int repCols = abs(int(displacement.x)) / 8;
+	int repRows = int(toReplace.y) / 8;
+	int repCols = int(toReplace.x) / 8;
 
-	// Update replaceable
-	if (displacement.x < 0)
-		replaceable = vector2D<float>(displacement.x + repCols * 8, displacement.y);
-	if (displacement.x >= 0)
-		replaceable = vector2D<float>(displacement.x - repCols * 8, displacement.y);
-	if (displacement.y < 0)
-		replaceable = vector2D<float>(displacement.x, displacement.y + repRows * 8);
-	if (displacement.y >= 0)
-		replaceable = vector2D<float>(displacement.x, displacement.y + repRows * 8);
+	// Update leftOverScroll
+	leftOverScroll.x = toReplace.x - repCols * 8;
+	leftOverScroll.y = toReplace.y - repRows * 8;
 
 	// Return if not replacing anything
-	if (repRows == 0 && repCols == 0)
-		return;
+	// TODO: turn this back on
+	//if (repRows == 0 && repCols == 0)
+	//	return;
 
 	// where to begin the replacement in the vm background map
 	vector2D<int> vmBgMapRep((thisScroll.x - 128) / 8, (thisScroll.y - 32) / 8);
-	// Make sure they're not negative
-	if (vmBgMapRep.x < 0) vmBgMapRep.x += (ZBE_BACKGROUND_TILE_WIDTH * 8);
-	if (vmBgMapRep.y < 0) vmBgMapRep.y += (ZBE_BACKGROUND_TILE_HEIGHT * 8);
+	//if (repCols > 0) vmBgMapRep.x -= 1;
+	//if (repRows > 0) vmBgMapRep.y -= 1;
 
 	// where to copy the replacement tiles from in mm background map
-	vector2D<int> mmBgMaprep;
-	// Scrolling left
-	if (displacement.x < 0) mmBgMaprep.x = (screenOffset.x - 128) / 8;
-	// Scrolling right
-	else                    mmBgMaprep.x = (screenOffset.x + SCREEN_WIDTH + 128) / 8;
-	// Scrolling Up
-	if (displacement.y < 0) mmBgMaprep.y = (screenOffset.y - 32) / 8;
-	// Scrolling right
-	else                    mmBgMaprep.y = (screenOffset.y + SCREEN_HEIGHT + 32) / 8;
+	vector2D<int> mmBgMapRepTL((screenOffset.x - 128) / 8, (screenOffset.y - 32) / 8);
+	vector2D<int> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH + 128) / 8, (screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+
 	//       --------------------------------
-	iprintf("lso (%d, %d), so (%d, %d)\n", (int) lastScreenOffset.x, (int) lastScreenOffset.y, (int) screenOffset.x, (int) screenOffset.y);
-	iprintf("d (%d, %d)               \n", (int) displacement.x, (int) displacement.y);
-	iprintf("ls (%d, %d), ts (%d, %d) \n", (int) lastScroll.x, (int) lastScroll.y, (int) thisScroll.x, (int) thisScroll.y);
-	iprintf("Scrolled to %d, %d       \n", (int) displacement.x, (int) displacement.y);
-	iprintf("Replacing %d cols at %d  \n", repCols, vmBgMapRep.x);
-	iprintf("Replacing %d rows at %d  \n\n", repRows, vmBgMapRep.y);pause();
+	consoleClear();
+	printf("sO: (%f, %f)\n", screenOffset.x, screenOffset.y);
+	iprintf("bg's lvl map coords:\n");
+	iprintf("(%d, %d) to (%d, %d)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
+	iprintf("rep %d, %d at (%d, %d)\n", repRows, repCols, vmBgMapRep.x, vmBgMapRep.y);
+	iprintf("bg %d x %d\n", bg->w, bg->h);
+
+	if (repRows == 0 && repCols == 0)
+		return;
 
 	// Now we just need to copy the tiles
 	// replace repRows rows
-	for (int r = 0; r < repRows; r++)
+	for (int r = 0; r != repRows;)
 	{
 		// Every column tile for this row
 		for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
 		{
 			// Copy it up
-			int screenMapTileX = (vmBgMapRep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
-			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
-			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			copyTile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
+			int mmMapTileY = (displacement.y > 0) ? mmBgMapRepBR.y + r : mmBgMapRepTL.y + r;
+			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmBgMapRepTL.x + c, mmMapTileY);
 		}
+
+		// Increment or decrement r
+		if (displacement.y > 0) r++;
+		else r--;
 	}
 
 	// replace repCols columns
-	for (int c = 0; c < repCols; c++)
+	for (int c = 0; c != repCols;)
 	{
 		// Every row tile for this column
 		for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
 		{
 			// Copy it up
-			int screenMapTileX = (vmBgMapRep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
-			int screenMapTileY = (vmBgMapRep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			int memMapTileX = (mmBgMaprep.x + c) % ZBE_BACKGROUND_TILE_WIDTH;
-			int memMapTileY = (mmBgMaprep.y + r) % ZBE_BACKGROUND_TILE_HEIGHT;
-			copyTile(screenMapTileX, screenMapTileY, memMapTileX, memMapTileY);
+			int mmMapTileX = (displacement.x > 0) ? mmBgMapRepBR.x + c : mmBgMapRepTL.x + c;
+			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmMapTileX, mmBgMapRepTL.y + r);
 		}
+
+		// Increment or decrement c
+		if (displacement.x > 0) c++;
+		else c--;
 	}
 
 	lastScreenOffset = screenOffset;
-	lastScroll = thisScroll;
+	lastScroll = thisScroll;pause();
 }
 
 
 void background::copyTile(int x, int y, int mx, int my)
 {
 	// Make sure all these values are within bounds
-	if (x < 0) x += ZBE_BACKGROUND_TILE_WIDTH;
+	while (x < 0) x += ZBE_BACKGROUND_TILE_WIDTH;
 	if (x >= ZBE_BACKGROUND_TILE_WIDTH) x = x % ZBE_BACKGROUND_TILE_WIDTH;
-	if (y < 0) y += ZBE_BACKGROUND_TILE_HEIGHT;
+	while (y < 0) y += ZBE_BACKGROUND_TILE_HEIGHT;
 	if (y > ZBE_BACKGROUND_TILE_HEIGHT) y = y % ZBE_BACKGROUND_TILE_HEIGHT;
 
-	if (mx < 0) mx += bg->w;
-	if (mx >= bg->w) mx = mx % bg->w;
-	if (my < 0) my += bg->h;
-	if (my >= bg->h) my = my % bg->h;
+	while (mx < 0) mx += bg->w;
+	if (mx >= int(bg->w)) mx = mx % bg->w;
+	while (my < 0) my += bg->h;
+	if (my >= int(bg->h)) my = my % bg->h;
 
 	// The tiles on the right half of the background actually go AFTER the left half.
 	if (x >= SCREEN_WIDTH / 8)

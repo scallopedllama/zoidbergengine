@@ -194,11 +194,11 @@ void level::update()
 		 *  BEGIN TEMPORARY STUFF
 		 */
 		// iprintf("object[%d] x: %d y: %d\n", i, (int)objects[i]->position.x, (int)objects[i]->position.y);
-		if(objects[i]->position.y > 200.0)
+		if(objects[i]->position.y > 1024.0)
 		{
 			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
-			objects[i]->position.y = 200.0;
+			objects[i]->position.y = 1024.0;
 		}
 		if(objects[i]->position.y < 0.0)
 		{
