@@ -85,15 +85,13 @@ void decapod :: jump(object sprite)
 	sprite.setPosition( vector2D<float>(x,y) );	
 }*/
 
-bool decapod :: collide(object *object1, object *object2) 
+/*bool decapod :: collide(object *object1, object *object2) 
 {
 	
 	float left1, left2;
 	float right1, right2;
 	float top1, top2;
 	float bottom1, bottom2;
-	
-	// TODO: this does not take into account the image's topleft value.
 	
 	left1 = object1->position.x;
 	left2 = object2->position.x;
@@ -110,7 +108,80 @@ bool decapod :: collide(object *object1, object *object2)
 	if (left1 > right2) return(false);
 	
 	return(true);
-};
+};*/
+
+/*
+ * Collisions 
+ */
+bool decapod :: collide(object *object1, object *object2)
+{
+
+	float left1, left2;
+	float right1, right2;
+	float top1, top2;
+	float bottom1, bottom2;
+	
+	// get the demensions of the objects
+	left1 = object1->position.x;
+	left2 = object2->position.x;
+	right1 = left1 + object1->frame->dimensions.x;
+	right2 = left2 + object2->frame->dimensions.x;
+	top1 = object1->position.y;
+	top2 = object2->position.y;
+	bottom1 = top1 + object1->frame->dimensions.y;
+	bottom2 = top2 + object2->frame->dimensions.y;
+
+	// if completley outside one another return false
+		if (right1 < left2) return(false);
+		if (left1 > right2) return(false);
+        if (bottom1 < top2) return(false);
+		if (top1 > bottom2) return(false);
+
+	//if weight of object 1 is less than object2 then only object 1 moves
+		if(object1->getWeight() < object2->getWeight())
+		{
+			if(right1 > left2 && left1 < right2)
+				object1->position.y-=object1->velocity.y;
+			if(right1 > left2 && left1 < right2)
+				object1->velocity.y=0;
+	                
+			if (bottom1 <= top2) return(false);
+			if (top1 >= bottom2) return(false);
+
+			object1->position.x-= object1->velocity.x;
+			object1->velocity.x = 0;
+		}
+		else
+		{
+		// if object1 is heavier move object2
+			int diffy = 0;
+			int diffx = 0;
+			
+			// move lighter object in x direction
+			if(object1->velocity.x > 0)		// if object moving to the right
+			{
+				diffx = right1 - left2;
+				object2->position.x += diffx;
+			}
+			else							// if object moving to the left
+			{
+				diffx = left1 - right2;
+				object2->position.x -= diffx;
+			}
+			// move lighter object in the y direction
+			if(object1->velocity.y > 0)		// if object is moving up
+			{
+				diffy = bottom1 - top2;
+				object2->position.x += diffy;
+			}
+			else							// if object moving down
+			{
+				diffy = top1 - bottom2;
+				object2->position.x -= diffy;
+			}
+		}
+		return 0;
+}
 
 // Moved out of collision.cpp jb
 bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
