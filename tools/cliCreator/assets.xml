@@ -89,6 +89,8 @@
 			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
 		</background>
 		<background palette="2" xml="bigBg.xml"/>
+		<background palette="2" xml="noiseBg.xml" />
+		<background palette="2" xml="gridBg.xml" />
 	</backgrounds>
 	<objects>
 		<object weight="45">
