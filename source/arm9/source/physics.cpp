@@ -131,7 +131,7 @@ bool decapod :: collide(object *object1, object *object2)
 	bottom1 = top1 + object1->frame->dimensions.y;
 	bottom2 = top2 + object2->frame->dimensions.y;
 
-	// if completley outside one another
+	// if completley outside one another return false
 		if (right1 < left2) return(false);
 		if (left1 > right2) return(false);
         if (bottom1 < top2) return(false);
@@ -141,17 +141,46 @@ bool decapod :: collide(object *object1, object *object2)
 		if(object1->getWeight() < object2->getWeight())
 		{
 			if(right1 > left2 && left1 < right2)
-			object1->position.y-=object1->velocity.y;
+				object1->position.y-=object1->velocity.y;
 			if(right1 > left2 && left1 < right2)
-			object1->velocity.y=0;
+				object1->velocity.y=0;
 	                
 			if (bottom1 <= top2) return(false);
 			if (top1 >= bottom2) return(false);
 
 			object1->position.x-= object1->velocity.x;
 			object1->velocity.x = 0;
-
 		}
+		else
+		{
+		// if object1 is heavier move object2
+			int diffy = 0;
+			int diffx = 0;
+			
+			// move lighter object in x direction
+			if(object1->velocity.x > 0)		// if object moving to the right
+			{
+				diffx = right1 - left2;
+				object2->position.x += diffx;
+			}
+			else							// if object moving to the left
+			{
+				diffx = left1 - right2;
+				object2->position.x -= diffx;
+			}
+			// move lighter object in the y direction
+			if(object1->velocity.y > 0)		// if object is moving up
+			{
+				diffy = bottom1 - top2;
+				object2->position.x += diffy;
+			}
+			else							// if object moving down
+			{
+				diffy = top1 - bottom2;
+				object2->position.x -= diffy;
+			}
+		}
+		return 0;
 }
 
 // Moved out of collision.cpp jb
