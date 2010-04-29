@@ -93,7 +93,7 @@
 		<background palette="2" xml="gridBg.xml" />
 	</backgrounds>
 	<objects>
-		<object weight="45">
+		<object weight="5">
 			<animations>
 				<animation>
 					<frame id="0" pal="0" time="10" />
@@ -101,7 +101,7 @@
 				</animation>
 			</animations>
 		</object>
-		<object weight="10">
+		<object weight="40">
 			<animations>
 				<animation>
 					<frame id="1" pal="1" time="10" />
@@ -116,7 +116,7 @@
 			</backgrounds>
 			<objects>
 				<object id="0" x="155" y="34" />
-				<object id="0" x="200" y="10" />
+				<object id="0" x="100" y="10" />
 			</objects>
 			<heroes>
 				<hero id="1" x="32" y="32" />
