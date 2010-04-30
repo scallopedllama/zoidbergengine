@@ -149,6 +149,17 @@ public:
 
 
 	/**
+	 * Object mved function
+	 *
+	 * Called whenever the object is moved by an outside force like collision resolution or
+	 * a cinematic event. Is not called when an object's update function causes it to move.
+	 *
+	 * @author Joe Balough
+	 */
+	virtual void moved()
+	{}
+
+	/**
 	 * makeRotateScale function
 	 *
 	 * Makes this object into a rotateScale sprite in the OAM, enabling the matrix functions.

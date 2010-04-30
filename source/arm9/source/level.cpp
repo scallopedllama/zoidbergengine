@@ -17,11 +17,11 @@ level::level(levelAsset *m, OamState *o)
 	}
 
 	// gravity default value CAN BE CHANGED
-	gravity.y = 0.025;
+	gravity.y = 0.0;//25;
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
-	colMatrix = new collisionMatrix(1200, 1000, 70);
+	colMatrix = new collisionMatrix(4800, 2048, 70);
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
@@ -194,21 +194,24 @@ void level::update()
 		 *  BEGIN TEMPORARY STUFF
 		 */
 		// iprintf("object[%d] x: %d y: %d\n", i, (int)objects[i]->position.x, (int)objects[i]->position.y);
-		if(objects[i]->position.y > 1024.0)
+		if(objects[i]->position.y > 2048.0)
 		{
 			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
-			objects[i]->position.y = 1024.0;
+			objects[i]->position.y = 2048.0;
+			objects[i]->moved();
 		}
 		if(objects[i]->position.y < 0.0)
 		{
 			objects[i]->position.y = 0.0;
 			objects[i]->velocity.y = 0.0;
+			objects[i]->moved();
 		}
 		if(objects[i]->position.x < 0.0)
 		{
 			objects[i]->position.x = 0.0;
 			objects[i]->velocity.x = 0.0;
+			objects[i]->moved();
 		}
 		/*
 		 *   END TEMPORARY STUFF

@@ -70,7 +70,7 @@ public:
 		 Mosaic)
 	{
 		// Give screen offset a default value
-		updateScreenOffset();
+		moved();
 	}
 
 	/**
@@ -111,6 +111,16 @@ public:
 		// Call object's draw
 		object::draw(spriteId);
 	}
+
+
+	/**
+	 * Implementation of moved callback
+	 * Called whenever the hero is moved by an object other than hero, e.g. collision detection.
+	 *
+	 * @author Joe Balough
+	 */
+	virtual void moved();
+
 
 private:
 

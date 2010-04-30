@@ -179,6 +179,9 @@ bool decapod :: collide(object *object1, object *object2)
 				diffy = top1 - bottom2;
 				object2->position.y -= diffy;
 			}
+
+			// Run moved callback on the object.
+			object1->moved();
 		}
 		return 0;
 }
