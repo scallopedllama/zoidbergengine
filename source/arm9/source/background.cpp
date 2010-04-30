@@ -63,16 +63,16 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	DC_FlushRange(bg->data, bg->length);
 	mapPtr = bgGetMapPtr(backgroundId);
 	iprintf("  load map -> %x\n", (int) mapPtr);
-/*
+
 	// Row Major Order
 	for (uint8 y = 0; y < ZBE_BACKGROUND_TILE_HEIGHT; y++)
 	{
 		for (uint8 x = 0; x < ZBE_BACKGROUND_TILE_WIDTH; x++)
 		{
 			// Copy the tile
-			copyTile(x, y, int(screenOffset.x - 128) / 8 + x, int(screenOffset.y - 32) / 8  + y);
+			//copyTile(x, y, int(screenOffset.x - 128) / 8 + x, int(screenOffset.y - 32) / 8  + y);
 		}
-	}*/
+	}
 
 	iprintf(" copied map\n");
 }
@@ -93,8 +93,8 @@ void background::update()
 	vector2D<float> toReplace = vector2D<float>(displacement.x + leftOverScroll.x, displacement.y + leftOverScroll.y);
 
 	//The number of columns to replace in those dimensions
-	int repRows = int(toReplace.y / 8);
-	int repCols = int(toReplace.x / 8);
+	int repRows = (int)((toReplace.y + ((toReplace.y < 0) ? -7.99 : 7.99)) / 8);
+	int repCols = (int)((toReplace.x + ((toReplace.x < 0) ? -7.99 : 7.99)) / 8);
 
 	// Update leftOverScroll
 	leftOverScroll.x = toReplace.x - repCols * 8;
@@ -106,59 +106,59 @@ void background::update()
 	//	return;
 
 	// where to begin the replacement in the vm background map
-	vector2D<float> vmBgMapRep((thisScroll.x - 128) / 8, (thisScroll.y - 32) / 8);
+	vector2D<int> vmBgMapRepTL(int(thisScroll.x) / 8 - 1, int(thisScroll.y) / 8 - 1);
+	vector2D<int> vmBgMapRepBR(int(thisScroll.x + SCREEN_WIDTH) / 8, int(thisScroll.y + SCREEN_HEIGHT) / 8);
+
 
 	// where to copy the replacement tiles from in mm background map
-	vector2D<float> mmBgMapRepTL((screenOffset.x - 128) / 8, (screenOffset.y - 32) / 8);
-	vector2D<float> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH + 128) / 8, (screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+	vector2D<int> mmBgMapRepTL((screenOffset.x) / 8 - 1, (screenOffset.y) / 8 - 1);
+	vector2D<int> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH) / 8, (screenOffset.y + SCREEN_HEIGHT) / 8 );
 
-/*
+
 	// This fixes some of the missed rows / columns issues
+	/*
 	if (repRows != 0)
 	{
 		if (repRows < 0)
 		{
-			repRows-=5;
-			vmBgMapRep.y+=1.0;
-			mmBgMapRepBR.y += 1.0;
-			mmBgMapRepTL.y += 1.0;
+			//repRows-=2;
+			repRows = -7;
 		}
 		else
 		{
-			repRows+=5;
-			vmBgMapRep.y-=1.0;
-			mmBgMapRepBR.y -= 1.0;
-			mmBgMapRepTL.y -= 1.0;
+			//repRows+=2;
+			repRows = 7;
 		}
 	}
 	if (repCols != 0)
 	{
 		if (repCols < 0)
 		{
-			repCols-=5;
-			vmBgMapRep.x += 1.0;
-			mmBgMapRepBR.x += 1.0;
-			mmBgMapRepTL.x += 1.0;
+			//repCols-=2;
+			repCols = -31;
 		}
-		else{
-			repCols+=5;
-			vmBgMapRep.x -= 1.0;
-			mmBgMapRepBR.x -= 1.0;
-			mmBgMapRepTL.x -= 1.0;
+		else
+		{
+			//repCols+=2;
+			repCols = 31;
 		}
 	}*/
 
 	//       --------------------------------
 	consoleClear();
+	printf("lsO: (%f, %f)\n", lastScreenOffset.x, lastScreenOffset.y);
 	printf("sO: (%f, %f)\n", screenOffset.x, screenOffset.y);
+	printf("disp: (%f, %f)\n", displacement.x, displacement.y);
+	printf("torep: (%f, %f)\n", toReplace.x, toReplace.y);
+
 	printf("los: %f, %f\n", leftOverScroll.x, leftOverScroll.y);
 	printf("bg's lvl map coords:\n");
-	printf("  (%f, %f) to \n  (%f, %f)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
-	printf("rep %d, %d at\n  (%f, %f)\n", repRows, repCols, vmBgMapRep.x, vmBgMapRep.y);
+	printf("  (%d, %d) to (%d, %d)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
+	printf("rep %d, %d at\n  (%d, %d) (%d, %d)\n", repRows, repCols, vmBgMapRepTL.x, vmBgMapRepTL.y, vmBgMapRepBR.x, vmBgMapRepBR.y);
 	printf("bg %d x %d\n", bg->w, bg->h);
 
 	lastScreenOffset = screenOffset;
-	lastScroll = thisScroll;//pause();
+	lastScroll = thisScroll;
 
 	if (repRows == 0 && repCols == 0)
 		return;
@@ -167,15 +167,13 @@ void background::update()
 	// replace repRows rows
 	for (int r = 0; r != repRows;)
 	{
-		int repStart = 0; // (repRows > 0) ? 0 : 16;
-		int repEnd = ZBE_BACKGROUND_TILE_WIDTH - repCols; //(repRows > 0) ? ZBE_BACKGROUND_TILE_WIDTH - 16 : ZBE_BACKGROUND_TILE_WIDTH;
-
 		// Replace Visible area + half of buffer
-		for (int c = repStart; c <= repEnd; c++)
+		for (int c = 0; c <= ZBE_BACKGROUND_TILE_WIDTH; c++)
 		{
 			// Copy it up
 			int mmMapTileY = (displacement.y > 0) ? mmBgMapRepBR.y + r : mmBgMapRepTL.y + r;
-			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmBgMapRepTL.x + c, mmMapTileY);
+			int vmMapTileY = (displacement.y > 0) ? vmBgMapRepBR.y + r : vmBgMapRepTL.y + r;
+			copyTile(vmBgMapRepTL.x + c, vmMapTileY + r, mmBgMapRepTL.x + c, mmMapTileY);
 		}
 
 		iprintf("reprow'd\n");
@@ -188,15 +186,13 @@ void background::update()
 	// replace repCols columns
 	for (int c = 0; c != repCols;)
 	{
-		int repStart = 0;//(repCols > 0) ? 0 : 4;
-		int repEnd = ZBE_BACKGROUND_TILE_HEIGHT - repRows; //(repCols > 0) ? ZBE_BACKGROUND_TILE_HEIGHT - 4 : ZBE_BACKGROUND_TILE_HEIGHT;
-
 		// Replace visible area + half of buffer
-		for (int r = repStart; r <= repEnd; r++)
+		for (int r = 0; r <= ZBE_BACKGROUND_TILE_HEIGHT; r++)
 		{
 			// Copy it up
 			int mmMapTileX = (displacement.x > 0) ? mmBgMapRepBR.x + c : mmBgMapRepTL.x + c;
-			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmMapTileX, mmBgMapRepTL.y + r);
+			int vmMapTileX = (displacement.x > 0) ? vmBgMapRepBR.x + c : vmBgMapRepTL.x + c;
+			copyTile(vmMapTileX + c, vmBgMapRepTL.y + r, mmMapTileX, mmBgMapRepTL.y + r);
 		}
 
 		iprintf("repcol'd\n");
