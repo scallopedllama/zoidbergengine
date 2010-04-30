@@ -119,7 +119,7 @@
 				<object id="0" x="100" y="10" />
 			</objects>
 			<heroes>
-				<hero id="1" x="32" y="32" />
+				<hero id="1" x="1024" y="1024" />
 			</heroes>
 		</level>
 	</levels>
