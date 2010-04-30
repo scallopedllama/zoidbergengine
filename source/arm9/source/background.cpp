@@ -63,7 +63,7 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	DC_FlushRange(bg->data, bg->length);
 	mapPtr = bgGetMapPtr(backgroundId);
 	iprintf("  load map -> %x\n", (int) mapPtr);
-
+/*
 	// Row Major Order
 	for (uint8 y = 0; y < ZBE_BACKGROUND_TILE_HEIGHT; y++)
 	{
@@ -72,7 +72,8 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 			// Copy the tile
 			copyTile(x, y, int(screenOffset.x - 128) / 8 + x, int(screenOffset.y - 32) / 8  + y);
 		}
-	}
+	}*/
+
 	iprintf(" copied map\n");
 }
 
@@ -92,8 +93,8 @@ void background::update()
 	vector2D<float> toReplace = vector2D<float>(displacement.x + leftOverScroll.x, displacement.y + leftOverScroll.y);
 
 	//The number of columns to replace in those dimensions
-	int repRows = int(toReplace.y) / 8;
-	int repCols = int(toReplace.x) / 8;
+	int repRows = int(toReplace.y / 8);
+	int repCols = int(toReplace.x / 8);
 
 	// Update leftOverScroll
 	leftOverScroll.x = toReplace.x - repCols * 8;
@@ -111,6 +112,42 @@ void background::update()
 	vector2D<float> mmBgMapRepTL((screenOffset.x - 128) / 8, (screenOffset.y - 32) / 8);
 	vector2D<float> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH + 128) / 8, (screenOffset.y + SCREEN_HEIGHT + 32) / 8);
 
+/*
+	// This fixes some of the missed rows / columns issues
+	if (repRows != 0)
+	{
+		if (repRows < 0)
+		{
+			repRows-=5;
+			vmBgMapRep.y+=1.0;
+			mmBgMapRepBR.y += 1.0;
+			mmBgMapRepTL.y += 1.0;
+		}
+		else
+		{
+			repRows+=5;
+			vmBgMapRep.y-=1.0;
+			mmBgMapRepBR.y -= 1.0;
+			mmBgMapRepTL.y -= 1.0;
+		}
+	}
+	if (repCols != 0)
+	{
+		if (repCols < 0)
+		{
+			repCols-=5;
+			vmBgMapRep.x += 1.0;
+			mmBgMapRepBR.x += 1.0;
+			mmBgMapRepTL.x += 1.0;
+		}
+		else{
+			repCols+=5;
+			vmBgMapRep.x -= 1.0;
+			mmBgMapRepBR.x -= 1.0;
+			mmBgMapRepTL.x -= 1.0;
+		}
+	}*/
+
 	//       --------------------------------
 	consoleClear();
 	printf("sO: (%f, %f)\n", screenOffset.x, screenOffset.y);
@@ -125,42 +162,50 @@ void background::update()
 
 	if (repRows == 0 && repCols == 0)
 		return;
-	
-	// Note for later:
-	//  I think i may have an issue with where tiles come from in main memory. not where they go in video memory.
 
 	// Now we just need to copy the tiles
 	// replace repRows rows
 	for (int r = 0; r != repRows;)
 	{
-		// Every column tile for this row
-		for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
+		int repStart = 0; // (repRows > 0) ? 0 : 16;
+		int repEnd = ZBE_BACKGROUND_TILE_WIDTH - repCols; //(repRows > 0) ? ZBE_BACKGROUND_TILE_WIDTH - 16 : ZBE_BACKGROUND_TILE_WIDTH;
+
+		// Replace Visible area + half of buffer
+		for (int c = repStart; c <= repEnd; c++)
 		{
 			// Copy it up
 			int mmMapTileY = (displacement.y > 0) ? mmBgMapRepBR.y + r : mmBgMapRepTL.y + r;
 			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmBgMapRepTL.x + c, mmMapTileY);
 		}
 
+		iprintf("reprow'd\n");
+
 		// Increment or decrement r
-		if (displacement.y > 0) r++;
+		if (repRows > 0) r++;
 		else r--;
 	}
 
 	// replace repCols columns
 	for (int c = 0; c != repCols;)
 	{
-		// Every row tile for this column
-		for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+		int repStart = 0;//(repCols > 0) ? 0 : 4;
+		int repEnd = ZBE_BACKGROUND_TILE_HEIGHT - repRows; //(repCols > 0) ? ZBE_BACKGROUND_TILE_HEIGHT - 4 : ZBE_BACKGROUND_TILE_HEIGHT;
+
+		// Replace visible area + half of buffer
+		for (int r = repStart; r <= repEnd; r++)
 		{
 			// Copy it up
 			int mmMapTileX = (displacement.x > 0) ? mmBgMapRepBR.x + c : mmBgMapRepTL.x + c;
 			copyTile(vmBgMapRep.x + c, vmBgMapRep.y + r, mmMapTileX, mmBgMapRepTL.y + r);
 		}
 
+		iprintf("repcol'd\n");
+
 		// Increment or decrement c
-		if (displacement.x > 0) c++;
+		if (repCols > 0) c++;
 		else c--;
 	}
+
 }
 
 
@@ -170,7 +215,7 @@ void background::copyTile(int x, int y, int mx, int my)
 	while (x < 0) x += ZBE_BACKGROUND_TILE_WIDTH;
 	if (x >= ZBE_BACKGROUND_TILE_WIDTH) x = x % ZBE_BACKGROUND_TILE_WIDTH;
 	while (y < 0) y += ZBE_BACKGROUND_TILE_HEIGHT;
-	if (y > ZBE_BACKGROUND_TILE_HEIGHT) y = y % ZBE_BACKGROUND_TILE_HEIGHT;
+	if (y >= ZBE_BACKGROUND_TILE_HEIGHT) y = y % ZBE_BACKGROUND_TILE_HEIGHT;
 
 	while (mx < 0) mx += bg->w;
 	if (mx >= int(bg->w)) mx = mx % bg->w;
@@ -191,4 +236,7 @@ void background::copyTile(int x, int y, int mx, int my)
 
 	//                                  Each tile is 2 bytes \/
 	dmaCopy(bg->data + mapOffset, mapPtr + bgOffset, sizeof(uint16));
+
+// TODO: remove this
+	for(int i = 0; i<50000; i++);
 }

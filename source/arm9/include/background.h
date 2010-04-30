@@ -42,6 +42,7 @@
 #include <errno.h>
 #include <nds.h>
 #include <vector>
+#include <math.h> // ceil()
 #include "vector.h"
 #include "assettypes.h"
 #include "util.h" // die()
