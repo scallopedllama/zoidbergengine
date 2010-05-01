@@ -106,12 +106,10 @@ private:
 	 *   dmaCopy -- use the DMA hardware to fast copy data into video memory
 	 *
 	 * @param uint32 x, uint32 y
-	 *  The coordinates of the background tile to overwrite
-	 * @param uint32 mx, uint32 my
-	 *  The coordinates of the MAP tile to copy
+	 *  The coordinates of the map tile to replace
 	 * @author Joe Balough
 	 */
-	void copyTile(int x, int y, int mx, int my);
+	void copyTile(int x, int y);
 
 
 	/**

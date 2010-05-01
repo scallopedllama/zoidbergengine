@@ -81,12 +81,9 @@ void background::redraw()
 		for (uint8 x = 0; x < ZBE_BACKGROUND_TILE_WIDTH; x++)
 		{
 			// Copy the tile
-			//copyTile(x, y, int(screenOffset.x) / 8 + x, int(screenOffset.y) / 8  + y);
+			copyTile(int(screenOffset.x) / 8 + x, int(screenOffset.y) / 8  + y);
 		}
 	}
-	consoleClear();
-	iprintf("redraw");
-	pause();
 }
 
 
@@ -103,17 +100,6 @@ void background::update()
 	vector2D<int> bgMapRepTL(int(screenOffset.x - 128) / 8 - 1, int(screenOffset.y - 32) / 8 - 1);
 	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH + 128) / 8, int(screenOffset.y + SCREEN_HEIGHT + 32) / 8);
 
-	/*
-	copyTile(int(screenOffset.x) / 8, int(screenOffset.y) / 8, 1, 1);
-	copyTile(int(screenOffset.x + SCREEN_WIDTH) / 8 - 1, int(screenOffset.y + SCREEN_HEIGHT) / 8 - 1, 2, 2);*/
-
-	consoleClear();
-	printf("d: (%f, %f)\n", displacement.x, displacement.y);
-	printf("SO: (%f, %f)\n", screenOffset.x, screenOffset.y);
-	printf("lSO: (%f, %f\n", lastScreenOffset.x, lastScreenOffset.y);
-	printf("TL:  (%d, %d),  BR: (%d, %d)", bgMapRepTL.x, bgMapRepTL.y, bgMapRepBR.x, bgMapRepBR.y);
-	printf("lTL: (%d, %d), lBR: (%d, %d)", lastBgMapRepTL.x, lastBgMapRepTL.y, lastBgMapRepBR.x, lastBgMapRepBR.y);
-
 	// If there are more tiles to replace than there are in the screen, just replace the whole thing and be done with it
 	if (((int) displacement.x % SCREEN_WIDTH) * ((int) displacement.y % SCREEN_HEIGHT) > SCREEN_HEIGHT * SCREEN_WIDTH)
 	{
@@ -128,11 +114,12 @@ void background::update()
 		// Replace Columns
 		for (int c = lastBgMapRepTL.x + 1; c >= bgMapRepTL.x; c--)
 		{
+			int end = displacement.y < 0 ? ZBE_BACKGROUND_TILE_HEIGHT : ZBE_BACKGROUND_TILE_HEIGHT + 1;
 			// Replace Rows
-			for (int r = 2; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			for (int r = 0; r < end; r++)
 			{
 				// Copy it up
-				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
+				copyTile(c, lastBgMapRepTL.y + r);
 			}
 		}
 	}
@@ -143,11 +130,12 @@ void background::update()
 		// Replace Columns
 		for (int c = lastBgMapRepBR.x - 1; c <= bgMapRepBR.x; c++)
 		{
+			int end = displacement.y < 0 ? ZBE_BACKGROUND_TILE_HEIGHT : ZBE_BACKGROUND_TILE_HEIGHT + 1;
 			// Replace Rows
-			for (int r = 2; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			for (int r = 0; r < end; r++)
 			{
 				// Copy it up
-				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
+				copyTile(c, lastBgMapRepTL.y + r);
 			}
 		}
 	}
@@ -158,11 +146,12 @@ void background::update()
 		// Replace rows
 		for (int r = lastBgMapRepTL.y + 1; r >= bgMapRepTL.y; r--)
 		{
+			int end = displacement.x < 0 ? ZBE_BACKGROUND_TILE_WIDTH : ZBE_BACKGROUND_TILE_WIDTH + 1;
 			// Each column in the row
-			for (int c = 8; c < ZBE_BACKGROUND_TILE_WIDTH - 6; c++)
+			for (int c = 0; c < end; c++)
 			{
 				// Copy it up
-				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+				copyTile(lastBgMapRepTL.x + c, r);
 			}
 		}
 	}
@@ -173,18 +162,15 @@ void background::update()
 		// Replace rows
 		for (int r = lastBgMapRepBR.y - 1; r <= bgMapRepBR.y; r++)
 		{
+			int end = displacement.x < 0 ? ZBE_BACKGROUND_TILE_WIDTH : ZBE_BACKGROUND_TILE_WIDTH + 1;
 			// Each column in the row
-			for (int c = 8; c < ZBE_BACKGROUND_TILE_WIDTH - 6; c++)
+			for (int c = 0; c < end; c++)
 			{
 				// Copy it up
-				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+				copyTile(lastBgMapRepTL.x + c, r);
 			}
 		}
 	}
-
-
-
-
 
 
 	// Save some values to avoid havning to re-calculate them.
@@ -204,8 +190,11 @@ void background::update()
 }
 
 
-void background::copyTile(int x, int y, int mx, int my)
+void background::copyTile(int x, int y)
 {
+	int mx = x;
+	int my = y;
+
 	// Make sure all these values are within bounds
 	while (x < 0) x += ZBE_BACKGROUND_TILE_WIDTH;
 	if (x >= ZBE_BACKGROUND_TILE_WIDTH) x = x % ZBE_BACKGROUND_TILE_WIDTH;
