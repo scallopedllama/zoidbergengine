@@ -17,7 +17,7 @@ level::level(levelAsset *m, OamState *o)
 	}
 
 	// gravity default value CAN BE CHANGED
-	gravity.y = 0.0;//25;
+	gravity.y = 0.025;
 
 	// initialize the collisionMatrix
 	// TODO: make this automatic or add a field to the assets file for it
