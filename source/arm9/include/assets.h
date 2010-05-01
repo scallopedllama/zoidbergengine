@@ -91,12 +91,12 @@ public:
 	/**
 	 * parseZbe function
 	 *
-	 * Parses a zbe file and notes indices for loading. Loads only the lengths into memory.
-	 * All actual data (tiles, palettes, etc.) are loaded upon request.
+	 * Parses a zbe file and fills in arrays of typeAssets. These are contain minimal data until
+	 * passed to an appropriate load() function here in the assets class, at which point the file
+	 * is seeked back to the point where the data can be found and the rest of that data is loaded.
 	 *
 	 * @author Joe Balough
 	 */
-	// TODO: update the docs for this too
 	void parseZbe();
 
 	/**

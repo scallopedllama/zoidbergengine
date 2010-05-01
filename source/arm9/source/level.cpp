@@ -240,7 +240,7 @@ void level::update()
 	{
 		// Get this object's position on screen
 		gfxAsset *animFrame = objects[i]->frame;
-		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x + animFrame->topleft.x, objects[i]->position.y - screenOffset.y + animFrame->topleft.y);		// If the screenPos plus the object's dimensions are in the screen, give it a sprite and tell it to draw
+		vector2D<float> screenPos = vector2D<float>(objects[i]->position.x - screenOffset.x + animFrame->topleft.x, objects[i]->position.y - screenOffset.y + animFrame->topleft.y);
 
 		// If the object is within the bounds of the screen, give it a sprite Id and tell it to draw.
 		if (screenPos.x >= int(animFrame->dimensions.x) * -1 && screenPos.x <= SCREEN_WIDTH  &&
