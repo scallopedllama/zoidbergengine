@@ -59,7 +59,16 @@ using namespace std;
 class background {
 public:
 	/**
-	 * Constructor, parses levelBackgroundAsset metadata to initialize
+	 * Constructor, parses levelBackgroundAsset metadata to initialize the background.
+	 *
+	 * libnds API Calls:
+	 *   bgInit() -- initialize the background control registers
+	 *   bgSetPriority -- Set the render order of the background
+	 *   bgGetMapPtr -- Get the location in video memory to copy the background map
+	 *   bgGetGfxPtr -- Get the location in video memory to copy the background tiles
+	 *   DC_FlushRange -- reset memory cache so dmiCopy will get correct data
+	 *   dmiCopy -- copy the background tiles and palettes into video memory using fast DMI hardware.
+	 *              Only called if tiles and palettes weren't loaded into video memory by a different background.
 	 *
 	 * @param levelBackgroundAsset *metadata
 	 *   The data to use to build this background
@@ -77,7 +86,11 @@ public:
 	}
 
 	/**
-	 * Update function, scrolls background to proper location, updating map if needed
+	 * Update function, scrolls background to proper location, Replacing portion of background map if necessary.
+	 * The scroll value is ALWAYS equal to the screenOffset. Uses copyTile to replace tiles.
+	 *
+	 * libnds API Calls:
+	 *    bgSetScroll -- Scroll the background to the proper location
 	 *
 	 * @author Joe Balough
 	 */
@@ -86,10 +99,11 @@ public:
 private:
 
 	/**
-	 * copyTile function
-	 *
 	 * Copies the tile in (mx, my) from the map data into the background at
 	 * coordinate (x, y).
+	 *
+	 * libnds API Calls:
+	 *   dmaCopy -- use the DMA hardware to fast copy data into video memory
 	 *
 	 * @param uint32 x, uint32 y
 	 *  The coordinates of the background tile to overwrite
@@ -99,6 +113,15 @@ private:
 	 */
 	void copyTile(int x, int y, int mx, int my);
 
+
+	/**
+	 * Replaces the whole map for the porition of the background that is currently visible on screen.
+	 * Used during initialization and when the screenOffset has changed dramatically since last update.
+	 * Uses copyTile to replace tiles.
+	 *
+	 * @author Joe Balough
+	 */
+	void redraw();
 
 	// Contains the map data and such for the background being used
 	backgroundAsset *bg;
@@ -116,9 +139,9 @@ private:
 	uint16 *mapPtr;
 
 	// Keep track of last values
-	vector2D<float> lastScroll;
 	vector2D<float> lastScreenOffset;
-	vector2D<float> leftOverScroll;
+	vector2D<int> lastBgMapRepTL;
+	vector2D<int> lastBgMapRepBR;
 };
 
 #endif

@@ -3,11 +3,11 @@
 // loads up a background
 background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 paletteOffset)
 {
-	lastScreenOffset = screenOffset;
 	distance = metadata->distance;
 	layer = metadata->layer;
-	lastScroll = vector2D<float>(128.0, 32.0);
-	leftOverScroll = vector2D<float>(0.0, 0.0);
+	lastScreenOffset = screenOffset;
+	lastBgMapRepTL = vector2D<int>((screenOffset.x) / 8, (screenOffset.y) / 8);
+	lastBgMapRepBR = vector2D<int>((screenOffset.x + SCREEN_WIDTH) / 8 - 1, (screenOffset.y + SCREEN_HEIGHT) / 8 - 1);
 
 	// Load up the backgroundAsset to get the map data
 	zbeAssets->loadBackground(metadata);
@@ -59,22 +59,30 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 		dmaCopy(pal->data, BG_PALETTE + (i + paletteOffset) * 16, pal->length);
 	}
 
-	// Copy the visible part of the background into video memory
+	// Flush the cache in that region of memory to prevent screwups
 	DC_FlushRange(bg->data, bg->length);
 	mapPtr = bgGetMapPtr(backgroundId);
 	iprintf("  load map -> %x\n", (int) mapPtr);
 
+	// Redraw the screen's visible background
+	redraw();
+
+	iprintf(" copied map\n");
+}
+
+
+// Replaces the entire visible background
+void background::redraw()
+{
 	// Row Major Order
 	for (uint8 y = 0; y < ZBE_BACKGROUND_TILE_HEIGHT; y++)
 	{
 		for (uint8 x = 0; x < ZBE_BACKGROUND_TILE_WIDTH; x++)
 		{
 			// Copy the tile
-			//copyTile(x, y, int(screenOffset.x - 128) / 8 + x, int(screenOffset.y - 32) / 8  + y);
+			//copyTile(x, y, int(screenOffset.x) / 8 + x, int(screenOffset.y) / 8  + y);
 		}
 	}
-
-	iprintf(" copied map\n");
 }
 
 
@@ -83,125 +91,115 @@ void background::update()
 {
 	// Find out how much things have moved
 	vector2D<float> displacement = vector2D<float>(screenOffset.x - lastScreenOffset.x , screenOffset.y - lastScreenOffset.y);
-	// Figure out where the background will be scrolled for this frame
-	vector2D<float> thisScroll = vector2D<float>(lastScroll.x + displacement.x, lastScroll.y + displacement.y);
 
-	// scroll the background
-	bgSetScroll(backgroundId, (int) thisScroll.x, (int) thisScroll.y);
+	// scroll the background (mod by bg dimensions because hardware will crash if the value gets too big)
+	// TODO: turn the mods back on
+	bgSetScroll(backgroundId, int(screenOffset.x) % (ZBE_BACKGROUND_TILE_WIDTH * 8), int(screenOffset.y) % (ZBE_BACKGROUND_TILE_HEIGHT * 8));
 
-	// Add the amount of background left over from past updates that is replacable
-	vector2D<float> toReplace = vector2D<float>(displacement.x + leftOverScroll.x, displacement.y + leftOverScroll.y);
+	// where to copy the replacement tiles from in background map
+	vector2D<int> bgMapRepTL(int(screenOffset.x) / 8, int(screenOffset.y) / 8);
+	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH) / 8 - 1, int(screenOffset.y + SCREEN_HEIGHT) / 8 - 1);
 
-	//The number of columns to replace in those dimensions
-	int repRows = (int)((toReplace.y + ((toReplace.y < 0) ? -7.99 : 7.99)) / 8);
-	int repCols = (int)((toReplace.x + ((toReplace.x < 0) ? -7.99 : 7.99)) / 8);
+	consoleClear();
+	printf("d: (%f, %f)\n", displacement.x, displacement.y);
+	printf("SO: (%f, %f)\n", screenOffset.x, screenOffset.y);
+	printf("lSO: (%f, %f\n", lastScreenOffset.x, lastScreenOffset.y);
+	printf("TL:  (%d, %d),  BR: (%d, %d)", bgMapRepTL.x, bgMapRepTL.y, bgMapRepBR.x, bgMapRepBR.y);
+	printf("lTL: (%d, %d), lBR: (%d, %d)", lastBgMapRepTL.x, lastBgMapRepTL.y, lastBgMapRepBR.x, lastBgMapRepBR.y);
 
-	// Update leftOverScroll
-	leftOverScroll.x = toReplace.x - repCols * 8;
-	leftOverScroll.y = toReplace.y - repRows * 8;
-
-	// Return if not replacing anything
-	// TODO: turn this back on
-	//if (repRows == 0 && repCols == 0)
-	//	return;
-
-	// where to begin the replacement in the vm background map
-	vector2D<int> vmBgMapRepTL(int(thisScroll.x) / 8 - 1, int(thisScroll.y) / 8 - 1);
-	vector2D<int> vmBgMapRepBR(int(thisScroll.x + SCREEN_WIDTH) / 8, int(thisScroll.y + SCREEN_HEIGHT) / 8);
-
-
-	// where to copy the replacement tiles from in mm background map
-	vector2D<int> mmBgMapRepTL((screenOffset.x) / 8 - 1, (screenOffset.y) / 8 - 1);
-	vector2D<int> mmBgMapRepBR((screenOffset.x + SCREEN_WIDTH) / 8, (screenOffset.y + SCREEN_HEIGHT) / 8 );
-
-
-	// This fixes some of the missed rows / columns issues
-	/*
-	if (repRows != 0)
+/*
+	// If there are more tiles to replace than there are in the screen, just replace the whole thing and be done with it
+	if (((int) displacement.x % SCREEN_WIDTH) * ((int) displacement.y % SCREEN_HEIGHT) > SCREEN_HEIGHT * SCREEN_WIDTH)
 	{
-		if (repRows < 0)
-		{
-			//repRows-=2;
-			repRows = -7;
-		}
-		else
-		{
-			//repRows+=2;
-			repRows = 7;
-		}
-	}
-	if (repCols != 0)
-	{
-		if (repCols < 0)
-		{
-			//repCols-=2;
-			repCols = -31;
-		}
-		else
-		{
-			//repCols+=2;
-			repCols = 31;
-		}
+		// Redraw the whole screen
+		redraw();
+		return;
 	}*/
 
-	//       --------------------------------
-	consoleClear();
-	printf("lsO: (%f, %f)\n", lastScreenOffset.x, lastScreenOffset.y);
-	printf("sO: (%f, %f)\n", screenOffset.x, screenOffset.y);
-	printf("disp: (%f, %f)\n", displacement.x, displacement.y);
-	printf("torep: (%f, %f)\n", toReplace.x, toReplace.y);
 
-	printf("los: %f, %f\n", leftOverScroll.x, leftOverScroll.y);
-	printf("bg's lvl map coords:\n");
-	printf("  (%d, %d) to (%d, %d)\n", mmBgMapRepTL.x, mmBgMapRepTL.y, mmBgMapRepBR.x, mmBgMapRepBR.y);
-	printf("rep %d, %d at\n  (%d, %d) (%d, %d)\n", repRows, repCols, vmBgMapRepTL.x, vmBgMapRepTL.y, vmBgMapRepBR.x, vmBgMapRepBR.y);
-	printf("bg %d x %d\n", bg->w, bg->h);
 
-	lastScreenOffset = screenOffset;
-	lastScroll = thisScroll;
+	/*
+	 * Replace Rows
+	 */
 
-	if (repRows == 0 && repCols == 0)
-		return;
-
-	// Now we just need to copy the tiles
-	// replace repRows rows
-	for (int r = 0; r != repRows;)
+	// Scrolling UP
+	if (displacement.y < -8)
 	{
-		// Replace Visible area + half of buffer
-		for (int c = 0; c <= ZBE_BACKGROUND_TILE_WIDTH; c++)
+		// The row
+		for (int r = lastBgMapRepTL.y; r >= bgMapRepTL.y; r--)
 		{
-			// Copy it up
-			int mmMapTileY = (displacement.y > 0) ? mmBgMapRepBR.y + r : mmBgMapRepTL.y + r;
-			int vmMapTileY = (displacement.y > 0) ? vmBgMapRepBR.y + r : vmBgMapRepTL.y + r;
-			copyTile(vmBgMapRepTL.x + c, vmMapTileY + r, mmBgMapRepTL.x + c, mmMapTileY);
+			// Each column in the row
+			for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
+			{
+				// Copy it up
+				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+			}
 		}
-
-		iprintf("reprow'd\n");
-
-		// Increment or decrement r
-		if (repRows > 0) r++;
-		else r--;
+	}
+	// Scrolling DOWN
+	else if (displacement.y > 8)
+	{
+		// The row
+		for (int r = lastBgMapRepBR.y; r <= bgMapRepBR.y; r++)
+		{
+			// Each column in the row
+			for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
+			{
+				// Copy it up
+				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+			}
+		}
 	}
 
-	// replace repCols columns
-	for (int c = 0; c != repCols;)
+
+
+	/*
+	 * Replace Columns
+	 */
+
+	// Scrolling LEFT
+	if (displacement.x < -8)
 	{
-		// Replace visible area + half of buffer
-		for (int r = 0; r <= ZBE_BACKGROUND_TILE_HEIGHT; r++)
+		// Replace Columns
+		for (int c = lastBgMapRepTL.x - 1; c >= bgMapRepTL.x; c--)
 		{
-			// Copy it up
-			int mmMapTileX = (displacement.x > 0) ? mmBgMapRepBR.x + c : mmBgMapRepTL.x + c;
-			int vmMapTileX = (displacement.x > 0) ? vmBgMapRepBR.x + c : vmBgMapRepTL.x + c;
-			copyTile(vmMapTileX + c, vmBgMapRepTL.y + r, mmMapTileX, mmBgMapRepTL.y + r);
+			// Replace Rows
+			for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			{
+				// Copy it up
+				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
+			}
 		}
-
-		iprintf("repcol'd\n");
-
-		// Increment or decrement c
-		if (repCols > 0) c++;
-		else c--;
+	}
+	//scrolling RIGHT
+	else if (displacement.x > 8)
+	{
+		// Replace Columns
+		for (int c = lastBgMapRepBR.x + 1; c <= bgMapRepBR.x; c++)
+		{
+			// Replace Rows
+			for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			{
+				// Copy it up
+				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
+			}
+		}
 	}
 
+	// Save some values to avoid havning to re-calculate them.
+	// Only change the value if a row/col was replaced in that direction
+	if (displacement.x > 8 || displacement.x < -8)
+	{
+		lastScreenOffset.x = screenOffset.x;
+		lastBgMapRepBR.x = bgMapRepBR.x;
+		lastBgMapRepTL.x = bgMapRepTL.x;
+	}
+	if (displacement.y > 8 || displacement.y < -8)
+	{
+		lastScreenOffset.y = screenOffset.y;
+		lastBgMapRepBR.y = bgMapRepBR.y;
+		lastBgMapRepTL.y = bgMapRepTL.y;
+	}
 }
 
 
@@ -232,7 +230,4 @@ void background::copyTile(int x, int y, int mx, int my)
 
 	//                                  Each tile is 2 bytes \/
 	dmaCopy(bg->data + mapOffset, mapPtr + bgOffset, sizeof(uint16));
-
-// TODO: remove this
-	for(int i = 0; i<50000; i++);
 }
