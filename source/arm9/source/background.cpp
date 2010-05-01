@@ -129,7 +129,7 @@ void background::update()
 		for (int r = lastBgMapRepTL.y; r >= bgMapRepTL.y; r--)
 		{
 			// Each column in the row
-			for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
+			for (int c = -1; c < SCREEN_WIDTH / 8 + 1; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
@@ -143,7 +143,7 @@ void background::update()
 		for (int r = lastBgMapRepBR.y; r <= bgMapRepBR.y; r++)
 		{
 			// Each column in the row
-			for (int c = 0; c < ZBE_BACKGROUND_TILE_WIDTH; c++)
+			for (int c = -1; c < SCREEN_WIDTH / 8 + 1; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
@@ -164,7 +164,7 @@ void background::update()
 		for (int c = lastBgMapRepTL.x - 1; c >= bgMapRepTL.x; c--)
 		{
 			// Replace Rows
-			for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			for (int r = -1; r < SCREEN_HEIGHT / 8 + 1; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
@@ -178,7 +178,7 @@ void background::update()
 		for (int c = lastBgMapRepBR.x + 1; c <= bgMapRepBR.x; c++)
 		{
 			// Replace Rows
-			for (int r = 0; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
+			for (int r = -1; r < SCREEN_HEIGHT / 8 + 1; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
