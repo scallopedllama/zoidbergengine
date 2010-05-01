@@ -9,25 +9,19 @@ bool hero::update(touchPosition *touch)
 	// If the user is pressing left or right, move the object slightly to the left or right
 	// if the user is pressing up, jump.
 	// In all of those cases, set falling to true to force gravity.
-	// Old v valuies: x 0.05, y 0.1
 	if (keysHeld() & KEY_LEFT)
 	{
-		velocity.x -= 0.1; //0.3;
+		velocity.x -= 0.05;
 		falling = true;
 	}
 	else if (keysHeld() & KEY_RIGHT)
 	{
-		velocity.x += 0.1; //0.3;
+		velocity.x += 0.05;
 		falling = true;
 	}
 	if (keysHeld() & KEY_UP)
 	{
 		velocity.y -= 0.1; //0.3;
-		falling = true;
-	}
-	if (keysHeld() & KEY_DOWN)
-	{
-		velocity.y += 0.1; //0.3;
 		falling = true;
 	}
 
