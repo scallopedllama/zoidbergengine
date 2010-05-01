@@ -6,8 +6,8 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	distance = metadata->distance;
 	layer = metadata->layer;
 	lastScreenOffset = screenOffset;
-	lastBgMapRepTL = vector2D<int>((screenOffset.x) / 8, (screenOffset.y) / 8);
-	lastBgMapRepBR = vector2D<int>((screenOffset.x + SCREEN_WIDTH) / 8 - 1, (screenOffset.y + SCREEN_HEIGHT) / 8 - 1);
+	lastBgMapRepTL = vector2D<int>((screenOffset.x) / 8 - 1, (screenOffset.y) / 8 - 1);
+	lastBgMapRepBR = vector2D<int>((screenOffset.x + SCREEN_WIDTH) / 8, (screenOffset.y + SCREEN_HEIGHT) / 8);
 
 	// Load up the backgroundAsset to get the map data
 	zbeAssets->loadBackground(metadata);
@@ -83,6 +83,9 @@ void background::redraw()
 			//copyTile(x, y, int(screenOffset.x) / 8 + x, int(screenOffset.y) / 8  + y);
 		}
 	}
+	consoleClear();
+	iprintf("redraw");
+	pause();
 }
 
 
@@ -93,12 +96,11 @@ void background::update()
 	vector2D<float> displacement = vector2D<float>(screenOffset.x - lastScreenOffset.x , screenOffset.y - lastScreenOffset.y);
 
 	// scroll the background (mod by bg dimensions because hardware will crash if the value gets too big)
-	// TODO: turn the mods back on
 	bgSetScroll(backgroundId, int(screenOffset.x) % (ZBE_BACKGROUND_TILE_WIDTH * 8), int(screenOffset.y) % (ZBE_BACKGROUND_TILE_HEIGHT * 8));
 
 	// where to copy the replacement tiles from in background map
-	vector2D<int> bgMapRepTL(int(screenOffset.x) / 8, int(screenOffset.y) / 8);
-	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH) / 8 - 1, int(screenOffset.y + SCREEN_HEIGHT) / 8 - 1);
+	vector2D<int> bgMapRepTL(int(screenOffset.x) / 8 - 1, int(screenOffset.y) / 8 - 1);
+	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH) / 8, int(screenOffset.y + SCREEN_HEIGHT) / 8);
 
 	consoleClear();
 	printf("d: (%f, %f)\n", displacement.x, displacement.y);
@@ -107,15 +109,13 @@ void background::update()
 	printf("TL:  (%d, %d),  BR: (%d, %d)", bgMapRepTL.x, bgMapRepTL.y, bgMapRepBR.x, bgMapRepBR.y);
 	printf("lTL: (%d, %d), lBR: (%d, %d)", lastBgMapRepTL.x, lastBgMapRepTL.y, lastBgMapRepBR.x, lastBgMapRepBR.y);
 
-/*
 	// If there are more tiles to replace than there are in the screen, just replace the whole thing and be done with it
 	if (((int) displacement.x % SCREEN_WIDTH) * ((int) displacement.y % SCREEN_HEIGHT) > SCREEN_HEIGHT * SCREEN_WIDTH)
 	{
 		// Redraw the whole screen
 		redraw();
 		return;
-	}*/
-
+	}
 
 
 	/*
@@ -129,7 +129,7 @@ void background::update()
 		for (int r = lastBgMapRepTL.y; r >= bgMapRepTL.y; r--)
 		{
 			// Each column in the row
-			for (int c = -1; c < SCREEN_WIDTH / 8 + 1; c++)
+			for (int c = -2; c < SCREEN_WIDTH / 8 + 2; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
@@ -143,7 +143,7 @@ void background::update()
 		for (int r = lastBgMapRepBR.y; r <= bgMapRepBR.y; r++)
 		{
 			// Each column in the row
-			for (int c = -1; c < SCREEN_WIDTH / 8 + 1; c++)
+			for (int c = -2; c < SCREEN_WIDTH / 8 + 2; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
@@ -164,7 +164,7 @@ void background::update()
 		for (int c = lastBgMapRepTL.x - 1; c >= bgMapRepTL.x; c--)
 		{
 			// Replace Rows
-			for (int r = -1; r < SCREEN_HEIGHT / 8 + 1; r++)
+			for (int r = -2; r < SCREEN_HEIGHT / 8 + 2; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
@@ -178,7 +178,7 @@ void background::update()
 		for (int c = lastBgMapRepBR.x + 1; c <= bgMapRepBR.x; c++)
 		{
 			// Replace Rows
-			for (int r = -1; r < SCREEN_HEIGHT / 8 + 1; r++)
+			for (int r = -2; r < SCREEN_HEIGHT / 8 + 2; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
