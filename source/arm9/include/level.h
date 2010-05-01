@@ -171,11 +171,6 @@ private:
 		matrixAvail[index] = true;
 	}
 
-	/*
-	 * Gravity vector to dynamically change the direction of the
-	 * acceleration due to gravity
-	 */
-	vector2D<float> gravity;
 
 	/**
 	 * Variables for collision detection

@@ -323,6 +323,8 @@ void assets::parseZbe()
 		}
 		iprintf(" %d: %s\n", i, newAsset->name);
 
+		// Get the level's dimensions
+
 		// Set the location variable
 		fpos_t curPos;
 		fgetpos(zbeData, &curPos);
@@ -330,6 +332,10 @@ void assets::parseZbe()
 
 		// Push this asset onto the levelAssets vector
 		levelAssets.push_back(newAsset);
+
+		// Skip over the level's dimensions
+		load<uint32>(zbeData);
+		load<uint32>(zbeData);
 
 #ifdef ZBE_TESTING
 		// Skip over the test explanation message
@@ -431,6 +437,10 @@ levelAsset *assets::loadLevel(uint32 id)
 	// Seek to the proper place in the file
 	fsetpos(zbeData, &(lvl->position));
 	iprintf("lvl %d requested\n", id);
+
+	// Load up the level's dimensions
+	lvl->dimensions.x = load<uint32>(zbeData);
+	lvl->dimensions.y = load<uint32>(zbeData);
 
 #ifdef ZBE_TESTING
 	// Test explanation message

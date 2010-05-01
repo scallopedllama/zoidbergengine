@@ -308,6 +308,7 @@ struct levelAsset : assetStatus
 
 	// to add: level geometry, villians, etc.
 
+	vector2D<uint32> dimensions;
 };
 
 

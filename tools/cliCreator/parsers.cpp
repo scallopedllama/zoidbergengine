@@ -448,8 +448,23 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		// Add level name string
 		TiXmlElement *nameXML = levelXML->FirstChildElement("name");
 		string lvlName = (nameXML) ? nameXML->GetText() : "";
-		debug("\tLevel \"%s\"\n", lvlName.c_str());
 		fwriteStr(lvlName, output);
+
+		// Add the level's dimensions
+		int w, h;
+		if (!getIntAttr(levelXML, "w", w))
+		{
+			fprintf(stderr, "ERROR: No width set for level %d.\n", totalLvl);
+			exit(EXIT_FAILURE);
+		}
+		if (!getIntAttr(levelXML, "h", h))
+		{
+			fprintf(stderr, "ERROR: No height set for level %d.\n", totalLvl);
+			exit(EXIT_FAILURE);
+		}
+		fwrite<uint32_t>(uint32_t(w), output);
+		fwrite<uint32_t>(uint32_t(h), output);
+		debug("\tLevel \"%s\": %d x %d\n", lvlName.c_str(), w, h);
 
 		// exp, debug, and timer values if making testing
 		if (testing)
@@ -486,8 +501,8 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 			int timer;
 			if (!getIntAttr(levelXML, "timer", timer))
 			{
-				printf("\tWARNING: No timer value specified for level. Will run for %d minutes unless fixed\n", uint16_t(-1) / 60 / 60);
-				printf("\t         Add timer=\"-1\" to <level> tag if this is desired\n");
+				fprintf(stderr, "\tWARNING: No timer value specified for level. Will run for %d minutes unless fixed\n", uint16_t(-1) / 60 / 60);
+				fprintf(stderr, "\t         Add timer=\"-1\" to <level> tag if this is desired\n");
 				timer = uint16_t(-1);
 			}
 			debug("\tTest will run for %d blanks\n", timer);

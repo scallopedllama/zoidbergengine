@@ -116,7 +116,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level>
+		<level w="2048" h="2048">
 			<backgrounds tileset="0">
 				<background layer="0" id="4" distance="1" />
 			</backgrounds>
