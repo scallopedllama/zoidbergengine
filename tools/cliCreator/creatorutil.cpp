@@ -85,6 +85,36 @@ bool getIntAttr(TiXmlElement *elem, string attr, int &value)
 	return true;
 }
 
+// get int attribute
+float getFloatAttr(TiXmlElement *elem, string attr)
+{
+	float toReturn = -1.0;
+	if (elem->QueryFloatAttribute(attr.c_str(), &toReturn) == TIXML_WRONG_TYPE)
+	{
+		fprintf(stderr, "Error getting float value of attribute %s\n", attr.c_str());
+	}
+	return toReturn;
+}
+
+// get int attribute (returning whether it got a value or not
+bool getFloatAttr(TiXmlElement *elem, string attr, float &value)
+{
+	float val;
+	int ret = elem->QueryFloatAttribute(attr.c_str(), &val);
+	if (ret == TIXML_WRONG_TYPE)
+	{
+		fprintf(stderr, "Error getting int value of attribute %s\n", attr.c_str());
+	}
+	else if (ret == TIXML_NO_ATTRIBUTE)
+	{
+		return false;
+	}
+
+	// Made it this far? must have been set
+	value = val;
+	return true;
+}
+
 // Get string attribute
 string getStrAttr(TiXmlElement *elem, string attr)
 {

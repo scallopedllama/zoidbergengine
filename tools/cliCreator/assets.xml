@@ -97,7 +97,13 @@
 			<animations>
 				<animation>
 					<frame id="0" pal="0" time="10" />
-					<frame id="0" pal="1" time="10" />
+				</animation>
+			</animations>
+		</object>
+		<object weight="5">
+			<animations>
+				<animation>
+					<frame id="0" pal="0" time="10" />
 				</animation>
 			</animations>
 		</object>
@@ -115,11 +121,11 @@
 				<background layer="0" id="4" distance="1" />
 			</backgrounds>
 			<objects>
-				<object id="0" x="155" y="34" />
-				<object id="0" x="100" y="10" />
+				<object id="0" x="155" y="34" hgrav="0.0" vgrav="0.3" />
+				<object id="0" x="100" y="10" hgrav="0.0" vgrav="-0.3" />
 			</objects>
 			<heroes>
-				<hero id="1" x="1024" y="1024" />
+				<hero id="1" x="1024" y="1024" hgrav="0.0" vgrav="0.025" />
 			</heroes>
 		</level>
 	</levels>

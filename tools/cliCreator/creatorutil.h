@@ -209,6 +209,38 @@ int getIntAttr(TiXmlElement *elem, string attr);
  */
  bool getIntAttr(TiXmlElement *elem, string attr, int &value);
 
+/**
+ * getFloatAttr function
+ *
+ * Gets a float attribute from the passed TiXmlElement.
+ * Will print an error if it failed.
+ *
+ * @param TiXmlElement *elem
+ *  The TiXmlElement from which an attribute should be queried
+ * @param string attr
+ *  The name of the attribute to query
+ * @return float
+ *  Returns the float value of attribute
+ * @author Joe Balough
+ */
+float getFloatAttr(TiXmlElement *elem, string attr);
+
+/**
+ * alternative getFloatAttr
+ *
+ * Use this getFloatAttr when you need to know wheter the attribute was set or not (i.e. it is optional).
+ *
+ * @param TiXmlElement *elem
+ *  The TiXmlElement from which the attribute should be queried
+ * @param string attr
+ *  The name of the attribute to get
+ * @param float &value
+ *  the float into which the queried value should be put (untouched if not attribute not defined)
+ * @return bool
+ *  true if the attribute was defined, false otherwise
+ * @author Joe Balough
+ */
+ bool getFloatAttr(TiXmlElement *elem, string attr, float &value);
 
 /**
  * getStrAttr function
