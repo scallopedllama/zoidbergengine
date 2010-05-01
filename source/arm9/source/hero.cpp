@@ -12,22 +12,22 @@ bool hero::update(touchPosition *touch)
 	// Old v valuies: x 0.05, y 0.1
 	if (keysHeld() & KEY_LEFT)
 	{
-		velocity.x -= 0.3;
+		velocity.x -= 0.1; //0.3;
 		falling = true;
 	}
 	else if (keysHeld() & KEY_RIGHT)
 	{
-		velocity.x += 0.3;
+		velocity.x += 0.1; //0.3;
 		falling = true;
 	}
 	if (keysHeld() & KEY_UP)
 	{
-		velocity.y -= 0.3;
+		velocity.y -= 0.1; //0.3;
 		falling = true;
 	}
 	if (keysHeld() & KEY_DOWN)
 	{
-		velocity.y += 0.3;
+		velocity.y += 0.1; //0.3;
 		falling = true;
 	}
 
