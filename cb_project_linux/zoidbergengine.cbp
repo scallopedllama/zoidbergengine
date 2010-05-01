@@ -108,6 +108,7 @@
 		<Unit filename="../tools/cliCreator/cliCreator.cpp" />
 		<Unit filename="../tools/cliCreator/creatorutil.cpp" />
 		<Unit filename="../tools/cliCreator/creatorutil.h" />
+		<Unit filename="../tools/cliCreator/gfx/Makefile" />
 		<Unit filename="../tools/cliCreator/parsers.cpp" />
 		<Unit filename="../tools/cliCreator/parsers.h" />
 		<Unit filename="../tools/cliCreator/testing.xml" />
