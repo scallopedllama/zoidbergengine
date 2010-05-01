@@ -30,8 +30,10 @@ object::object(OamState *Oam,
 
 	hflip = vflip = false;
 
-	position = vector2D<float>(pos.x, pos.y);
-	gravity = vector2D<float>(grav.x, grav.y);
+	position = pos;
+	gravity = grav;
+	printf("obj grav: %f %f\n", gravity.x, gravity.y);
+
 	acceleration.x = acceleration.y = 0.0;
 	velocity.x = velocity.y = 0.0;
 

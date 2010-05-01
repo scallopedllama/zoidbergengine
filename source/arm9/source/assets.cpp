@@ -356,8 +356,8 @@ void assets::parseZbe()
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
 		// NOTE: Keep this up to date!
-		//                            object Id  X   Y
-		const static int lvlObjSize = 4 +        2 + 2;
+		//                            object Id  X   Y   hgrav vgrav
+		const static int lvlObjSize = 4 +        2 + 2 + 4 +   4;
 
 		// number of level heroes
 		uint32 numLvlHeroes = load<uint32>(zbeData);
@@ -492,10 +492,17 @@ levelAsset *assets::loadLevel(uint32 id)
 		uint32 objId = load<uint32>(zbeData);
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
+		int32 ihgrav = load<int32>(zbeData);
+		int32 ivgrav = load<int32>(zbeData);
+		// Convert 12.20 ints into floats by dividing by 2^12 = 4096
+		float fhgrav = float(ihgrav) / 4096.0;
+		float fvgrav = float(ivgrav) / 4096.0;
+
 		iprintf("  #%d: obj%d at (%d, %d)\n", (int) i, (int) objId, (int) x, (int) y);
+		printf("       grav (%f, %f)\n", fhgrav, fvgrav);
 
 		// make a new levelObjectAsset and add it to the vector
-		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
+		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), vector2D<float>(fhgrav, fvgrav), objectAssets[objId]);
 		lvl->heroes[i] = lvlObj;
 	}
 
@@ -514,10 +521,17 @@ levelAsset *assets::loadLevel(uint32 id)
 		uint32 objId = load<uint32>(zbeData);
 		uint16 x = load<uint16>(zbeData);
 		uint16 y = load<uint16>(zbeData);
+		int32 ihgrav = load<int32>(zbeData);
+		int32 ivgrav = load<int32>(zbeData);
+		// Convert 12.20 ints into floats by dividing by 2^12 = 4096
+		float fhgrav = float(ihgrav) / 4096.0;
+		float fvgrav = float(ivgrav) / 4096.0;
+
 		iprintf("  #%d: obj%d at (%d, %d)\n", (int) i, (int) objId, (int) x, (int) y);
+		printf("       grav (%f, %f)\n", fhgrav, fvgrav);
 
 		// Make a new levelObjectAsset and add it to the vector
-		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), objectAssets[objId]);
+		levelObjectAsset *lvlObj = new levelObjectAsset(vector2D<float>(float(x), float(y)), vector2D<float>(fhgrav, fvgrav), objectAssets[objId]);
 		lvl->objects[i] = lvlObj;
 	}
 

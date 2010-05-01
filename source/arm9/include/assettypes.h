@@ -212,14 +212,18 @@ struct objectAsset
 struct levelObjectAsset
 {
 	// Construcotr
-	levelObjectAsset(vector2D<float> pos, objectAsset *o)
+	levelObjectAsset(vector2D<float> pos, vector2D<float> grav, objectAsset *o)
 	{
+		gravity = grav;
 		position = pos;
 		obj = o;
 	}
 
 	// coordinates on screen
 	vector2D<float> position;
+
+	// Gravity
+	vector2D<float> gravity;
 
 	// pointer to general objectAsset
 	objectAsset *obj;

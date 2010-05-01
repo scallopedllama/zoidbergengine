@@ -64,6 +64,8 @@ public:
 	 * This function has a lot of parameters passed to it that are needed to initialize the SpriteEntry object and give
 	 * the object an initial location in the hardware sprite processor.
 	 *
+	 * @todo Make this constructor take a levelObjectAsset
+	 *
 	 * @param OamState *oam
 	 *  The oam in which this sprite should update. Should be oamMain or oamSub,.
 	 * @param frameAsset ***animations
