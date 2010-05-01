@@ -143,6 +143,9 @@ public:
 	 * objects are where they need to be. Virtual in case any classes inheriting this one
 	 * need to do something weird.
 	 *
+	 * libnds API calls:
+	 *   oamSet -- Sets a sprite in the OAM
+	 *
 	 * @param int spriteId
 	 *  The sprite index to use in the oam
 	 * @author Joe Balough
@@ -151,7 +154,7 @@ public:
 
 
 	/**
-	 * Object mved function
+	 * Object moved function
 	 *
 	 * Called whenever the object is moved by an outside force like collision resolution or
 	 * a cinematic event. Is not called when an object's update function causes it to move.
@@ -166,6 +169,9 @@ public:
 	 *
 	 * Makes this object into a rotateScale sprite in the OAM, enabling the matrix functions.
 	 * Must be passed a matrix ID provided by the level class.
+	 *
+	 * libnds API calls:
+	 *   oamRotateScale -- sets scale and rotation values for an affine transformed sprite
 	 *
 	 * @param int matrixId
 	 *  The index of the SpriteRotation object in the OAMTable
@@ -198,6 +204,9 @@ public:
 	 * Sets the rotation of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
 	 * After setting the angle, it sets up the appropriate affine transformation matrix.
 	 *
+	 * libnds API calls:
+	 *   oamRotateScale -- sets scale and rotation values for an affine transformed sprite
+	 *
 	 * @param int angle
 	 *  The angle to set to this object
 	 * @author Joe Balough
@@ -217,6 +226,9 @@ public:
 	 *
 	 * Sets the scale of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
 	 * After setting the scale, it sets up the appropriate affine transformation matrix.
+	 *
+	 * libnds API calls:
+	 *   oamRotateScale -- sets scale and rotation values for an affine transformed sprite
 	 *
 	 * @param int scaleX, scaleY
 	 *  The inverse scale factors for the x and y values. (Note 1 << 8 is 1x)
@@ -238,6 +250,9 @@ public:
 	 *
 	 * Sets the rotation and scale of this sprite. Only valid when the object is set to isRotateScale (with makeRotateScale()).
 	 * After setting the rotation and scale, it sets up the appropriate affine transformation matrix.
+	 *
+	 * libnds API calls:
+	 *   oamRotateScale -- sets scale and rotation values for an affine transformed sprite
 	 *
 	 * @param int angle
 	 *  The angle to set to this object

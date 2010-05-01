@@ -56,6 +56,23 @@ inline void die()
  *
  * Configures the DS video hardware
  *
+ * libnds API calls:
+ *   powerOn(POWER_ALL_2D) -- Enables 2D graphics on the DS
+ *   lcdMainOnTop() -- Tells the DS to use the top screen as the main screen
+ *   vramSetMainBanks -- Tells the DS how to map the video ram banks.
+ *               We use A for the main screen's backgrounds
+ *                      B for the main screen's sprites
+ *                      C for the sub screen's backgrounds
+ *                      D for the sub screen's sprites
+ *   videoSetMode -- Tells the DS what graphics features to use on the main screen
+ *               We set the graphics mode to mode 5 (with affine transformations)
+ *                  enable 4 backgrounds on the main screen
+ *                         tiled sprites on the main screen
+ *   videoSetModeSub -- Tells the DS what graphics features to use on the sub screen
+ *               We set the graphics to mode 5 and enable 1 background
+ *   oamInit -- initialize the main and sub OAMs for displaying sprites
+ *   consoleDemoInit -- enable console output using printf on the sub screen
+ *
  * @author Joe Balough
  */
 void initVideo();
@@ -66,6 +83,10 @@ void initVideo();
  *
  * Stops everything and waits for the player to press any key before returning.
  *
+ * libnds API calls:
+ *   scanKeys -- check for keys that have been pressed
+ *   keysUp -- returns all the buttons that have been released
+ *
  * @author Joe Balough
  */
 void pause();
@@ -75,6 +96,12 @@ void pause();
  *
  * Displays a list of strings to the user as a menu and allows them to pick one option using
  * the up/down and B/A keys. This funciton will stop everything else
+ *
+ * libnds API calls:
+ *   consoleClear -- clears the console text
+ *   scanKeys -- check for keys that have been pressed
+ *   keysUp -- returns all the buttons that have been released
+ *   KEY_* -- define to determine if the * button has been pressed
  *
  * @param vector<string> list
  *  A vector of strings to use as the list of options in the menu
@@ -116,8 +143,13 @@ inline bool yesNoMenu(string message)
 
 /**
  * pauseIfTesting function
+ *
  * Prints "\nPress any key to continue\n", pauses, then clears the screen if
  * ZBE_TESTING defined.
+ *
+ * libnds API calls:
+ *   consoleClear -- clears the console text
+ *
  * @author Joe Balough
  */
 inline void pauseIfTesting()

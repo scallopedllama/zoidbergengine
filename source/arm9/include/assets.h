@@ -105,6 +105,11 @@ public:
 	 * Returns a pointer to the location in video memory where the tiles for the passed gfxAsset
 	 * can be found. Will copy those tiles into video memory if needed.
 	 *
+	 * libnds API Calls:
+	 *   oamAllocateGfx -- Asks libnds for a video memory location into which graphics can be copied. Actually manages free space.
+	 *   DC_FlushRange -- Flush the memory cache in the range of the gfx data
+	 *   dmaCopyHalfWordsAsynch -- Copy 2 bytes at a time from main memory into video memory using DMA hardware
+	 *
 	 * @param gfxAsset *gfx
 	 *   the gfxAsset to load
 	 * @return uint16 pointer
@@ -139,6 +144,10 @@ public:
 	 *
 	 * Returns the index to the location in video memory where the palette data for the passed paletteAsset
 	 * can be found. Will copy that palette into video memory if needed.
+	 *
+	 * libnds API Calls:
+	 *   DC_FlushRange -- Flush the memory cache in the range of the gfx data
+	 *   dmaCopyHalfWordsAsynch -- Copy 2 bytes at a time from main memory into video memory using DMA hardware
 	 *
 	 * @param palAsset *pal
 	 *   A pointer to the palAsset of the palette to load

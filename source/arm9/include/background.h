@@ -80,6 +80,14 @@ public:
 	 */
 	background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 paletteOffset);
 
+	/**
+	 * background class deconstructor, just hides the background it used to update
+	 *
+	 * libnds API Calls:
+	 *   bgHide -- hides the background with the specified id
+	 *
+	 * @author Joe Balough
+	 */
 	~background()
 	{
 		bgHide(backgroundId);

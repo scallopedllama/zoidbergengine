@@ -152,6 +152,7 @@ void level::run()
 
 		swiWaitForVBlank();
 		oamUpdate(oam);
+		bgUpdate();
 	}
 }
 
@@ -264,6 +265,4 @@ void level::update()
 	{
 		backgrounds[i]->update();
 	}
-	// API Call: Update the backgrounds
-	bgUpdate();
 }

@@ -33,6 +33,17 @@
 #include <stdio.h>
 #include "game.h"
 
+/**
+ * Main function
+ *
+ * This main function first initializes the video and the file system access
+ * then creates a game and runs it.
+ *
+ * libnds API calls:
+ *   fatInitDefault -- initializes libfat with default settings for SD card reading
+ *
+ * @author Joe Balough
+ */
 int main()
 {
 	initVideo();

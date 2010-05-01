@@ -93,6 +93,9 @@ public:
 	 *
 	 * Goes through array of objects and deletes them, since they were dynamically allocated.
 	 *
+	 * libnds API calls:
+	 *   oamClear -- Clears all sprites defined in the OAM
+	 *
 	 * @author Joe Balough
 	 */
 	~level();
@@ -102,6 +105,11 @@ public:
 	 *
 	 * Acts as the 'main game loop' for this level. Calls the update function, waits for the next frame
 	 * then copies the local OAMTable in to memory.
+	 *
+	 * libnds API calls:
+	 *   swiWaitForVBlank -- Waits for the time to update the screen (DS always runs at 30 FPS)
+	 *   oamUpdate -- Updates the sprites on screen
+	 *   bgUpdate -- Updates the backgrounds
 	 *
 	 * @author Joe Balough
 	 */
@@ -115,6 +123,11 @@ public:
 	 * Those functions return a boolean value indicating whether they've moved
 	 * because of the update. If they have moved, run collision detection on
 	 * them.
+	 *
+	 * libnds API calls:
+	 *   scanKeys -- Check for buttons that have been pressed
+	 *   touchRead -- Check for the touchscreen having been touched
+	 *   oamClear -- Clears specified sprites defined in the OAM
 	 *
 	 * @author Joe Balough
 	 */
