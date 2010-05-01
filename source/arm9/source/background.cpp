@@ -6,8 +6,9 @@ background::background(levelBackgroundAsset *metadata, gfxAsset *tileset, uint8 
 	distance = metadata->distance;
 	layer = metadata->layer;
 	lastScreenOffset = screenOffset;
-	lastBgMapRepTL = vector2D<int>((screenOffset.x) / 8 - 1, (screenOffset.y) / 8 - 1);
-	lastBgMapRepBR = vector2D<int>((screenOffset.x + SCREEN_WIDTH) / 8, (screenOffset.y + SCREEN_HEIGHT) / 8);
+	lastBgMapRepTL = vector2D<int>(int(screenOffset.x - 128) / 8 - 1, int(screenOffset.y - 32) / 8 - 1);
+	lastBgMapRepBR = vector2D<int>(int(screenOffset.x + SCREEN_WIDTH + 128) / 8, int(screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+
 
 	// Load up the backgroundAsset to get the map data
 	zbeAssets->loadBackground(metadata);
@@ -99,8 +100,10 @@ void background::update()
 	bgSetScroll(backgroundId, int(screenOffset.x) % (ZBE_BACKGROUND_TILE_WIDTH * 8), int(screenOffset.y) % (ZBE_BACKGROUND_TILE_HEIGHT * 8));
 
 	// where to copy the replacement tiles from in background map
-	vector2D<int> bgMapRepTL(int(screenOffset.x) / 8 - 1, int(screenOffset.y) / 8 - 1);
-	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH) / 8, int(screenOffset.y + SCREEN_HEIGHT) / 8);
+	vector2D<int> bgMapRepTL(int(screenOffset.x - 128) / 8 - 1, int(screenOffset.y - 32) / 8 - 1);
+	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH + 128) / 8, int(screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+	/*copyTile(int(screenOffset.x) / 8, int(screenOffset.y) / 8, 1, 1);
+	copyTile(int(screenOffset.x + SCREEN_WIDTH) / 8 - 1, int(screenOffset.y + SCREEN_HEIGHT) / 8 - 1, 2, 2);*/
 
 	consoleClear();
 	printf("d: (%f, %f)\n", displacement.x, displacement.y);
@@ -117,74 +120,70 @@ void background::update()
 		return;
 	}
 
-
-	/*
-	 * Replace Rows
-	 */
-
-	// Scrolling UP
-	if (displacement.y < -8)
-	{
-		// The row
-		for (int r = lastBgMapRepTL.y; r >= bgMapRepTL.y; r--)
-		{
-			// Each column in the row
-			for (int c = -2; c < SCREEN_WIDTH / 8 + 2; c++)
-			{
-				// Copy it up
-				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
-			}
-		}
-	}
-	// Scrolling DOWN
-	else if (displacement.y > 8)
-	{
-		// The row
-		for (int r = lastBgMapRepBR.y; r <= bgMapRepBR.y; r++)
-		{
-			// Each column in the row
-			for (int c = -2; c < SCREEN_WIDTH / 8 + 2; c++)
-			{
-				// Copy it up
-				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
-			}
-		}
-	}
-
-
-
-	/*
-	 * Replace Columns
-	 */
-
 	// Scrolling LEFT
 	if (displacement.x < -8)
 	{
 		// Replace Columns
-		for (int c = lastBgMapRepTL.x - 1; c >= bgMapRepTL.x; c--)
+		for (int c = lastBgMapRepTL.x + 1; c >= bgMapRepTL.x; c--)
 		{
 			// Replace Rows
-			for (int r = -2; r < SCREEN_HEIGHT / 8 + 2; r++)
+			for (int r = 3; r < ZBE_BACKGROUND_TILE_HEIGHT - 1; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
 			}
 		}
 	}
-	//scrolling RIGHT
-	else if (displacement.x > 8)
+
+	// Scrolling RIGHT
+	if (displacement.x > 8)
 	{
 		// Replace Columns
-		for (int c = lastBgMapRepBR.x + 1; c <= bgMapRepBR.x; c++)
+		for (int c = lastBgMapRepBR.x - 1; c <= bgMapRepBR.x; c++)
 		{
 			// Replace Rows
-			for (int r = -2; r < SCREEN_HEIGHT / 8 + 2; r++)
+			for (int r = 3; r < ZBE_BACKGROUND_TILE_HEIGHT - 1; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
 			}
 		}
 	}
+
+	// Scrolling UP
+	if (displacement.y < -8)
+	{
+		// Replace rows
+		for (int r = lastBgMapRepTL.y + 1; r >= bgMapRepTL.y; r--)
+		{
+			// Each column in the row
+			for (int c = 9; c < ZBE_BACKGROUND_TILE_WIDTH - 7; c++)
+			{
+				// Copy it up
+				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+			}
+		}
+	}
+
+	// Scrolling DOWN
+	if (displacement.y > 8)
+	{
+		// Replace rows
+		for (int r = lastBgMapRepBR.y - 1; r <= bgMapRepBR.y; r++)
+		{
+			// Each column in the row
+			for (int c = 9; c < ZBE_BACKGROUND_TILE_WIDTH - 7; c++)
+			{
+				// Copy it up
+				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
+			}
+		}
+	}
+
+
+
+
+
 
 	// Save some values to avoid havning to re-calculate them.
 	// Only change the value if a row/col was replaced in that direction
