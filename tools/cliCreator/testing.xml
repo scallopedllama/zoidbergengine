@@ -29,7 +29,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level timer="180">
+		<level timer="180" w="32" h="32">
 			<name>First</name>
 			<exp>
 				<line>This is simply to test the</line>
@@ -47,7 +47,7 @@
 			<heroes>
 			</heroes>
 		</level>
-		<level timer="900">
+		<level timer="900" w="2048" h="2048">
 			<name>Scrolling Background</name>
 			<exp>
 				<!----                                ---->
@@ -69,7 +69,36 @@
 			<objects>
 			</objects>
 			<heroes>
-				<hero id="0" x="128" y="96" />
+				<hero id="0" x="128" y="96" hgrav="0" vgrav="0" />
+			</heroes>
+		</level>
+		<level timer="900" w="2048" h="128">
+			<!----                            ---->
+			<name>Parallax Scrolling BG</name>
+			<exp>
+				<!----                               ---->
+				<line>This test will test parallax</line>
+				<line>scrolling backgrounds. You</line>
+				<line>should have a hero in your</line>
+				<line>control that you can move</line>
+				<line>left and right for 15 seconds.</line>
+				<line>The 4 layers of background</line>
+				<line>should scroll at different</line>
+				<line>speeds.</line>
+			</exp>
+			<debug>
+				<line>Something went wrong in the</line>
+				<line>background::update() function.</line>
+				<line>Specifically, the call to</line>
+				<line>bgScroll().</line>
+			</debug>
+			<backgrounds tileset="0">
+				<background layer="0" id="0" distance="1" />
+			</backgrounds>
+			<objects>
+			</objects>
+			<heroes>
+				<hero id="0" x="128" y="96" hgrav="1" vgrav="0"/>
 			</heroes>
 		</level>
 	</levels>
