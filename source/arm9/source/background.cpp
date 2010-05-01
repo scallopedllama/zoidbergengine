@@ -102,7 +102,9 @@ void background::update()
 	// where to copy the replacement tiles from in background map
 	vector2D<int> bgMapRepTL(int(screenOffset.x - 128) / 8 - 1, int(screenOffset.y - 32) / 8 - 1);
 	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH + 128) / 8, int(screenOffset.y + SCREEN_HEIGHT + 32) / 8);
-	/*copyTile(int(screenOffset.x) / 8, int(screenOffset.y) / 8, 1, 1);
+
+	/*
+	copyTile(int(screenOffset.x) / 8, int(screenOffset.y) / 8, 1, 1);
 	copyTile(int(screenOffset.x + SCREEN_WIDTH) / 8 - 1, int(screenOffset.y + SCREEN_HEIGHT) / 8 - 1, 2, 2);*/
 
 	consoleClear();
@@ -127,7 +129,7 @@ void background::update()
 		for (int c = lastBgMapRepTL.x + 1; c >= bgMapRepTL.x; c--)
 		{
 			// Replace Rows
-			for (int r = 3; r < ZBE_BACKGROUND_TILE_HEIGHT - 1; r++)
+			for (int r = 2; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
@@ -142,7 +144,7 @@ void background::update()
 		for (int c = lastBgMapRepBR.x - 1; c <= bgMapRepBR.x; c++)
 		{
 			// Replace Rows
-			for (int r = 3; r < ZBE_BACKGROUND_TILE_HEIGHT - 1; r++)
+			for (int r = 2; r < ZBE_BACKGROUND_TILE_HEIGHT; r++)
 			{
 				// Copy it up
 				copyTile(c, lastBgMapRepTL.y + r, c, lastBgMapRepTL.y + r);
@@ -157,7 +159,7 @@ void background::update()
 		for (int r = lastBgMapRepTL.y + 1; r >= bgMapRepTL.y; r--)
 		{
 			// Each column in the row
-			for (int c = 9; c < ZBE_BACKGROUND_TILE_WIDTH - 7; c++)
+			for (int c = 8; c < ZBE_BACKGROUND_TILE_WIDTH - 6; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
@@ -172,7 +174,7 @@ void background::update()
 		for (int r = lastBgMapRepBR.y - 1; r <= bgMapRepBR.y; r++)
 		{
 			// Each column in the row
-			for (int c = 9; c < ZBE_BACKGROUND_TILE_WIDTH - 7; c++)
+			for (int c = 8; c < ZBE_BACKGROUND_TILE_WIDTH - 6; c++)
 			{
 				// Copy it up
 				copyTile(lastBgMapRepTL.x + c, r, lastBgMapRepTL.x + c, r);
