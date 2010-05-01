@@ -81,7 +81,7 @@ void background::redraw()
 		for (uint8 x = 0; x < ZBE_BACKGROUND_TILE_WIDTH; x++)
 		{
 			// Copy the tile
-			copyTile(int(screenOffset.x) / 8 + x, int(screenOffset.y) / 8  + y);
+			copyTile(int(screenOffset.x - 128) / 8 + x, int(screenOffset.y - 32) / 8  + y);
 		}
 	}
 }
