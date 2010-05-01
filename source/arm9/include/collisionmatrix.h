@@ -93,6 +93,8 @@ struct objGroup
  * and delete them and provides many useful utility functions for adding objects to
  * groups and the like.
  *
+ * @todo Add 4 additional objGroups to the collisionMatrix: above, below, left, and
+ *  right to hold the objects that are out of the level bounds.
  * @author Joe Balough
  */
 class collisionMatrix
