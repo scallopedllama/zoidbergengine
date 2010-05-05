@@ -190,8 +190,6 @@ bool decapod :: collide(object *object1, object *object2)
 			//heavy object then moves lighter object with its velocity
 			object2->position.x += object1->velocity.x;
 			object2->position.y += object1->velocity.y;
-
-
 		}
 		return 0;
 }
