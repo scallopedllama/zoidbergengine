@@ -125,12 +125,12 @@ bool decapod :: collide(object *object1, object *object2)
 	// get the demensions of the objects
 	left1 = object1->position.x;
 	left2 = object2->position.x;
-	right1 = left1 + object1->frame->dimensions.x;
-	right2 = left2 + object2->frame->dimensions.x;
+	right1 = left1 + object1->frame->dimensions.x + object1->frame->topleft.x;
+	right2 = left2 + object2->frame->dimensions.x + object2->frame->topleft.x;
 	top1 = object1->position.y;
 	top2 = object2->position.y;
-	bottom1 = top1 + object1->frame->dimensions.y;
-	bottom2 = top2 + object2->frame->dimensions.y;
+	bottom1 = top1 + object1->frame->dimensions.y + object1->frame->topleft.y;
+	bottom2 = top2 + object2->frame->dimensions.y + object2->frame->topleft.y;
 
 	// if completley outside one another return false
 		if (right1 < left2) return(false);
