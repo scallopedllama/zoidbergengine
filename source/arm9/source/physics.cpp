@@ -113,6 +113,7 @@ void decapod :: jump(object sprite)
 /*
  * Collisions
  */
+
 bool decapod :: collide(object *object1, object *object2)
 {
 
@@ -150,11 +151,12 @@ bool decapod :: collide(object *object1, object *object2)
 
 			object1->position.x-= object1->velocity.x;
 			object1->velocity.x = 0;
+			object1->moved();
 		}
 		else
 		{
 		// if object1 is heavier move object2
-			int diffy = 0;
+		/*	int diffy = 0;
 			int diffx = 0;
 
 			// move lighter object in x direction
@@ -178,10 +180,18 @@ bool decapod :: collide(object *object1, object *object2)
 			{
 				diffy = top1 - bottom2;
 				object2->position.y -= diffy;
-			}
+			}*/
 
-			// Run moved callback on the object.
-			object1->moved();
+			// if completley outside one another return false
+			if (right1 < left2) return(false);
+			if (left1 > right2) return(false);
+			if (bottom1 < top2) return(false);
+			if (top1 > bottom2) return(false);
+
+			//heavy object then moves lighter object with its velocity
+			object2->position.x += object1->velocity.x;
+			object2->position.y += object1->velocity.y;
+			object2->moved();
 		}
 		return 0;
 }
