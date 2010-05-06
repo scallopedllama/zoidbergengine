@@ -101,5 +101,72 @@
 				<hero id="0" x="128" y="96" hgrav="1" vgrav="0"/>
 			</heroes>
 		</level>
+		<level timer="900" w="256" h="192">
+			<!----				--->
+			<name>Simple collision </name>
+			<exp>
+				<line>Test collision with 2 objects</line>
+				<line>An objects falls</line>
+				<line>onto another and</line>
+				<line>stacks on top</line>
+			</exp>
+			<debug>
+				<line>Something went wrong in</line>
+				<line>the collision detection</line>
+			</debug>
+			<backgrounds>
+			</backgrounds>
+			<objects>
+				<object id="0" x="100" y="0" hgrav="0" vgrav="0.25">
+				<object id="0" x="100" y="100" hgrav="0" vgrav="0.25">
+			</objects>
+		</level>
+		<level timer="900" w="256" h="192">
+			<!----				--->
+			<name>Moveable object test </name>
+			<exp>
+				<line>Test collision with 2 objects</line>
+				<line> and a hero that can move</line>
+				<line>ojects around the level</line>
+			</exp>
+			<debug>
+				<line>Something went wrong in</line>
+				<line>the collision detection</line>
+			</debug>
+			<backgrounds>
+			</backgrounds>
+			<objects>
+				<object id="0" x="100" y="0" hgrav="0" vgrav="0.25">
+				<object id="0" x="100" y="100" hgrav="0" vgrav="0.25">
+			</objects>
+			<heroes>
+				<hero id="1" x="0" y="0" hgrav="0" vgrav="0.25">
+			</heroes>
+		</level>
+		<level timer="900" w="256" h="192">
+			<!----				--->
+			<name>Fun with objects</name>
+			<exp>
+				<line>Test the boundries</line>
+				<line>of the level with </line>
+				<line>4 objects with different</line>
+				<line>acceleration vectors</line>
+			</exp>
+			<debug>
+				<line>Something went wrong in</line>
+				<line>the collision detection</line>
+			</debug>
+			<backgrounds>
+			</backgrounds>
+			<objects>
+				<object id="0" x="128" y="64" hgrav="0.1" vgrav="0">
+				<object id="0" x="128" y="96" hgrav="0" vgrav="0.1">
+				<object id="0" x="96" y="64" hgrav="0" vgrav="-0.1">
+				<object id="0" x="96" y="96" hgrav="-0.1" vgrav="0">
+			</objects>
+		</level>
+
+
+		
 	</levels>
 </zbe>
