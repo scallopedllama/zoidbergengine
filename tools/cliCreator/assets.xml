@@ -125,7 +125,7 @@
 				<object id="0" x="100" y="10" hgrav="0.0" vgrav="-0.3" />
 			</objects>
 			<heroes>
-				<hero id="1" x="1024" y="1024" hgrav="0.0" vgrav="0.025" />
+				<hero id="2" x="1024" y="1024" hgrav="0.0" vgrav="0.025" />
 			</heroes>
 		</level>
 	</levels>
