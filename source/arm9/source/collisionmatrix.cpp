@@ -140,6 +140,13 @@ vector <object*> collisionMatrix::getCollisionCandidates(vector2D<float> positio
 		vector<object*> add = groups[coords.x - 1][coords.y]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
+	// Up-Left
+	if (coords.x > 0 && coords.y > 0)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x - 1][coords.y - 1]->objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
 	// Up
 	if (coords.y > 0)
 	{
@@ -147,11 +154,39 @@ vector <object*> collisionMatrix::getCollisionCandidates(vector2D<float> positio
 		vector<object*> add = groups[coords.x][coords.y - 1]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
-	// Up-Left
-	if (coords.x > 0 && coords.y > 0)
+	// Up-Right
+	if (coords.y > 0 && coords.x / blockSqSize < groupsWidth)
 	{
 		// Add it to the return vector
-		vector<object*> add = groups[coords.x - 1][coords.y - 1]->objects;
+		vector<object*> add = groups[coords.x + 1][coords.y - 1]->objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Right
+	if (coords.x / blockSqSize < groupsWidth)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x + 1][coords.y]->objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Down-Right
+	if (coords.y / blockSqSize < groupsHeight && coords.x / blockSqSize < groupsWidth)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x + 1][coords.y + 1]->objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Down
+	if (coords.y / blockSqSize < groupsHeight)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x][coords.y + 1]->objects;
+		toReturn.insert(toReturn.end(), add.begin(), add.end());
+	}
+	// Down-Left
+	if (coords.x > 0 && coords.y / blockSqSize < groupsHeight)
+	{
+		// Add it to the return vector
+		vector<object*> add = groups[coords.x - 1][coords.y + 1]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
 

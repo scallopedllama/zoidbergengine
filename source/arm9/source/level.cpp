@@ -18,7 +18,7 @@ level::level(levelAsset *m, OamState *o)
 	}
 
 	// initialize the collisionMatrix
-	colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 70);
+	colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 64);
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
