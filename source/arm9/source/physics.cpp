@@ -149,14 +149,14 @@ object *decapod::collisionResolution(object *object1, object *object2)
 	}
 
 	// get the demensions of the objects
-	float left1 = object1->position.x + object1->frame->topleft.x;
-	float left2 = object2->position.x + object2->frame->topleft.x;
-	float right1 = left1 + object1->frame->dimensions.x;
-	float right2 = left2 + object2->frame->dimensions.x;
-	float top1 = object1->position.y + object1->frame->topleft.y;
-	float top2 = object2->position.y + object2->frame->topleft.y;
-	float bottom1 = top1 + object1->frame->dimensions.y;
-	float bottom2 = top2 + object2->frame->dimensions.y;
+	float left1 = object1->position.x + (float)object1->frame->topleft.x;
+	float left2 = object2->position.x + (float)object2->frame->topleft.x;
+	float right1 = left1 + (float)object1->frame->dimensions.x;
+	float right2 = left2 + (float)object2->frame->dimensions.x;
+	float top1 = object1->position.y + (float)object1->frame->topleft.y;
+	float top2 = object2->position.y + (float)object2->frame->topleft.y;
+	float bottom1 = top1 + (float)object1->frame->dimensions.y;
+	float bottom2 = top2 + (float)object2->frame->dimensions.y;
 
 	// Figure out the overlap vector
 	float overRight = right1 - left2;
@@ -168,21 +168,21 @@ object *decapod::collisionResolution(object *object1, object *object2)
 	// Find x and y
 	if (fabs(overRight) <= fabs(overLeft))
 		overlap.x = overRight;
-	else if (fabs(overRight) > fabs(overLeft))
+	else
 		overlap.x = overLeft;
 	if (fabs(overBottom) <= fabs(overTop))
 		overlap.y = overBottom;
-	else if (fabs(overBottom) > fabs(overTop))
+	else
 		overlap.y = overTop;
 
 	// Only move both directions if the overlaps are equal
-	if (fabs(overlap.x) < fabs(overlap.y) || fabs(overlap.x) == fabs(overlap.y))
+	if (fabs(overlap.x) <= fabs(overlap.y))
 	{
 		// Move only horizontally
 		object2->position.x += overlap.x;
 		object2->velocity.x = 0;
 	}
-	if (fabs(overlap.y) < fabs(overlap.x) || fabs(overlap.x) == fabs(overlap.y))
+	if (fabs(overlap.y) <= fabs(overlap.x))
 	{
 		// Move on ly vertically
 		object2->position.y += overlap.y;

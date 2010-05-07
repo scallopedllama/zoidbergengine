@@ -4,7 +4,7 @@
 		<graphics>
 			<gfx bin="gfx/00-block.img.bin" w="32" h="32" top="0" left="0"/>
 			<gfx bin="gfx/01-crate.img.bin" w="32" h="32" top="0" left="0"/>
-			<gfx bin="gfx/02-boxman.img.bin" w="29" h="28" top="4" left="3"/>
+			<gfx bin="gfx/02-boxman.img.bin" w="28" h="29" top="3" left="4"/>
 			<gfx bin="gfx/04-plus.img.bin" w="32" h="32" top="0" left="0"/>
 		</graphics>
 		<tilesets>
@@ -47,7 +47,7 @@
 				<object id="0" x="100" y="10" hgrav="0.0" vgrav="0.0" />
 			</objects>
 			<heroes>
-				<hero id="1" x="1024" y="1024" hgrav="0.0" vgrav="0.0" />
+				<hero id="1" x="200" y="200" hgrav="0.0" vgrav="0.0" />
 			</heroes>
 		</level>
 	</levels>
