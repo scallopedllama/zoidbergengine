@@ -92,13 +92,27 @@ void background::update()
 {
 	// Find out how much things have moved
 	vector2D<float> displacement = vector2D<float>(screenOffset.x - lastScreenOffset.x , screenOffset.y - lastScreenOffset.y);
+	vector2D<float> useScreenOffset = screenOffset;
+
+	// Adjust the screen offset for distance
+	if (layer < 3)
+	{
+		useScreenOffset.x /= distance;
+		useScreenOffset.y /= distance;
+	}
+	else
+	{
+		useScreenOffset.x *= distance;
+		useScreenOffset.y *= distance;
+	}
 
 	// scroll the background (mod by bg dimensions because hardware will crash if the value gets too big)
-	bgSetScroll(backgroundId, int(screenOffset.x) % (ZBE_BACKGROUND_TILE_WIDTH * 8), int(screenOffset.y) % (ZBE_BACKGROUND_TILE_HEIGHT * 8));
+	// Behind layers
+	bgSetScroll(backgroundId, int(useScreenOffset.x) % (ZBE_BACKGROUND_TILE_WIDTH * 8), int(useScreenOffset.y) % (ZBE_BACKGROUND_TILE_HEIGHT * 8));
 
 	// where to copy the replacement tiles from in background map
-	vector2D<int> bgMapRepTL(int(screenOffset.x - 128) / 8 - 1, int(screenOffset.y - 32) / 8 - 1);
-	vector2D<int> bgMapRepBR(int(screenOffset.x + SCREEN_WIDTH + 128) / 8, int(screenOffset.y + SCREEN_HEIGHT + 32) / 8);
+	vector2D<int> bgMapRepTL(int(useScreenOffset.x - 128) / 8 - 1, int(useScreenOffset.y - 32) / 8 - 1);
+	vector2D<int> bgMapRepBR(int(useScreenOffset.x + SCREEN_WIDTH + 128) / 8, int(useScreenOffset.y + SCREEN_HEIGHT + 32) / 8);
 
 	// If there are more tiles to replace than there are in the screen, just replace the whole thing and be done with it
 	if (((int) displacement.x % SCREEN_WIDTH) * ((int) displacement.y % SCREEN_HEIGHT) > SCREEN_HEIGHT * SCREEN_WIDTH)
