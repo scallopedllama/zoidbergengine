@@ -17,7 +17,7 @@ level::level(levelAsset *m, OamState *o)
 	}
 
 	// initialize the collisionMatrix
-	colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 70);
+	//colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 70);
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
@@ -34,9 +34,7 @@ level::level(levelAsset *m, OamState *o)
 		objects.push_back(newObj);
 
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
-		// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
-		//       collision actions to the collisionMatrix.
-		objectsGroups.push_back(colMatrix->addObject(newObj));
+		//objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
 	// Parse the levelAssets metadata
@@ -53,9 +51,7 @@ level::level(levelAsset *m, OamState *o)
 		objects.push_back(newObj);
 
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
-		// TODO: by default, objects won't do anything on collisions. So only add objects that have clearly defined
-		//       collision actions to the collisionMatrix.
-		objectsGroups.push_back(colMatrix->addObject(newObj));
+		//objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
 
@@ -89,12 +85,16 @@ level::~level()
 		delete objects[i];
 	}
 
-	delete colMatrix;
+	//delete colMatrix;
 
 	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
 		delete backgrounds[i];
 	}
+
+	// Reset the screenOffset
+	screenOffset.x = 0.0;
+	screenOffset.y = 0.0;
 
 	// Clear out the OAM
 	oamClear(oam, 0, 0);
