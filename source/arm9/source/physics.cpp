@@ -153,7 +153,7 @@ bool decapod :: collide(object *object1, object *object2)
 			object1->velocity.x = 0;
 			object1->moved();
 		}
-		else
+		else if(object1->getWeight() > object2->getWeight())
 		{
 		// if object1 is heavier move object2
 		/*	int diffy = 0;
