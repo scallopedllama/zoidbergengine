@@ -4,6 +4,9 @@
 # Tell grit to include a palette (the first index in it will be transparent)
 -p
 
+# change the transparent index to be the last one (15)
+-pT15
+
 # Tile the image
 -gt
 
