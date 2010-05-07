@@ -6,6 +6,7 @@ level::level(levelAsset *m, OamState *o)
 	// set the oam and metadata
 	oam = o;
 	metadata = m;
+	levelSize = vector2D<float>(metadata->dimensions.x, metadata->dimensions.y);
 
 	// No palettes loaded
 	numBackgroundPalettes = 0;
@@ -95,6 +96,8 @@ level::~level()
 	// Reset the screenOffset
 	screenOffset.x = 0.0;
 	screenOffset.y = 0.0;
+	levelSize.x = 0.0;
+	levelSize.y = 0.0;
 
 	// Clear out the OAM
 	oamClear(oam, 0, 0);
