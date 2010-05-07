@@ -1,7 +1,7 @@
 #include "object.h"
 
 // object constructor
-object::object(OamState *Oam,
+object::object(OamState *Oam, int id,
 	   frameAsset ***anim,
 	   vector2D<float> pos, vector2D<float> grav, uint8 Weight, bool Hidden,
 	   int MatrixId, int ScaleX, int ScaleY, int Angle,
@@ -9,6 +9,7 @@ object::object(OamState *Oam,
 {
 	// Set all the variables
 	oam = Oam;
+	objectId = id;
 	animations = anim;
 	weight = Weight;
 	frame = anim[0][0]->gfx;
@@ -75,6 +76,12 @@ void object::draw(int spriteId)
 
 	uint16 *frameMem = zbeAssets->getGfx(frame);
 	uint8 paletteId = zbeAssets->getPalette(pal);
+
+	// Flip horizontally?
+	if (velocity.x < 0)
+		hflip = true;
+	else
+		hflip = false;
 
 	// Update the OAM
 	// NOTE: If hidden doesn't work as expected on affine transformed sprites, then there needs to be a check here to see if

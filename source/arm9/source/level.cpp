@@ -21,13 +21,14 @@ level::level(levelAsset *m, OamState *o)
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
-	for (unsigned int i = 0; metadata->heroes[i] != NULL; i++)
+	int objId = 0;
+	for (unsigned int i = 0; metadata->heroes[i] != NULL; i++, objId++)
 	{
 		// This is the objectAsset for this levelObjectAsset
 		objectAsset *obj = metadata->heroes[i]->obj;
 
 		// Make the new hero
-		object *newObj = (object*) new hero(oam, obj->animations, metadata->heroes[i]->position, metadata->heroes[i]->gravity, obj->weight);
+		object *newObj = (object*) new hero(oam, objId, obj->animations, metadata->heroes[i]->position, metadata->heroes[i]->gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
@@ -40,13 +41,13 @@ level::level(levelAsset *m, OamState *o)
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
-	for (unsigned int i = 0; metadata->objects[i] != NULL; i++)
+	for (unsigned int i = 0; metadata->objects[i] != NULL; i++, objId++)
 	{
 		// This is the objectAsset for this levelObjectAsset
 		objectAsset *obj = metadata->objects[i]->obj;
 
 		// Make the new object
-		object *newObj = new object(oam, obj->animations, metadata->objects[i]->position, metadata->objects[i]->gravity, obj->weight);
+		object *newObj = new object(oam, objId, obj->animations, metadata->objects[i]->position, metadata->objects[i]->gravity, obj->weight);
 
 		// Add the new object to the list of objects
 		objects.push_back(newObj);
@@ -97,6 +98,7 @@ level::~level()
 
 	// Clear out the OAM
 	oamClear(oam, 0, 0);
+	oamUpdate(oam);
 }
 
 // tries to get an affine transformation matrix for use with the rotoZoom style sprite.
@@ -226,11 +228,21 @@ void level::update()
 		// Test for collision with them
 		for (unsigned int j = 0; j < candidates.size(); j++)
 		{
-			if (i != j && collide(objects[i], objects[j]))
+			// Can't collide with itself
+			if (i != j)
 			{
-				// We have a collision
-				objects[i]->velocity = objects[j]->velocity = vector2D<float>(0.0, 0.0);
-				objects[i]->falling = objects[j]->falling = false;
+				// check for collision
+				object *resolvedObj = collide(objects[i], objects[j]);
+
+				// If one was moved
+				if (resolvedObj)
+				{
+					// Pull it out of the collision matrix and re-insert it
+					int objId = resolvedObj->getObjectId();
+					if (!objectsGroups[objId]->remove(objects[objId]))
+						iprintf("W: lvl upd: rm obj fail\n");
+					objectsGroups[objId] = colMatrix->addObject(objects[objId]);
+				}
 			}
 		}
 	}

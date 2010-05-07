@@ -58,12 +58,12 @@ public:
 	 * @see object::object()
 	 * @author Joe Balough
 	 */
-	hero(OamState *Oam,
+	hero(OamState *Oam, int id,
 		frameAsset ***animations,
 		vector2D<float> position, vector2D<float> gravity, uint8 weight, bool hidden = false,
 		int matrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
 		bool Mosaic = false)
-	: object(Oam,
+	: object(Oam, id,
 		 animations,
 		 position, gravity, weight, hidden,
 		 matrixId, ScaleX, ScaleY, Angle,

@@ -114,7 +114,7 @@ void decapod :: jump(object sprite)
  * Collisions
  */
 
-bool decapod :: collide(object *object1, object *object2)
+object* decapod :: collide(object *object1, object *object2)
 {
 
 	float left1, left2;
@@ -133,70 +133,66 @@ bool decapod :: collide(object *object1, object *object2)
 	bottom2 = top2 + object2->frame->dimensions.y + object2->frame->topleft.y;
 
 	// if completley outside one another return false
-		if (right1 < left2) return(false);
-		if (left1 > right2) return(false);
-        if (bottom1 < top2) return(false);
-		if (top1 > bottom2) return(false);
+	if (right1 < left2) return NULL;
+	if (left1 > right2) return NULL;
+	if (bottom1 < top2) return NULL;
+	if (top1 > bottom2) return NULL;
 
 	//if weight of object 1 is less than object2 then only object 1 moves
-		if(object1->getWeight() < object2->getWeight())
+	if(object1->getWeight() < object2->getWeight())
+	{
+		if(right1 > left2 && left1 < right2)
+			object1->position.y-=object1->velocity.y;
+		if(right1 > left2 && left1 < right2)
+			object1->velocity.y=0;
+
+		if (bottom1 <= top2) return NULL;
+		if (top1 >= bottom2) return NULL;
+
+		object1->position.x -= object1->velocity.x;
+		object1->velocity.x = 0;
+		object1->moved();
+		return object1;
+	}
+	else if(object1->getWeight() > object2->getWeight())
+	{
+	// if object1 is heavier move object2
+	/*	int diffy = 0;
+		int diffx = 0;
+
+		// move lighter object in x direction
+		if(object1->velocity.x > 0)		// if object moving to the right
 		{
-			if(right1 > left2 && left1 < right2)
-				object1->position.y-=object1->velocity.y;
-			if(right1 > left2 && left1 < right2)
-				object1->velocity.y=0;
-
-			if (bottom1 <= top2) return(false);
-			if (top1 >= bottom2) return(false);
-
-			object1->position.x-= object1->velocity.x;
-			object1->velocity.x = 0;
-			object1->moved();
+			diffx = right1 - left2;
+			object2->position.x += diffx;
 		}
-		else if(object1->getWeight() > object2->getWeight())
+		else							// if object moving to the left
 		{
-		// if object1 is heavier move object2
-		/*	int diffy = 0;
-			int diffx = 0;
-
-			// move lighter object in x direction
-			if(object1->velocity.x > 0)		// if object moving to the right
-			{
-				diffx = right1 - left2;
-				object2->position.x += diffx;
-			}
-			else							// if object moving to the left
-			{
-				diffx = left1 - right2;
-				object2->position.x -= diffx;
-			}
-			// move lighter object in the y direction
-			if(object1->velocity.y > 0)		// if object is moving up
-			{
-				diffy = bottom1 - top2;
-				object2->position.y += diffy;
-			}
-			else							// if object moving down
-			{
-				diffy = top1 - bottom2;
-				object2->position.y -= diffy;
-			}*/
-
-			// if completley outside one another return false
-			if (right1 < left2) return(false);
-			if (left1 > right2) return(false);
-			if (bottom1 < top2) return(false);
-			if (top1 > bottom2) return(false);
-
-			//heavy object then moves lighter object with its velocity
-			object2->position.x += object1->velocity.x;
-			object2->position.y += object1->velocity.y;
-			object2->moved();
+			diffx = left1 - right2;
+			object2->position.x -= diffx;
 		}
-		return 0;
+		// move lighter object in the y direction
+		if(object1->velocity.y > 0)		// if object is moving up
+		{
+			diffy = bottom1 - top2;
+			object2->position.y += diffy;
+		}
+		else							// if object moving down
+		{
+			diffy = top1 - bottom2;
+			object2->position.y -= diffy;
+		}*/
+
+		//heavy object then moves lighter object with its velocity
+		object2->position.x += object1->velocity.x;
+		object2->position.y += object1->velocity.y;
+		object2->moved();
+		return object2;
+	}
+	return NULL;
 }
 
-// Moved out of collision.cpp jb
+/*
 bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
 {
 	if(obj1->position.y > yval)
@@ -205,6 +201,7 @@ bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
 		obj1->position.y -= diff;
 		obj1->velocity.y = 0;
 	}
-}
+	return false;
+}*/
 
 

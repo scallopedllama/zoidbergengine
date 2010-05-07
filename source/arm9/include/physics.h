@@ -46,7 +46,7 @@ namespace decapod
 
 	//bool intersection(object sprite1, object sprite2);
 
-	/**
+	/*
 	* @author Dan Tracy
 	* We assume the projectile is small enough to only consider the center point
 	* to be the bound in question.  ie. if the center point hits the bounding box
@@ -54,7 +54,7 @@ namespace decapod
 	*/
 	//bool smallProjectileCollide(const object sprite, const object bullet);
 
-	/**
+	/*
 	* @author Dan Tracy
 	* @param object sprite
 	* The sprite that wants to jump.
@@ -66,8 +66,15 @@ namespace decapod
 	* is passed to see if the sprite hits the ground or not.
 	*/
 	//void jump(object sprite);*/
-	bool collide(object *object1, object *object2);
-	bool collisionHorrizontalLine(object *obj1, int yval);
+
+	/**
+	 * Checks for collision between two objects, returns the object it moved
+	 * or NULL if it didn't move anything or they're not colliding.
+	 *
+	 * @author Rob Byers
+	 */
+	object *collide(object *object1, object *object2);
+	//bool collisionHorrizontalLine(object *obj1, int yval);
 };
 
 #endif
