@@ -17,7 +17,7 @@ level::level(levelAsset *m, OamState *o)
 	}
 
 	// initialize the collisionMatrix
-	//colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 70);
+	colMatrix = new collisionMatrix(metadata->dimensions.x, metadata->dimensions.y, 70);
 
 	// Parse the levelAssets metadata
 	// Load up all the objects
@@ -34,7 +34,7 @@ level::level(levelAsset *m, OamState *o)
 		objects.push_back(newObj);
 
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
-		//objectsGroups.push_back(colMatrix->addObject(newObj));
+		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
 	// Parse the levelAssets metadata
@@ -51,7 +51,7 @@ level::level(levelAsset *m, OamState *o)
 		objects.push_back(newObj);
 
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
-		//objectsGroups.push_back(colMatrix->addObject(newObj));
+		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
 
 
@@ -85,7 +85,7 @@ level::~level()
 		delete objects[i];
 	}
 
-	//delete colMatrix;
+	delete colMatrix;
 
 	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
@@ -197,24 +197,24 @@ void level::update()
 		{
 			objects[i]->falling =false;
 			objects[i]->velocity.y = 0.0;
-			objects[i]->position.y = metadata->dimensions.y - objects[i]->frame->topleft.y - objects[i]->frame->dimensions.y;
+			objects[i]->position.y = metadata->dimensions.y - objects[i]->frame->topleft.y - objects[i]->frame->dimensions.y - 0.1;
 			objects[i]->moved();
 		}
 		if(objects[i]->position.x + objects[i]->frame->topleft.x + objects[i]->frame->dimensions.x > metadata->dimensions.x)
 		{
 			objects[i]->velocity.x = 0.0;
-			objects[i]->position.x = metadata->dimensions.x - objects[i]->frame->topleft.x - objects[i]->frame->dimensions.x;
+			objects[i]->position.x = metadata->dimensions.x - objects[i]->frame->topleft.x - objects[i]->frame->dimensions.x - 0.1;
 			objects[i]->moved();
 		}
 		if(objects[i]->position.y < 0.0)
 		{
-			objects[i]->position.y = 0.0;
+			objects[i]->position.y = 0.1;
 			objects[i]->velocity.y = 0.0;
 			objects[i]->moved();
 		}
 		if(objects[i]->position.x < 0.0)
 		{
-			objects[i]->position.x = 0.0;
+			objects[i]->position.x = 0.1;
 			objects[i]->velocity.x = 0.0;
 			objects[i]->moved();
 		}
