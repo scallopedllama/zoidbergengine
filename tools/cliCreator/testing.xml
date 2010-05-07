@@ -261,7 +261,7 @@
 			</heroes>
 			<objects>
 				<object id="1" x="100" y="0" hgrav="0" vgrav="0.25"/>
-				<object id="1" x="100" y="100" hgrav="0" vgrav="0.25"/>
+				<object id="0" x="100" y="100" hgrav="0" vgrav="0.25"/>
 			</objects>
 		</level>
 		<level timer="300" w="256" h="192">
