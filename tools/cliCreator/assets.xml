@@ -19,7 +19,7 @@
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="2" xml="gridBg.xml" />
+		<background palette="4" xml="gridBg.xml" />
 	</backgrounds>
 	<objects>
 		<object weight="255">
