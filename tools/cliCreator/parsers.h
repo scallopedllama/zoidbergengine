@@ -7,7 +7,7 @@
  * @author Joe Balough
  */
 
-/**
+/*
  *  Copyright (c) 2010 zoidberg engine
  *
  *  This file is part of the zoidberg engine.
@@ -45,11 +45,65 @@ using namespace std;
 
 // NOTE: All functions should return the number of assets parsed!
 
-
+/**
+ * Parses the root XML node for all the gfx bins. Will output proper zbe
+ * format to the output file.
+ * 
+ * @param FILE *output
+ *  the file to which output is being written
+ * @param TiXmlElement *zbeXML
+ *  The root XML node
+ * @author Joe Balough
+ */
 int parseGfx(TiXmlElement *zbeXML, FILE *output);
+
+/**
+ * Parses a generic binary section from the root XML node. Will output a proper zbe
+ * format to the output file. Used to parse the backgroundTiles and palettes sections. 
+ *
+ * @param FILE *output
+ *  the file to which output is being written
+ * @param string type
+ *  the type of binary section being parsed, for example "palette"
+ * @param TiXmlElement *zbeXML
+ *  The root XML node
+ * @author Joe Balough
+ */
 int parseBins(TiXmlElement *zbeXML, string type, FILE *output);
+
+/**
+ * Parses the root XML node for backgrounds. Will properly parse the rols and columns
+ * of tiles defining the background and use them to build a DS compatible map data structure
+ * that is used in the proper zbe datafile output.
+ * 
+ * @param FILE *output
+ *  the file to which output is being written
+ * @param TiXmlElement *zbeXML
+ *  The root XML node
+ * @author Joe Balough
+ */
 int parseBackgrounds(TiXmlElement *zbeXML, FILE *output);
+
+/**
+ * Parses the root XML node for game objects.
+ * 
+ * @param FILE *output
+ *  the file to which output is being written
+ * @param TiXmlElement *zbeXML
+ *  The root XML node
+ * @author Joe Balough
+ */
 int parseObjects(TiXmlElement *zbeXML, FILE *output);
+
+/**
+ * Parses the root XML node for game levels.
+ * 
+ * @param FILE *output
+ *  the file to which output is being written
+ * @param TiXmlElement *zbeXML
+ *  The root XML node
+ * @author Joe Balough
+ */
 int parseLevels(TiXmlElement *zbeXML, FILE *output);
 
 #endif
