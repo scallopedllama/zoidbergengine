@@ -3,6 +3,7 @@
 
 # Tell grit to include a palette (the first index in it will be transparent)
 -p
+-pT11
 
 # Tile the image
 -gt
@@ -15,3 +16,5 @@
 
 # No need for headers
 -fh!
+
+

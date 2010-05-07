@@ -603,7 +603,7 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 			int id = getIntAttr(heroXML, "id");
 
 			// Horizontal Gravity
-			float fhgrav = 0.025;
+			float fhgrav = 0.0;
 			if (!getFloatAttr(heroXML, "hgrav", fhgrav))
 				fprintf(stderr, "WARNING: No horizontal gravity set for level hero %d. Using default %f.\n", totalLvlHro, fhgrav);
 			int32_t ihgrav = int32_t(fhgrav * pow(2, 12));
@@ -651,7 +651,7 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 			int id = getIntAttr(objectXML, "id");
 
 		// Horizontal Gravity
-			float fhgrav = 0.025;
+			float fhgrav = 0.0;
 			if (!getFloatAttr(objectXML, "hgrav", fhgrav))
 				fprintf(stderr, "WARNING: No horizontal gravity set for level object %d. Using default %f.\n", totalLvlObj, fhgrav);
 			int32_t ihgrav = int32_t(fhgrav * pow(2, 12));

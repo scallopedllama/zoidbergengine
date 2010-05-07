@@ -184,7 +184,7 @@ private:
 
 	// A dynamically allocated 2D array of objGroups. Can be referenced like
 	// groups[x][y]
-	objGroup** groups;
+	objGroup*** groups;
 
 	// The bounds for the group array
 	int groupsWidth, groupsHeight;

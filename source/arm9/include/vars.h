@@ -45,8 +45,22 @@
  */
 extern vector2D<float> screenOffset;
 
-// A pointer to the assets class to use
-// TODO : flesh out this documentation
+/**
+ * Global Variable; level size
+ *
+ * contains the size of the currently running level
+ *
+ * @author Joe Balough
+ */
+extern vector2D<float> levelSize;
+
+/**
+ * Global Variable; assets
+ *
+ * A pointer to the assets class to use
+ *
+ * @author Joe Balough
+ */
 extern assets *zbeAssets;
 
 #endif // VARS_H_INCLUDED

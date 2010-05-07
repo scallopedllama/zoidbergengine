@@ -96,7 +96,7 @@ public:
 	 *  Defaults to false, whether or not this sprite should be a mosaic'd (blurry)
 	 * @author Joe Balough
 	 */
-	object(OamState *Oam,
+	object(OamState *Oam, int id,
 	   frameAsset ***animations,
 	   vector2D<float> position, vector2D<float> gravity, uint8 weight, bool Hidden = false,
 	   int MatrixId = -1, int ScaleX = 1 << 8, int ScaleY = 1 << 8, int Angle = 0,
@@ -163,6 +163,16 @@ public:
 	 */
 	virtual void moved()
 	{}
+
+
+	/**
+	 * Just a quick getter to get the object's id
+	 * @author Joe Balough
+	 */
+	inline int getObjectId()
+	{
+		return objectId;
+	}
 
 	/**
 	 * makeRotateScale function
@@ -348,6 +358,9 @@ protected:
 	// Pointer to the OamState in which this sprite should be updated
 	// Should point to either oamSub or oamMain
 	OamState *oam;
+
+	// This object's id
+	int objectId;
 
 	// Pointer to this object's animations
 	frameAsset ***animations;

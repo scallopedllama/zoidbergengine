@@ -41,9 +41,14 @@ collisionMatrix::collisionMatrix(int levelWidth, int levelHeight, int blockSqSz)
 	groupsHeight = levelHeight / blockSqSize + 1;
 
 	// Allocate data for the groups array
-	groups = new objGroup*[groupsWidth];
+	groups = new objGroup**[groupsWidth];
 	for (int i = 0; i < groupsWidth; i++)
-		groups[i] = new objGroup[groupsHeight];
+	{
+		groups[i] = new objGroup*[groupsHeight];
+
+		for (int j = 0; j < groupsHeight; j++)
+			groups[i][j] = new objGroup;
+	}
 }
 
 // Deconstructor
@@ -51,7 +56,11 @@ collisionMatrix::~collisionMatrix()
 {
 	// Delete all the objGroups
 	for(int i = 0; i < groupsWidth; i++)
+	{
+		for (int j = 0; j < groupsHeight; j++)
+			delete groups[i][j];
 		delete groups[i];
+	}
 	delete groups;
 }
 
@@ -83,7 +92,7 @@ objGroup *collisionMatrix::getObjGroup(vector2D<float> position)
 	}
 
 	// Return group
-	return &groups[coords.x][coords.y];
+	return groups[coords.x][coords.y];
 }
 
 // Add an object to its objGroup
@@ -100,10 +109,10 @@ objGroup *collisionMatrix::addObject(object *add)
 	}
 
 	// Add to the group
-	groups[coords.x][coords.y].objects.push_back(add);
+	groups[coords.x][coords.y]->objects.push_back(add);
 
 	// Return that group
-	return &groups[coords.x][coords.y];
+	return groups[coords.x][coords.y];
 }
 
 // Return an array of object pointers that may be colliding with object at x, y
@@ -121,28 +130,28 @@ vector <object*> collisionMatrix::getCollisionCandidates(vector2D<float> positio
 	// plus the objGroup above, to the left, and to the upperleft. These groups
 	// contain the only objects that could possibly be colliding with this object
 	// This group
-	vector<object*> toReturn = groups[coords.x][coords.y].objects;
+	vector<object*> toReturn = groups[coords.x][coords.y]->objects;
 
 	// The others -- Make sure that they are valid first
 	// Left
 	if (coords.x > 0)
 	{
 		// Add it to the return vector
-		vector<object*> add = groups[coords.x - 1][coords.y].objects;
+		vector<object*> add = groups[coords.x - 1][coords.y]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
 	// Up
 	if (coords.y > 0)
 	{
 		// Add it to the return vector
-		vector<object*> add = groups[coords.x][coords.y - 1].objects;
+		vector<object*> add = groups[coords.x][coords.y - 1]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
 	// Up-Left
 	if (coords.x > 0 && coords.y > 0)
 	{
 		// Add it to the return vector
-		vector<object*> add = groups[coords.x - 1][coords.y - 1].objects;
+		vector<object*> add = groups[coords.x - 1][coords.y - 1]->objects;
 		toReturn.insert(toReturn.end(), add.begin(), add.end());
 	}
 

@@ -33,6 +33,8 @@
 #define PHYSICS_ENGINE_H
 
 #include <nds.h>
+#include <algorithm>
+#include <math.h>
 #include "object.h"
 
 // TODO: comment up this file.
@@ -46,7 +48,7 @@ namespace decapod
 
 	//bool intersection(object sprite1, object sprite2);
 
-	/**
+	/*
 	* @author Dan Tracy
 	* We assume the projectile is small enough to only consider the center point
 	* to be the bound in question.  ie. if the center point hits the bounding box
@@ -54,7 +56,7 @@ namespace decapod
 	*/
 	//bool smallProjectileCollide(const object sprite, const object bullet);
 
-	/**
+	/*
 	* @author Dan Tracy
 	* @param object sprite
 	* The sprite that wants to jump.
@@ -66,8 +68,35 @@ namespace decapod
 	* is passed to see if the sprite hits the ground or not.
 	*/
 	//void jump(object sprite);*/
-	bool collide(object *object1, object *object2);
-	bool collisionHorrizontalLine(object *obj1, int yval);
+
+	/**
+	 * Checks for collision between two objects
+	 *
+	 * @param object *object1, object *object2
+	 *  The two objects to test for collisions
+	 * @return bool
+	 *  true if the objects are colliding, false o.w.
+	 * @author Robert Byers
+	 */
+	bool collisionDetect(object *object1, object *object2);
+
+
+	/**
+	 * Default collision resolution
+	 * This function is run on two objects are known to be colliding. It will look at
+	 * the weight of both objects and move them so that the heavier object is pushing
+	 * the lighter object. If they are the same weight, neither object will be moved.
+	 *
+	 * @param object *object1, object *object2
+	 *  The two objects that are colliding
+	 * @return object*
+	 *  The object that was moved in the collision resolution
+	 * @author Robert Byers
+	 */
+	object *collisionResolution(object *object1, object *object2);
+
+
+	//bool collisionHorrizontalLine(object *obj1, int yval);
 };
 
 #endif

@@ -2,98 +2,27 @@
 <zbe>
 	<bin>
 		<graphics>
-			<gfx bin="gfx/01-orangeShuttle.img.bin" w="44" h="55" top="3" left="8"/>
-			<gfx bin="gfx/02-moon.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/00-block.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/01-crate.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/02-boxman.img.bin" w="28" h="29" top="3" left="4"/>
+			<gfx bin="gfx/04-plus.img.bin" w="32" h="32" top="0" left="0"/>
 		</graphics>
 		<tilesets>
 			<tileset bin="gfx/03-bgTiles.img.bin" />
 		</tilesets>
 		<palettes>
-			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
-			<palette bin="gfx/02-moon.pal.bin"/>
-			<palette bin="gfx/03-bgTiles.pal.bin"/>
+			<palette bin="gfx/00-block.pal.bin"/>
+			<palette bin="gfx/01-crate.pal.bin"/>
+			<palette bin="gfx/02-boxman.pal.bin"/>
+			<palette bin="gfx/04-plus.pal.bin" />
+			<palette bin="gfx/03-bgTiles.pal.bin" />
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="2">
-			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="3"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="1"/></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" hflip="1" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
-		</background>
-		<background palette="2" xml="bigBg.xml"/>
-		<background palette="2" xml="noiseBg.xml" />
-		<background palette="2" xml="gridBg.xml" />
+		<background palette="4" xml="gridBg.xml" />
 	</backgrounds>
 	<objects>
-		<object weight="5">
+		<object weight="255">
 			<animations>
 				<animation>
 					<frame id="0" pal="0" time="10" />
@@ -103,29 +32,648 @@
 		<object weight="5">
 			<animations>
 				<animation>
-					<frame id="0" pal="0" time="10" />
-				</animation>
-			</animations>
-		</object>
-		<object weight="40">
-			<animations>
-				<animation>
-					<frame id="1" pal="1" time="10" />
+					<frame id="2" pal="2" time="10" />
 				</animation>
 			</animations>
 		</object>
 	</objects>
 	<levels>
-		<level w="2048" h="2048">
+		<level w="1472" h="992">
 			<backgrounds tileset="0">
-				<background layer="0" id="4" distance="1" />
+				<background layer="0" id="0" distance="1" />
 			</backgrounds>
 			<objects>
-				<object id="0" x="155" y="34" hgrav="0.0" vgrav="0.3" />
-				<object id="0" x="100" y="10" hgrav="0.0" vgrav="-0.3" />
+				<object id="0" x="0" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="0" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="32" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="32" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="32" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="32" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="32" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="64" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="96" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="128" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="160" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="192" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="224" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="256" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="288" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="320" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="352" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="384" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="416" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="448" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="480" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="512" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="544" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="576" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="608" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="640" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="672" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="704" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="736" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="768" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="800" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="832" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="864" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="896" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="928" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="0" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="32" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="64" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="96" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="128" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="160" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="192" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="224" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="256" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="288" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="320" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="352" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="384" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="416" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="448" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="480" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="512" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="544" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="576" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="608" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="640" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="672" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="704" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="736" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="768" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="800" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="832" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="864" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="896" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="928" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="960" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="992" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1024" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1056" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1088" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1120" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1152" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1184" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1216" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1248" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1280" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1312" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1344" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1376" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1408" y="960" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="1440" y="960" hgrav="0.0" vgrav="0.0" />
 			</objects>
 			<heroes>
-				<hero id="1" x="1024" y="1024" hgrav="0.0" vgrav="0.025" />
+				<hero id="1" x="0" y="32" hgrav="0.0" vgrav="0.0" />
 			</heroes>
 		</level>
 	</levels>

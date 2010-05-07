@@ -113,80 +113,88 @@ void decapod :: jump(object sprite)
 /*
  * Collisions
  */
-bool decapod :: collide(object *object1, object *object2)
+
+// Check for a collision
+bool decapod :: collisionDetect(object *object1, object *object2)
 {
-
-	float left1, left2;
-	float right1, right2;
-	float top1, top2;
-	float bottom1, bottom2;
-
 	// get the demensions of the objects
-	left1 = object1->position.x;
-	left2 = object2->position.x;
-	right1 = left1 + object1->frame->dimensions.x;
-	right2 = left2 + object2->frame->dimensions.x;
-	top1 = object1->position.y;
-	top2 = object2->position.y;
-	bottom1 = top1 + object1->frame->dimensions.y;
-	bottom2 = top2 + object2->frame->dimensions.y;
+	float left1 = object1->position.x + object1->frame->topleft.x;
+	float left2 = object2->position.x + object2->frame->topleft.x;
+	float right1 = left1 + object1->frame->dimensions.x;
+	float right2 = left2 + object2->frame->dimensions.x;
+	float top1 = object1->position.y + object1->frame->topleft.y;
+	float top2 = object2->position.y + object2->frame->topleft.y;
+	float bottom1 = top1 + object1->frame->dimensions.y;
+	float bottom2 = top2 + object2->frame->dimensions.y;
 
 	// if completley outside one another return false
-		if (right1 < left2) return(false);
-		if (left1 > right2) return(false);
-        if (bottom1 < top2) return(false);
-		if (top1 > bottom2) return(false);
+	if (right1 < left2) return false;
+	if (left1 > right2) return false;
+	if (bottom1 < top2) return false;
+	if (top1 > bottom2) return false;
 
-	//if weight of object 1 is less than object2 then only object 1 moves
-		if(object1->getWeight() < object2->getWeight())
-		{
-			if(right1 > left2 && left1 < right2)
-				object1->position.y-=object1->velocity.y;
-			if(right1 > left2 && left1 < right2)
-				object1->velocity.y=0;
-
-			if (bottom1 <= top2) return(false);
-			if (top1 >= bottom2) return(false);
-
-			object1->position.x-= object1->velocity.x;
-			object1->velocity.x = 0;
-		}
-		else
-		{
-		// if object1 is heavier move object2
-			int diffy = 0;
-			int diffx = 0;
-
-			// move lighter object in x direction
-			if(object1->velocity.x > 0)		// if object moving to the right
-			{
-				diffx = right1 - left2;
-				object2->position.x += diffx;
-			}
-			else							// if object moving to the left
-			{
-				diffx = left1 - right2;
-				object2->position.x -= diffx;
-			}
-			// move lighter object in the y direction
-			if(object1->velocity.y > 0)		// if object is moving up
-			{
-				diffy = bottom1 - top2;
-				object2->position.y += diffy;
-			}
-			else							// if object moving down
-			{
-				diffy = top1 - bottom2;
-				object2->position.y -= diffy;
-			}
-
-			// Run moved callback on the object.
-			object1->moved();
-		}
-		return 0;
+	return true;
 }
 
-// Moved out of collision.cpp jb
+
+// Resolve that collision
+object *decapod::collisionResolution(object *object1, object *object2)
+{
+	// Make object 1 the heavy one
+	if (object1->getWeight() < object2->getWeight())
+	{
+		object *t = object1;
+		object1 = object2;
+		object2 = t;
+	}
+
+	// get the demensions of the objects
+	float left1 = object1->position.x + (float)object1->frame->topleft.x;
+	float left2 = object2->position.x + (float)object2->frame->topleft.x;
+	float right1 = left1 + (float)object1->frame->dimensions.x;
+	float right2 = left2 + (float)object2->frame->dimensions.x;
+	float top1 = object1->position.y + (float)object1->frame->topleft.y;
+	float top2 = object2->position.y + (float)object2->frame->topleft.y;
+	float bottom1 = top1 + (float)object1->frame->dimensions.y;
+	float bottom2 = top2 + (float)object2->frame->dimensions.y;
+
+	// Figure out the overlap vector
+	float overRight = right1 - left2;
+	float overLeft = left1 - right2;
+	float overBottom = bottom1 - top2;
+	float overTop = top1 - bottom2;
+	vector2D<float> overlap(0.0, 0.0);
+
+	// Find x and y
+	if (fabs(overRight) <= fabs(overLeft))
+		overlap.x = overRight;
+	else
+		overlap.x = overLeft;
+	if (fabs(overBottom) <= fabs(overTop))
+		overlap.y = overBottom;
+	else
+		overlap.y = overTop;
+
+	// Only move both directions if the overlaps are equal
+	if (fabs(overlap.x) <= fabs(overlap.y))
+	{
+		// Move only horizontally
+		object2->position.x += overlap.x;
+		object2->velocity.x = 0;
+	}
+	if (fabs(overlap.y) <= fabs(overlap.x))
+	{
+		// Move on ly vertically
+		object2->position.y += overlap.y;
+		object2->velocity.y = 0;
+	}
+
+	// Run the moved function and return the one we moved
+	object2->moved();
+	return object2;
+}
+
+/*
 bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
 {
 	if(obj1->position.y > yval)
@@ -195,6 +203,7 @@ bool decapod :: collisionHorrizontalLine(object *obj1, int yval)
 		obj1->position.y -= diff;
 		obj1->velocity.y = 0;
 	}
-}
+	return false;
+}*/
 
 
