@@ -124,6 +124,7 @@
 			<row></row>
 			<row></row>
 		</background>
+		<background palette="4" xml="gridBg.xml"/>
 	</backgrounds>
 	<objects>
 		<!-- 0 - SUPERHEAVY BLOCK -->
@@ -254,6 +255,7 @@
 				<line>function.</line>
 			</debug>
 			<backgrounds tileset="0">
+				<background layer="0" id="5" distance="1"/>
 			</backgrounds>
 			<heroes>
 			</heroes>
@@ -268,8 +270,9 @@
 				<line>This will test weighted</line>
 				<line>collision resolution. You</line>
 				<line>will be in control of a hero</line>
-				<line>for 5 seconds that should be able</line>
-				<line>to push the crate in front of it</line>
+				<line>for 5 seconds that should be</line>
+				<line>able to push the crate in</line>
+				<line>front of it</line>
 			</exp>
 			<debug>
 				<line>There was a either a problem</line>
@@ -279,6 +282,7 @@
 				<line>function.</line>
 			</debug>
 			<backgrounds tileset="0">
+				<background layer="0" id="5" distance="1"/>
 			</backgrounds>
 			<objects>
 				<object id="1" x="100" y="100" hgrav="0" vgrav="0.25"/>
@@ -303,6 +307,7 @@
 				<line>or the gravity value parsing</line>
 			</debug>
 			<backgrounds tileset="0">
+				<background layer="0" id="5" distance="1"/>
 			</backgrounds>
 			<heroes>
 			</heroes>
