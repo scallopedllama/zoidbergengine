@@ -1,5 +1,5 @@
 all:
-	$(DEVKITARM)/bin/grit *.png *.bmp
+	$(DEVKITARM)/bin/grit *.bmp
 
 clean:
 	rm -f *.bin
