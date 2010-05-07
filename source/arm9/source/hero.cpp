@@ -24,6 +24,12 @@ bool hero::update(touchPosition *touch)
 		velocity.y -= 0.1; //0.3;
 		falling = true;
 	}
+	if (keysHeld() & KEY_DOWN)
+	{
+		velocity.y += 0.1; //0.3;
+		falling = true;
+	}
+
 
 	// Done doing hero specific update functions,
 	// pass back to the object update function
