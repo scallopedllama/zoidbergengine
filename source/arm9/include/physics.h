@@ -33,6 +33,8 @@
 #define PHYSICS_ENGINE_H
 
 #include <nds.h>
+#include <algorithm>
+#include <math.h>
 #include "object.h"
 
 // TODO: comment up this file.
@@ -68,12 +70,32 @@ namespace decapod
 	//void jump(object sprite);*/
 
 	/**
-	 * Checks for collision between two objects, returns the object it moved
-	 * or NULL if it didn't move anything or they're not colliding.
+	 * Checks for collision between two objects
 	 *
-	 * @author Rob Byers
+	 * @param object *object1, object *object2
+	 *  The two objects to test for collisions
+	 * @return bool
+	 *  true if the objects are colliding, false o.w.
+	 * @author Robert Byers
 	 */
-	object *collide(object *object1, object *object2);
+	bool collisionDetect(object *object1, object *object2);
+
+
+	/**
+	 * Default collision resolution
+	 * This function is run on two objects are known to be colliding. It will look at
+	 * the weight of both objects and move them so that the heavier object is pushing
+	 * the lighter object. If they are the same weight, neither object will be moved.
+	 *
+	 * @param object *object1, object *object2
+	 *  The two objects that are colliding
+	 * @return object*
+	 *  The object that was moved in the collision resolution
+	 * @author Robert Byers
+	 */
+	object *collisionResolution(object *object1, object *object2);
+
+
 	//bool collisionHorrizontalLine(object *obj1, int yval);
 };
 

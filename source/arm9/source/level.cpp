@@ -229,17 +229,17 @@ void level::update()
 		for (unsigned int j = 0; j < candidates.size(); j++)
 		{
 			// Can't collide with itself
-			if (i != j)
+			if (objects[i] != candidates[j])
 			{
 				// check for collision
-				object *resolvedObj = collide(objects[i], objects[j]);
-
-				// If one was moved
-				if (resolvedObj)
+				if (collisionDetect(objects[i], candidates[j]))
 				{
+					// Resolve that collision
+					object *resolvedObj = collisionResolution(objects[i], candidates[j]);
+
 					// Pull it out of the collision matrix and re-insert it
 					int objId = resolvedObj->getObjectId();
-					if (!objectsGroups[objId]->remove(objects[objId]))
+					if (!objectsGroups[objId]->remove(resolvedObj))
 						iprintf("W: lvl upd: rm obj fail\n");
 					objectsGroups[objId] = colMatrix->addObject(objects[objId]);
 				}
