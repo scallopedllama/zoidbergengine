@@ -2,98 +2,27 @@
 <zbe>
 	<bin>
 		<graphics>
-			<gfx bin="gfx/01-orangeShuttle.img.bin" w="44" h="55" top="3" left="8"/>
-			<gfx bin="gfx/02-moon.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/00-block.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/01-crate.img.bin" w="32" h="32" top="0" left="0"/>
+			<gfx bin="gfx/02-boxman.img.bin" w="29" h="28" top="4" left="3"/>
+			<gfx bin="gfx/04-plus.img.bin" w="32" h="32" top="0" left="0"/>
 		</graphics>
 		<tilesets>
 			<tileset bin="gfx/03-bgTiles.img.bin" />
 		</tilesets>
 		<palettes>
-			<palette bin="gfx/01-orangeShuttle.pal.bin"/>
-			<palette bin="gfx/02-moon.pal.bin"/>
-			<palette bin="gfx/03-bgTiles.pal.bin"/>
+			<palette bin="gfx/00-block.pal.bin"/>
+			<palette bin="gfx/01-crate.pal.bin"/>
+			<palette bin="gfx/02-boxman.pal.bin"/>
+			<palette bin="gfx/04-plus.pal.bin" />
+			<palette bin="gfx/03-bgTiles.pal.bin" />
 		</palettes>
 	</bin>
 	<backgrounds>
-		<background palette="2">
-			<row><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="2"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3" hflip="1" vflip="1"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/><tile id="3"/></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="3"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="1"/></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/><tile id="1"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2" hflip="1" vflip="1"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-			<row><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/><tile id="2"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
-		</background>
-		<background palette="2">
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row></row>
-			<row><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="0"/><tile id="4"/></row>
-		</background>
-		<background palette="2" xml="bigBg.xml"/>
-		<background palette="2" xml="noiseBg.xml" />
 		<background palette="2" xml="gridBg.xml" />
 	</backgrounds>
 	<objects>
-		<object weight="5">
+		<object weight="255">
 			<animations>
 				<animation>
 					<frame id="0" pal="0" time="10" />
@@ -103,14 +32,7 @@
 		<object weight="5">
 			<animations>
 				<animation>
-					<frame id="0" pal="0" time="10" />
-				</animation>
-			</animations>
-		</object>
-		<object weight="40">
-			<animations>
-				<animation>
-					<frame id="1" pal="1" time="10" />
+					<frame id="2" pal="2" time="10" />
 				</animation>
 			</animations>
 		</object>
@@ -118,14 +40,14 @@
 	<levels>
 		<level w="2048" h="2048">
 			<backgrounds tileset="0">
-				<background layer="0" id="4" distance="1" />
+				<background layer="0" id="0" distance="1" />
 			</backgrounds>
 			<objects>
-				<object id="0" x="155" y="34" hgrav="0.0" vgrav="0.3" />
-				<object id="0" x="100" y="10" hgrav="0.0" vgrav="-0.3" />
+				<object id="0" x="155" y="34" hgrav="0.0" vgrav="0.0" />
+				<object id="0" x="100" y="10" hgrav="0.0" vgrav="0.0" />
 			</objects>
 			<heroes>
-				<hero id="2" x="1024" y="1024" hgrav="0.0" vgrav="0.025" />
+				<hero id="1" x="1024" y="1024" hgrav="0.0" vgrav="0.0" />
 			</heroes>
 		</level>
 	</levels>
