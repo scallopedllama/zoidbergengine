@@ -41,7 +41,7 @@
 		</object>
 	</objects>
 	<levels>
-		<level w="4000" h="300">
+		<level w="3584" h="240">
 			<backgrounds tileset="1">
 				<background layer="0" id="1" distance="1" />
 			</backgrounds>
