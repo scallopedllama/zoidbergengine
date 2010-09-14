@@ -4,6 +4,7 @@ all:
 	$(DEVKITARM)/bin/grit 02-boxman.bmp
 	$(DEVKITARM)/bin/grit 03-bgTiles.bmp
 	$(DEVKITARM)/bin/grit 04-plus.bmp
+	$(DEVKITARM)/bin/grit 1-1.bmp
 
 clean:
 	rm -f *.bin
