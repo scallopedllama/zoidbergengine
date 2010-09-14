@@ -75,6 +75,9 @@ level::level(levelAsset *m, OamState *o)
 			// Add it to the vector
 			backgrounds.push_back(newBackground);
 		}
+		// Hide all disabled backgrounds, they show random tiles otherwise.
+		else
+			bgHide(i);
 	}
 }
 
