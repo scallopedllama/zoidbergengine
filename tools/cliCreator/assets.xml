@@ -9,6 +9,7 @@
 		</graphics>
 		<tilesets>
 			<tileset bin="gfx/03-bgTiles.img.bin" />
+			<tileset bin="gfx/1-1.img.bin" />
 		</tilesets>
 		<palettes>
 			<palette bin="gfx/00-block.pal.bin"/>
@@ -16,10 +17,12 @@
 			<palette bin="gfx/02-boxman.pal.bin"/>
 			<palette bin="gfx/04-plus.pal.bin" />
 			<palette bin="gfx/03-bgTiles.pal.bin" />
+			<palette bin="gfx/1-1.pal.bin" />
 		</palettes>
 	</bin>
 	<backgrounds>
 		<background palette="4" xml="gridBg.xml" />
+		<background palette="5" bin="gfx/1-1.map.bin" w="448" h="30" />
 	</backgrounds>
 	<objects>
 		<object weight="255">
