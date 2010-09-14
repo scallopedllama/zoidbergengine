@@ -30,9 +30,7 @@
 #include "ndstypes.h"
 #include <nds/touch.h>
 
-/*! \file fifomessages.h 
-\brief standard fifo messages utilized by libnds. 
-*/
+/* internal fifo messages utilized by libnds. */
 
 typedef enum {
 	SOUND_PLAY_MESSAGE = 0x1234,
@@ -49,22 +47,23 @@ typedef struct FifoMessage {
 	union {
 
 		struct {
-			u16 type; 	
 			const void* data;
+			u32 dataSize;
 			u16 loopPoint;
-			u16 dataSize;
 			u16 freq;
 			u8 volume;
 			u8 pan;
 			bool loop;
 			u8 format;
+			u8 channel;
 		} SoundPlay;
 
 		struct{
-			u16 freq;	
+			u16 freq;
 			u8 dutyCycle;
 			u8 volume;
 			u8 pan;
+			u8 channel;
 		} SoundPsg;
 
 		struct{

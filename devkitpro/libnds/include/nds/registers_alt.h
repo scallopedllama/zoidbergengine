@@ -27,7 +27,7 @@
 
 /*
 	This file should be deprecated.
-	
+
 	All hardware register defines should be replaced with REG_ for consistency and namespacing
 
 	http://forum.gbadev.org/viewtopic.php?t=4993
@@ -262,7 +262,7 @@
 
 
 
-/*3D graphics suff*/
+/*3D graphics stuff*/
 #define	REG_GFX_FIFO		(*(vu32*) 0x4000400)
 #define	REG_GFX_STATUS		(*(vu32*) 0x4000600)
 #define	REG_GFX_CONTROL		(*(vu16*) 0x4000060)
@@ -306,10 +306,10 @@
 
 // Card	bus
 
-#define	REG_CARD_CR1		(*(vu32*)0x040001A0)
-#define	REG_CARD_CR1H		(*(vu8*)0x040001A1)
-#define	REG_CARD_CR2		(*(vu32*)0x040001A4)
-#define	REG_CARD_COMMAND	((vu8*)0x040001A8)
+#define	CARD_CR1		REG_AUXSPICNT
+#define	CARD_CR1H		REG_AUXSPICNTH
+#define	CARD_CR2		REG_ROMCTRL
+#define CARD_EEPDATA	REG_AUXSPIDATA
 
 #define	REG_CARD_DATA		(*(vu32*)0x04100000)
 #define	REG_CARD_DATA_RD	(*(vu32*)0x04100010)
