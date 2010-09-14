@@ -319,6 +319,7 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 
 		// See if there's an xml attribute defined
 		string extBgXMLfile = getStrAttr(bgXML, "xml");
+		string extBgBINfile = getStrAttr(bgXML, "bin");
 		if (!extBgXMLfile.empty())
 		{
 			debug("\tOpening external background map XML file: %s\n", extBgXMLfile.c_str());
@@ -331,6 +332,42 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			TiXmlElement *extBgXML = extXML.RootElement()->FirstChildElement("backgroundmap");
 
 			parseBackground(extBgXML, output, totalBg, pal, defPal);
+		}
+		// See if the map was added as a grit-generated bin
+		else if (!extBgBINfile.empty())
+		{
+			
+			// Get dimensions of the map
+			int width, height;
+			if (!getIntAttr(bgXML, "w", width))
+			{
+				fprintf(stderr, "ERROR: no width provided for background %d.\n", totalBg);
+				exit(EXIT_FAILURE);
+			}
+			if (!getIntAttr(bgXML, "h", height))
+			{
+				fprintf(stderr, "ERROR: no height provided for background %d.\n", totalBg);
+				exit(EXIT_FAILURE);
+			}
+			if (!defPal)
+			{
+				fprintf(stderr, "ERROR: no palette provided for background %d.\n", totalBg);
+			}
+			
+			debug("\tInserting external %d x %d background map BIN file %s using palette #%d\n", width, height, extBgBINfile.c_str(), pal);
+			// dimensions
+			fwrite<uint32_t>(uint32_t(width), output);
+			fwrite<uint32_t>(uint32_t(height), output);
+			
+			// palettes
+			fwrite<uint8_t>(1, output);
+			fwrite<uint32_t>(pal, output);
+			
+			// temp data length followed by data
+			fpos_t dataLenPos = tempVal<uint16_t>("Map Data Length", output);
+			uint16_t dataLen = appendData(output, extBgBINfile);
+			goWrite<uint16_t>(dataLen, output, &dataLenPos);
+			debug("\tWrote %dB of map data.\n", dataLen);
 		}
 		else
 			parseBackground(bgXML, output, totalBg, pal, defPal);
