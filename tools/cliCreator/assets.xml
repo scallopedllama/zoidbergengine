@@ -41,6 +41,14 @@
 		</object>
 	</objects>
 	<levels>
+		<level w="4000" h="300">
+			<backgrounds tileset="1">
+				<background layer="0" id="1" distance="1" />
+			</backgrounds>
+			<heroes>
+				<hero id="1" x="0" y="32" hgrav="0.0" vgrav="0.0" />
+			</heroes>
+		</level>
 		<level w="1472" h="992">
 			<backgrounds tileset="0">
 				<background layer="0" id="0" distance="1" />
