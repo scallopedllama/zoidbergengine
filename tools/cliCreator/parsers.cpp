@@ -629,6 +629,7 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 		uint32_t totalLvlHro = 0;
 
 		TiXmlElement *heroesXML = levelXML->FirstChildElement("heroes");
+		// TODO: All sections of code like this (foosXML = ...; fooXML = foosXML->...;) need to be wrapped in ifs to prevent segfaults.
 		TiXmlElement *heroXML = heroesXML->FirstChildElement("hero");
 		while (heroXML)
 		{
@@ -671,44 +672,47 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 
 
 		// Level Objects
-		//Total objects
+		// Total objects
 		debug("\t");
 		fpos_t totalLvlObjPos = tempVal<uint32_t>("Level Objects", output);
 		uint32_t totalLvlObj = 0;
 
 		TiXmlElement *objectsXML = levelXML->FirstChildElement("objects");
-		TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
-		while (objectXML)
+		if (objectsXML)
 		{
-			++totalLvlObj;
+			TiXmlElement *objectXML = objectsXML->FirstChildElement("object");
+			while (objectXML)
+			{
+				++totalLvlObj;
 
-			// Get the relevant infos
-			int x = getIntAttr(objectXML, "x");
-			int y = getIntAttr(objectXML, "y");
-			int id = getIntAttr(objectXML, "id");
+				// Get the relevant infos
+				int x = getIntAttr(objectXML, "x");
+				int y = getIntAttr(objectXML, "y");
+				int id = getIntAttr(objectXML, "id");
 
-		// Horizontal Gravity
-			float fhgrav = 0.0;
-			if (!getFloatAttr(objectXML, "hgrav", fhgrav))
-				fprintf(stderr, "WARNING: No horizontal gravity set for level object %d. Using default %f.\n", totalLvlObj, fhgrav);
-			int32_t ihgrav = int32_t(fhgrav * pow(2, 12));
+			// Horizontal Gravity
+				float fhgrav = 0.0;
+				if (!getFloatAttr(objectXML, "hgrav", fhgrav))
+					fprintf(stderr, "WARNING: No horizontal gravity set for level object %d. Using default %f.\n", totalLvlObj, fhgrav);
+				int32_t ihgrav = int32_t(fhgrav * pow(2, 12));
 
-			// Vertical Gravity
-			float fvgrav = 0.025;
-			if (!getFloatAttr(objectXML, "vgrav", fvgrav))
-				fprintf(stderr, "WARNING: No vertical gravity set for level object %d. Using default %f.\n", totalLvlObj, fvgrav);
-			int32_t ivgrav = int32_t(fvgrav * pow(2, 12));
+				// Vertical Gravity
+				float fvgrav = 0.025;
+				if (!getFloatAttr(objectXML, "vgrav", fvgrav))
+					fprintf(stderr, "WARNING: No vertical gravity set for level object %d. Using default %f.\n", totalLvlObj, fvgrav);
+				int32_t ivgrav = int32_t(fvgrav * pow(2, 12));
 
-			// Write them up
-			debug("\t\tObject using object id %d at (%d, %d) w/ grav (%f, %f) = (%d, %d) 20.12\n", id, x, y, fhgrav, fvgrav, ihgrav, ivgrav);
-			fwrite<uint32_t>(uint32_t(id), output);
-			fwrite<uint16_t>(uint16_t(x), output);
-			fwrite<uint16_t>(uint16_t(y), output);
-			fwrite<int32_t>(ihgrav, output);
-			fwrite<int32_t>(ivgrav, output);
+				// Write them up
+				debug("\t\tObject using object id %d at (%d, %d) w/ grav (%f, %f) = (%d, %d) 20.12\n", id, x, y, fhgrav, fvgrav, ihgrav, ivgrav);
+				fwrite<uint32_t>(uint32_t(id), output);
+				fwrite<uint16_t>(uint16_t(x), output);
+				fwrite<uint16_t>(uint16_t(y), output);
+				fwrite<int32_t>(ihgrav, output);
+				fwrite<int32_t>(ivgrav, output);
 
-			// Get the next object
-			objectXML = objectXML->NextSiblingElement("object");
+				// Get the next object
+				objectXML = objectXML->NextSiblingElement("object");
+			}
 		}
 		//go write the total number of objects
 		goWrite<uint32_t>(totalLvlObj, output, &totalLvlObjPos);
