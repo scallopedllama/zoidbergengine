@@ -364,9 +364,9 @@ int parseBackgrounds(TiXmlElement *zbeXML, FILE *output)
 			fwrite<uint32_t>(pal, output);
 			
 			// temp data length followed by data
-			fpos_t dataLenPos = tempVal<uint16_t>("Map Data Length", output);
-			uint16_t dataLen = appendData(output, extBgBINfile);
-			goWrite<uint16_t>(dataLen, output, &dataLenPos);
+			fpos_t dataLenPos = tempVal<uint32_t>("Map Data Length", output);
+			uint32_t dataLen = appendData(output, extBgBINfile);
+			goWrite<uint32_t>(dataLen, output, &dataLenPos);
 			debug("\tWrote %dB of map data.\n", dataLen);
 		}
 		else
