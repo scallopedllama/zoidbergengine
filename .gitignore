@@ -24,3 +24,6 @@ source/arm9/build/*
 
 devkitpro/*/build/*
 *.s
+
+#OO.o locks
+.~lock*
