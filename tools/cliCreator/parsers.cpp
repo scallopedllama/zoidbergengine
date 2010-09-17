@@ -545,7 +545,7 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 				string lvlDebug;
 				TiXmlElement *dbgXML = levelXML->FirstChildElement("debug");
 				if (dbgXML) {
-					lineXML = dbgXML->FirstChildElement("line");
+					TiXmlElement *lineXML = dbgXML->FirstChildElement("line");
 					while (lineXML)
 					{
 						lvlDebug += lineXML->GetText();
@@ -573,12 +573,13 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 
 			// Add background information
 			TiXmlElement *backgroundsXML = levelXML->FirstChildElement("backgrounds");
+			map<int, uint32_t> bgIds;
+			map<int, uint8_t> bgDistances;
+			int numBackgrounds = 0;
+			
 			if (backgroundsXML)
 			{
 				TiXmlElement *backgroundXML = backgroundsXML->FirstChildElement("background");
-				map<int, uint32_t> bgIds;
-				map<int, uint8_t> bgDistances;
-				int numBackgrounds = 0;
 				while (backgroundXML)
 				{
 					int layer = numBackgrounds, id, distance = 1;
