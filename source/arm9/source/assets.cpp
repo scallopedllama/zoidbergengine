@@ -358,6 +358,14 @@ void assets::parseZbe()
 		const static int bgSize = 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4;
 		fseek(zbeData, bgSize, SEEK_CUR);
 		iprintf(" bgs\n");
+		
+		// Skip over the platforms
+		// NOTE: Keep this up to date!
+		//                          X   Y   i   j
+		const static int platSize = 2 + 2 + 2 + 2;
+		uint32 numLvlPlatforms = load<uint32>(zbeData);
+		fseek(zbeData, platSize * numLvlPlatforms, SEEK_CUR);
+		iprintf(" %d platforms", numLvlPlatforms);
 
 		// The total number of bytes it takes to represent one level object in the
 		// assets file.
@@ -486,6 +494,12 @@ levelAsset *assets::loadLevel(uint32 id)
 	uint32 tilesetId = load<uint32>(zbeData);
 	lvl->tileset = tilesetAssets[tilesetId];
 	iprintf(" using tileset %d for bgs\n", tilesetId);
+	
+	
+	
+	// TODO: load up the platforms here.
+	
+	
 
 	// number of level heroes
 	uint32 numLvlHeroes = load<uint32>(zbeData);
