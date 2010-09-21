@@ -29,7 +29,7 @@
 #define ASSETTYPES_H_INCLUDED
 
 #define ZBE_PLATFORM_TYPE_VEC 0
-#define ZBE_PLATFORM_TYPE_RECT 1
+#define ZBE_PLATFORM_TYPE_SQ 1
 
 #include <stdio.h>
 #include <nds.h>

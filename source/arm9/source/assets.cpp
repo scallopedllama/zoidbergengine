@@ -534,7 +534,7 @@ levelAsset *assets::loadLevel(uint32 id)
 		iprintf("  #%d: sq (%d, %d) %d x %d\n", n, x, y, i , j);
 		
 		// create the platform
-		levelPlatformAsset *lvlPlat = new levelPlatformAsset(ZBE_PLATFORM_TYPE_RECT, vector2D<float>(float(x), float(y)), vector2D<float>(float(x), float(y)));
+		levelPlatformAsset *lvlPlat = new levelPlatformAsset(ZBE_PLATFORM_TYPE_SQ, vector2D<float>(float(x), float(y)), vector2D<float>(float(x), float(y)));
 		lvl->platforms[n] = lvlPlat;
 	}
 			
