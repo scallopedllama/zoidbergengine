@@ -11,7 +11,7 @@ level::level(levelAsset *m, OamState *o)
 	// No palettes loaded
 	numBackgroundPalettes = 0;
 
-	// indicate that all matrices and sprites are available
+	// indicate that all matrices are available
 	for (int i = 0; i < MATRIX_COUNT; i++)
 	{
 		matrixAvail[i] = true;
@@ -54,11 +54,29 @@ level::level(levelAsset *m, OamState *o)
 		// Add the object to the collisionMatrix and push its objGroup onto the objectsGroups vector
 		objectsGroups.push_back(colMatrix->addObject(newObj));
 	}
+	
+	
+	// Load up the platforms
+	for (unsigned int i = 0; metadata->platforms[i] != NULL; i++)
+	{
+		// The new platform object
+		platform *newPlat = NULL;
+		
+		// create appropriately
+		if (metadata->platforms[i]->type == ZBE_PLATFORM_TYPE_VEC)
+			newPlat = new vecPlatform(metadata->platforms[i]->position, metadata->platforms[i]->direction);
+		else if (metadata->platforms[i]->type == ZBE_PLATFORM_TYPE_SQ)
+			newPlat = new sqPlatform(metadata->platforms[i]->position, metadata->platforms[i]->direction);
+		
+		// add to the vector
+		platforms.push_back(newPlat);
+		
+		// Add to the collisionMatrix
+		// TODO: THIS
+	}
 
 
 	// Load up the backgrounds
-	// Level dimensions are determined by the biggest background in the back layers
-	//vector2D<uint32> maxDimensions(0, 0);
 	for (int i = 0; i < 4; i++)
 	{
 		if (metadata->bgs[i].background)
@@ -67,11 +85,6 @@ level::level(levelAsset *m, OamState *o)
 			background *newBackground = new background(&(metadata->bgs[i]), metadata->tileset, numBackgroundPalettes);
 			numBackgroundPalettes += metadata->bgs[i].palettes.size();
 
-			// If this is a layer behind the sprites, see if it's bigger than the current biggest
-			/*vector2D<uint32> thisDimensions = newBackground->getDimensions();
-			if (i < 3 && thisDimensions.x > maxDimensions.x && thisDimensions.y > maxDimensions.y)
-				maxDimensions = thisDimensions;*/
-
 			// Add it to the vector
 			backgrounds.push_back(newBackground);
 		}
@@ -79,6 +92,8 @@ level::level(levelAsset *m, OamState *o)
 		else
 			bgHide(i);
 	}
+	
+	// TODO: Might want to clean up the level metadata here if we're done with it.
 }
 
 // level destructor

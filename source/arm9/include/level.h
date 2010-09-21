@@ -52,6 +52,9 @@
 #include "object.h"
 #include "hero.h"
 
+// Platforms
+#include "platform.h"
+
 // For Collision detection
 #include "physics.h"
 #include "collisionmatrix.h"
@@ -143,6 +146,9 @@ private:
 
 	// A vector of pointers to backgrounds
 	vector<background*> backgrounds;
+	
+	// A vector of pointers to platforms in the level
+	vector<platform*> platforms;
 
 	// This keep track of the number of background palettes are being used
 	uint8 numBackgroundPalettes;
