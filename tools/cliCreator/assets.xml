@@ -46,16 +46,11 @@
 				<background layer="0" id="1" distance="1" />
 			</backgrounds>
 			<platforms>
-				<platform x="0" y="208" i="1103" j="0" />
-				<platform x="1103" y="208" i="0" j="32" />
-				<platform x="1136" y="208" i="0" j="32" />
-				<platform x="1136" y="208" i="240" j="0" />
-				<platform x="1175" y="208" i="0" j="32" />
-				<platform x="1424" y="208" i="1024" j="0" />
-				<platform x="1424" y="208" i="0" j="32" />
-				<platform x="2447" y="208" i="0" j="32" />
-				<platform x="2480" y="208" i="0" j="32" />
-				<platform x="2480" y="208" i="1104" j="0" />
+				<rectangle x="0" y="208" w="1103" h="32" />
+				<rectangle x="1136" y="208" w="39" h="32" />
+				<rectangle x="1424" y="208" w="1024" h="32" />
+				<rectangle x="2480" y="208" w="1024" h="32" />
+				<vector x="2881" y="207" i="159" j="160" />
 			</platforms>
 			<heroes>
 				<hero id="1" x="0" y="32" hgrav="0.0" vgrav="0.0" />

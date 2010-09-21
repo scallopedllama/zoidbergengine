@@ -657,38 +657,45 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 			debug("\t");
 			fpos_t totalLvlPlatPos = tempVal<uint32_t>("Level Platforms", output);
 			uint32_t totalLvlPlat = 0;
+			debug("\t");
+			fpos_t totalLvlVecPlatPos = tempVal<uint32_t>("Vector Platforms", output);
+			uint32_t totalLvlVecPlat = 0;
+			debug("\t");
+			fpos_t totalLvlSqPlatPos = tempVal<uint32_t>("Rectangle Platforms", output);
+			uint32_t totalLvlSqPlat = 0;
 
 			TiXmlElement *platformsXML = levelXML->FirstChildElement("platforms");
 			if (platformsXML)
 			{
-				TiXmlElement *platformXML = platformsXML->FirstChildElement("platform");
-				while (platformXML)
+				// vector-based platforms
+				TiXmlElement *vectorXML = platformsXML->FirstChildElement("vector");
+				while (vectorXML)
 				{
-					++totalLvlPlat;
+					++totalLvlPlat; ++totalLvlVecPlat;
 					
 					// Get all the information
 					int x, y, i, j;
 					bool skip = false;
 					
 					// Make sure all necessary items are defined
-					if (!getIntAttr(platformXML, "x", x))
+					if (!getIntAttr(vectorXML, "x", x))
 					{
-						fprintf(stderr, "WARNING: No X coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: No X coordinate provided for vector platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
-					if (!getIntAttr(platformXML, "y", y))
+					if (!getIntAttr(vectorXML, "y", y))
 					{
-						fprintf(stderr, "WARNING: No Y coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: No Y coordinate provided for vector platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
-					if (!getIntAttr(platformXML, "i", i))
+					if (!getIntAttr(vectorXML, "i", i))
 					{
-						fprintf(stderr, "WARNING: No i value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: No i value provided for vector platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
-					if (!getIntAttr(platformXML, "j", j))
+					if (!getIntAttr(vectorXML, "j", j))
 					{
-						fprintf(stderr, "WARNING: No j value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: No j value provided for vector platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
 					
@@ -696,22 +703,12 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 					// Make sure they're all positive.
 					if (x < 0)
 					{
-						fprintf(stderr, "WARNING: X value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: X value for vector platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
 					if (y < 0)
 					{
-						fprintf(stderr, "WARNING: Y value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					if (i < 0)
-					{
-						fprintf(stderr, "WARNING: i value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					if (j < 0)
-					{
-						fprintf(stderr, "WARNING: j value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						fprintf(stderr, "WARNING: Y value for vector platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
 					
@@ -719,21 +716,93 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 					// Write them up
 					if (!skip)
 					{
-						debug("\t\tPlatform at (%d, %d) with vector <%d, %d>\n", x, y, i, j);
+						debug("\t\tVector platform at (%d, %d) with vector <%d, %d>\n", x, y, i, j);
 						fwrite<uint16_t>(uint16_t(x), output);
 						fwrite<uint16_t>(uint16_t(y), output);
-						fwrite<uint16_t>(uint16_t(i), output);
-						fwrite<uint16_t>(uint16_t(j), output);
+						fwrite<int16_t>(int16_t(i), output);
+						fwrite<int16_t>(int16_t(j), output);
 					}
 					
 					// Get the next object
-					platformXML = platformXML->NextSiblingElement("platform");
+					vectorXML = vectorXML->NextSiblingElement("vector");
+				}
+				
+				// Rectangle-based platforms
+				TiXmlElement *rectXML = platformsXML->FirstChildElement("rectangle");
+				while (rectXML)
+				{
+					++totalLvlPlat; ++totalLvlSqPlat;
+					
+					// Get all the information
+					int x, y, w, h;
+					bool skip = false;
+					
+					// Make sure all necessary items are defined
+					if (!getIntAttr(rectXML, "x", x))
+					{
+						fprintf(stderr, "WARNING: No X coordinate provided for rectangle platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (!getIntAttr(rectXML, "y", y))
+					{
+						fprintf(stderr, "WARNING: No Y coordinate provided for rectangle platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (!getIntAttr(rectXML, "w", w))
+					{
+						fprintf(stderr, "WARNING: No width provided for rectangle platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (!getIntAttr(rectXML, "h", h))
+					{
+						fprintf(stderr, "WARNING: No height provided for rectangle platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					
+					
+					// Make sure they're all positive.
+					if (x < 0)
+					{
+						fprintf(stderr, "WARNING: X value for rectangle platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (y < 0)
+					{
+						fprintf(stderr, "WARNING: Y value for rectangle platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (w < 0)
+					{
+						fprintf(stderr, "WARNING: Width for rectangle platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					if (h < 0)
+					{
+						fprintf(stderr, "WARNING: Height for rectangle platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
+						skip = true;
+					}
+					
+					
+					// Write them up
+					if (!skip)
+					{
+						debug("\t\t%d x %d Rectangle platform at (%d, %d)\n", w, h, x, y);
+						fwrite<uint16_t>(uint16_t(x), output);
+						fwrite<uint16_t>(uint16_t(y), output);
+						fwrite<uint16_t>(uint16_t(w), output);
+						fwrite<uint16_t>(uint16_t(h), output);
+					}
+					
+					// Get the next object
+					rectXML = rectXML->NextSiblingElement("rectangle");
 				}
 			}
 			
 			//go write the total number of platforms
 			goWrite<uint32_t>(totalLvlPlat, output, &totalLvlPlatPos);
-			debug("\t%d Level Platforms\n", int(totalLvlPlat));
+			goWrite<uint32_t>(totalLvlSqPlat, output, &totalLvlSqPlatPos);
+			goWrite<uint32_t>(totalLvlVecPlat, output, &totalLvlVecPlatPos);
+			debug("\t%d vec + %d rect = %d Level Platforms\n", int(totalLvlSqPlat), int(totalLvlVecPlat), int(totalLvlPlat));
 
 
 
