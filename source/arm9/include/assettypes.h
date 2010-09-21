@@ -28,6 +28,9 @@
 #ifndef ASSETTYPES_H_INCLUDED
 #define ASSETTYPES_H_INCLUDED
 
+#define ZBE_PLATFORM_TYPE_VEC 0
+#define ZBE_PLATFORM_TYPE_RECT 1
+
 #include <stdio.h>
 #include <nds.h>
 #include <fat.h>
@@ -240,18 +243,22 @@ struct levelObjectAsset
 struct levelPlatformAsset
 {
 	// Constructor
-	levelPlatformAsset(vector2D<float> pos, vector2D<float> dir)
+	levelPlatformAsset(uint8 t, vector2D<float> pos, vector2D<float> dir)
 	{
+		type = t;
 		position = pos;
 		direction = dir;
 	}
 	
-	// Where this platform starts
-	vector2D<float> position;
+	// What type of platform is this
+	uint8 type;
 	
 	// In what direction this platform points
+	vector2D<float> direction;
+	
+	// Where this platform starts
 	vector2D<float> position;
-}
+};
 
 
 /**

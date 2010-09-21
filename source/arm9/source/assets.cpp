@@ -364,6 +364,8 @@ void assets::parseZbe()
 		//                          X   Y   i   j
 		const static int platSize = 2 + 2 + 2 + 2;
 		uint32 numLvlPlatforms = load<uint32>(zbeData);
+		load<uint32>(zbeData); // Number vector platforms
+		load<uint32>(zbeData);  // number rectangle platforms
 		fseek(zbeData, platSize * numLvlPlatforms, SEEK_CUR);
 		iprintf(" %d platforms", numLvlPlatforms);
 
@@ -497,8 +499,46 @@ levelAsset *assets::loadLevel(uint32 id)
 	
 	
 	
-	// TODO: load up the platforms here.
+	// number of platforms
+	uint32 totNumLvlPlatforms = load<uint32>(zbeData);
+	uint32 numLvlVecPlatforms = load<uint32>(zbeData);
+	uint32 numLvlSqPlatforms = load<uint32>(zbeData);
+	iprintf(" #plats %d + %d = %d\n", numLvlVecPlatforms, numLvlSqPlatforms, totNumLvlPlatforms);
 	
+	// allocate memory
+	lvl->platforms = new levelPlatformAsset*[totNumLvlPlatforms + 1];
+	lvl->platforms[totNumLvlPlatforms + 1] = NULL;
+	
+	// Load them, Vector Platforms
+	for (uint32 n = 0; n < numLvlVecPlatforms; n++)
+	{
+		uint16 x = load<uint16>(zbeData);
+		uint16 y = load<uint16>(zbeData);
+		int16 i = load<int16>(zbeData);
+		int16 j = load<int16>(zbeData);
+		
+		iprintf("  #%d: vec (%d, %d) <%d, %d>\n", n, x, y, i , j);
+		
+		// create the platform
+		levelPlatformAsset *lvlPlat = new levelPlatformAsset(ZBE_PLATFORM_TYPE_VEC, vector2D<float>(float(x), float(y)), vector2D<float>(float(x), float(y)));
+		lvl->platforms[n] = lvlPlat;
+	}
+	// Square Platforms
+	for (uint32 n = numLvlVecPlatforms; n < numLvlVecPlatforms + numLvlSqPlatforms; n++)
+	{
+		uint16 x = load<uint16>(zbeData);
+		uint16 y = load<uint16>(zbeData);
+		uint16 i = load<uint16>(zbeData);
+		uint16 j = load<uint16>(zbeData);
+		
+		iprintf("  #%d: sq (%d, %d) %d x %d\n", n, x, y, i , j);
+		
+		// create the platform
+		levelPlatformAsset *lvlPlat = new levelPlatformAsset(ZBE_PLATFORM_TYPE_RECT, vector2D<float>(float(x), float(y)), vector2D<float>(float(x), float(y)));
+		lvl->platforms[n] = lvlPlat;
+	}
+			
+		
 	
 
 	// number of level heroes
