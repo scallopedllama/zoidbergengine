@@ -670,52 +670,30 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 					int x, y, i, j;
 					bool skip = false;
 					
-					// Make sure all necessary items are defined
 					if (!getIntAttr(platformXML, "x", x))
 					{
 						fprintf(stderr, "WARNING: No X coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
+					
 					if (!getIntAttr(platformXML, "y", y))
 					{
 						fprintf(stderr, "WARNING: No Y coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
+					
 					if (!getIntAttr(platformXML, "i", i))
 					{
 						fprintf(stderr, "WARNING: No i value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
+					
 					if (!getIntAttr(platformXML, "j", j))
 					{
 						fprintf(stderr, "WARNING: No j value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
 						skip = true;
 					}
-					
-					
-					// Make sure they're all positive.
-					if (x < 0)
-					{
-						fprintf(stderr, "WARNING: X value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					if (y < 0)
-					{
-						fprintf(stderr, "WARNING: Y value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					if (i < 0)
-					{
-						fprintf(stderr, "WARNING: i value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					if (j < 0)
-					{
-						fprintf(stderr, "WARNING: j value for platform %d in level %d is negative. Must be positive. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					
-					
+						
 					// Write them up
 					if (!skip)
 					{
