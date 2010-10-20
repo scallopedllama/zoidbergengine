@@ -651,73 +651,8 @@ int parseLevels(TiXmlElement *zbeXML, FILE *output)
 
 
 
-
-			// Level Geometry
-			// Total number platforms
-			debug("\t");
-			fpos_t totalLvlPlatPos = tempVal<uint32_t>("Level Platforms", output);
-			uint32_t totalLvlPlat = 0;
-
-			TiXmlElement *platformsXML = levelXML->FirstChildElement("platforms");
-			if (platformsXML)
-			{
-				TiXmlElement *platformXML = platformsXML->FirstChildElement("platform");
-				while (platformXML)
-				{
-					++totalLvlPlat;
-					
-					// Get all the information
-					int x, y, i, j;
-					bool skip = false;
-					
-					if (!getIntAttr(platformXML, "x", x))
-					{
-						fprintf(stderr, "WARNING: No X coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					
-					if (!getIntAttr(platformXML, "y", y))
-					{
-						fprintf(stderr, "WARNING: No Y coordinate provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					
-					if (!getIntAttr(platformXML, "i", i))
-					{
-						fprintf(stderr, "WARNING: No i value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-					
-					if (!getIntAttr(platformXML, "j", j))
-					{
-						fprintf(stderr, "WARNING: No j value provided for platform %d in level %d. Skipping...\n", totalLvlPlat, totalLvl);
-						skip = true;
-					}
-						
-					// Write them up
-					if (!skip)
-					{
-						debug("\t\tPlatform at (%d, %d) with vector <%d, %d>\n", x, y, i, j);
-						fwrite<uint16_t>(uint16_t(x), output);
-						fwrite<uint16_t>(uint16_t(y), output);
-						fwrite<uint16_t>(uint16_t(i), output);
-						fwrite<uint16_t>(uint16_t(j), output);
-					}
-					
-					// Get the next object
-					platformXML = platformXML->NextSiblingElement("platform");
-				}
-			}
-			
-			//go write the total number of platforms
-			goWrite<uint32_t>(totalLvlPlat, output, &totalLvlPlatPos);
-			debug("\t%d Level Platforms\n", int(totalLvlPlat));
-
-
-
-
 			// Level Heroes
-			// Total heroes
+			//Total heroes
 			debug("\t");
 			fpos_t totalLvlHroPos = tempVal<uint32_t>("Level Heroes", output);
 			uint32_t totalLvlHro = 0;
