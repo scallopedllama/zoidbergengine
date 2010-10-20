@@ -231,30 +231,6 @@ struct levelObjectAsset
 
 
 /**
- * levelPlatformAsset struct is used manage one platform used in the level.
- * Platforms are represented as a point where they start and a vector that
- * points in the direction of the platform. the vector should not be a unit
- * vector, it should be as long as the platform is.
- * @author Joe Balough
- */
-struct levelPlatformAsset
-{
-	// Constructor
-	levelPlatformAsset(vector2D<float> pos, vector2D<float> dir)
-	{
-		position = pos;
-		direction = dir;
-	}
-	
-	// Where this platform starts
-	vector2D<float> position;
-	
-	// In what direction this platform points
-	vector2D<float> position;
-}
-
-
-/**
  * levelAsset struct. contains the data needed to define a level.
  * assets has a vector of these things but upon initial parsing, the only value
  * loaded into them is their file position. The rest of the data is parsed when
@@ -282,11 +258,6 @@ struct levelAsset : assetStatus
 			delete heroes[i];
 		}
 		delete heroes;
-		for (int i = 0; platforms[i] != NULL; i++)
-		{
-			delete platforms[i];
-		}
-		delete platforms;
 
 		if (name)
 		{
@@ -331,12 +302,9 @@ struct levelAsset : assetStatus
 	levelBackgroundAsset bgs[4];
 
 	// all the objects in this level
-	// this array is null terminated!
+	// this array is null temrinated!
 	levelObjectAsset **objects;
 	levelObjectAsset **heroes;
-	
-	// all the platforms in the level. This array is also null terminated
-	levelPlatformAsset **platforms;
 
 	// to add: level geometry, villians, etc.
 
